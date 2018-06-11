@@ -1,4 +1,4 @@
-package fgafa.interval;
+package fgafa.datastructure.interval;
 
 import java.util.Arrays;
 import java.util.Comparator;

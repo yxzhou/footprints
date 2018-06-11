@@ -7,8 +7,7 @@ package fgafa.todo.baidu;
  *   Give a line, length 27 cm,  
  *   There are 5 ants, in (3cm, 7cm, 11)
  *  
- * Question, 
-
+ * Question,
  * 
  */
 public class Ants {

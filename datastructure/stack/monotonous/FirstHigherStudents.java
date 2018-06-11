@@ -1,4 +1,4 @@
-package fgafa.datastructure.stack;
+package fgafa.datastructure.stack.monotonous;
 
 import java.util.Stack;
 

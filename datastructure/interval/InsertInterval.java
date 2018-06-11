@@ -1,4 +1,4 @@
-package fgafa.interval;
+package fgafa.datastructure.interval;
 
 import java.util.LinkedList;
 import java.util.List;

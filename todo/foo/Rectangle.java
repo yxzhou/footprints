@@ -4,6 +4,8 @@ import java.util.*;
 
 /**
  * _http://www.jiuzhang.com/solution/rectangle
+ *
+ * Give a set, if you can find four points that make up a rectangle that is parallel to the coordinate axis and outputs YES or NO.
  */
 
 public class Rectangle {

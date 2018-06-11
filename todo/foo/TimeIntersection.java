@@ -5,6 +5,11 @@ import java.util.List;
 
 /**
  * _http://www.jiuzhang.com/solution/time-intersection
+ *
+ * Give two users' ordered online time series, and each section records the user's login time point x and offline time point y.
+ * Find out the time periods when both users are online at the same time, and output in ascending order.
+ *
+ *  S: interval merge
  */
 
 public class TimeIntersection {
