@@ -1,7 +1,10 @@
 package fgafa.datastructure.interval;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * 
@@ -32,7 +35,7 @@ public class MeetingRoom {
             }
         });
         
-        for(int i = 1; i < intervals.length; i++){           
+        for(int i = 1; i < intervals.length; i++){
             if( intervals[i].start > intervals[i - 1].end ){
                 return false;
             }
@@ -91,10 +94,52 @@ public class MeetingRoom {
             end = 0;
         }
 
-        Interval(int s,
-                 int e) {
+        Interval(int s, int e) {
             start = s;
             end = e;
         }
+    }
+    
+    
+    public int minMeetingRooms_n(Interval[] intervals) {
+        //check
+        if(null == intervals || 0 == intervals.length){
+            return 0;
+        }
+    
+        List<Pair> list = new ArrayList<>();
+        for(Interval interval : intervals){
+            list.add(new Pair(interval.start, 1));
+            list.add(new Pair(interval.end, -1));
+        }
+        
+        Collections.sort(list);
+        
+        int result = 0;
+        int count = 0;
+        for(Pair p : list){
+            count += p.value;
+            
+            result = Math.max(result, count);
+        }
+        
+        return result;
+    }
+    
+    private class Pair implements Comparable<Pair> {
+        int x; //x position
+        int value;
+        
+        Pair(int x, int value){
+            this.x = x;
+            this.value = value;
+        }
+        
+        @Override
+        public int compareTo(Pair o) {
+            int diff = this.x - o.x;
+            return diff == 0 ? this.value - o.value : diff;
+        } 
+        
     }
 }

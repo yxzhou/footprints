@@ -3,7 +3,8 @@ package fgafa.graph.maze;
 import java.applet.Applet;
 import java.awt.Graphics;
 
-import com.televigation.log.TVCategory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public class MazeApplet extends Applet
 {
@@ -13,8 +14,10 @@ public class MazeApplet extends Applet
 
   private static final long serialVersionUID = 3583853686079306810L;
 
-  public static final TVCategory logger = (TVCategory) TVCategory
-      .getInstance(MazeApplet.class);
+  //public static final TVCategory logger = (TVCategory) TVCategory
+  //    .getInstance(MazeApplet.class);
+  //private static final Logger logger = LoggerFactory.getLogger(MazeApplet.class);
+
 
   private int generator = MazeConstant.GENERATOR_KRUSKAL;
 
@@ -180,7 +183,7 @@ public class MazeApplet extends Applet
 
   private void addItem(String newWord) {
     //System.out.println(newWord);
-    logger.info(newWord);
+    //logger.info(newWord);
 
     paintStatus(this.getG(), newWord);
 

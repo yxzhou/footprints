@@ -10,7 +10,8 @@ package fgafa.dp.sequence;
  */
 
 public class PaintFence {
-    public int numWays(int n, int k) {
+    public int numWays(int n,
+                       int k) {
 
         if (n == 0 || k == 0) {
             return 0;
@@ -19,17 +20,63 @@ public class PaintFence {
             return k;
         }
 
-        int same_color_count = k;
-        int diff_color_count = k * (k - 1);
+        int sameColorCount = k;
+        int diffColorCount = k * (k - 1);
 
         for (int i = 3; i <= n; i++) {
-            int swap = diff_color_count;
-            diff_color_count = diff_color_count * (k - 1) + same_color_count
-                        * (k - 1);
-            same_color_count = swap;
+            int swap = diffColorCount;
+            diffColorCount = diffColorCount * (k - 1) + sameColorCount * (k - 1);
+            sameColorCount = swap;
         }
 
-        return same_color_count + diff_color_count;
+        return sameColorCount + diffColorCount;
+    }
+    
+    
+    //no adjacent fence posts have the same color
+    public int numWays1(int n, int k) {
+        if (n == 0 || k == 0) {
+            return 0;
+        }
+        
+        int result = k;
 
+        for(int i = 2; i <= n; i++){
+            result = result * (k -1);
+        }
+        
+        return result;
+    }
+
+    //no more than two adjacent fence posts have the same color
+    public int numWays2(int n, int k) {
+        if (n == 0 || k == 0) {
+            return 0;
+        }
+        
+        int result = k;
+
+        for(int i = 2; i <= n; i++){
+            result = result * k;
+        }
+        
+        return result;
+    }
+    
+    //no more than three adjacent fence posts have the same color
+    public int numWays3(int n, int k) {
+        if (n == 0 || k == 0) {
+            return 0;
+        }
+        
+        int f1 = k;
+        int f2 = k * k;
+
+        int result = 1;
+        for(int i = 3; i <= n; i++){
+            result = result * (k -1);
+        }
+        
+        return result;
     }
 }

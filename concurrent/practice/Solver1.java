@@ -15,7 +15,7 @@ import java.util.function.Function;
  *
  */
 public class Solver1 {
-    Function<Key, Value> f = new Function<fgafa.concurrent.practice.Promblem1.Key, fgafa.concurrent.practice.Promblem1.Value>() {
+    Function<Key, Value> f = new Function<Solver1.Key, Solver1.Value>() {
         @Override
         public Value apply(Key t)
         {

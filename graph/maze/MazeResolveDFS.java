@@ -3,11 +3,14 @@ package fgafa.graph.maze;
 import java.awt.Graphics;
 import java.util.Stack;
 
-import com.televigation.log.TVCategory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public class MazeResolveDFS implements MazeResolveToolkit 
 {
-  public static final TVCategory logger = (TVCategory) TVCategory.getInstance(MazeResolveDFS.class);
+  //public static final TVCategory logger = (TVCategory) TVCategory.getInstance(MazeResolveDFS.class);
+  //private static final Logger logger = LoggerFactory.getLogger(MazeApplet.class);
+
   
   private Maze myMaze = null;
   
@@ -28,7 +31,7 @@ public class MazeResolveDFS implements MazeResolveToolkit
   }
   
   private boolean solveMazeDFS(Graphics g, int speed, Stack<Cell> paintedCells, Cell theCell) {
-    logger.info(" || solve... "+ System.currentTimeMillis()+ "theCell:" + theCell + " paintedRoute:" + paintedCells.toString());
+    //logger.info(" || solve... "+ System.currentTimeMillis()+ "theCell:" + theCell + " paintedRoute:" + paintedCells.toString());
     
     //resolved mean finished,  
 //    if(resolved )

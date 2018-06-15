@@ -90,27 +90,6 @@ public class RacerScore
     return endTimes.size() - lower;
   }
   
-  private int getPosition(List<Integer> endTimes, int x){
-    if(endTimes == null || endTimes.size() == 0 ){
-      endTimes.add(0, x);
-      return 0;
-    }  
-    
-    int lower = 0, higher = endTimes.size() - 1, middle;
-    
-    while(lower <= higher){
-      middle = lower + ((higher - lower) >> 1);
-        
-      if(x <= endTimes.get(middle) )   // it's O(n)
-        higher = middle -1;
-      else
-        lower = middle + 1;
-        
-    }
-    
-    endTimes.add(lower, x);
-    return endTimes.size() - lower;
-  }  
   
   /**
    * @param args

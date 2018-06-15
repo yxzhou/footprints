@@ -35,89 +35,49 @@ import fgafa.util.Misc;
 public class Anagram
 {
 
-  /*
-   * 
-   * Given an array of strings, return all groups of strings that are anagrams.
-   *
-   * Note: All inputs will be in lower-case.
-   * 
-   */
-  public List<String> fetchAllAnagrams(String[] strs){
-    ArrayList<String> retList = new ArrayList<String>();
+    /*
+     * 
+    Given an array of strings, group anagrams together.
     
-    //check
-    if(strs == null || strs.length < 2)
-      return retList;
+    For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"], 
+    Return:
+        [
+            ["ate", "eat","tea"],
+            ["nat","tan"],
+            ["bat"]
+        ]
     
-    //init
+     * Note: All inputs will be in lower-case.
+     */
+    public List<List<String>> fetchAllAnagrams2(String[] strs) {
+        List<List<String>> result = new ArrayList<>();
 
-    //travel the string list,  get the new "sorted String" , example {"fagd","acb", "cba"} ==> {"adfg","abc","abc"}
-    //add the <new String, ArrayList<old String>> into a Hashtable.
-    HashMap<String, ArrayList<String>> hm = new HashMap<>();
-    String newStr;
-    ArrayList<String> arrList;
-    for(int i=0; i<strs.length; i++){
-      if(strs[i] == null)
-        continue;
-      
-      newStr = sort(strs[i]);
-      if(hm.containsKey(newStr)){
-       ((ArrayList<String>) hm.get(newStr)).add(strs[i]);
-      }else {
-        arrList = new ArrayList<String>();
-        arrList.add(strs[i]);
-        
-        hm.put(newStr, arrList);
-      }
-    }
-    
-    //travel the Hashtable, if the ArrayList<old String> size is not one, add it in Arraylist<String> from return 
-    for (ArrayList<String> subList : hm.values() ) {
-  
-       if(subList.size() > 1){
-         retList.addAll(subList);
-       }
-    }
-    
-    return retList;
-  }
-  
-  public ArrayList<ArrayList<String>> fetchAllAnagrams2(String[] strs){
-    //check
-    if(strs == null )
-      return new ArrayList();
-    
-    //init
+        // check
+        if (null == strs || 0 == strs.length) {
+            return result;
+        }
 
-    //travel the string list,  get the new "String" , example {"fagd","acb", "cba"} ==> {"adfg","abc","abc"}
-    //add the <new String, ArrayList<old String>> into a Hashtable.
-    Hashtable<String, HashSet<String>> ht = new Hashtable<String, HashSet<String>>();
-    String newStr;
-    HashSet<String> hs;
-    for(int i=0; i<strs.length; i++){
-      if(strs[i] == null)
-        continue;
-      
-      newStr = sort(strs[i]);
-      if(ht.containsKey(newStr)){
-       ((HashSet<String>) ht.get(newStr)).add(strs[i]);
-      }else {
-        hs = new HashSet<String>();
-        hs.add(strs[i]);
-        
-        ht.put(newStr, hs);
-      }
+        Map<String, List<String>> map = new HashMap<>();
+
+        for (String s : strs) {
+            if (s == null) {
+                continue;
+            }
+
+            String tmp = sort(s);
+            if (!map.containsKey(tmp)) {
+                map.put(tmp, new ArrayList<String>());
+            }
+
+            map.get(tmp).add(s);
+        }
+
+        for (List<String> subList : map.values()) {
+            result.add(subList);
+        }
+
+        return result;
     }
-    
-    ArrayList<ArrayList<String>> retList = new ArrayList<ArrayList<String>>();
-    
-    //travel the Hashtable, if the ArrayList<old String> size is not one, add it in Arraylist<String> from return 
-    for (HashSet<String> subList : ht.values() ) {
-       retList.add(new ArrayList<String>(subList));
-    }
-    
-    return retList;
-  }
   /*
    * reorder the input string, 
    * e.g.
@@ -381,8 +341,8 @@ public class Anagram
 
     String[] strs = {"tea","and","ate","eat","dan", "eat", "abc"};
     
-    Misc.printArrayList((ArrayList<String>)sv.fetchAllAnagrams(strs));
-    ArrayList<ArrayList<String>> resultList = sv.fetchAllAnagrams2(strs);
+    Misc.printArrayList((ArrayList<String>)sv.fetchAllAnagrams_n(strs));
+    List<List<String>> resultList = sv.fetchAllAnagrams2(strs);
     
     for (int i = 0; i < resultList.size(); i++) {
       ArrayList<String> subList = (ArrayList<String>)resultList.get(i);

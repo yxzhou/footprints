@@ -24,17 +24,17 @@ public class StrobogrammaticIII {
         int highSize = high.length();
         
         long[] p = new long[highSize + 2]; // p[i] is the amount of strobogrammatic number with i-digits
-        p[1] = 5;
-        p[2] = 4;
+        p[1] = 5; // it's {0, 1, 6, 8, 9}
+        p[2] = 4; // it's {11, 69, 88, 96}
         long[] t = new long[highSize + 2]; // t[i] is the total amount of strobogrammatic number not bigger than i-digits
         t[1] = p[1];
         t[2] = t[1] + p[2];
         
         for(int i = 3; i <= highSize; i++){
             if( (i & 1) == 1){ //odd
-                p[i] = p[i - 1] * 3;
+                p[i] = p[i - 1] * 3;  //the valid digit (in middle) is {0, 1, 8}   
             }else{ //even
-                p[i] = p[i - 2] * 5;
+                p[i] = p[i - 2] * 5;  // the valid digit (not just in middle) is {0, 1, 6, 8, 9} 
             }
             
             t[i] = t[i - 1] + p[i];
@@ -59,7 +59,7 @@ public class StrobogrammaticIII {
             return validDigits[num.charAt(0) - '0'];
         }
         
-        long factor = p[size] / 4;
+        long factor = p[size] / 4; // the valid digit in the first position is {1, 6, 8, 9}
         long s = firstDigits[num.charAt(0) - '0'] * factor;
         
         for(int i = 1; i < size / 2; i++){

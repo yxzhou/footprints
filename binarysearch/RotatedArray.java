@@ -4,133 +4,97 @@ import fgafa.util.Misc;
 
 public class RotatedArray {
 
-	  /*
-	   * Suppose a sorted array is rotated at some pivot unknown to you beforehand.
-	   * (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
-	   * 
-	   * You are given a target value to search. If found in the array return its index, otherwise return -1.
-	   * You may assume no duplicate exists in the array.
-	   * 
-	   * Time O(logn) Space O(1)
-	   */
+  /*
+   * Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+   * (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+   * 
+   * You are given a target value to search. If found in the array return its index, otherwise return -1.
+   * You may assume no duplicate exists in the array.
+   * 
+   * Time O(logn) Space O(1)
+   */
 	  
-	  public int binarySearch_Rotated(int[] seqNum, int num){
-	    //initial
-	    int returnValue = -1;
-	    
-	    //check
-	    if( seqNum == null ) 
-	      return returnValue;
-	    
-	    int left = 0;
-	    int right = seqNum.length - 1;
-	    int mid = 0; 
-	    while (left <= right) {
-	      mid = left + ((right - left) >> 1);  // Avoid overflow, (left + right )/2 
-	      if (seqNum[mid] == num) 
-	        return mid;
-	      
-	      if (seqNum[left] <= seqNum[mid]) { // the left half (left, mid) is sorted
-	        if (seqNum[left] <= num && num < seqNum[mid])  // num is in [left, mid)
-	          right = mid - 1;
-	        else   // num is in (mid, right]
-	          left = mid + 1;
-	      }else {  // the right half is sorted
-	        if (seqNum[mid] < num && num <= seqNum[right]) // num is in (mid, right]
-	          left = mid + 1;
-	        else   // num is in [left, mid)  
-	          right = mid - 1;
-	      }
-	    }
-	    
-	    return returnValue;
-	  }
+    public int binarySearch_Rotated(int[] seqNum,
+                                    int num) {
+        // check
+        if (seqNum == null) {
+            return -1;
+        }
+
+        int left = 0;
+        int right = seqNum.length - 1;
+        int mid = 0;
+        while (left <= right) {
+            mid = left + ((right - left) >> 1); // Avoid overflow
+
+            if (seqNum[mid] == num) {
+                return mid;
+            }
+
+            if (seqNum[left] <= seqNum[mid]) { // the left half (left, mid) is sorted
+                if (seqNum[left] <= num && num < seqNum[mid]) { // num is in [left, mid)
+                    right = mid - 1;
+                } else { // num is in (mid, right]
+                    left = mid + 1;
+                }
+            } else { // the right half is sorted
+                if (seqNum[mid] < num && num <= seqNum[right]) {// num is in (mid, right]
+                    left = mid + 1;
+                } else { // num is in [left, mid)
+                    right = mid - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
 	  
-	  /** 
-	   *@param A : an integer rotated sorted array
-	   *@param target :  an integer to be searched
-	   *return : an integer
-	   */
-	  /*Time O(logn) Space O(1)*/
-	  public int binarySearch_Rotated_n(int[] A, int target) {
-	      // check
-	      if(null == A){
-	          return -1;
-	      }
-	      
-	      int low = 0;
-	      int high = A.length - 1;
-	      int mid;
-	      
-	      while(low <= high){
-	          mid = low + ((high - low) >> 1);
-	          
-	          if(A[mid] == target){
-	              return mid;
-	          }else if(A[mid] < target){
-	              if(A[low] <= target && A[low] > A[mid]){
-	                  high = mid - 1;
-	              }else{
-	                  low = mid + 1;
-	              }
-	          }else{ // A[mid] > target
-	              if(A[low] > target && A[low] < A[mid]){
-	                  low = mid + 1;
-	              }else{
-	                  high = mid - 1;
-	              }
-	          }
-	      }
-	      
-	      return -1;
-	  }
-	  
-	    /** 
-	     * param A : an integer ratated sorted array and duplicates are allowed
-	     * param target :  an integer to be search
-	     * return : a boolean 
-	     */
-	  /*Time O(n) Space O(1)*/
-	    public boolean binarySearch_Rotated_WithDupl(int[] A, int target) {
-	        // check
-	        if(null == A){
-	            return false;
-	        }
-	        
-	        return binarySearch_Rotated_WithDupl(A, 0, A.length - 1, target);
-	    }
-	    
-	    private boolean binarySearch_Rotated_WithDupl(int[] A, int low, int high, int target){
-	        
-	        int mid;
-	        
-	        while(low <= high){
-	            mid = low + ((high - low) >> 1);
-	            
-	            if(A[mid] == target){
-	                return true;
-	            }else if(A[mid] < target){
-	                if(A[low] <= target && A[low] > A[mid]){
-	                    high = mid - 1;
-	                }else if (A[low] == A[mid]){
-	                    return binarySearch_Rotated_WithDupl(A, low, mid - 1, target) || binarySearch_Rotated_WithDupl(A, mid + 1, high, target);
-	                }else { 
-	                    low = mid + 1;
-	                }
-	                    
-	            }else{ //A[mid] > target
-	                  if(A[low] > target && A[low] < A[mid]){
-		                  low = mid + 1;
-		              }else if(A[low] == A[mid]){
-		                  return binarySearch_Rotated_WithDupl(A, low, mid - 1, target) || binarySearch_Rotated_WithDupl(A, mid + 1, high, target);
-		              }else {
-		                  high = mid - 1;
-		              }
-	            }
-	        }
-	        
-	        return false;
-	    }
+    /*Time O(n) Space O(1)*/
+    public boolean binarySearch_Rotated_WithDupl(int[] A,
+                                                 int target) {
+        // check
+        if (null == A) {
+            return false;
+        }
+
+        return binarySearch_Rotated_WithDupl(A, 0, A.length - 1, target);
+    }
+
+    private boolean binarySearch_Rotated_WithDupl(int[] A,
+                                                  int low,
+                                                  int high,
+                                                  int target) {
+
+        int mid;
+        while (low <= high) {
+            mid = low + ((high - low) >> 1);
+
+            if (A[mid] == target) {
+                return true;
+            } else if (A[mid] < target) {
+                if (A[low] <= target && A[low] > A[mid]) {
+                    high = mid - 1;
+                } else if (A[low] == A[mid]) {
+                    return binarySearch_Rotated_WithDupl(A, low, mid - 1, target)
+                                || binarySearch_Rotated_WithDupl(A, mid + 1, high, target);
+                } else {
+                    low = mid + 1;
+                }
+
+            } else { // A[mid] > target
+                if (A[low] > target && A[low] < A[mid]) {
+                    low = mid + 1;
+                } else if (A[low] == A[mid]) {
+                    return binarySearch_Rotated_WithDupl(A, low, mid - 1, target)
+                                || binarySearch_Rotated_WithDupl(A, mid + 1, high, target);
+                } else {
+                    high = mid - 1;
+                }
+            }
+        }
+
+        return false;
+    }
 	    
 	  /*
 	   * Suppose a sorted array is rotated at some pivot unknown to you beforehand.

@@ -3,7 +3,8 @@ package fgafa.tree;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import fgafa.tree.TreeNode;
+import fgafa.tree.traversal.Main;
+import fgafa.tree.traversal.RecursiveTraversal;
 
 
 /**
@@ -302,7 +303,7 @@ public class LargestBST
     
     //print the tree in-order
     System.out.println("\nThe binary tree is (in-order): ");
-    Traversal.inorder_R(tree.root);
+    RecursiveTraversal.inorder_R(tree.root);
     
     //get largest BST subtree 
 
@@ -313,7 +314,7 @@ public class LargestBST
     System.out.println("htMin: "+ s.htMin.toString() );
     
     System.out.println("\nThe Largest BST subtree is (in-order): ");
-    Traversal.inorder_R(subRoot);
+    RecursiveTraversal.inorder_R(subRoot);
 
     //get largest BST 
 

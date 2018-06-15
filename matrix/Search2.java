@@ -8,7 +8,8 @@ import fgafa.util.TimeCost;
 
 /**
  * 
- * Write an efficient algorithm that searches for a value in an n x m table (two-dimensional array). This table is sorted along the rows and columns — that is,
+ * Write an efficient algorithm that searches for a value in an n x m table (two-dimensional array). 
+ * This table is sorted along the rows and columns — that is,
  * Table[i][j] <= Table[i][j + 1],  
  * Table[i][j] <= Table[i + 1][j]
  *

@@ -216,7 +216,7 @@ public class LongestIncreasingSubsequence
    * 
    * input arr1={a1, a2, ---, am},  arr2={b1, b2, ---, bn}  where m>=n 
    * 
-   * opt[i][j] = 0                              if i = m or j = N
+   * opt[i][j] = 0                              if i = M or j = N
    *           = opt[i+1][j+1] + 1              if arr1[i] = arr2[j]
    *           = max(opt[i][j+1], opt[i+1][j])  otherwise
    *           
@@ -238,7 +238,7 @@ public class LongestIncreasingSubsequence
     if(M < N)
       calLIS_DP(arr2, arr1);  
         
-    //main program (m> N)
+    //main program (M> N)
     int top = 0;
     
     // opt[i][j] = length of LCS of x[0..i] and y[0..j]
@@ -278,7 +278,7 @@ public class LongestIncreasingSubsequence
     //init
     
     
-    //main program (m> N)
+    //main program (M> N)
     int top = 0;
     int[] stack = new int[M];
     

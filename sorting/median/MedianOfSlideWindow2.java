@@ -38,7 +38,7 @@ public class MedianOfSlideWindow2 {
             return new double[0]; 
         }
         
-        Median median = new Median();
+        Median4Stream2 median = new Median4Stream2(10);
         
         double[] result = new double[nums.length];
         
@@ -61,12 +61,13 @@ public class MedianOfSlideWindow2 {
     
 }
 
-class Median2{
+class Median4Stream2{
     
     int[] sorted;
-    Map<>
+    HashHeap minHashHeap = new HashHeap("min");
+    HashHeap maxHashHeap = new HashHeap("max");
     
-    public Median2(int capacity){
+    Median4Stream2(int capacity){
         sorted = new int[capacity];
     }
                 

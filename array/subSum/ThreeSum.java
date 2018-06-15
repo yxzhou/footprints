@@ -35,34 +35,32 @@ public class ThreeSum
 {
   
   /**
-   * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
-
-   *	Note:
-   *	Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
-   *	The solution set must not contain duplicate triplets.
+   * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0?
+   * Find all unique triplets in the array which gives the sum of zero.
    *
-   *	    For example, given array S = {-1 0 1 2 -1 -4},	
-   *	    A solution set is:
-   *	    (-1, 0, 1)
-   *	    (-1, -1, 2)
+   * Example,
+   * Given array S = {-1 0 1 2 -1 -4},
+   * Return:
+   *   (-1, 0, 1)
+   *   (-1, -1, 2)
+   *
+   * Note:
+   * Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
+   * The solution set must not contain duplicate triplets.
    */
-    /*Time O(nlogn) + O(n^2), Space O(1)*/	  
+    /**
+     * Time O(nlogn) + O(n^2), Space O(1)
+     */
     public List<Integer[]> sumOf3(int[] arr) {
-        //init
         List<Integer[]> triplets = new ArrayList<>();
-        
-        // check
         if (null == arr || arr.length < 3) {
             return triplets;
         }
 
-        // sort
         Arrays.sort(arr);
 
         Integer[] triplet;
-
         for (int i = 0; i < arr.length - 2; i++) {
-
             //avoid duplicate solutions
             if (arr[i] == arr[i - 1]){
                 continue;
@@ -86,11 +84,12 @@ public class ThreeSum
                     triplets.add(triplet);
 
                     // avoid duplicate solutions
-                    while (i < k && arr[k] == arr[k + 1])
+                    while (i < k && arr[k] == arr[k + 1]) {
                         k--;
-
-                    while (i < k && arr[i] == arr[i - 1])
+                    }
+                    while (i < k && arr[i] == arr[i - 1]) {
                         i++;
+                    }
                 }
             }
         }

@@ -66,6 +66,7 @@ public class Prime
     }
   
   /*
+   * 
    * Count the number of prime numbers less than a non-negative number, n
    */
   public int countPrimes(int n) {
@@ -86,7 +87,7 @@ public class Prime
 	  int limit = (int) Math.sqrt(n);
 	  for(int i=2; i<= limit; i++){
 		  if(isPrime[i]){
-			  for(int j= i*i; j<n; j+=i){
+			  for(int j= i*i; j<n; j+=i){ //start from i*i
 				  isPrime[j] = false;
 			  }
 		  }

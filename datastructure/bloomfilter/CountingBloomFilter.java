@@ -21,7 +21,7 @@ public class CountingBloomFilter extends AbstractSet<Object> implements Serializ
 
   private byte[] byteset;
 
-  private int totalElementSize; // m, total space for number of elements
+  private int totalElementSize; // M, total space for number of elements 
   private int currentElementSize; // N, number of elements actually added 
 
   private static int K;  //number of hash functions

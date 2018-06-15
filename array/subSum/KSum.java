@@ -18,6 +18,9 @@ public final class KSum {
         
         if(k == 1){
             for(int n : num){
+
+
+
                 if(n == target){
                     Set<Integer> tmp = new HashSet<>();
                     tmp.add(n);
@@ -77,48 +80,44 @@ public final class KSum {
         }
         return result;
     }
-    
+
+    /**
+     * Solution:
+     * Define ksum[i][j][l]表示前j个元素里面取l个元素之和为i。
+     *
+     * 初始化：ksum[0][j][0] =1(j:0~n)，即前j个元素里面取0个元素使其和为0的方法只有1种，那就是什么都不取
+     * 状态函数： ksum[i][j][l] = ksum[i][j-1][l] + ksum[i-A[i-1]][j-1][l-1]
+     * 即前j个元素里面取l个元素之和为i由两种情况组成：
+     * 第一种情况为不包含第i个元素，即前j－1个元素里取l个元素使其和为i，
+     * 第二种情况为包含第i个元素，即前j－1个元素里取l－1个元素使其和为i-A[i-1]（前提是i-A[i-1]>=0）。
+     */
     /* Time O(  ) )*/
-    public int kSum_dp(int[] num, int k, int target){
-        int count = 0;
-        
-        if(null == num || k < 1 || num.length <= k){
-            return count;
+    public int kSum_dp(int[] nums, int k, int target) {
+        if (nums == null || nums.length == 0) {
+            return 0;
         }
-        
-        if(k == 1){
-            for(int n : num){
-                if(n == target){
-                    count++;
-                }
-            }
-            return count;
+
+        int n = nums.length;
+        int[][][] ksum = new int[target + 1][n + 1][k + 1];
+
+        for (int j = 0; j <= n; j++) {
+            ksum[0][j][0] = 1;
         }
-        
-        Arrays.sort(num);
-        
-        boolean[][][] dp = new boolean[num.length][k][target+1];//default all are false
-        
-        for(int i = 0; i < num.length; i++){
-            for(int j = 1; j < i; j++){
-                for(int p = 1; p <= target; p++){
-                    for(int q = 0; q <= i; q++ ){
-                        if(p < num[q]){
-                            break;
-                        }
-                        
-                        if( dp[i][j - 1][p - num[q]]){
-                            dp[i][j][p] = true;
-                            break;
-                        }
+
+        for (int i = 1; i <= target; i++) {
+            for (int j = 1; j <= n; j++) {
+                for (int l = 1; l <= j && l <= k; l++) {
+                    ksum[i][j][l] = ksum[i][j - 1][l];
+                    if (i - nums[j - 1] >= 0) {
+                        ksum[i][j][l] += ksum[i - nums[j - 1]][j - 1][l - 1];
                     }
-                    
                 }
             }
         }
-        
-        return count;
+
+        return ksum[target][n][k];
     }
+
     
     public static void main(String[] args) {
         // TODO Auto-generated method stub

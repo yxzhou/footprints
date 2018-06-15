@@ -1,14 +1,13 @@
 package fgafa.graph.maze;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.Random;
-
-import com.televigation.log.TVCategory;
 
 public class MazeCreateDFS implements MazeCreateToolkit 
 { 
-  public static final TVCategory logger = (TVCategory) TVCategory.getInstance(MazeCreateDFS.class);
- 
+//  public static final TVCategory logger = (TVCategory) TVCategory.getInstance(MazeCreateDFS.class);
+//    private static final Logger logger = LoggerFactory.getLogger(MazeCreateDFS.class);
+
   private Maze myMaze = null;
   
   private Random random = new Random();

@@ -36,7 +36,6 @@ public class ExpressionTreeBuild {
      * @return: The root of expression tree
      */
     public ExpressionTreeNode build(String[] expression) {
-		//check
 		if(null == expression || 0 == expression.length){
 			return null;
 		}

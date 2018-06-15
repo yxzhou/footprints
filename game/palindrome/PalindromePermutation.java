@@ -27,7 +27,7 @@ public class PalindromePermutation {
      * The problem can be easily solved by count the frequency of each character using a hash map. 
      * The only thing need to take special care is consider the length of the string to be even or odd. 
       -- If the length is even. Each character should appear exactly times of 2, e.g. 2, 4, 6, etc..
-      -- If the length is odd. One and only one character could appear odd times. 
+      -- If the length is odd. Only one character could appear odd times. 
      */
     public boolean canPermutePalindrome(String s) {
         //check input
@@ -53,6 +53,85 @@ public class PalindromePermutation {
         
         boolean isOdd = (s.length() & 1) == 1;
         return oddNum == (isOdd ? 1 : 0 );
+    }
+    
+    public List<String> generatePalindromes_n(String s) {
+        List<String> result = new ArrayList<>();
+        
+        //check input
+        if(null == s || s.length() < 1){
+            return result;
+        }
+        
+        //count characters
+        Map<Character, Integer> counts = new HashMap<>();
+        for(char c : s.toCharArray()){
+            if(counts.containsKey(c)){
+                counts.put(c, counts.get(c) + 1);
+            }else{
+                counts.put(c, 1);
+            }
+        }
+       
+        Character middle = null;
+        List<Character> list = new ArrayList<>(s.length() / 2);
+        for(Character key : counts.keySet()){
+            if(( counts.get(key) & 1 ) == 1){
+                if(middle == null){
+                    middle = key;
+                }else{
+                    return result;
+                }
+            }
+            
+            for(int i = 0; i < counts.get(key) / 2; i++){
+                list.add(key);
+            }
+        }
+        
+        dfs(list, 0, middle, result);
+
+        return result;
+    }
+    
+    
+    private void dfs(List<Character> list, int i, Character middle, List<String> result){
+        
+        if(i == list.size()){
+            result.add(build(list, middle));
+            return;
+        }
+        
+        for(int j = i; j < list.size(); j++){
+            if(j > i && list.get(j) == list.get(j - 1)){
+                continue;
+            }
+            
+            swap(list, i, j);
+            
+            dfs(list, i+1, middle, result);
+            
+            swap(list, i, j);
+        }
+    }
+    
+    private String build(List<Character> list, Character middle){
+        int size = list.size() * 2;
+        if(null != middle){
+            size++;
+        }
+        char[] result = new char[size];
+        
+        for(int i = 0; i < list.size(); i++){
+            result[i] = list.get(i);
+            result[--size] = list.get(i);            
+        }
+        
+        if(null != middle){
+            result[list.size()] = middle;
+        }
+        
+        return String.valueOf(result);
     }
     
     
@@ -88,8 +167,11 @@ public class PalindromePermutation {
             }
         }
         
-        boolean isOdd = (s.length() & 1) == 1;
-        if( odds.size() != (isOdd? 1 : 0)){
+//        boolean isOdd = (s.length() & 1) == 1;
+//        if( odds.size() != (isOdd? 1 : 0)){
+//            return result;
+//        }
+        if(odds.size() > 1){
             return result;
         }
         

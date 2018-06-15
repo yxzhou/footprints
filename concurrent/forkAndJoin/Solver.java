@@ -23,9 +23,7 @@ public class Solver extends RecursiveAction
       int[] l2 = Arrays.copyOfRange(list, midpoint, list.length);
       Solver s1 = new Solver(l1);
       Solver s2 = new Solver(l2);
-
       //forkJoin(s1, s2);
-
       result = s1.result + s2.result;
     }
   }

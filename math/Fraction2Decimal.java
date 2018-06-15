@@ -21,8 +21,13 @@ public class Fraction2Decimal {
 
 	public String fractionToDecimal(int numerator, int denominator) {
 		// check
-		if (0 == denominator)
+		if (0 == denominator){
 			return null;
+		}
+		
+		if(0 == numerator){
+		    return "0";
+		}
 		
 		String sign = "";
 		if((numerator > 0 && denominator < 0) || (numerator < 0 && denominator > 0))
@@ -35,9 +40,10 @@ public class Fraction2Decimal {
 
 		long result = numerator / denominator;
 		long remain = numerator % denominator;
-		if (0 == remain)
+		if (0 == remain){
 			return String.valueOf(result);
-
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append(result);
 		sb.append('.');

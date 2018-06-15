@@ -108,7 +108,7 @@ public class QuadTree {
      ***************************************************************************/
     /*
     public static void main(String[] args) {
-        int m = Integer.parseInt(args[0]); // queries
+        int M = Integer.parseInt(args[0]); // queries
         int N = Integer.parseInt(args[1]); // points
 
         QuadTree st = new QuadTree();
@@ -123,7 +123,7 @@ public class QuadTree {
         StdOut.println("Done preprocessing " + N + " points");
 
         // do some range searches
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < M; i++) {
             Integer xmin = (int) (100 * Math.random());
             Integer ymin = (int) (100 * Math.random());
             Integer xmax = xmin + (int) (10 * Math.random());

@@ -30,11 +30,16 @@ public class GraphValidTree {
         }
         
         int[] parent = new int[n];
+        
         for(int i = 0; i < n; i++){
         	parent[i] = i;
         }
         
         for(int[] pair : edges){
+        	if(find(parent, pair[0]) == find(parent, pair[1])){// has loop
+        		return false;
+        	}
+        	
         	union(parent, pair[0], pair[1]);
         }
         
@@ -43,17 +48,18 @@ public class GraphValidTree {
 	
     
     private void union(int[] parent, int p, int q){
-    	int pRoot = findUnionId(parent, p);
-    	int qRoot = findUnionId(parent, q);
+    	int pRoot = find(parent, p);
+    	int qRoot = find(parent, q);
 		
-    	if(pRoot == qRoot){ //has loop
+    	if(pRoot == qRoot){
     		return;
     	}
     	
     	parent[qRoot] = pRoot;
     }
     
-    private int findUnionId(int[] parent, int p){
+    private int find(int[] parent, int p){
+
 		while(parent[p] != p){
 			p = parent[p];
 		}

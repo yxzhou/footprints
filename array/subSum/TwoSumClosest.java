@@ -3,72 +3,73 @@ package fgafa.array.subSum;
 import java.util.Arrays;
 
 public class TwoSumClosest {
-    
+
+    /**
+     *   Problem:
+     *   Given an array nums of n integers, find two integers in nums such that the sum is closest to a given number, target.
+     *   Return the difference between the sum of the two integers and the target.
+     *
+     *   Example"
+     *   Given array nums = [-1, 2, 1, -4], and target = 4.
+     *   The minimum difference is 1. (4 - (2 + 1) = 1).
+     */
     /*Time O(nlogn) + O(n), Space O(1)*/
     public int[] twoSumClosest(int[] numbers, int target) {
-        //initial
         int[] result = new int[2];
-        
-        //check
         if(numbers == null || numbers.length == 0){
             return result;
         }
-        //sorted
+
         Arrays.sort(numbers);
-      
-        //
+
         int left = 0;
         int right = numbers.length - 1;
-        int tmp;
-        int min = Integer.MAX_VALUE;
-
+        int minDistance = Integer.MAX_VALUE;
         while(left < right){
-            tmp = numbers[left] + numbers[right] - target; 
+            int diff = numbers[left] + numbers[right] - target;
 
-            if( Math.abs(tmp) < min) {
+            if( Math.abs(diff) < minDistance) {
                   result[0] = numbers[left];
                   result[1] = numbers[right];
 
-                  min = Math.abs(tmp);
+                  minDistance = Math.abs(diff);
             }
 
-            if(tmp == 0){
+            if(diff == 0){
                 return result;
-            }else if (tmp <0 ){
+            }else if (diff < 0 ){
                 left ++;
-            }else{  //sumTmp > target
+            }else{
                 right --;
             }
-
          }
          return result;
      }
 
+    /**
+     *   Problem:
+     *   Given an array integer of n integers, find two integers in the array such that the sum is bigger than a given number, target.
+     *   Return how many such pairs.
+     */
     /*Time O(nlogn) + O(n^2), Space O(1)*/
     public int twoSumBiggerThan(int[] numbers, int target) {
-        //initial
         int count = 0;
-        
-        //check
         if(numbers == null || numbers.length == 0){
             return count;
         }
-        //sorted
+
         Arrays.sort(numbers);
-      
-        //
+
         int left = 0;
         int right = numbers.length - 1;
-        int sum;
-
         while(left < right){
-            sum = numbers[left] + numbers[right]; 
+            int sum = numbers[left] + numbers[right];
 
             if (sum > target){
                 count += 1;
                 
                 right--;
-            } else {  //sum <= target
+            } else {
                 left++;
                 
                 right = numbers.length - 1;
@@ -77,26 +78,20 @@ public class TwoSumClosest {
 
          return count;
      }
-    
+
     /*Time O(nlogn) + O(n), Space O(1)*/
     public int twoSumBiggerThan_n(int[] numbers, int target) {
-        //initial
         int count = 0;
-        
-        //check
         if(numbers == null || numbers.length == 0){
             return count;
         }
-        //sorted
+
         Arrays.sort(numbers);
-      
-        //
+
         int left = 0;
         int right = numbers.length - 1;
-        int sum;
-
         while(left < right){
-            sum = numbers[left] + numbers[right]; 
+            int sum = numbers[left] + numbers[right];
 
             if (sum > target){
                 count += right - left;

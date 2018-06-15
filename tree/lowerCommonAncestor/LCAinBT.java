@@ -91,7 +91,7 @@ public class LCAinBT {
         
 
         TreeNode root = BinaryTree.initBT();
-        //Traversal.postorder_R(root);
+        //Main.postorder_R(root);
         print.printTreeShape(root);
 
         TreeNode[][] test = {{root.left.left.right, root.left.right}, // LCD( A, C ) = D

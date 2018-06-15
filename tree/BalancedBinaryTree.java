@@ -1,7 +1,5 @@
 package fgafa.tree;
 
-import java.util.ArrayList;
-
 import fgafa.util.Misc;
 
 
@@ -17,24 +15,21 @@ public class BalancedBinaryTree
  
  */
   public boolean isBalanced_subtree(TreeNode root) {
-    return  -1 != isBalanced_subtreeHelp(root);
+    return -1 != getHeight(root);
   }
-  
-  /**
-   * 
-   */
-  private int isBalanced_subtreeHelp(TreeNode node){
-    if(null == node)
+
+  private int getHeight(TreeNode node) {
+    if (null == node) {
       return 0;
-  
-    int leftSubTreeH = isBalanced_subtreeHelp(node.left); 
-    int rightSubTreeH = isBalanced_subtreeHelp(node.right);
-    
-    if(-1 == leftSubTreeH && -1 == rightSubTreeH && Math.abs(leftSubTreeH - rightSubTreeH) < 2)
-       return Math.max(leftSubTreeH, rightSubTreeH) + 1;
-    else
-       return -1;
-    
+    }
+
+    int left = getHeight(node.left);
+    int right = getHeight(node.right);
+    if (left != -1 && right != -1 && Math.abs(left - right) < 2) {
+      return Math.max(left, right) + 1;
+    }
+
+    return -1;
   }
   
   
@@ -46,36 +41,27 @@ public class BalancedBinaryTree
    * 
    */
   public boolean isBalanced_AnyLeaf(TreeNode root) {
-    if(root == null)
-      return true;
-    
-    ArrayList<Integer> heights = new ArrayList<Integer>();
-    return isBalanced_AnyLeafHelp(root, 1, heights) ;
+    return -1 != getHeights(root)[0];
   }
 
-  private boolean isBalanced_AnyLeafHelp(TreeNode node, int currLevel, ArrayList<Integer> heights){
-    if(node == null){
-      if(heights.size() == 2 && (currLevel != heights.get(0) && currLevel != heights.get(1)) )
-        return false;
-      
-      if(heights.size() == 1 ){
-        if( Math.abs(currLevel - heights.get(0)) > 1 )
-          return false;
-        else if (currLevel != heights.get(0))
-          heights.add(currLevel);    
-      }
-      
-      if(heights.size() == 0)
-        heights.add(currLevel);     
-      
-      return true;
+  private int[] getHeights(TreeNode node){
+    if(null == node){
+      return new int[]{0, 0};
     }
-    
-    
-    return isBalanced_AnyLeafHelp(node.left, currLevel + 1, heights) && isBalanced_AnyLeafHelp(node.right, currLevel + 1, heights);
-    
+
+    int[] left = getHeights(node.left);
+    if(left[0] != -1 ){
+      return new int[]{-1, -1};
+    }
+
+    int[] right = getHeights(node.right);
+    if(right[0] != -1 && Math.max(left[1], right[1]) - Math.min(left[0], right[0]) < 2){
+      return new int[]{Math.min(left[0], right[0]), Math.max(left[1], right[1])};
+    }
+
+    return new int[]{-1, -1};
   }
-  
+
   /*
    * build AVL tree with sorted array in ascending order
    * 

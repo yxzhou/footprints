@@ -4,7 +4,7 @@ package fgafa.graph.maze;
 import java.awt.Graphics;
 import java.util.Random;
 
-import com.televigation.log.TVCategory;
+
 
 /*************************************************************************
  *  Dependencies: Graphics.java
@@ -18,8 +18,10 @@ import com.televigation.log.TVCategory;
 public class MazeCreatePrim implements MazeCreateToolkit
 {
 
-  public static final TVCategory logger = (TVCategory) TVCategory
-      .getInstance(MazeCreatePrim.class);
+//  public static final TVCategory logger = (TVCategory) TVCategory
+//      .getInstance(MazeCreatePrim.class);
+//  private static final Logger logger = LoggerFactory.getLogger(MazeApplet.class);
+
 
   private Maze myMaze = null;
 

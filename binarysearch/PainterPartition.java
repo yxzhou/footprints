@@ -21,8 +21,8 @@ public class PainterPartition
   
   /**
    * Divide a int array into k or fewer partitions, and try to make it more average (the maximum sum over all the partitions is minimized)
-   * Defined m[n][k] to show the result that divide n elements into k or fewer partitions
-   * m[j][i] = a[0]      when j = 1,
+   * Defined M[n][k] to show the result that divide n elements into k or fewer partitions
+   * M[j][i] = a[0]      when j = 1, 
    *         = a[0]+ -- +a[j-1] = sum(a[0], -, a[j-1])       when i = 0
    *         = max(a[0],-, a[i] )   when j==i,  i <= k
    *         = min(best, max(partition(A, p, k-1), sum(A, p, n-1)));   p is from k-1 to n-1
@@ -61,7 +61,7 @@ public class PainterPartition
       for (int j = i+1; j <= n; j++) {  //
       //for (int j = 2; j <= n; j++) {  //
         //best = min(best, max(partition(A, j, k-1), sum(A, j, n-1)));   j is from k-1 to n-1
-        int best = Integer.MAX_VALUE; //m[j][i-1];
+        int best = Integer.MAX_VALUE; //M[j][i-1];
 
         for (int p = 1; p <= j; p++) {
           if (best > sum[j] - sum[p])
@@ -71,7 +71,7 @@ public class PainterPartition
       }
     }
     
-    //System.out.println(""+Misc.array2String(m));
+    //System.out.println(""+Misc.array2String(M));
     
     return M[n][k];
   }

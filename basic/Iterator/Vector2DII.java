@@ -10,7 +10,7 @@ public class Vector2DII {
     int curr = 0;
     
     public Vector2DII(List<List<Integer>> vec2d) {
-        this.its = new ArrayList<Iterator<Integer>>();
+        this.its = new ArrayList<>();
         for(List<Integer> l : vec2d){
             // 只将非空的迭代器加入数组
             if(l.size() > 0){

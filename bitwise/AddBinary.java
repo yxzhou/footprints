@@ -62,6 +62,39 @@ public class AddBinary
 	    return sb.reverse().toString();
 	  }
   
+  public String addBinary_x(String a, String b) {
+      //check   
+      if(null == a || 0 == a.length() || null == b || 0 == b.length()){
+          return "";
+      }
+      
+      StringBuilder result = new StringBuilder();
+      int carry = 0;
+      int tmp = 0;
+
+      for(int aIndex = a.length()-1, bIndex = b.length()-1; bIndex >= 0 || aIndex >= 0; ){
+          tmp = carry;
+          
+          if(aIndex >= 0){
+              tmp = a.charAt(aIndex--) - 48; // '0' is 48
+          }
+          if(bIndex >= 0){
+              tmp = b.charAt(bIndex--) - 48; 
+          }
+
+          carry = tmp / 2;
+          tmp = tmp & 1;  //tmp % 2
+          
+          result.append(tmp);
+      }
+      
+      if(carry > 0){
+          result.append(carry);
+      }
+      
+      return result.reverse().toString();
+  }
+  
   /**
    * @param a a number
    * @param b a number

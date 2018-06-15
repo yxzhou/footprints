@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
  * Find the kth smallest number in N sorted arrays.
 
     Example
-    Given m sorted arrays:
+    Given M sorted arrays:
     
     [
       [1 ,5 ,7],

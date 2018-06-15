@@ -17,7 +17,7 @@ package fgafa.math;
  *	 30 - XXX							
  *   40 - XL  						90 - XC			100 - C
  *   41 - XLI		51 - LI			91 - XCI		500 - D
- *   42 - XLII		52 - LII		92 - XCII		1000 - m
+ *   42 - XLII		52 - LII		92 - XCII		1000 - M
  *   43 - XLIII
  *   44 - XLIV
  *   45 - XLV
@@ -37,7 +37,7 @@ public class RomanNumber {
 	 */
 	public String intToRoman(int num) {
 		StringBuilder str = new StringBuilder();
-		String[] symbol = { "m", "CM", "D", "CD", "C", "XC", "L", "XL", "X","IX", "V", "IV", "I" };
+		String[] symbol = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X","IX", "V", "IV", "I" };
 		int[] value = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 		for (int i = 0; num != 0; i++) {
 			while (num >= value[i]) {
@@ -59,7 +59,7 @@ public class RomanNumber {
         }
         
         int[] nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        String[] romains = { "m", "CM", "D", "CD", "C", "XC", "L", "XL", "X","IX", "V", "IV", "I" };
+        String[] romains = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X","IX", "V", "IV", "I" };
         StringBuilder result = new StringBuilder();
 
         for(int i = 0; i < nums.length && n > 0; i++){
@@ -136,7 +136,7 @@ public class RomanNumber {
 			return 100;
 		case 'D':
 			return 500;
-		case 'm':
+		case 'M':
 			return 1000;
 		default:
 			return 0;

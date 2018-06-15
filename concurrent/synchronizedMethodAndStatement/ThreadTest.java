@@ -1,4 +1,4 @@
-package fgafa.basic.thread.synchronizedMethodAndStatement;
+package fgafa.concurrent.synchronizedMethodAndStatement;
 
 
 /*

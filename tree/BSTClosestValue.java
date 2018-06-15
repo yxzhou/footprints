@@ -28,29 +28,31 @@ import java.util.Stack;
 
 public class BSTClosestValue {
 
-
+   /*  Solution #1,  inOrder traverse,  Time O(n) 
+    *  Solution #2,  based on Binary Search Tree,  leftChild < root < rightChild,  Time O(logn)
+    */
     public int closestValue(TreeNode root, double target) {
         if (root == null) {
             throw new NullPointerException("Tree must be non-empty");
         }
          
         int result = 0;
-        double gap = Double.MAX_VALUE;
+        double minDiff = Double.MAX_VALUE;
          
         while (root != null) {
-            if (root.val == target) {
-                return root.val;
-            }
+//            if (root.val == target) {
+//                return root.val;
+//            }
              
-            double dist = Math.abs(root.val - target);
-            if (dist < gap) {
+            double diff = Math.abs(root.val - target);
+            if (diff < minDiff) {
                 result = root.val;
-                gap = dist;
+                minDiff = diff;
             }
              
             if (target > root.val) {
                 root = root.right;
-            } else if (target < root.val) {
+            } else { // if (target < root.val)
                 root = root.left;
             }
         }
@@ -59,7 +61,7 @@ public class BSTClosestValue {
     
     /**
      * maxHeap
-     * 
+     *  Time O(n*logk )
      */
     public List<Integer> closestKValues_1(TreeNode root, double target, int k) {
         PriorityQueue<Pair> maxHeap = new PriorityQueue<Pair>(k, new Comparator<Pair>(){
@@ -69,7 +71,7 @@ public class BSTClosestValue {
             }
         });
         
-        rec(root, target, k, maxHeap);
+        traverse(root, target, k, maxHeap);
         
         List<Integer> result = new ArrayList<Integer>(k);
         
@@ -80,30 +82,25 @@ public class BSTClosestValue {
         return result;
     }
     
-    private void rec(TreeNode node, double target, int k, PriorityQueue<Pair> maxHeap){
+    private void traverse(TreeNode node, double target, int k, PriorityQueue<Pair> maxHeap){
         if(null == node){
             return;
         }
         
         double diff = Math.abs(node.val-target); 
         
-        
         if(maxHeap.size() < k){
             maxHeap.offer(new Pair(node.val, diff));
         }else if(diff < maxHeap.peek().diff){
             maxHeap.poll();
             maxHeap.offer(new Pair(node.val, diff));
-        }else{
+        }else{ // maxHeap.size >= k && diff >= maxHeap.peek().diff
             if(node.val > target){
-                rec(node.left, target, k, maxHeap);
+                traverse(node.left, target, k, maxHeap);
             }else{
-                rec(node.right, target, k, maxHeap);
+                traverse(node.right, target, k, maxHeap);
             }
-            return;
         }
-        
-        rec(node.left, target, k, maxHeap);
-        rec(node.right, target, k, maxHeap);
     }
     
     class Pair{
@@ -118,7 +115,7 @@ public class BSTClosestValue {
     
     /**
      * inorder traversal
-     * 
+     *   Time 
      */
     public List<Integer> closestKValues_2(TreeNode root, double target, int k) {
         List<Integer> result = new LinkedList<Integer>();

@@ -10,7 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 /*
- * Given a set S of n integers, find all pairs of integers (a and b) in S such that a + b = target?
+ * Q1. Given a set S of n integers, find all pairs of integers (a and b) in S such that a + b = target?
+ * Q2. Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+ * You may assume that each input would have exactly one solution, and you may not use the same element twice.
  * 
  * Solution:    (pre-process, without cache)
  * 1) make S in ascending sorting.   
@@ -40,7 +42,8 @@ import java.util.Set;
 public class TwoSum{
   
   /*
-   * @return all pairs of integers (a and b) in S such that a + b = target, no duplicate pairs.
+   * @return all pairs of integers (a and b) in S such that a + b = target, no duplicate pairs. 
+   * (no duplicate value instead of no duplicate index)
    * 
    * Time O(nlogn+n)  Space O(1)
    */
@@ -110,7 +113,26 @@ public class TwoSum{
       
       return ret;
   }
-  
+
+    public Set<List<Integer>> twoSums_Hash_2(int[] numbers, int target) {
+        Set<List<Integer>> result = new HashSet<List<Integer>>();
+        if (null == numbers || 0 == numbers.length) {
+            return result;
+        }
+
+        Set<Integer> map = new HashSet<>();
+        for(int number : numbers){
+            int diff = target - number;
+            if(map.contains(diff)){
+                result.add(build(diff, number));
+            }else{
+                map.add(number);
+            }
+        }
+
+        return result;
+    }
+
   private List<Integer> build(int i, int j){
 	  List<Integer> pair = new ArrayList<>();
 	  pair.add(i);

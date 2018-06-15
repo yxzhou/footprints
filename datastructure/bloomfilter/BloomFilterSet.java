@@ -21,7 +21,7 @@ public class BloomFilterSet extends AbstractSet<Object> implements Serializable 
 
   private BitSet bitset;
 
-  private int totalSetSize; // m, total space for number of elements
+  private int totalSetSize; // M, total space for number of elements 
   private int currentSetSize; // N, number of elements actually added 
 
   private static int K;  //number of hash functions

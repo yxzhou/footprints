@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.net.HostAndPort;
-import com.integrien.alive.common.util.CommonConstants;
+
 
 public class IPHelper {
 
@@ -330,7 +330,7 @@ public class IPHelper {
     private static PropertiesConfiguration getGemfireNativeProperties() {
 
         if (gemfireNativeProperties.isEmpty()) {
-            String aliveBase = System.getProperty(CommonConstants.ALIVE_BASE);
+            String aliveBase = System.getProperty("ALIVE_BASE");
             if (aliveBase != null) {
                 String gemfireNativeProps = aliveBase + File.separator + "user" + File.separator + "conf" + File.separator + "gemfire.native.properties";
                 try {

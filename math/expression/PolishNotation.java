@@ -1,21 +1,20 @@
 package fgafa.math.expression;
 
-import java.util.ArrayList;
-import java.util.Stack;
-
 import fgafa.math.expression.ExpressionTreeBuild.ExpressionTreeNode;
 import fgafa.util.Misc;
+
+import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class PolishNotation {
 
     /*
-     * 
      * Given an expression string array, return the Reverse Polish notation of this expression. (remove the parentheses)
-
-        Example
-        For the expression [3 - 4 + 5] (which denote by ["3", "-", "4", "+", "5"]),
-         return [3 4 - 5 +] (which denote by ["3", "4", "-", "5", "+"])
+     *
+     * Example
+     *   For the expression [3 - 4 + 5] (which denote by ["3", "-", "4", "+", "5"]),
+     *   return [3 4 - 5 +] (which denote by ["3", "4", "-", "5", "+"])
      */
     public ArrayList<String> convertToRPN(String[] expression) {
         ArrayList<String> result = new ArrayList<String>();
@@ -28,7 +27,7 @@ public class PolishNotation {
         ExpressionTreeBuild tree = new ExpressionTreeBuild();
         ExpressionTreeNode root = tree.build(expression);
         
-        //postorder 
+        //postorder
         postorder(root, result);
         
         return result;
@@ -112,7 +111,7 @@ public class PolishNotation {
     /*   ??  need check/valid the input*/
     public int evalRPN_n(String[] tokens) {
         int result = 0;
-        //check
+
         if(null == tokens){
             return result;
         }

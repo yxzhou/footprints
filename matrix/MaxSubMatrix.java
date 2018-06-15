@@ -14,10 +14,10 @@ import fgafa.util.Misc;
  * 
  * O( rows * cols * min(rows, cols)
  * 
- * case 1: Given an N*m matrix of 0 and 1, find the max sub matrix with all 1.
+ * case 1: Given an N*M matrix of 0 and 1, find the max sub matrix with all 1.
  * Solution: change 0 to Integer.MIN_VALUE; find the sub-matrix with the largest possible sum 
  *  
- * case 2: Given an N*m matrix of 0 and 1, find the max sub matrix. ( all are 1 )
+ * case 2: Given an N*M matrix of 0 and 1, find the max sub matrix. ( all are 1 )  
  * 
  */
 
@@ -98,7 +98,7 @@ public class MaxSubMatrix
     final int M = matrix.length;
     final int N = matrix[0].length;
 
-    int[][] mx = new int[M][N]; // mx[m - 1][] store the tmp value (0 or 1).  mx[m][] store the height from m-1 to m.( 0<=m<=m-2 )
+    int[][] mx = new int[M][N]; // mx[M - 1][] store the tmp value (0 or 1).  mx[m][] store the height from M-1 to m.( 0<=m<=M-2 )
 
     for (int col = 0; col < N; col++) {
 
@@ -156,7 +156,7 @@ public class MaxSubMatrix
     final int M = matrix.length;
     final int N = matrix[0].length;
 
-    int[][] mx = new int[M][N]; // mx[m - 1][] store the tmp value (0 or 1).  mx[m][] store the height from m-1 to m.( 0<=m<=m-2 )
+    int[][] mx = new int[M][N]; // mx[M - 1][] store the tmp value (0 or 1).  mx[m][] store the height from M-1 to m.( 0<=m<=M-2 )
 
     for (int col = 0; col < N; col++) {
 

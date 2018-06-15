@@ -15,6 +15,12 @@ public class MathmaticsII
     return (num & 1) == 0;
   }
   
+  public static boolean isOdd(int num){     
+    if(num < 0) return false;
+    
+    return (num & 1) != 0;
+  }
+  
   /*
    * calculate the GCD (greatest common divisor) 
    * 

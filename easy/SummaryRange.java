@@ -26,7 +26,8 @@ public class SummaryRange {
         int end = start;
         for(int i = 1; i< nums.length; i++){
             if( nums[i] == end + 1){
-                end = nums[i];
+                //end++;
+				end = nums[i];
             }else{
                 result.add(getRange(start, end));
                 

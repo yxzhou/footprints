@@ -13,8 +13,8 @@ import fgafa.util.Misc;
  *  input:  str1 = {ggcaccacg}, str2 = {acggcggatacg}
  * output:  ggcaacg
  * DP:  
- *  We use the notation opt[i][j] = length of LCS of x[i..m] and y[j..N]
- *  opt[i][j] = 0                               if i == m or j == N
+ *  We use the notation opt[i][j] = length of LCS of x[i..M] and y[j..N]
+ *  opt[i][j] = 0                               if i == M or j == N
  *            = opt[i+1][j+1] + 1               if str1[i] == str2[j]
  *            = max(opt[i][j+1], opt[i+1][j])   otherwise
  *  
@@ -31,7 +31,7 @@ import fgafa.util.Misc;
  * LCStr is a special case of LCSeq 
  * 
  * DP：
- *  We use the notation opt[i][j] = length of LCS of x[i..m] and y[j..N]
+ *  We use the notation opt[i][j] = length of LCS of x[i..M] and y[j..N]
  *  opt[i][j] = 0                           if str1[i] != str2[j]
  *            = opt[i-1][j-1]+1             if str1[i] == str2[j] 
  *      
@@ -76,8 +76,8 @@ public class LongestCommonSequence
    * fetch Longest Common Subsequence with DP on two arrays.
    * input arr1={a1, a2, ---, am},  arr2={b1, b2, ---, bn}  where m>=n 
    * 
-   * We use the notation opt[i][j] = length of LCS of x[i..m] and y[j..N]
-   * opt[i][j] = 0                              if i == m or j == N
+   * We use the notation opt[i][j] = length of LCS of x[i..M] and y[j..N]
+   * opt[i][j] = 0                              if i == M or j == N
    *           = opt[i+1][j+1] + 1              if arr1[i] == arr2[j]
    *           = max(opt[i][j+1], opt[i+1][j])  otherwise
    * 
@@ -118,7 +118,7 @@ public class LongestCommonSequence
     int M = arr1.length;
     int N = arr2.length;
 
-    // opt[i][j] = length of LCS of x[i..m] and y[j..N]
+    // opt[i][j] = length of LCS of x[i..M] and y[j..N]
     int[][] opt = new int[N+1][M+1];
 
     // compute length of LCS and all subproblems via dynamic programming

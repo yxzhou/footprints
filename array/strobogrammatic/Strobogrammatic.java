@@ -7,18 +7,18 @@ package fgafa.array.strobogrammatic;
  * For example, the numbers "69", "88", and "818" are all strobogrammatic.
  *
  *  cases:
- *    0,
- *    1,
- *    2,
+ *    0,  -> 0
+ *    1,  -> 1
+ *    2,  
  *    3,
  *    4,
  *    5,
- *    6,
+ *    6,  -> 9
  *    7,
- *    8,
- *    9,
- *    10,
- *    69, 
+ *    8,  -> 8
+ *    9,  -> 6
+ *    10, -> 01
+ *    69, -> 
  *    88,
  *    414,
  *    818,

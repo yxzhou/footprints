@@ -21,7 +21,57 @@ import fgafa.util.Misc;
 
 public class SearchForARange
 {
-
+    public int[] searchRange_n1(int[] nums, int target) {
+        int[] result = {-1, -1};
+        if(null == nums || 0 == nums.length){
+            return result;
+        }
+        
+        int lowerBound = lowerBound(nums, target);
+        int upperBound = upperBound(nums, target);
+        
+        if(lowerBound >= 0 && lowerBound < nums.length && nums[lowerBound] == target){
+            result[0] = lowerBound;
+            result[1] = upperBound;
+        }
+        
+        return result;
+    }
+    
+    private int lowerBound(int[] nums, int target){
+        int left = 0;
+        int right = nums.length - 1;
+        
+        while(left <= right){
+            int mid = left + (right - left) / 2;
+            
+            if(nums[mid] >= target){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        
+        return left;
+    }
+    
+    private int upperBound(int[] nums, int target){
+        int left = 0;
+        int right = nums.length - 1;
+        
+        while(left <= right){
+            int mid = left + (right - left) / 2;
+            
+            if(nums[mid] > target){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        
+        return right;
+    }
+    
 	public int[] searchRange(int[] A, int target) {
 		int[] result = { -1, -1 };
 
@@ -95,7 +145,7 @@ public class SearchForARange
 		return right;
 	}
 
-	public int[] searchRange_w(int[] A, int target) {
+	public int[] searchRange_wrong(int[] A, int target) {
 		int[] result = { -1, -1 };
 
 		// check
@@ -340,7 +390,8 @@ public class SearchForARange
     for(int i=0; i<A.length; i++){
       System.out.println("\nInput :" + Misc.array2String(A[i]) + "\t" + target[i]);
       System.out.println("Output:" + Misc.array2String(sv.searchRange(A[i], target[i])));
-      System.out.println("Output:" + Misc.array2String(sv.searchRange_w(A[i], target[i])));
+      System.out.println("Output:" + Misc.array2String(sv.searchRange_n1(A[i], target[i])));
+      //System.out.println("Output:" + Misc.array2String(sv.searchRange_wrong(A[i], target[i])));
       System.out.println("Output:" + Misc.array2String(sv.searchRange_n2(A[i], target[i])));
     }
   }

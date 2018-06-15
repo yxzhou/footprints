@@ -14,32 +14,32 @@ package fgafa.game;
  * If you can only press the keyboard for N times (with the above four keys), please write a program to produce maximum numbers of A. 
  * If possible, please also print out the sequence of keys.
  *
- * That is to say, the input parameter is N (No. of keys that you can press), the output is m (No. of As that you can produce).
+ * That is to say, the input parameter is N (No. of keys that you can press), the output is M (No. of As that you can produce).
  *
  * solution: 
  * 1) press 2 times A, get AA.  press 2 times A, and CTRL+A, CTRL+C, CTRL+V, CTRL+V (total it's 6 times ), get AAAA.
- * 2) define 2A as 2 times A, (2 times press,  m = m + 2 )
- *    define 2D as CTRL+A, CTRL+C, CTRL+V, CTRL+V (4 times press,  m = m * 2),
- *    define 3D as CTRL+A, CTRL+C, CTRL+V, CTRL+V, CTRL+V (5 times press,  m = m * 3)
- *    define 2D2D as (CTRL+A, CTRL+C, CTRL+V, CTRL+V), (CTRL+A, CTRL+C, CTRL+V, CTRL+V) (8 times press,  m = m * 2 * 2)
+ * 2) define 2A as 2 times A, (2 times press,  M = M + 2 )
+ *    define 2D as CTRL+A, CTRL+C, CTRL+V, CTRL+V (4 times press,  M = M * 2), 
+ *    define 3D as CTRL+A, CTRL+C, CTRL+V, CTRL+V, CTRL+V (5 times press,  M = M * 3)
+ *    define 2D2D as (CTRL+A, CTRL+C, CTRL+V, CTRL+V), (CTRL+A, CTRL+C, CTRL+V, CTRL+V) (8 times press,  M = M * 2 * 2)
  *  
  * define n is the input parameter,
- * define the output is m,
+ * define the output is M, 
  * define f(n) is the sequence of keys, 
  * define k is the number of steps 
  * define (a1, ---, ak), sum(a1, a2, ---, ak)
  * (e.g.     ).
  *   
- * f(n) = nA            m=n         n<=7
- *      = 3A3D          m=3*3=9     n =8    sum=6(3+3)       k=2
- *      = 4A3D=3A4D=12  m=3*4=12    n =9    sum=7(3+4)       k=2
- *      = 4A4D          m=4*4=16    n =10   sum=8(4+4)       k=2
- *      = 5A4D=>4A5D    m=5*4=20    n =11   sum=9(4+5)       k=2
- *      = 5A5D          m=5*5=25    n =12   sum=10(5+5)      k=2
- *      = 5A6D          m=5*6=30    n =13
- *      = 6A6D          m=6*6=36    n =14   sum=12           k=2
- *      = 6A7D=>3A4D4D  m=3*4*4=48  n =15   sum=11(3+4+4)    k=3
- *      = 4A4D4D        m=4*4*4=64  n =16
+ * f(n) = nA            M=n         n<=7           
+ *      = 3A3D          M=3*3=9     n =8    sum=6(3+3)       k=2
+ *      = 4A3D=3A4D=12  M=3*4=12    n =9    sum=7(3+4)       k=2
+ *      = 4A4D          M=4*4=16    n =10   sum=8(4+4)       k=2
+ *      = 5A4D=>4A5D    M=5*4=20    n =11   sum=9(4+5)       k=2
+ *      = 5A5D          M=5*5=25    n =12   sum=10(5+5)      k=2
+ *      = 5A6D          M=5*6=30    n =13
+ *      = 6A6D          M=6*6=36    n =14   sum=12           k=2
+ *      = 6A7D=>3A4D4D  M=3*4*4=48  n =15   sum=11(3+4+4)    k=3 
+ *      = 4A4D4D        M=4*4*4=64  n =16
  *      ---
  *      = 3A4D4D4D                  n =21 
  *      ---
@@ -50,8 +50,8 @@ package fgafa.game;
  *      
  *  f(n) = a1Aa2Da3D---akD    
  *  1) a1 + a2 + -- + ak = n-2(k-2)
- *  2) m = a1*a2*a3*---*ak
- *  3) if it want m max, a1, a2, ---, ak should be closed, ABS|ai-aj| <= 1.
+ *  2) M = a1*a2*a3*---*ak      
+ *  3) if it want M max, a1, a2, ---, ak should be closed, ABS|ai-aj| <= 1.  
  *      
  *  when ax+(a+1)(k-x) = n-2(k-1)  ( a>=2, (n+2)/2>k>=2, n>7, x<k ) , get the max( a^x * (a+1)^(k-x) ) 
  *           

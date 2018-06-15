@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.Random;
 import java.util.Stack;
 
-import com.televigation.log.TVCategory;
 
 /** 
  *  ---------
@@ -20,8 +19,9 @@ import com.televigation.log.TVCategory;
 public class Maze
 {
   
-  public static final TVCategory logger = (TVCategory) TVCategory.getInstance(Maze.class);
-  
+  //public static final TVCategory logger = (TVCategory) TVCategory.getInstance(Maze.class);
+  //private static final Logger logger = LoggerFactory.getLogger(MazeApplet.class);
+
   /**
    * 
    */
@@ -228,7 +228,7 @@ public class Maze
 
   public void repaintMaze(Graphics g)
   {    
-    logger.info(" || repaintMaze... "+ System.currentTimeMillis()+ " Maze:" + this.toString());
+    //logger.info(" || repaintMaze... "+ System.currentTimeMillis()+ " Maze:" + this.toString());
     
     //paint the maze
     g.setColor(MazeConstant.WALLCOLOR);
@@ -245,7 +245,7 @@ public class Maze
   
   public void repaintRoute(Graphics g)
   {    
-    logger.info(" || repaintRoute... "+ System.currentTimeMillis()+ " resolved:"+ this.resolved + " repaintedRoute:" + this.paintedCells.toString());
+    //logger.info(" || repaintRoute... "+ System.currentTimeMillis()+ " resolved:"+ this.resolved + " repaintedRoute:" + this.paintedCells.toString());
     
     if(!this.resolved) return; 
     

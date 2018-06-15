@@ -32,7 +32,7 @@ import fgafa.util.Misc;
 public class GroupShiftedStrings {
 
     public List<List<String>> groupStrings(String[] strings) {
-        List<List<String>> result = new ArrayList<List<String>>();
+        List<List<String>> result = new ArrayList<>();
         
         //check
         if(null == strings || 0 == strings.length){
@@ -42,21 +42,17 @@ public class GroupShiftedStrings {
         //group by the code
         Map<String, List<String>> groups = new HashMap<>();
         String code;
-        List<String> group;
         for(String s : strings){
             code = groupCode(s);
             
-            group = groups.get(code);
-            if(null == group){
-                group = new ArrayList<>();
-                groups.put(code, group);
+            if(!groups.containsKey(code)){
+                groups.put(code, new ArrayList<>());
             }
-            group.add(s);
+            
+            groups.get(code).add(s);
         }
         
-        //re-organize and return
-        result.addAll(groups.values());
-        
+        result.addAll(groups.values());        
         return result;
     }
     

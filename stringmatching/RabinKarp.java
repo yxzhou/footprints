@@ -41,7 +41,7 @@ public class RabinKarp {
     private int M;           // pattern length
     private long Q;          // a large prime, small enough to avoid long overflow
     private int R;           // radix
-    private long RM;         // R^(m-1) % Q
+    private long RM;         // R^(M-1) % Q
 
     public RabinKarp(int R, char[] pattern) {
         throw new RuntimeException("Operation not supported yet");
@@ -53,14 +53,14 @@ public class RabinKarp {
         M = pat.length();
         Q = longRandomPrime();
 
-        // precompute R^(m-1) % Q for use in removing leading digit
+        // precompute R^(M-1) % Q for use in removing leading digit
         RM = 1;
         for (int i = 1; i <= M-1; i++)
            RM = (R * RM) % Q;
         patHash = hash(pat, M);
     } 
 
-    // Compute hash for key[0..m-1].
+    // Compute hash for key[0..M-1]. 
     private long hash(String key, int M) { 
         long h = 0; 
         for (int j = 0; j < M; j++) 
@@ -68,7 +68,7 @@ public class RabinKarp {
         return h; 
     } 
 
-    // Las Vegas version: does pat[] match txt[i..i-m+1] ?
+    // Las Vegas version: does pat[] match txt[i..i-M+1] ?
     private boolean check(String txt, int i) {
         for (int j = 0; j < M; j++) 
             if (pat.charAt(j) != txt.charAt(i + j)) 

@@ -50,32 +50,31 @@ public class FindCelebrity {
 	/*
 	 * Time between O(N) to O(2N)
 	 */
-    public int findCelebrity(int n) {
+    public int findCelebrity2(int n) {
     	if(n < 2){
     		return -1;
     	}
     	
         int candidate = 0;
         int curr = 1;
-        while ( int next = 2; next <= n; next++) {
-        	boolean forward = knows(candidate, curr);
-        	boolean reverse = knows(curr, candidate);
-        	
-        	if(forward == reverse){
-            	candidate = next;
-                next++;
-            	curr = next;
-        	}else if (forward){
-            	candidate = curr;
-            	curr = next;
-        	}else{ // true == reverse
-        		curr = next;
-        	}
-        }
+//        while ( int next = 2; next <= n; next++) {
+//        	boolean forward = knows(candidate, curr);
+//        	boolean reverse = knows(curr, candidate);
+//
+//        	if(forward == reverse){
+//            	candidate = next;
+//                next++;
+//            	curr = next;
+//        	}else if (forward){
+//            	candidate = curr;
+//            	curr = next;
+//        	}else{ // true == reverse
+//        		curr = next;
+//        	}
+//        }
         
         return curr > n ? -1 : candidate;
     }
-    
     
     private boolean knows(int i, int j){
     	//TODO

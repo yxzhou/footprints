@@ -2,7 +2,7 @@ package fgafa.dfsbfs.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.LinkedList;
 import java.util.List;
 
 import fgafa.util.Misc;
@@ -43,7 +43,7 @@ public class Subsets
 	 * 
 	 */
   public List<List<Integer>> subsets_insert(int[] nums) {
-      List<List<Integer>> ret = new ArrayList<>();
+      List<List<Integer>> ret = new LinkedList<>();
       
       //check
       if(null == nums || 0 == nums.length){
@@ -53,13 +53,12 @@ public class Subsets
       //main
       Arrays.sort(nums);
       
-      ArrayList<Integer> subset = new ArrayList<Integer>();
+      List<Integer> subset = new LinkedList<Integer>();
       ret.add(subset);
-      int size;
+
       for(Integer num : nums){
-          size = ret.size();
-          for(int i = 0; i < size; i++){
-              subset = new ArrayList<Integer>(ret.get(i));
+          for(int i = ret.size() - 1; i >= 0; i--){
+              subset = new LinkedList<>(ret.get(i)); //deep clone
               subset.add(num);
               ret.add(subset);
           }
@@ -81,13 +80,13 @@ public class Subsets
       
       Arrays.sort(nums);
       
-      dfs(nums, 0, new ArrayList<>(), result);
+      dfs(nums, 0, new LinkedList<>(), result);
       
       return result;
   }
 
-  private void dfs(int[] nums, int pos, List<Integer> subset, List<List<Integer>> result){	  
-	  result.add(new ArrayList<>(subset));
+  private void dfs(int[] nums, int pos, List<Integer> subset, List<List<Integer>> result){
+	  result.add(new LinkedList<>(subset)); //deep clone
 	  
 	  for( ; pos< nums.length; pos++){
 		  subset.add(nums[pos]);

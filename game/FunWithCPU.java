@@ -1,4 +1,4 @@
-package fgafa.game0;
+package fgafa.game;
 
 /*
  * bczm

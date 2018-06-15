@@ -10,7 +10,8 @@ import fgafa.util.Misc;
 /**
  * 
  * You have a number of envelopes with widths and heights given as a pair of integers (w, h). 
- * One envelope can fit into another if and only if both the width and height of one envelope is greater than the width and height of the other envelope.
+ * One envelope can fit into another if and only if both the width and height of one envelope is greater than 
+ * the width and height of the other envelope.
 
     What is the maximum number of envelopes can you Russian doll? (put one inside other)
     
@@ -97,7 +98,7 @@ public class RussianDollEnvelope {
             //if(entry.width > heights[top].width){
                 top = binarySearhAndUpdate(heights, top, entry);
                 
-                System.out.println(Misc.array2String(heights));
+                //System.out.println(Misc.array2String(heights));
             //}
             
             max = Math.max(max, top + 1);
@@ -114,7 +115,7 @@ public class RussianDollEnvelope {
           int mid =  low + ((high - low)  >> 1);    //(low + high) / 2; 
           
           if (lis[mid].height == target.height){
-              return top;
+              return mid;
           } else if (lis[mid].height < target.height){
               low = mid + 1;
           }else{
@@ -145,7 +146,7 @@ public class RussianDollEnvelope {
         @Override
         public int compareTo(Envelope other) {
             if(this.width == other.width){
-                return Integer.compare(other.height, this.height);
+                return Integer.compare(other.height, this.height); // key point
                // return this.height - other.height;             
             }else{
                 return Integer.compare(this.width, other.width);
@@ -158,7 +159,44 @@ public class RussianDollEnvelope {
 //            return this.width + "-" + this.height + " ";
 //        }
     }
-    
+
+    /*Time Complexity O(nlogn) Space O(n)*/
+    public int maxEnvelopes_Greedy_x(int[][] envelopes) {
+        if (null == envelopes || 0 == envelopes.length) {
+            return 0;
+        }
+
+        Arrays.sort(envelopes, new Comparator<int[]>(){
+            @Override
+            public int compare(int[] pair1,
+                               int[] pair2) {
+                if(pair1[0] == pair2[0]){
+                    return pair2[1] - pair1[1];  // key point
+                }else{
+                    return pair1[0] - pair2[0];
+                }
+            }
+        });
+
+        int max = 0;
+        int[] dp = new int[envelopes.length];
+        int end = 0;
+        for(int[] pair : envelopes){
+            int top = Arrays.binarySearch(dp, 0, end, pair[1]);
+            if(top < 0){
+                top = 0 - top - 1;
+            }
+            
+            max = Math.max(max, top + 1);
+            dp[top] = pair[1];
+            if(top == end){
+                end++;
+            }
+        }
+
+        return max;
+    }
+
     public static void main(String[] args) {
         RussianDollEnvelope sv = new RussianDollEnvelope();
         
@@ -166,6 +204,7 @@ public class RussianDollEnvelope {
         int[][][] input = {
                     {},
                     {{1, 1}},
+                    {{5,4},{5,9},{5,7},{2,3}},
                     {{5,4},{6,4},{6,7},{2,3}},
                     {{4,5},{4,6},{6,7},{2,3},{1,1}},
                     {{46,89},{50,53},{52,68},{72,45},{77,81}},
@@ -177,7 +216,7 @@ public class RussianDollEnvelope {
         
         for(int[][] envelopes : input ){
             System.out.println(String.format("Input: %s", Misc.array2String(envelopes)));
-            System.out.println(String.format("Output: %d, %d", sv.maxEnvelopes_dp(envelopes), sv.maxEnvelopes_Greedy(envelopes)));
+            System.out.println(String.format("Output: %d, %d, %d", sv.maxEnvelopes_dp(envelopes), sv.maxEnvelopes_Greedy(envelopes), sv.maxEnvelopes_Greedy_x(envelopes)));
         }
     }
 

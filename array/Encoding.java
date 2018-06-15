@@ -1,13 +1,9 @@
 package fgafa.array;
 
+import algs4.stdlib.In;
+
 import java.io.IOException;
 import java.util.Hashtable;
-
-import algs4.graph.Edge;
-import algs4.graph.EdgeWeightedGraph;
-import algs4.graph.KruskalMST;
-import algs4.stdlib.In;
-import algs4.stdlib.StdOut;
 
 /*
  * 

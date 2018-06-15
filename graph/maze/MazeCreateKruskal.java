@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
 
-import com.televigation.log.TVCategory;
-
 /*
  * The <tt>MazeCreateKruskal</tt> class represents a Maze generation with Kruskal algorithm.
  * 
@@ -16,8 +14,6 @@ import com.televigation.log.TVCategory;
 public class MazeCreateKruskal implements MazeCreateToolkit
 {
 
-  public static final TVCategory logger = (TVCategory) TVCategory
-      .getInstance(MazeCreateKruskal.class);
 
   private Maze myMaze = null;
 

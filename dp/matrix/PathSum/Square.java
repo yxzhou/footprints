@@ -22,7 +22,7 @@ public class Square
    * 
    * Note: You can only move either down or right at any point in time.
    *
-   * Time O(m*N)  Space O(m*N)
+   * Time O(M*N)  Space O(M*N) 
    */
   public int minPathSum1(int[][] grid) {
     //check
@@ -51,7 +51,7 @@ public class Square
   }
 
   
-  /* Time O(m*N)  Space O(m) */
+  /* Time O(M*N)  Space O(M) */
   public int minPathSum2(int[][] grid) {
     //check
     if(grid == null || grid.length == 0 )
@@ -77,7 +77,7 @@ public class Square
   /*
   * similar with minPathSum 
   * 
-  * Time O(m*N)  Space O(m*N)
+  * Time O(M*N)  Space O(M*N) 
   */
   public int maxPathSum(int[][] grid) {
     //TODO
@@ -102,7 +102,7 @@ public class Square
    *                  , f[x-1][y][p-1][q],f[x-1][y][p][q-1]) 
    *                  + grid[x][y] + (x=p&&y=q)? 0 : grid[p][q]            
    *
-   * Time O(m*m*N*N)  Space O(m*m*N*N)
+   * Time O(M*M*N*N)  Space O(M*M*N*N) 
    */
   public int maxPathSum_two(int[][] grid) {
     

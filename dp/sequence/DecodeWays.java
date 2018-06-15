@@ -1,6 +1,5 @@
 package fgafa.dp.sequence;
 
-import java.util.Hashtable;
 
 /**
  * 
@@ -32,7 +31,7 @@ public class DecodeWays
    *  
    * From right to left
    */
-  public int numDecodings_recur(String s) {
+  public int decodeWays_recur(String s) {
     int result = 0;
     
     //check
@@ -41,13 +40,13 @@ public class DecodeWays
         
     int[] returnValue = new int[1]; 
     returnValue[0] = 0;
-    numDecodings_recur(s, 0, s.length(), returnValue);
+    decodeWays_recur(s, 0, s.length(), returnValue);
     
     return returnValue[0];
   }
   
 
-  private void numDecodings_recur(String s, int index, int len, int[] returnValue) {
+  private void decodeWays_recur(String s, int index, int len, int[] returnValue) {
     
     //System.out.println(s+ "\t"+ index +"\t"+len+"\t"+returnValue[0]);
     
@@ -60,13 +59,13 @@ public class DecodeWays
     char firstDigit = s.charAt(index);
     //if (firstDigit > 48 && firstDigit < 58) { // '0' is 48, '1' is 49,'9' is 57
     if (firstDigit > '0' && firstDigit < 58) {
-      numDecodings_recur(s, index + 1, len, returnValue);
+      decodeWays_recur(s, index + 1, len, returnValue);
 
       if (index + 2 <= len) {
         int first2Digits = Integer.valueOf(s.substring(index, index + 2));
 
         if (first2Digits > 0 && first2Digits < 27) { // A is 1, Z is 26
-          numDecodings_recur(s, index + 2, len, returnValue);
+          decodeWays_recur(s, index + 2, len, returnValue);
         }
       }
     }
@@ -74,7 +73,7 @@ public class DecodeWays
   
   
   /* same as the numDecodings_recur(String s) , from right to left*/
-  public  int numDecodings_dp(String s) {
+  public  int decodeWays_dp(String s) {
     
     //check
     if(s == null || s.length() == 0 )
@@ -103,153 +102,45 @@ public class DecodeWays
     return c[n];
   }
   
-  
-  
-  /**
-   * 
-   * Example:  
-   * P(s) = 1   when s is valid ( It's 2 digits, the first digit is in 1--9, these 2 digits is in 1--26 )
-   *        0   when s is not valid
-   * f("1") = fib(1)
-   * f("12") = fib(2)
-   * f("123") = fib(3) 
-   * f("111222") = fib(6)
-   * 
-   * f("10034") = 0;  //when the first digit and firstD+secondD digit are not valid, see "00"
-   * f("12034") = f("1")*f("34")     // when the first digit is not valid, the firstD+secondD digit is valid, see '0'
-   * f("12834") = f("12")*f("834")=f("12")*f("34")     //when the first digit is valid, the firstD*10+secondD is not valid. see '8' 
-   * f("13234") = f("13")*f("234")    //when the first digit is valid, the firstD*10+secondD is not valid. see '3'
-   * 
-   * @param s
-   * @return
-   */
-  public int numDecodings_X(String s) {
-    //System.out.println("="+s);
-    
-    int result = 0;
-    
-    //check
-    if(s == null || s.length() == 0 )
-      return result;
-    
-    int len = s.length();
-    char[] str = s.toCharArray();
-    
-    //check the first digit
-    if(!isValid(str[0]))
-      return 0;
-    
-    //just one digit
-    if(len == 1){
-        return 1;
-    }
-           
-    boolean is1DigitValid = false, is2DigitsValid = false;
-    int index=0;
-    Hashtable<Integer, Integer> fibCache = new Hashtable<Integer, Integer>();
-    //while(index <len - 2){
-      
-      while( index <len - 1 &&  (is1DigitValid = isValid(str[index])) && (is2DigitsValid = isValid(str[index], str[index+1])) )
-        index ++;
-      
-      if(!is1DigitValid && !is2DigitsValid){
-        /*f("10034") = 0;  //when the first digit and firstD+secondD digit are not valid.*/
-        return 0;        
-      }
-      else if(!is1DigitValid){
-        /*f("12034") = f("1")*f("34")     // when the first digit is not valid, the firstD+secondD digit is valid*/
-        result =  fib(index - 1, fibCache);
-        
-        //if(index + 1 < len - 1)
-        //System.out.println("==" + index +"==" + s.substring(index + 1) );
-        result *= numDecodings_X(s.substring(index + 1));
-          
-      }else if(!is2DigitsValid){
-        if(!isValid(str[index+1]))
+  public int decodeWays_n(String s){
+      if(null == s  || 0 == s.length()){
           return 0;
-        
-        /* *
-         * f("12834") = f("12")*f("34")    //when the first digit is valid, the firstD*10+secondD is not valid.  
-         * f("13234") = f("13")*f("234")    //when the first digit is valid, the firstD*10+secondD is not valid. 
-         * */
-        result =  fib(index+1, fibCache);
-        
-        if(index + 1 < len - 1)
-          result *= numDecodings_X(s.substring(index + 1));
+      }
+      
+      if(!isValid(s.charAt(0))){
+          return 0;
+      }
+      
+      int i = 1;
+      int j = 1;
+      
+      for(int k = 1; k < s.length(); k++){
+          if(!isValid(s.charAt(k)) && !isValid(s.charAt(k - 1), s.charAt(k))){
+              return 0;
+          }
           
-      }else{ // all digits except the last one are valid
-        
-        if(index == len -1 && isValid(str[index]))
-          result = fib(len, fibCache);
-        else 
-          result = fib(index-1, fibCache);
-        
+          int tmp = 0;
+          if(isValid(s.charAt(k))){
+              tmp = j;
+          }
+          
+          if(isValid(s.charAt(k - 1), s.charAt(k))){
+             tmp += i; 
+          }
+          
+          i = j;
+          j = tmp;
       }
-        
-    //}
-    
-    return result;
-  }
-  
-  
-  private boolean isValid(char firstDigit){
-    boolean result = false;
-    
-    if (firstDigit > 48 && firstDigit < 58) // '0' is 48, '1' is 49,'9' is 57
-      result = true;
-    
-    return result;
-  }
-  
-  private boolean isValid(char firstDigit, char secondDigit){
-    boolean result = false;
-
-    /*A is 1, Z is 26 ; '0' is 48, '1' is 49,'9' is 57 ;  the first digit have to be 1-9, the second digit have to be 0-*/
-    if (( firstDigit == 49 && secondDigit >= 48 && secondDigit < 58 ) || ( firstDigit == 50 && secondDigit >= 48 && secondDigit < 55 ) )  
-      result = true;
       
-    return result;
+      return j;
   }
   
-  private int fib(int num, Hashtable<Integer, Integer> fibCache){
-    
-    if(!fibCache.containsKey(num)){
-      fibCache.put(num, fib_matrix_X(num));
-    }
-    
-    return fibCache.get(num);
+  private boolean isValid(char digit){
+      return digit >= '1' && digit <= '9';
   }
   
-  /* copy from math.Fibonacci */
-  private int fib_matrix_X(int num)  {
-    
-    int r1 =0;    
-    int r2 =1;    
-    
-    int a1 = 1; 
-    int a2 = 0; 
-    
-    int tmp1, tmp2;
-    num = num + 1;   //this is very important
-    for (; num > 0; num >>= 1 ) {
-      //F(2k+1) = F(k) + F(k-1) = r1 + r2
-      if ((num & 1) == 1) {
-        tmp1 = a1 * (r1 + r2) + a2 * r1;
-        tmp2 = r1 * a1 + r2 * a2;
-        
-        r1 = tmp1;
-        r2 = tmp2;
-      }
-     
-      tmp1 = a1 * a1 + 2 * a1 * a2;     
-      tmp2 = a1 * a1 + a2 * a2;       
-
-      a1 = tmp1;
-      a2 = tmp2;
-      
-    }
-
-    return r1;
+  private boolean isValid(char digit1, char digit2){
+      return (digit1 == '1'  && (digit2 >= '0' && digit2 <= '9')) || (digit1 == '2' && (digit2 >= '0' && digit2 <= '6'));
   }
   
   
@@ -279,8 +170,9 @@ public class DecodeWays
     for(int i=0; i<str.length; i++){
       System.out.println("\nDecodeWayss: " + str[i]);
       
-      System.out.println("Result:\t" + sv.numDecodings_recur(str[i]) );
-      System.out.println("Result:\t" + sv.numDecodings_X(str[i]) );
+      System.out.println("Result:\t" + sv.decodeWays_recur(str[i]) );
+      System.out.println("Result:\t" + sv.decodeWays_dp(str[i]) );
+      System.out.println("Result:\t" + sv.decodeWays_n(str[i]) );
       
       
       System.out.println("Expect:\t" + n[i] );

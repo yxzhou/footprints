@@ -13,8 +13,12 @@ package fgafa.easy;
  *     27 -> AA
  *     28 -> AB 
  *     
- *  Q1, Given a positive integer, return its corresponding column title 
+ *  Q1, Given a positive integer, return its corresponding column title
+ *  base 10 -> base 26 
+ *  
  *  Q2, Given a column title, return its corresponding positive integer
+ *  base 26 -> base 10
+ *  
  */
 
 public class ExcelColumn {
@@ -56,7 +60,7 @@ public class ExcelColumn {
 				n--;
 			}
 			
-			ret.append((char)(remain + 64));
+			ret.append((char)(remain + 64)); //'A' is 65
 		}
 
 		return ret.reverse().toString();

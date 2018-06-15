@@ -11,10 +11,8 @@ import java.util.Stack;
  * 
  * Implement an iterator to flatten a 2d vector.
 
-    For example,
-    
+    For example:
     Given 2d vector =
-    
     [
       [1,2],
       [3],

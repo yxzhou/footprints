@@ -77,14 +77,14 @@ public class CountAndSay
       for(int i=1; i<n; i++){
     	  StringBuilder next = new StringBuilder();
 
-    	  for(int j=0, k=1; j<curr.length(); j=j+k){
+    	  for(int j=0, count=1; j<curr.length(); j=j+count){
     		  first = curr.charAt(j);
-    		  k = 1;
-    		  while( k < curr.length() - j && first == curr.charAt(k+j)){
-    			  k++;
+    		  count = 1;
+    		  while( count < curr.length() - j && first == curr.charAt(count+j)){
+    			  count++;
     		  }
     		  
-    		  next.append(k);
+    		  next.append(count);
     		  next.append(first);
     	  }
     	  

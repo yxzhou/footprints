@@ -1,6 +1,5 @@
 package fgafa.concurrent.threadpools;
 
-import sun.jvm.hotspot.utilities.WorkerThread;
 
 import java.util.concurrent.*;
 
@@ -25,7 +24,7 @@ public class UseThreadPoolExecutor {
 
     public static void main(String[] args) {
         //RejectedExecutionHandler implementation
-        RejectedExecutionHandlerImpl rejectionHandler = new RejectedExecutionHandlerImpl();
+        RejectedExecutionHandler rejectionHandler = new RejectedExecutionHandlerImpl();
 
         //Get the ThreadFactory implementation to use
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
@@ -43,13 +42,23 @@ public class UseThreadPoolExecutor {
             executorPool.execute(new MyThread(100000L + i));
         }
 
-        Thread.sleep(30000);
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
         //shut down the pool
         executorPool.shutdown();
 
         //shut down the monitor thread
-        Thread.sleep(5000);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         monitor.shutdown();
 
     }
@@ -98,7 +107,7 @@ class MyMonitorThread implements Runnable {
     }
 }
 
-class RejectedExecutionHandlerImpl implements RejectedExecutionException {
+class RejectedExecutionHandlerImpl implements RejectedExecutionHandler{
 
     @Override
     public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {

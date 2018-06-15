@@ -148,6 +148,52 @@ public class PopulatingNextRight
       thisRowHead = nextRowHead;
     }
   }
+    
+    //constant space
+    public void connectII_x(TreeLinkNode root){
+        if(null == root){
+            return;
+        }
+        
+        TreeLinkNode curr;
+        TreeLinkNode next;
+        TreeLinkNode currHead = root;
+        TreeLinkNode nextHead = null;
+        while( null != currHead ){
+
+            //locate nextHead
+            for(curr = currHead; null != curr; curr = curr.next){
+                if(null != curr.left){
+                    nextHead = curr.left;
+                } else if(null != curr.right){
+                    nextHead = curr.right;
+                }
+            }
+                
+            if(null == nextHead){
+                break;
+            }
+            
+            //connect the next pointers
+            for( next = nextHead ; null != curr; curr = curr.next){
+                if(null != curr.left){
+                    next.next = curr.left;
+                    next = next.next;
+                }
+                
+                if(null != next.right){
+                    next.next = curr.right;
+                    next = next.next;
+                }
+            }     
+            if(next == next.next){
+                next.next = null;
+            }
+            
+            currHead = nextHead;
+        }
+    }
+  
   
   
   public void connectII_n(TreeLinkNode root) {
