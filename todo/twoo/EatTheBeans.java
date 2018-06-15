@@ -42,7 +42,7 @@ public class EatTheBeans {
             result += p[i][0][0] + p[i][0][1];
         }
 
-        return result
+        return result;
     }
 
 }

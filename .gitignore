@@ -2,9 +2,16 @@
 *.class
 *.classpath
 *.project
+target/
+bin/
 
 # Log file
 *.log
+
+#IDE file
+*.iml
+.idea/
+*.DS_STORE
 
 # BlueJ files
 *.ctxt
