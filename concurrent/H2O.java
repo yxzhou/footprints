@@ -1,5 +1,7 @@
 package fgafa.concurrent;
 
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,31 +14,68 @@ import java.util.concurrent.locks.ReentrantLock;
 public class H2O {
 
     static final Lock LOCK = new ReentrantLock();
+
     static final Condition CONDITIONH = LOCK.newCondition();
     static final Condition CONDITIONO = LOCK.newCondition();
-    static int COUNTH = 0;
-    static int COUNTO = 0;
+    static volatile int COUNTH = 0;
+    static volatile int COUNTO = 0;
 
-    static void check() {
-        while (COUNTH >= 2 && COUNTO >= 1) {
-            CONDITIONH.signal();
-            CONDITIONH.signal();
-            CONDITIONO.signal();
+    //static volatile AtomicInteger COUNTH = new AtomicInteger(0);
+    //static volatile AtomicInteger COUNTO = new AtomicInteger(0);
 
-            //WATER.signalAll()   // wrong !!
+    static void check(boolean loopable) {
+        while(loopable){
+            //while (COUNTH.intValue() >= 2 && COUNTO.intValue() >= 1) {
+            while (COUNTH >= 2 && COUNTO >= 1) {
+                LOCK.lock();
+                try {
+                    System.out.println("Output a H2O");
+                    CONDITIONH.signal();
+                    //sleep(2);
+                    CONDITIONH.signal();
+                    //sleep(2);
+                    CONDITIONO.signal();
+                    //sleep(2);
 
-            COUNTH -= 2;
-            COUNTO -= 1;
+                    COUNTH -= 2;
+                    COUNTO--;
+                } finally {
+                    LOCK.unlock();
+                }
+
+                //WATER.signalAll()   // wrong !!
+
+                //COUNTH.decrementAndGet();
+                //COUNTH.decrementAndGet();
+                //COUNTO.decrementAndGet();
+            }
+
+            //sleep(1);
+        }
+    }
+
+    private static void sleep(long ms){
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     public static void h() {
         LOCK.lock();
         try {
-            ++COUNTH;
-            CONDITIONH.awaitUninterruptibly();
+            String currThread = Thread.currentThread().getName();
 
-            check();
+            System.out.println(currThread + " Input a H");
+            //COUNTH.incrementAndGet();
+            COUNTH++;
+
+            //check(false);
+
+            CONDITIONH.awaitUninterruptibly();
+            System.out.println(currThread + " is released");
+
         } finally {
             LOCK.unlock();
         }
@@ -45,13 +84,43 @@ public class H2O {
     public static void o() {
         LOCK.lock();
         try {
-            ++COUNTO;
-            CONDITIONO.awaitUninterruptibly();
+            String currThread = Thread.currentThread().getName();
 
-            check();
+            //COUNTO.incrementAndGet();
+            COUNTO++;
+            System.out.println(currThread+  "Input a O");
+
+            //check(false);
+
+            CONDITIONO.awaitUninterruptibly();
+            System.out.println(currThread + " is released");
+
         } finally {
             LOCK.unlock();
         }
     }
 
+
+    public static void main(String[] args){
+        Random random = new Random();
+
+        //
+        new Thread(() -> {
+            H2O.check(true);
+        }).start();
+
+        for (int i = 0; i < 30; i++) {
+            final int j = i;
+
+            new Thread(() -> {
+                if (random.nextInt(3) == 2) {
+                //if ( j % 3 == 2) {
+                    H2O.o();
+                } else {
+                    H2O.h();
+                }
+            }).start();
+        }
+
+    }
 }
