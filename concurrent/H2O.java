@@ -1,6 +1,8 @@
 package fgafa.concurrent;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -24,18 +26,17 @@ public class H2O {
     //static volatile AtomicInteger COUNTO = new AtomicInteger(0);
 
     static void check(boolean loopable) {
-        while(loopable){
+        String currThread = Thread.currentThread().getName();
+
+        while(true){
             //while (COUNTH.intValue() >= 2 && COUNTO.intValue() >= 1) {
-            while (COUNTH >= 2 && COUNTO >= 1) {
+            if (COUNTH >= 2 && COUNTO >= 1) {
                 LOCK.lock();
                 try {
-                    System.out.println("Output a H2O");
+                    System.out.println(currThread + " Output a H2O");
                     CONDITIONH.signal();
-                    //sleep(2);
                     CONDITIONH.signal();
-                    //sleep(2);
                     CONDITIONO.signal();
-                    //sleep(2);
 
                     COUNTH -= 2;
                     COUNTO--;
@@ -48,9 +49,13 @@ public class H2O {
                 //COUNTH.decrementAndGet();
                 //COUNTH.decrementAndGet();
                 //COUNTO.decrementAndGet();
-            }
+            }else{
+                sleep(10);
 
-            //sleep(1);
+                if(!loopable){
+                    break;
+                }
+            }
         }
     }
 
@@ -74,6 +79,9 @@ public class H2O {
             //check(false);
 
             CONDITIONH.awaitUninterruptibly();
+
+            //check(false);
+
             System.out.println(currThread + " is released");
 
         } finally {
@@ -86,13 +94,16 @@ public class H2O {
         try {
             String currThread = Thread.currentThread().getName();
 
+            System.out.println(currThread+  " Input a O");
             //COUNTO.incrementAndGet();
             COUNTO++;
-            System.out.println(currThread+  "Input a O");
 
             //check(false);
 
             CONDITIONO.awaitUninterruptibly();
+
+            //check(false);
+
             System.out.println(currThread + " is released");
 
         } finally {
@@ -102,25 +113,42 @@ public class H2O {
 
 
     public static void main(String[] args){
-        Random random = new Random();
 
+        ExecutorService pool = Executors.newFixedThreadPool(20);
         //
-        new Thread(() -> {
+        pool.submit(() -> {
             H2O.check(true);
-        }).start();
+        });
 
-        for (int i = 0; i < 30; i++) {
+        Random random = new Random();
+        for (int i = 0; i < 50; i++) {
             final int j = i;
 
-            new Thread(() -> {
+            pool.submit(() -> {
                 if (random.nextInt(3) == 2) {
                 //if ( j % 3 == 2) {
                     H2O.o();
                 } else {
                     H2O.h();
                 }
-            }).start();
+            });
         }
 
     }
 }
+
+/**
+ *    Note:
+ *    1 "call check() in h() and o()" VS "call check() in special thread"
+ *       There is an issue in "call check() in h() and o()":
+ *       if the check() is before CONDITIONO.awaitUninterruptibly(), it will miss some H2O output.
+ *       Example to use-case, input,  H, H, H, O.  It would no output.
+ *       if the check() is after CONDITIONO.awaitUninterruptibly(), all threads will be in wait, no H2O output.
+ *       Example to use-case, input,  H, H, H, O.  every thread will be in wait, no chance to call check().
+ *
+ *    2 It would throw IllegalMonitorStateExcepton if the current thread is not the owner of the lock.
+ *
+ *    3 because there is LOCK.lock(), COUNTH is same to set as integer and AtomicInteger
+ *
+ *    4 when use thread pool, if the pool size is not big enough, all threads maybe be blocked
+ */

@@ -1,4 +1,4 @@
-package fgafa.basic.completableFuture;
+package fgafa.concurrent.completableFuture;
 
 import org.junit.Test;
 
