@@ -1,9 +1,9 @@
 package fgafa.datastructure.segmenttree.Fenwick;
 
+import fgafa.util.Misc;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import fgafa.util.Misc;
 
 /**
  * 
@@ -18,6 +18,16 @@ import fgafa.util.Misc;
     Return 3.
     The three ranges are : [0, 0], [2, 2], [0, 2] and their respective sums are: -2, -1, 2.
  *
+ *
+ * Solution:
+ *   It's a range sum issue.
+ *   All the range would be [x, y], total it's n^2, so the worst case, the time complexity is O(n^2).
+ *   To get a "better algorithm",  it's improve time complexity with space cost.
+ *   A "better algorithm" is,
+ *     1 get the rangeSum from 0 to i,  i is in [0, n-1], stored as sums, sums[i] = nums[0] + -- + nums[i]
+ *     2 to all possible range that is end by index 0,  count with sums and lower and upper
+ *     3 to all possible range that is end by index 1,  count with sums and lower + nums[0] and upper + nums[0]
+ *     4 - - -
  */
 
 public class CountOfRangeSum {
@@ -28,15 +38,15 @@ public class CountOfRangeSum {
             return 0;
         }
         
-        BSTNode root = buildSumTree(nums);
+        BINode root = buildSumTree(nums);
         
         return countRangeSum(nums, lower, upper, root);
     }
     
-    private BSTNode buildSumTree(int[] nums){
+    private BINode buildSumTree(int[] nums){
 
         long sum = nums[0];
-        BSTNode root = new BSTNode(sum, 1);
+        BINode root = new BINode(sum, 1);
         for(int i = 1; i < nums.length; i++){
             sum += nums[i];
             
@@ -46,18 +56,18 @@ public class CountOfRangeSum {
         return root;
     }
     
-    private void add(BSTNode node, long sum, int endIndex){
+    private void add(BINode node, long sum, int endIndex){
         while( null != node){
             if(node.value > sum){
                 if(null == node.left){
-                    node.left = new BSTNode(sum, endIndex);
+                    node.left = new BINode(sum, endIndex);
                     break;
                 }else{
                     node = node.left;
                 }
             }else if(node.value < sum){
                 if(null == node.right){
-                    node.right = new BSTNode(sum, endIndex);
+                    node.right = new BINode(sum, endIndex);
                     break;
                 }else{
                     node = node.right;
@@ -70,7 +80,7 @@ public class CountOfRangeSum {
         }
     }
     
-    private int countRangeSum(int[] nums, long lower, long upper, BSTNode root){
+    private int countRangeSum(int[] nums, long lower, long upper, BINode root){
 
         int count = 0;
         
@@ -84,7 +94,7 @@ public class CountOfRangeSum {
         return count;
     }
     
-    private int countRangeSum(long lower, long upper, BSTNode node, int endIndex){
+    private int countRangeSum(long lower, long upper, BINode node, int endIndex){
         if(null == node){
             return 0;
         }
@@ -111,14 +121,14 @@ public class CountOfRangeSum {
         return count;
     }
     
-    class BSTNode{
+    class BINode {
         long value;
         List<Integer> endIndexs = new ArrayList<>();
         
-        BSTNode right = null;
-        BSTNode left = null;
+        BINode right = null;
+        BINode left = null;
         
-        BSTNode(long value, int endIndex){
+        BINode(long value, int endIndex){
             this.value = value;
             this.endIndexs.add(endIndex);
         }

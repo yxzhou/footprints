@@ -1,9 +1,9 @@
 package fgafa.datastructure.segmenttree.Fenwick;
 
+import fgafa.util.Misc;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import fgafa.util.Misc;
 
 /**
  * 
@@ -25,22 +25,22 @@ import fgafa.util.Misc;
 public class CountOfSmallerNumberAfterItself {
 
     public List<Integer> countSmaller(int[] nums) {
-        List<Integer> result = new LinkedList<>();
+        List<Integer> result = new LinkedList<>(); //counting from right to left
         if(null == nums || 0 == nums.length ){
             return result;
         }
         
-        BSTNode root = new BSTNode(nums[nums.length - 1], 1);
+        BINode root = new BINode(nums[nums.length - 1], 1);
         result.add(0, 0);
         
         for(int i = nums.length - 2; i >= 0; i--){
-            result.add(0, add(root, nums[i]));
+            result.add(0, addAndCountSmaller(root, nums[i]));
         }
         
         return result;
     }
     
-    private int add(BSTNode node, int target){
+    private int addAndCountSmaller(BINode node, int target){
         int result = 0;
         
         if(target == node.val){
@@ -52,34 +52,33 @@ public class CountOfSmallerNumberAfterItself {
             node.numOfLeftNodes++;
             
             if(null == node.left){
-                node.left =  new BSTNode(target, 1);
-                
+                node.left =  new BINode(target, 1);
             }else{
-                result += add(node.left, target);
+                result += addAndCountSmaller(node.left, target);
             }
         }else{
             result += node.numOfLeftNodes + node.duplicate;
             
             if(null == node.right){
-                node.right =  new BSTNode(target, 1);
-                
+                node.right =  new BINode(target, 1);
             }else{
-                result += add(node.right, target) ;
+                result += addAndCountSmaller(node.right, target) ;
             }
         }
         
         return result;
     }
     
-    //Fenwick tree
-    class BSTNode{
+    //Fenwick Tree, Binary Indexed Tree
+    class BINode {
         int val = 0;
         int duplicate = 0;
-        int numOfLeftNodes = 0;
+        int numOfLeftNodes = 0; //number of smaller elements
         
-        BSTNode left = null, right = null;
+        BINode left = null;
+        BINode right = null;
         
-        BSTNode(int val, int duplicate) {
+        BINode(int val, int duplicate) {
             this.val = val;
             this.duplicate = duplicate;
         }

@@ -1,7 +1,5 @@
 package fgafa.datastructure.segmenttree;
 
-import fgafa.datastructure.segmenttree.SegmentTreeMax.SegmentTreeNode;
-
 public class SegmentTreeModify {
 
 	/**

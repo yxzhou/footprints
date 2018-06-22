@@ -1,7 +1,5 @@
 package fgafa.datastructure.segmenttree;
 
-import fgafa.datastructure.segmenttree.SegmentTreeModify.SegmentTreeNode;
-
 /**
  * 
  * The structure of Segment Tree is a binary tree which each node has two
