@@ -11,8 +11,11 @@ package fgafa.datastructure.segmenttree.rangeSum;
     sumRange(2, 5) -> -1
     sumRange(0, 5) -> -3
     Note:
-    You may assume that the array does not change.
-    There are many calls to sumRange function.
+    You may assume that the array does not change. There are many calls to sumRange function.
+ *
+ *  Solution:
+ *     define int[] sums, sums[i] is the sum of nums[0] to nums[i]
+ *     so, sumRange(i, j) = sums[j] - sum[i]
  *
  */
 
