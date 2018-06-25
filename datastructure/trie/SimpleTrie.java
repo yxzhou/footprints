@@ -1,4 +1,4 @@
-package fgafa.datastructure.Trie;
+package fgafa.datastructure.trie;
 
 import java.util.Collection;
 import java.util.HashMap;

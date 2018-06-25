@@ -1,4 +1,4 @@
-package fgafa.datastructure.Trie;
+package fgafa.datastructure.trie;
 
 /**
  * 
@@ -48,7 +48,7 @@ package fgafa.datastructure.Trie;
             return true;
         }
         
-        //Trie Node
+        //trie Node
         class TrieNode{
             public TrieNode[] children = new TrieNode[26];
             public String item = "";

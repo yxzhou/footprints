@@ -106,9 +106,10 @@ public class RangeSum_mutable {
 	 * Definition of SegmentTreeNode:
 	 */
 	public class SegmentTreeNode {
-		public int start, end;
-		public long sum = 0;
-		public SegmentTreeNode left, right;
+		int start, end;
+		long sum = 0;
+		SegmentTreeNode left;
+		SegmentTreeNode right;
 
 		public SegmentTreeNode(int start, int end) {
 			this.start = start;
@@ -117,15 +118,4 @@ public class RangeSum_mutable {
 		}
 	}
 
-	/**
-	 * Definition of Interval:
-	 */
-	public class Interval {
-		int start, end;
-
-		Interval(int start, int end) {
-			this.start = start;
-			this.end = end;
-		}
-	}
 }

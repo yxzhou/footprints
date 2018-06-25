@@ -1,8 +1,8 @@
-package fgafa.datastructure.Trie;
+package fgafa.datastructure.trie;
 
 /**
  * 
- * Given a Trie, print all words in the Trie
+ * Given a trie, print all words in the trie
  *
  */
 public class PrintTrie extends Trie{

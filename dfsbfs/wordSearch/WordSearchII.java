@@ -203,7 +203,7 @@ public class WordSearchII {
     }
 
     
-  //Trie Node
+  //trie Node
     class TrieNode{
         public TrieNode[] children = new TrieNode[26];
         //public String item = "";
@@ -223,7 +223,7 @@ public class WordSearchII {
         }
     }
      
-    //Trie
+    //trie
     class Trie{
         public TrieNode root = new TrieNode();
      

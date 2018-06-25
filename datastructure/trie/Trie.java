@@ -1,4 +1,4 @@
-package fgafa.datastructure.Trie;
+package fgafa.datastructure.trie;
 
 /**
  * 
@@ -8,8 +8,8 @@ package fgafa.datastructure.Trie;
 	Note
 	You may assume that all inputs are consist of lowercase letters a-z.
  *
- *  Your Trie object will be instantiated and called as such:
-     Trie trie = new Trie();
+ *  Your trie object will be instantiated and called as such:
+     trie trie = new trie();
      trie.insert("somestring");
      trie.search("key");
  *

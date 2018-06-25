@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign;
+package fgafa.datastructure.trie;
 
 import java.util.HashMap;
 import java.util.LinkedList;

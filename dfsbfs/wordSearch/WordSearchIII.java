@@ -57,7 +57,7 @@ public class WordSearchIII {
     }
 
     
-  //Trie Node
+  //trie Node
     class TrieNode{
         public TrieNode[] children = new TrieNode[26];
 
@@ -77,7 +77,7 @@ public class WordSearchIII {
         }
     }
      
-    //Trie
+    //trie
     class Trie{
         public TrieNode root = new TrieNode();
      
