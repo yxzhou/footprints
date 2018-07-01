@@ -40,7 +40,7 @@
  * with interval tree to store how many "remain space". 
  * Time O(n*2 + n*logn) , Space O(n << 2), n = 200000
  */
-package fgafa.datastructure.intervaltree.buyTickes;
+package fgafa.datastructure.intervaltree.buyTickets;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;
