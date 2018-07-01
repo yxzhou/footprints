@@ -26,7 +26,7 @@ public class SegmentTreeMax {
 	 * query(root, 0, 2), return 4
 	 */
 	/**
-	 * Definition of SegmentTreeNode: */
+	 * Definition of Node: */
 	public class SegmentTreeNode {
 		public int start, end, max;
 		public SegmentTreeNode left, right;

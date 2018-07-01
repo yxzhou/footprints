@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmenttree.rangeSum;
+package fgafa.datastructure.segmenttree.rangeSumQuery;
 
 /**
  * 

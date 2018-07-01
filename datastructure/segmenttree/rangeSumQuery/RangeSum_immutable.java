@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmenttree.rangeSum;
+package fgafa.datastructure.segmenttree.rangeSumQuery;
 
 /**
  * 
@@ -42,7 +42,8 @@ public class RangeSum_immutable {
         
         return sum[j + 1] - sum[i];
     }
-    
+
+
     public RangeSum_immutable(int[] nums, int n) {
         if(null == nums || 0 == nums.length){
             return;
@@ -60,7 +61,7 @@ public class RangeSum_immutable {
         if(i < 0 || j < i || j > sum.length - 1){
             throw new IllegalArgumentException(String.format("The input i and j should be in [%d, %d]", 0, sum.length - 2));
         }
-        
+
         if(i == 0){
             return sum[j];
         }else{
@@ -68,6 +69,7 @@ public class RangeSum_immutable {
         }
 
     }
+
     
     public static void main(String[] args) {
 

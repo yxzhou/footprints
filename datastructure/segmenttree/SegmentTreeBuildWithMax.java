@@ -34,7 +34,7 @@ package fgafa.datastructure.segmenttree;
 public class SegmentTreeBuildWithMax {
 
 	/**
-	 * Definition of SegmentTreeNode:
+	 * Definition of Node:
 	 */
 	public class SegmentTreeNode {
 		public int start, end, max;

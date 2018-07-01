@@ -46,38 +46,42 @@ public class SegmentTreeBuild {
 	 */
 	
 	/**
-	 * Definition of SegmentTreeNode:
+	 * Definition of Node:
 	 */
-	public class SegmentTreeNode {
-		public int start, end;
-		public SegmentTreeNode left, right;
+	class TreeNode {
+		int start;
+		int end;
 
-		public SegmentTreeNode(int start, int end) {
+		public TreeNode(int start, int end) {
 			this.start = start;
 			this.end = end;
-			this.left = this.right = null;
 		}
 	}
 
 	/**
 	 * @param start, end: Denote an segment / interval
-	 * @return: The root of Segment Tree
+	 *
+	 * @return: Segment Tree
 	 */
-	public SegmentTreeNode build(int start, int end) {
-		//check
-		if(start > end){
-			return null;
-		}
-		
-		SegmentTreeNode curr = new SegmentTreeNode(start, end);
+	public TreeNode[] build(int start, int end) {
+		int length = end - start + 1;
+		TreeNode[] tree = new TreeNode[length * 2 - 1]; //it's a full BST
+
+		build(tree, 0, start, end);
+
+		return tree;
+	}
+
+	private void build(TreeNode[] tree, int nodeIndex, int start, int end) {
+		tree[nodeIndex] = new TreeNode(start, end);
 		
 		if(start < end){
 			int mid = start + ((end - start) >> 1);
-			curr.left = build(start, mid);
-			curr.right = build(mid+1, end);
+			int leftSon = nodeIndex * 2 + 1;
+
+			build(tree, leftSon, start, mid);
+			build(tree, leftSon + 1, mid + 1, end);
 		}
-		
-		return curr; 
 	}
 	
 	public static void main(String[] args) {

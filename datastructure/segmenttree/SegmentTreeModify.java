@@ -39,7 +39,7 @@ public class SegmentTreeModify {
 	 */
 	
 	/**
-	 * Definition of SegmentTreeNode: */
+	 * Definition of Node: */
 	public class SegmentTreeNode {
 		public int start, end, max;
 		public SegmentTreeNode left, right;
