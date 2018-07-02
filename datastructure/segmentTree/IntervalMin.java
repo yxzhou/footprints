@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * 
+ *
  * Given an integer array (index from 0 to n-1, where n is the size of this array), and an query list.
  * Each query has two integers [start, end]. For each query, calculate the minimum number between index start and end in the given array, return the result list.
 

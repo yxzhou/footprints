@@ -66,9 +66,9 @@ public class Template
     int m = (l + r) >> 1;
     int ret = 0;
     if (L <= m)
-      ret += query(L, R, l, m, rt << 1); // query lson
+      ret += query(L, R, l, m, rt << 1); // checkIn lson
     if (R > m)
-      ret += query(L, R, m + 1, r, rt << 1 | 1); //query rson
+      ret += query(L, R, m + 1, r, rt << 1 | 1); //checkIn rson
 
     return ret;
   }

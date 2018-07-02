@@ -141,9 +141,9 @@ public class Main
     int mid = (l + r) >> 1;
     int leftSon = rt << 1;
     if (R <= mid)
-      return query(L, R, l, mid, leftSon); // query lson
+      return query(L, R, l, mid, leftSon); // checkIn lson
     else if (L > mid)
-      return query(L, R, mid + 1, r, leftSon + 1); //query rson
+      return query(L, R, mid + 1, r, leftSon + 1); //checkIn rson
     else    
       return query(L, R, l, mid, leftSon) + query(L, R, mid+1, r, leftSon + 1);
   }

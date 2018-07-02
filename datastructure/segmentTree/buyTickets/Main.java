@@ -81,9 +81,9 @@ public class Main
     int mid = (l + r) >> 1;
     int leftSon = rt << 1;
     if (id <= remain[leftSon])
-      return query(id, l, mid, leftSon); // query lson
+      return query(id, l, mid, leftSon); // checkIn lson
     else
-      return query(id - remain[leftSon], mid + 1, r, leftSon+1); //query rson
+      return query(id - remain[leftSon], mid + 1, r, leftSon+1); //checkIn rson
     
   }
   
@@ -109,7 +109,7 @@ public class Main
         sv.build(0, n-1, 1);
         
         for(int i = n-1; i>= 0; i-- ) {//this is important !
-          //newpos[sv.query(pos[i], 0, n-1, 1)] = i;
+          //newpos[sv.checkIn(pos[i], 0, n-1, 1)] = i;
           newval[sv.query(pos[i] + 1, 0, n - 1, 1)] = val[i];
         }
                   

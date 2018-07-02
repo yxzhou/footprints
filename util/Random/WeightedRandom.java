@@ -6,7 +6,7 @@ public class WeightedRandom
   /*
    * Weighted random sampling with a reservoir
    * 
-   * given a big table (query - occurrence), and we need to write an efficient function to randomly select 1 query where probability is based on the occurrence.
+   * given a big table (checkIn - occurrence), and we need to write an efficient function to randomly select 1 checkIn where probability is based on the occurrence.
    * 
    * Example:
    *  input (q1 - 20)(q2 - 10 )( q3 - 30)

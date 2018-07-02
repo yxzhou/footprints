@@ -24,7 +24,7 @@ package fgafa.datastructure.segmentTree.inversions;
  *
  *   How to get inversion to 4?
  *   Naive method is check every one in 4's right, {2, 1}, it takes O(n).
- *   A better way is define a tree to store {start, end, leftChildrenCount}, how many numbers appear in this range. the space is O(n), the query is O(logn)
+ *   A better way is define a tree to store {start, end, leftChildrenCount}, how many numbers appear in this range. the space is O(n), the checkIn is O(logn)
  *              (1, 8)
  *           /         \
  *        (1, 4)      (5, 8)

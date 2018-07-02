@@ -3,6 +3,7 @@ package fgafa.datastructure.segmentTree.rangeSumQuery;
 
 /**
  * 
+
  * Given an integer array in the construct method, implement two methods query(start, end) and modify(index, value):
 
 	For query(start, end), return the sum from index start to index end in the given array.
@@ -16,6 +17,7 @@ package fgafa.datastructure.segmentTree.rangeSumQuery;
 	query(0, 1), return 6.
 	modify(2, 1), change origin[2] from 7 to 1.
 	query(2, 4), return 14.
+
 	Note
 	We suggest you finish problem Segment Tree Build, Segment Tree Query and Segment Tree Modify first.
 	

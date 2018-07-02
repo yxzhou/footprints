@@ -92,9 +92,9 @@ public class Main
     int ret = 0;
 
     if (L <= mid)
-      ret = Math.max(ret, query(L, R, l, mid, rt << 1)); // query lson
+      ret = Math.max(ret, query(L, R, l, mid, rt << 1)); // checkIn lson
     if (R > mid)
-      ret = Math.max(ret, query(L, R, mid + 1, r, rt << 1 | 1)); //query rson
+      ret = Math.max(ret, query(L, R, mid + 1, r, rt << 1 | 1)); //checkIn rson
 
     return ret;
   }
