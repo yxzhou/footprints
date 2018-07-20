@@ -25,7 +25,7 @@ Total explored area: 180.00
  *  
  * 
  */
-package fgafa.datastructure.segmentTree.atlantis;
+package fgafa.datastructure.quadTree.atlantis;
 
 import java.io.BufferedInputStream;
 import java.util.Arrays;

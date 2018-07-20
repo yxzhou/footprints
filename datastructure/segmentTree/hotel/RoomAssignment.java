@@ -2,6 +2,15 @@ package fgafa.datastructure.segmentTree.hotel;
 
 /**
  *
+ * Give a int roomNumber,  implement the following 2 functions
+ *    queryAndCheckin(int roomNumberNeed) //when a user want to book some rooms, check room by index from 0 to roomNumber - 1,
+ *    find the contigurous and empty rooms, if find, assigned to the user and return the leftmost room index.
+ *
+ *    checkout(int roomIndexStart, int roomIndexEnd) //when a user checkout, reset the room from roomIndexStart to roomIndexEnd as empty
+ *
+ * Solution
+ *     Define a segment tree, segment node { start, end, max contigurous rooms number, the contigurous rooms number from the start, the contigurous rooms number width at the end  }
+ *
  */
 
 public class RoomAssignment {
@@ -82,7 +91,7 @@ public class RoomAssignment {
      * @param startIndex
      * @param endIndex
      */
-    public void checkOut(int startIndex, int endIndex){
+    public void checkout(int startIndex, int endIndex){
         update(tree, 0, 0, length - 1, startIndex, endIndex, false);
     }
 

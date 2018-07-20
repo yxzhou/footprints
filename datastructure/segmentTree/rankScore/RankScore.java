@@ -2,7 +2,7 @@ package fgafa.datastructure.segmentTree.rankScore;
 
 /**
  *
- *  In fact, it's to get the max of a range in a mutable integer array.
+ *  In fact, it's to get the max of a range/segment in a mutable integer array.
  *
  */
 

@@ -41,15 +41,16 @@ public class IntervalMin {
         initTree(tree, 0, 0, length - 1, nums);
 
         for(Interval interval : queries){
-        	result.add(query(tree, 0, 0, length - 1, interval));
+        	result.add(query(tree, 0, 0, length - 1, nums, interval));
         }
 		
 		return result;
 	}
 
 	private int initTree(int[] tree, int nodeIndex, int start, int end, int[] nums){
-		if(start == end ){
-			tree[nodeIndex] = nums[start];
+		if(start == end){
+			//tree[nodeIndex] = nums[start];
+			return nums[start];  // to avoid the ArrayIndexOutOfBoundsException, example when [0, 5]
 		}else{
 			int mid = start + ((end - start) >> 1);
 			int leftSon = nodeIndex * 2 + 1;
@@ -60,7 +61,11 @@ public class IntervalMin {
 		return tree[nodeIndex];
 	}
 
-	private int query(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, Interval interval){
+	private int query(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int[] nums, Interval interval){
+		if(nodeStart == nodeEnd){
+			return nums[nodeStart];
+		}
+
 		int min = Integer.MAX_VALUE;
 
 		if(nodeStart <= nodeEnd) {
@@ -72,8 +77,8 @@ public class IntervalMin {
 				int leftSon = nodeIndex * 2 + 1;
 				int middle = nodeStart + (nodeEnd - nodeStart) / 2;
 
-				min = Math.min(min, query(tree, leftSon, nodeStart, middle, interval));
-				min = Math.min(min, query(tree, leftSon + 1, middle + 1, nodeEnd, interval));
+				min = Math.min(min, query(tree, leftSon, nodeStart, middle, nums, interval));
+				min = Math.min(min, query(tree, leftSon + 1, middle + 1, nodeEnd, nums, interval));
 			}
 		}
 
@@ -110,7 +115,7 @@ public class IntervalMin {
 
 
 	public static void main(String[] args){
-		int[] input = {1,2,7,8,5};
+		int[] input = {1,2,7,8,5,9};
 
 		Interval[] queries = {
 			new Interval(1, 2),

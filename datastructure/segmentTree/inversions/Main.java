@@ -50,7 +50,7 @@
  *        adjust the inversion number 
  * step4: loop step3
  */
-package fgafa.datastructure.segmentTree.InversionNum;
+package fgafa.datastructure.segmentTree.inversions;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

@@ -3,20 +3,25 @@
  * 
  * Description
 
-The citizens of Bytetown, AB, could not stand that the candidates in the mayoral election campaign have been placing their electoral posters at all places at their whim. The city council has finally decided to build an electoral wall for placing the posters and introduce the following rules: 
+The citizens of Bytetown, AB, could not stand that the candidates in the mayoral election campaign have been placing their electoral posters at all places at their whim.
+ The city council has finally decided to build an electoral wall for placing the posters and introduce the following rules:
 Every candidate can place exactly one poster on the wall. 
 All posters are of the same height equal to the height of the wall; the width of a poster can be any integer number of bytes (byte is the unit of length in Bytetown). 
 The wall is divided into segments and the width of each segment is one byte. 
 Each poster must completely cover a contiguous number of wall segments.
 
-They have built a wall 10000000 bytes long (such that there is enough place for all candidates). When the electoral campaign was restarted, the candidates were placing their posters on the wall and their posters differed widely in width. Moreover, the candidates started placing their posters on wall segments already occupied by other posters. Everyone in Bytetown was curious whose posters will be visible (entirely or in part) on the last day before elections. 
+They have built a wall 10000000 bytes long (such that there is enough place for all candidates). When the electoral campaign was restarted,
+ the candidates were placing their posters on the wall and their posters differed widely in width.
+ Moreover, the candidates started placing their posters on wall segments already occupied by other posters.
+ Everyone in Bytetown was curious whose posters will be visible (entirely or in part) on the last day before elections.
 Your task is to find the number of visible posters when all the posters are placed given the information about posters' size, their place and order of placement on the electoral wall. 
-Input
+ Input
+The first line of input contains a number c giving the number of cases that follow. The first line of data for a single case contains number 1 <= n <= 10000.
+ The subsequent n lines describe the posters in the order in which they were placed. The i-th line among the n lines contains two integer numbers li and ri which are the number of the wall segment occupied by the left end and the right end of the i-th poster, respectively. We know that for each 1 <= i <= n, 1 <= li <= ri <= 10000000. After the i-th poster is placed, it entirely covers all wall segments numbered li, li+1 ,... , ri.
 
-The first line of input contains a number c giving the number of cases that follow. The first line of data for a single case contains number 1 <= n <= 10000. The subsequent n lines describe the posters in the order in which they were placed. The i-th line among the n lines contains two integer numbers li and ri which are the number of the wall segment occupied by the left end and the right end of the i-th poster, respectively. We know that for each 1 <= i <= n, 1 <= li <= ri <= 10000000. After the i-th poster is placed, it entirely covers all wall segments numbered li, li+1 ,... , ri.
-Output
+ Output
+For each input data set print the number of visible posters after all the posters are placed.
 
-For each input data set print the number of visible posters after all the posters are placed. 
  * Sample Input
 4
 5
@@ -54,18 +59,9 @@ Sample Output
  *   interval tree initial, Time O(n)
  *   interval tree update, Time O(n * logn)
  *   count the distinct poster,  Time O(n)
- * so it's O(nlogn)  
- *   
- * Solution #2:   ?? TODO
- *   calPosterNum(interval[] input){ 
- *     sort interval by interval.ri
- *     int count = 0;
- *     for interval, i from 2nd_max ri to min ri
- *       if input[i].li < input[i+1].li
- *         count ++;
- *   }
+ * so it's O(nlogn)
  */
-package fgafa.datastructure.segmentTree.MayorPoster;
+package fgafa.datastructure.segmentTree.mayorPoster;
 
 import java.io.BufferedInputStream;
 import java.util.Arrays;
@@ -136,7 +132,8 @@ public class Main
     }
     
     int mid = (l + r) >> 1;
-    int leftSon = rt << 1, rightSon = leftSon + 1;
+    int leftSon = rt << 1;
+    int rightSon = leftSon + 1;
     if (mid >= R )
       update(L, R, postId, l, mid, leftSon); // update lson
     else if(mid < L)
@@ -148,15 +145,7 @@ public class Main
       
     pushUp(rt);
   }
-  
-  //==================solution #2 start
-  public int calPoster(int[] inputStart, int[] inputEnd){
-    //TODO
-    
-    return -1;
-  }
-  
-  //==================solution #2 end
+
   
   /**
    * @param args
