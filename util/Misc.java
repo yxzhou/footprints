@@ -1,6 +1,7 @@
 package fgafa.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -204,8 +205,8 @@ public class Misc
   
   public static StringBuffer array2String(int[] array) {
     if(array == null)
-      return null; 
-    
+      return null;
+
     StringBuffer returnValue = new StringBuffer();
 
     returnValue.append("[ ");

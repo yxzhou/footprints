@@ -33,10 +33,9 @@ public class Random
       count++;  // increment count of numbers seen so far
    
       // If this is the first element from stream, return it
-      if (count == 1)
+      if (count == 1) {
           res = x;
-      else
-      {
+      }else {
           // Generate a random number from 0 to count - 1
           java.util.Random random = new java.util.Random();
           int i = random.nextInt(count);

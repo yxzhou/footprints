@@ -14,16 +14,34 @@ import java.util.*;
  * define int[] posterId = new int[n], posterId[i] is the last poster id that cover position i.
  * The time complexity is O(n * m), Space is O(n)
  *
- * Solution 2, interval tree   ---WRONG !
+ * Solution 2, interval tree
  * in solution 1, if m is big, m equals to n, it will take O(n^2) and the visible poster is 1.
- * A improvement is to use interval to show a poster.
- * The time complexity is O(n * logn)
+ * A improvement is to use intervals to show a poster.
+ *
+ * From the Main.java, 1 <= n <= 10000 and 1 <= li <= ri <= 10000000,
+ * build tree with li and ri, the space complexity is O(10000000 * 2), 离散化，build tree with li's index, the space complexity is O(10000 * 2)
+ *
+ * To case {{1, 10}, {1, 4}, {5, 10}}, the right answer is 3 instead of 2. because interval (4, 5) will be visible. A fix is add one between the indexes.
+ *
+ *   the li and ri list:          1,  4,  5,  10
+ *   离散化, index the above,      1,  2,  3,  4
+ *   to present (4, 5),           1   3   5   7
+ *
+ *   to build a full binary tree
+ *                     [1, 8]
+ *                /              \
+ *              [1, 4]          [5, 8]
+ *            /       \        /       \
+ *         [1, 2]    [3, 4]  [5, 6]   [7, 8]
+ *
+ * The time complexity is O(n * logn), the space is O(n * 4)
+ *
+ * n is 10^4, m is 10^7,  n*m is 10^11,  n*logn = 10^4 * 7
+ * The solution 1 is better when m is very small.
  *
  * Solution 3, scan line filling
  *
  *
- * n is 10^4, m is 10^7,  n*m is 10^11,  n*logn = 10^4 * 7
- * The solution 1 is better when m is smaller.
  *
  */
 
@@ -36,17 +54,23 @@ public class MayorPoster {
 
         int length = posters.length;
 
-        int max = Integer.MIN_VALUE;
-        //int min = Integer.MAX_VALUE;
+        Set<Integer> set = new HashSet<>(length);
         for(int[] poster : posters){
-            if(poster[0] < poster[1]) {
-        //        min = Math.min(min, poster[0]);
-                max = Math.max(max, poster[1]);
-            }
+            set.add(poster[0]);
+            set.add(poster[1]);
+        }
+        List<Integer> list = new ArrayList<>(set);
+        Collections.sort(list);
+
+        Map<Integer, Integer> position2Index = new HashMap<>(list.size() * 2);
+
+        for(int i = 0, j = 1; i < list.size(); i++, j+=2){
+            position2Index.put(list.get(i), j);
         }
 
         int n = 1;
-        while(n <= max){
+        final int x = position2Index.get(list.get(list.size() - 1));
+        while(n < x){
             n <<= 1;
         }
 
@@ -54,7 +78,7 @@ public class MayorPoster {
 
         for(int i = length - 1; i >= 0; i--){
             if(posters[i][0] < posters[i][1]) {
-                update(tree, 1, 1, n, i + 1, posters[i][0], posters[i][1]);
+                update(tree, 1, 1, n, i + 1, position2Index.get(posters[i][0]), position2Index.get(posters[i][1]));
             }
         }
 
