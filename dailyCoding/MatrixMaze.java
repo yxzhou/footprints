@@ -47,8 +47,7 @@ public class MatrixMaze {
         }
 
         matricMaze_dfs(startPoint, endPoint, steps);
-        matricMaze_bfs(startPoint, endPoint, steps);
-
+        //matricMaze_bfs(startPoint, endPoint, steps);
 
         if(steps[endPoint[0]][endPoint[1]] == -1 || steps[endPoint[0]][endPoint[1]] == Integer.MAX_VALUE){
             return -1;

@@ -19,17 +19,17 @@ package fgafa.dailyCoding;
  *  Tags:  Google,  Tree
  */
 public class UnivalTree<V> {
-    class Node<V>{
+    class TreeNode<V>{
         V value;
-        Node left;
-        Node right;
+        TreeNode left;
+        TreeNode right;
     }
 
-    class Wrapper{
+    private class Wrapper{
         int count = 0;
     }
 
-    public int countUnivalTree(Node root){
+    public int countUnivalTree(TreeNode root){
         Wrapper wrapper = new Wrapper();
         isUnivalTree(root, wrapper);
 
@@ -41,7 +41,7 @@ public class UnivalTree<V> {
      * @param node
      * @return the same value if it's univalTree, null if it's not univalTree
      */
-    private boolean isUnivalTree(Node<V> node, Wrapper wrapper){
+    private boolean isUnivalTree(TreeNode<V> node, Wrapper wrapper){
         if(node == null){
             return true;
         }

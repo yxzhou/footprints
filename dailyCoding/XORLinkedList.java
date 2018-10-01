@@ -13,23 +13,23 @@ package fgafa.dailyCoding;
  * /
 
 /** assume it provides the follwing */
-class Node<V>{
+class ListNode<V>{
     V value;
     long both;
 
-    Node(V value){
+    ListNode(V value){
         this.value = value;
         both = 0L;
     }
 }
 
 class Converter {
-    static long get_pointer(Node node) {
+    static long get_pointer(ListNode node) {
         //todo
         return -1;
     }
 
-    static Node dereference_pointer(long memoryAddress) {
+    static ListNode dereference_pointer(long memoryAddress) {
         //todo
         return null;
     }
@@ -37,12 +37,12 @@ class Converter {
 
 /** the following is the implementation */
 public class XORLinkedList<V> {
-    Node header = null;
-    Node tail = null;
+    ListNode header = null;
+    ListNode tail = null;
     int size = 0;
 
     void add(V element){
-        Node newNode = new Node(element);
+        ListNode newNode = new ListNode(element);
 
         if(size == 0){
             header = newNode;
@@ -55,13 +55,13 @@ public class XORLinkedList<V> {
         size++;
     }
 
-    Node get(int index){
+    ListNode get(int index){
         if(index >= size){
             return null;
         }
 
-        Node curr = header;
-        for(Node pre = tail, next = null ; index > 0; index--){
+        ListNode curr = header;
+        for(ListNode pre = tail, next = null ; index > 0; index--){
             next = Converter.dereference_pointer(Converter.get_pointer(pre) ^ curr.both);
 
             pre = curr;

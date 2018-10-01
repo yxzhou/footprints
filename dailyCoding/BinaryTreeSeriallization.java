@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class BinaryTreeSeriallization {
 
-    class Node{
+    class Node {
         String value;
         Node left;
         Node right;
