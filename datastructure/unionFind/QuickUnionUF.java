@@ -59,13 +59,6 @@ public class QuickUnionUF implements UF {
     
 	@Override
     public int count(){
-        //numberOfUnions connected components
-//		int numberOfUnions = 0;
-//        for(int id : ids){
-//        	if(id == ids[id]){
-//        		numberOfUnions++;
-//        	}
-//        }
         return numberOfUnions;
     }
 	

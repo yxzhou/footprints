@@ -1,8 +1,8 @@
 package fgafa.matrix; 
 
-import java.util.LinkedList;
-
 import fgafa.util.Misc;
+
+import java.util.LinkedList;
 
 /*
  * Find how many islands. 
@@ -23,7 +23,9 @@ import fgafa.util.Misc;
  *         {0,0,1,0}
  * 
  * output:   2 
- * 
+ *
+ * tages:  dfs
+ *
  */
 
 class Islands
@@ -42,7 +44,7 @@ class Islands
     for(int i=0; i<rowNum; i++)
       for(int j=0; j<colNum; j++)
         isVisited[i][j] = false;
-    
+
 
     for(int i=0; i<rowNum; i++){
       for(int j=0; j<colNum; j++){
