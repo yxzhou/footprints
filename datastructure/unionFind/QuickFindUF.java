@@ -61,13 +61,6 @@ public class QuickFindUF implements UF{
     
 	@Override
     public  int count(){
-        //numberOfUnions connected components
-//        Set<Integer> set = new HashSet<>();
-//        for(int id : unionIds){
-//        	set.add(id);
-//        }
-//        return set.size();
-        
         return numberOfUnions;
     }
 	

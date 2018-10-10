@@ -10,6 +10,7 @@ public class RankScore {
 
     int[] origin; //the original scores
     int[] tree;  //interval tree, the node is the max score of a interval.
+    final int n; //the leaf number of the interval tree
 
     public RankScore(int[] initialScores){
         if(null == initialScores || 0 == initialScores.length){
@@ -19,17 +20,27 @@ public class RankScore {
         int length = initialScores.length;
         origin = initialScores;
 
-        tree = new int[length * 2 - 1];
-        initTree(tree, 0, 0, length - 1, origin);
+        int x = 1;
+        while(x < length){
+            x <<= 1;
+        }
+        this.n = x;
+
+        tree = new int[n * 2];
+        initTree(tree, 1, 1, n, origin);
     }
 
     private void initTree(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int[] origin){
+        if(nodeStart > origin.length){
+            return;
+        }
+
         if(nodeStart == nodeEnd){
-            tree[nodeIndex] = origin[nodeStart];
+            tree[nodeIndex] = origin[nodeStart - 1];
         }else{ //nodeStart < nodeEnd
 
             int nodeMiddle = nodeStart + (nodeEnd - nodeStart) / 2;
-            int leftSon = nodeIndex * 2 + 1;
+            int leftSon = nodeIndex * 2;
 
             initTree(tree, leftSon, nodeStart, nodeMiddle, origin);
             initTree(tree, leftSon + 1, nodeMiddle + 1, nodeEnd, origin);
@@ -39,7 +50,7 @@ public class RankScore {
     }
 
     public int query(int startIndex, int endIndex){
-        return query(tree, 0, 0, origin.length - 1, startIndex, endIndex);
+        return query(tree, 1, 1, n, startIndex, endIndex);
     }
 
     private int query(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int startIndex, int endIndex){
@@ -51,7 +62,7 @@ public class RankScore {
             result = tree[nodeIndex];
         } else { // intersection
             int nodeMiddle = nodeStart + (nodeEnd - nodeStart) / 2;
-            int leftSon = nodeIndex * 2 + 1;
+            int leftSon = nodeIndex * 2;
 
             result = Math.max(result, query(tree, leftSon, nodeStart, nodeMiddle, startIndex, endIndex));
             result = Math.max(result, query(tree, leftSon + 1, nodeMiddle + 1, nodeEnd, startIndex, endIndex));
@@ -65,7 +76,7 @@ public class RankScore {
             throw new IllegalArgumentException("---");
         }
 
-        update(tree, 0, 0, origin.length - 1, origin, index, newScore);
+        update(tree, 1, 1, n, origin, index, newScore);
     }
 
     private void update(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int[] origin, int index, int newScore){
@@ -74,7 +85,7 @@ public class RankScore {
             tree[nodeIndex] = newScore;
         }else if(nodeStart < nodeEnd){
             int nodeMiddle = nodeStart + (nodeEnd - nodeStart) / 2;
-            int leftSon = nodeIndex * 2 + 1;
+            int leftSon = nodeIndex * 2;
 
             if(index <= nodeMiddle){
                 update(tree, leftSon, nodeStart, nodeMiddle, origin, index, newScore);
@@ -83,6 +94,27 @@ public class RankScore {
             }
 
             tree[nodeIndex] = Math.max(tree[leftSon], tree[leftSon + 1]);
+        }
+    }
+
+    public static void main(String[] args){
+        RankScore sv = new RankScore(new int[]{1, 2, 3, 4, 5});
+
+        int[][] input = {
+                {0,1,5},
+                {1,3,6},
+                {0,3,4},
+                {0,4,5},
+                {1,2,9},
+                {0,1,5}
+        };
+
+        for(int[] action : input){
+            if(action[0] == 0){
+                System.out.println(sv.query(action[1], action[2]));
+            }else{
+                sv.update(action[1], action[2]);
+            }
         }
     }
 }

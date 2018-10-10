@@ -69,13 +69,6 @@ public class WeightedQuickUnionUF implements UF {
     
 	@Override
     public int count(){
-        //numberOfUnion connected components
-//		int numberOfUnion = 0;
-//        for(int id : ids){
-//        	if(id == ids[id]){
-//        		numberOfUnion++;
-//        	}
-//        }
         return numberOfUnion;
     }
 	

@@ -47,6 +47,9 @@ public class IslandsII {
     
     Challenge:
     Can you do it in time complexity O(k log mn), where k is the length of the positions?
+
+     tags:  union find
+
 	 */
     public List<Integer> numIslands2(int colNum,
                                      int rowNum,
@@ -58,12 +61,12 @@ public class IslandsII {
             return result;
         }
 
-        int[][] groupIds = new int[colNum][rowNum]; // default all are 0
+        int[] parentIds = new int[colNum * rowNum]; // default all are 0
+
         int count = 0;
         int groupId = 0;
 
-        int[] dx = { 1, -1, 0, 0 };
-        int[] dy = { 0, 0, 1, -1 };
+        int[][] neighbors = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
         for (Point p : operators) {
 
             if (p.x < 0 && p.x >= colNum && p.y < 0 && p.y >= rowNum) {
@@ -72,27 +75,27 @@ public class IslandsII {
 
             // count++ when there is no adjacent islands, count decrease based
             // on adjacent islands group
-            if (groupIds[p.x][p.y] == 0) {
+            if (parentIds[p.x * p.y] == 0) {
 
-                // quick find
+                // quick union with path compression
                 Set<Integer> set = new HashSet<Integer>(4);
 
                 for (int i = 0; i < 4; i++) {
-                    int x = p.x + dx[i];
-                    int y = p.y + dy[i];
+                    int x = p.x + neighbors[i][0];
+                    int y = p.y + neighbors[i][1];
                     if (0 <= x && x < colNum && 0 <= y && y < rowNum
-                                && groupIds[x][y] > 0) {
-                        set.add(groupIds[x][y]);
+                                && parentIds[x * y] > 0) {
+                        set.add(parentIds[x * y]);
                     }
                 }
 
                 count += 1 - set.size();
                 groupId++;
-                groupIds[p.x][p.y] = groupId;
+                parentIds[p.x * p.y] = groupId;
 
                 // union
                 if (!set.isEmpty()) {
-                    dfs(groupIds, p.x, p.y, groupIds[p.x][p.y]);
+                    dfs(parentIds, p.x, p.y, parentIds[p.x][p.y]);
                 }
             }
 
@@ -100,6 +103,14 @@ public class IslandsII {
         }
 
         return result;
+    }
+
+    private void union(){
+
+    }
+
+    private void findRoot(int p, int[] parentIds){
+        while(parentIds[p] != p
     }
 
     private void dfs(int[][] matrix,
