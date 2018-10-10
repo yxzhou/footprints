@@ -1,5 +1,7 @@
 package fgafa.basic;
 
+import fgafa.util.Misc;
+
 public class ByValueOrRef
 {
 
@@ -53,7 +55,12 @@ public class ByValueOrRef
     
     s.passStringBuffer(sb);
     System.out.println(sb);
-    
+
+    //int[]
+    int[] ints = new int[10];
+    System.out.println(Misc.array2String(ints));
+    s.passIntArray(ints);
+    System.out.println(Misc.array2String(ints));
   }
 
   private void passInt(int i){

@@ -20,13 +20,22 @@ import fgafa.util.Misc;
  * For example,<br>
  * words: ["This", "is", "an", "example", "of", "text", "justification."]<br>
  * L: 16.<br>
- * 
+ *
  * Return the formatted lines as: <br>
  * [<br>
  *    "This    is    an",<br>
  *    "example  of text",<br>
  *    "justification.  "<br>
  * ]<br>
+ *
+ * For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16,
+ * you should return the following:
+
+    ["the  quick brown", # 1 extra space on the left
+     "fox  jumps  over", # 2 extra spaces distributed evenly
+     "the   lazy   dog"] # 4 extra spaces distributed evenly
+
+ *
  * Note: Each word is guaranteed not to exceed L in length.<br>
  * 
  */
@@ -129,7 +138,7 @@ public class TextJustification
                 rest -= words[j].length() + 1;
                 j++;
             } else {
-                returnvalue.add(build(words, L, i, j, rest));
+                returnvalue.add(buildLine(words, L, i, j, rest));
 
                 i = j;
                 rest = L;
@@ -137,38 +146,70 @@ public class TextJustification
 
         }
         
-        returnvalue.add(build(words, L, i, j, rest));
+        returnvalue.add(buildLine(words, L, i, j, rest));
 
         return returnvalue;
     }
 
-    private String build(String[] words,
-                         int L,
-                         int start,
-                         int end,
-                         int rest) {
+
+    public List<String> fullJustify_2(String[] words, int length){
+        List<String> result = new ArrayList<>();
+        if(null == words || words.length == 0){
+            return result;
+        }
+
+        int left = 0;
+        int right = 0;
+        int rest = length;
+        while(right < words.length){
+            if(words[right].length() <= rest){
+                rest -= words[right].length() + 1;
+                right++;
+            }else{
+                result.add(buildLine(words, length, left, right, rest));
+
+                left = right;
+                rest = length;
+            }
+
+        }
+        result.add(buildLine(words, length, left, right, rest));
+
+        return result;
+    }
+
+    private String buildLine(String[] words,
+            final int length,
+            int start,
+            int end,
+            int rest) {
         if (start == end) {
-            throw new IllegalArgumentException(words[start] + "is longer than " + L);
+            throw new IllegalArgumentException(words[start] + "is longer than " + length);
         }
 
         StringBuilder result = new StringBuilder();
 
         rest++;
         int wordsNum = end - start;
-        int middleSpaceNum = 0;
-        int tailSpaceNum;
-
+        int middleSpaceAverage = 0;
+        int middleSpaceRest = 0;
+        int tailSpaceNum = 0;
         if (wordsNum == 1) {
-            tailSpaceNum = L - words[start].length(); // rest
+            tailSpaceNum = length - words[start].length(); // rest
         } else {
-            middleSpaceNum = rest / (wordsNum - 1) + 1;
-            tailSpaceNum = rest - (wordsNum - 1) * (middleSpaceNum - 1);
+            middleSpaceAverage = rest / (wordsNum - 1) + 1;
+            middleSpaceRest = rest - (wordsNum - 1) * (middleSpaceAverage - 1);
         }
 
         while (start < end - 1) {
             result.append(words[start]);
-            result.append(buildSpace(middleSpaceNum));
-            
+            result.append(buildSpace(middleSpaceAverage));
+
+            if(middleSpaceRest > 0){
+                result.append(" ");
+                middleSpaceRest--;
+            }
+
             start++;
         }
         result.append(words[start]);
@@ -176,14 +217,17 @@ public class TextJustification
 
         return result.toString();
     }
-     
+
   /**
    * @param args
    */
   public static void main(String[] args) {
     String[][] words = {{""}, {""},{"a"},{"a"},{"a","b","c","d","e"}, {"a","b","c","d","e"}
-    , {"Listen","to","many,","speak","to","a","few."}, {"What","must","be","shall","be."}, {"What","must","be","shall","be."}};
-    int[] L = {0, 2, 1, 2, 1, 3, 6, 5, 12};
+    , {"Listen","to","many,","speak","to","a","few."}, {"What","must","be","shall","be."},
+            {"What","must","be","shall","be."},
+            {"This", "is", "an", "example", "of", "text", "justification."},
+            {"the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"}};
+    int[] L = {0, 2, 1, 2, 1, 3, 6, 5, 12, 16, 16};
     
     TextJustification sv = new TextJustification();
 
@@ -193,7 +237,9 @@ public class TextJustification
       
       Misc.printArrayList(sv.fullJustify(words[i], L[i]));  
       
-      Misc.printArrayList(sv.fullJustify_n(words[i], L[i]));  
+      Misc.printArrayList(sv.fullJustify_n(words[i], L[i]));
+
+      Misc.printArrayList(sv.fullJustify_2(words[i], L[i]));
     }
     
       

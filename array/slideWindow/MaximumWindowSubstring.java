@@ -187,41 +187,41 @@ public class MaximumWindowSubstring {
         
         return result;
     }
-    
+
     /* Time O(n),  Space O(k)*/
     public int lengthOfLongestSubstringTwoDistinctII_n(String s, int k) {
         int maxLength = 0;
-        
+
         if(null == s || 0 == s.length()){
             return maxLength;
         }
-        
+
         Map<Character, Interval> indexes = new HashMap<>();
         int left = 0;
         for(int i = 0; i < s.length(); i++){
             char c = s.charAt(i);
-            
+
             if(!indexes.containsKey(c)){
                 if(indexes.size() < k){
                     indexes.put(c, new Interval(c, i, i));
                 }else{ // indexes.size() == k
                     List<Interval> list = new ArrayList<>(indexes.values());
                     Collections.sort(list);
-                    
+
                     maxLength = Math.max(maxLength, list.get(k - 1).right - left + 1);
                     left = list.get(0).right + 1;
-                    
+
                     indexes.remove(list.get(0).value);
                 }
             }else{
                 indexes.get(c).right = i;
             }
         }
-        
+
         if(indexes.size() < k){
             maxLength = s.length();
         }
-        
+
         return maxLength;
     }
     

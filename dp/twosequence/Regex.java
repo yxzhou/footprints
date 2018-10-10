@@ -77,6 +77,7 @@ public class Regex {
                     "abbc",
                     "abcbcd",
                     "a",
+                    "bb",
                     "",
                     "bb",
                     "a",
@@ -105,6 +106,7 @@ public class Regex {
                     "ab*bbc",
                     "a.*c.*d",
                     "ab*",
+                    "a*",
                     "b*",
                     ".bab",
                     "ab*a",
@@ -115,7 +117,7 @@ public class Regex {
 
         boolean[] ans = { true, false, true, true, true, false, false, true,
                     false, true, true, true, true, true, true, true, true,
-                    true, true, false, false, false, false, false, false, false };
+                    true, false, true, false, false, false, false, false, false, false };
         boolean result;
 
         Regex sv = new Regex();
@@ -124,7 +126,7 @@ public class Regex {
             result = isMatch(t[i], p[i]);
             System.out.print(i + "--The Text is: " + t[i]
                         + " \t\t the pattern is: " + p[i]
-                        + " \t\t are they matched:" + isMatch(t[i], p[i])
+                        + " \n\t are they matched:" + isMatch(t[i], p[i])
                         + "\t" + sv.isMatch_dp(t[i], p[i]) + "\t"
                         + sv.isMatch_dp_n(t[i], p[i]) + "\t" + ans[i]);
             if (result != ans[i])
@@ -211,15 +213,15 @@ public class Regex {
                 if (i == 0 && j == 0) {
                     continue;
                 }
-                if (j > 1 && dp[i][j - 2] && p.charAt(j - 1) == '*') {
+                if (j > 1 && dp[i][j - 2] && p.charAt(j - 1) == '*') { // "a" match "ab*"
                     dp[i][j] = true;
                 }
                 if (i > 0 && j > 0 && dp[i - 1][j - 1]
-                            && isMatch(s.charAt(i - 1), p.charAt(j - 1))) {
+                            && isMatch(s.charAt(i - 1), p.charAt(j - 1))) { //
                     dp[i][j] = true;
                 }
                 if (i > 0 && j > 1 && dp[i - 1][j] && p.charAt(j - 1) == '*'
-                            && isMatch(s.charAt(i - 1), p.charAt(j - 2))) {
+                            && isMatch(s.charAt(i - 1), p.charAt(j - 2))) { // * repeat p.charAt(j - 2)
                     dp[i][j] = true;
                 }
             }
