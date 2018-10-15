@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+//todo
 public class IslandsII {
 
 	/**
@@ -61,7 +62,7 @@ public class IslandsII {
             return result;
         }
 
-        int[] parentIds = new int[colNum * rowNum]; // default all are 0
+        int[] parentIds = new int[(colNum + 1) * (rowNum + 1)]; // default all are 0
 
         int count = 0;
         int groupId = 0;
@@ -75,7 +76,7 @@ public class IslandsII {
 
             // count++ when there is no adjacent islands, count decrease based
             // on adjacent islands group
-            if (parentIds[p.x * p.y] == 0) {
+            if (parentIds[(p.x + 1) * (p.y + 1)] == 0) {
 
                 // quick union with path compression
                 Set<Integer> set = new HashSet<Integer>(4);
@@ -84,8 +85,8 @@ public class IslandsII {
                     int x = p.x + neighbors[i][0];
                     int y = p.y + neighbors[i][1];
                     if (0 <= x && x < colNum && 0 <= y && y < rowNum
-                                && parentIds[x * y] > 0) {
-                        set.add(parentIds[x * y]);
+                                && parentIds[(x + 1) * (y + 1)] > 0) {
+                        set.add(parentIds[(x + 1) * (y + 1)]);
                     }
                 }
 
@@ -95,7 +96,7 @@ public class IslandsII {
 
                 // union
                 if (!set.isEmpty()) {
-                    dfs(parentIds, p.x, p.y, parentIds[p.x][p.y]);
+                    //dfs(parentIds, p.x, p.y, parentIds[(p.x + 1) * (p.y + 1)]);
                 }
             }
 
@@ -110,7 +111,9 @@ public class IslandsII {
     }
 
     private void findRoot(int p, int[] parentIds){
-        while(parentIds[p] != p
+        while(parentIds[p] != p){
+            //todo
+        }
     }
 
     private void dfs(int[][] matrix,
@@ -153,5 +156,6 @@ public class IslandsII {
 			y = b;
 		}
 	}
+
 
 }

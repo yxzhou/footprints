@@ -27,10 +27,12 @@ import fgafa.util.Misc;
 
 public class MedianFromDataStream {
     /**
+	 * with maxHeap and minHeap
+	 *
      * @param nums: A list of integers.
      * @return: the median of numbers
      */
-    public int[] medianII(int[] nums) {
+    public int[] median(int[] nums) {
         //check
         if(null == nums || 0 == nums.length){
             return new int[0];
@@ -68,8 +70,28 @@ public class MedianFromDataStream {
 		
         return result;
     }
-    
-    
+
+
+	/**
+	 * with segment tree, when the minValue and maxValue is known.
+	 *   especially benifit when there are lots of duplicate numbers in the stream
+	 *
+	 * @param nums: A list of integers.
+	 * @return: the median of numbers
+	 */
+	public int[] medianII(int[] nums) {
+		//check
+		if (null == nums || 0 == nums.length) {
+			return new int[0];
+		}
+
+		int[] result = new int[nums.length];
+
+
+		return result;
+	}
+
+
     public static void main(String[] args){
     	MedianFromDataStream sv = new MedianFromDataStream();
     	

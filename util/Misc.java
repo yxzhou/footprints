@@ -1,5 +1,11 @@
 package fgafa.util;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -187,7 +193,21 @@ public class Misc
 
 		System.out.println();
 	}
-  
+
+	public static void printFile(String file){
+
+        byte[] buffer = new byte[8192];
+
+        try(InputStream input = new BufferedInputStream(new FileInputStream(file))) {
+            for (int length = 0; (length = input.read(buffer)) != -1;) {
+                System.out.write(buffer, 0, length);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+        }
+    }
+
   public static StringBuffer array2String(boolean[] array) {
     StringBuffer returnValue = new StringBuffer();
 
