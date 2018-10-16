@@ -1,0 +1,4 @@
+All puzzles are from http://fgafa.uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=3
+
+com.fgafa.uva.geometry  -- Computational Geometry
+       .dp        -- Dynamic programming 

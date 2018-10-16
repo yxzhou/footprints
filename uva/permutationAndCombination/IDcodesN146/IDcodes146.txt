@@ -1,0 +1,57 @@
+Input:
+abaacb
+cbbaa
+1
+12
+123
+1234
+12345
+123456
+654321
+54321
+4321
+321
+21
+1
+35421
+365421
+38765421
+43521
+543621
+546321
+546231
+546213
+11111
+1122
+2211
+5456332211
+#
+
+
+Output
+ababac
+No Successor
+No Successor
+21
+132
+1243
+12354
+123465
+No Successor
+No Successor
+No Successor
+No Successor
+No Successor
+No Successor
+41235
+412356
+4133678
+45123
+546123
+561234
+546312
+546231
+No Successor
+1212
+No Successor
+5461122335

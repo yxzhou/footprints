@@ -1,0 +1,65 @@
+open with UltraEdit32 and enable show space/Tab
+Input:   
+1
+1
+-yx8+9x3-1+y
+x5y+1+9x3
+1
+1
+99x99+99y99
+99x99-99y99
+99x99+99y99
+99x99+99y99
+-yx8+7x7y5-8x3-2x2
+x5y+1+4x3
+3yx-2xy
+-x5y-4x3+8x100y100
+-1x1
+-x100
+x2
+y-y
+x2y2+3xy-4
+x2-3x3+x5
+24x-67xy7
+-x5
+x32+y21+2x3y42-1
+-x
+x0y0
+1
+-x6y6
+x8y8+x7y9+x2-98
+0
+22
+#
+
+Output:
+ 
+1
+  13 2     11      8       6    5     5 2     3         
+-x  y  - 9x  y + 8x y + 81x  - x y + x y  + 9x y - 1 + y
+ 
+1
+     198        198
+9801x    - 9801y   
+     198         99 99        198
+9801x    + 19602x  y   + 9801y   
+  13 2     12 6     11       10 5     8      7      7 5      6     5     3     2
+-x  y  + 7x  y  - 4x  y + 28x  y  - 9x y - 2x y + 7x y  - 32x  - 8x  - 8x  - 2x 
+  101 101    6 2     4 
+8x   y    - x y  - 4x y
+ 101
+x   
+
+
+ 7 2     6      5     5 2     4     4 2      3     3      2
+x y  + 3x y - 4x  - 3x y  - 9x y + x y  + 12x  + 3x y - 4x 
+    6      6 7
+-24x  + 67x y 
+  33     4 42         21
+-x   - 2x y   + x - xy  
+ 
+1
+  14 14    13 15    8 6      6 6
+-x  y   - x  y   - x y  + 98x y 
+
+

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://www.algorithmist.com/index.php/UVa_106 -->
+<html lang="en" dir="ltr" class="client-js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>UVa 106 - Algorithmist</title>
+<meta charset="UTF-8">
+<meta name="generator" content="MediaWiki 1.18.1">
+<link rel="alternate" type="application/x-wiki" title="Edit" href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit">
+<link rel="edit" title="Edit" href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit">
+<link rel="shortcut icon" href="http://www.algorithmist.com/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.algorithmist.com/opensearch_desc.php" title="Algorithmist (en)">
+<link rel="EditURI" type="application/rsd+xml" href="http://www.algorithmist.com/api.php?action=rsd">
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="Algorithmist Atom feed" href="http://www.algorithmist.com/index.php?title=Special:RecentChanges&feed=atom">
+<link rel="stylesheet" href="http://www.algorithmist.com/load.php?debug=false&lang=en&modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.vector&only=styles&skin=vector&*">
+<style type="text/css" media="all">.mw-collapsible-toggle{float:right} li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+
+/* cache key: wikidb:resourceloader:filter:minify-css:4:4250852ed2349a0d4d0fc6509a3e7d4c */
+</style><style type="text/css" media="all">.js-messagebox{margin:1em 5%;padding:0.5em 2.5%;border:1px solid #ccc;background-color:#fcfcfc;font-size:0.8em}.js-messagebox .js-messagebox-group{margin:1px;padding:0.5em 2.5%;border-bottom:1px solid #ddd}.js-messagebox .js-messagebox-group:last-child{border-bottom:thin none transparent}
+
+/* cache key: wikidb:resourceloader:filter:minify-css:4:8b08bdc91c52a9ffba396dccfb5b473c */
+</style><meta name="ResourceLoaderDynamicStyles" content="">
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: wikidb:resourceloader:filter:minify-css:4:c88e2bcd56513749bec09a7e29cb3ffa */
+</style>
+<script src="./UVa 106 - Algorithmist_files/load.php"></script><script src="./UVa 106 - Algorithmist_files/load(1).php"></script>
+<script>if(window.mw){
+	mw.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "UVa_106", "wgTitle": "UVa 106", "wgCurRevisionId": 11862, "wgArticleId": 784, "wgIsArticle": true, "wgAction": "view", "wgUserName": null, "wgUserGroups": ["*"], "wgCategories": ["UVa Online Judge", "Math", "Number Theory"], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": [], "wgSearchNamespaces": [0]});
+}
+</script><script>if(window.mw){
+	mw.loader.load(["mediawiki.page.startup"]);
+}
+</script><script type="text/javascript" src="./UVa 106 - Algorithmist_files/load(2).php"></script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-UVa_106 action-view skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;" class="js-messagebox"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">UVa 106</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+								<!-- tagline -->
+				<div id="siteSub">From Algorithmist</div>
+				<!-- /tagline -->
+								<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="http://www.algorithmist.com/index.php/UVa_106#mw-head">navigation</a>,
+					<a href="http://www.algorithmist.com/index.php/UVa_106#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodycontent -->
+				<div lang="en" dir="ltr" class="mw-content-ltr"><table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a href="http://www.algorithmist.com/index.php/UVa_106#" class="internal" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="http://www.algorithmist.com/index.php/UVa_106#106_-_Fermat_vs._Pythagoras"><span class="tocnumber">1</span> <span class="toctext">106 - Fermat vs. Pythagoras</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="http://www.algorithmist.com/index.php/UVa_106#Summary"><span class="tocnumber">2</span> <span class="toctext">Summary</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="http://www.algorithmist.com/index.php/UVa_106#Explanation"><span class="tocnumber">3</span> <span class="toctext">Explanation</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="http://www.algorithmist.com/index.php/UVa_106#Input"><span class="tocnumber">4</span> <span class="toctext">Input</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="http://www.algorithmist.com/index.php/UVa_106#Output"><span class="tocnumber">5</span> <span class="toctext">Output</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="http://www.algorithmist.com/index.php/UVa_106#Solution"><span class="tocnumber">6</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</td></tr></tbody></table>
+<h2><span class="editsection">[<a href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit&section=1" title="Edit section: 106 - Fermat vs. Pythagoras">edit</a>]</span> <span class="mw-headline" id="106_-_Fermat_vs._Pythagoras"> 106 - Fermat vs. Pythagoras </span></h2>
+<ul><li><a rel="nofollow" class="external free" href="http://acm.uva.es/p/v1/106.html">http://acm.fgafa.uva.es/p/v1/106.html</a>
+</li></ul>
+<h2><span class="editsection">[<a href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit&section=2" title="Edit section: Summary">edit</a>]</span> <span class="mw-headline" id="Summary"> Summary </span></h2>
+<p>We will need to find another relationship that generates the <a href="http://www.algorithmist.com/index.php/Pythagorean_triple" title="Pythagorean triple">Pythagorean triples</a>
+that will allow us to generate all pairs easily.
+</p>
+<h2><span class="editsection">[<a href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit&section=3" title="Edit section: Explanation">edit</a>]</span> <span class="mw-headline" id="Explanation"> Explanation </span></h2>
+<p>This is a relatively difficult <a href="http://www.algorithmist.com/index.php/Math" title="Math">Math</a> problem.  The intuition is that we would brute force on <i>x</i>, <i>y</i>, and <i>z</i> would take too long.  The easy optimization is that you can calculate <i>z</i>, but since <i>x</i> and <i>y</i> can be as big as a million, the <span class="texhtml" dir="ltr"><i>O</i>(<i>n</i><sup>2</sup>)</span> solution is still not good enough.
+</p><p>The actual solution takes a little bit of <a href="http://www.algorithmist.com/index.php/Category:Number_Theory" title="Category:Number Theory">Number Theory</a>.
+</p><p>Assume that you have two numbers, <i>r</i>, and <i>s</i>. (for now, assume they're given)  Then this equation is true:
+</p><p><span class="texhtml" dir="ltr">(<i>r</i><sup>2</sup> - <i>s</i><sup>2</sup>)<sup>2</sup> + (2<i>r</i><i>s</i>)<sup>2</sup> = (<i>r</i><sup>2</sup> + <i>s</i><sup>2</sup>)<sup>2</sup></span>
+</p><p>Given an <i>r, s</i> pair, it is trivial to create a Pythagorean triple.  The difficult thing is to prove that all of them can be generated from them.  If this is proven, then it is easy to generate all the triples, since we only have to check all <img class="tex" alt="r,s &lt; \sqrt{n}" src="./UVa 106 - Algorithmist_files/cce66b3d2c404c92baefeae472573475.png">.
+</p><p>Why does this generate all triples?
+</p><p>Let's assume that <i>x,y,z</i> is a triple which is relatively prime.  This implies that one, but not both, of <i>x,y</i> must be even.  (Otherwise, <i>z</i> would be divisible by 2, but not by 4)  Assuming, without the loss of generality, that <i>y</i> is even, and <i>x,z</i> are odd, we can rewrite the equation as:
+</p><p><span class="texhtml" dir="ltr"><i>y</i><sup>2</sup> = (<i>z</i> + <i>x</i>)(<i>z</i> - <i>x</i>)</span>
+</p><p>Since <i>y</i> is even, <span class="texhtml" dir="ltr"><i>y</i><sup>2</sup></span> is divisible by 4.  Also, note that <i>z+x</i> and <i>z-x</i> are both divisible by 2 (adding/subtracting an odd number to another odd number).  So we can further write it as:
+</p><p><img class="tex" alt="(\frac{y}{2})^2 = \frac{(z+x)}{2} \cdot \frac{(z-x)}{2}" src="./UVa 106 - Algorithmist_files/c8fbf893a042117c7966f27103cb04ab.png">
+</p><p>Now <img class="tex" alt="\frac{z+x}{2}" src="./UVa 106 - Algorithmist_files/64d0326842576c30211757f7ad96fdea.png"> and <img class="tex" alt="\frac{z-x}{2}" src="./UVa 106 - Algorithmist_files/f7e8368f1980a81785ed1756cae14f41.png"> must be relatively prime (if they had a common factor, then their <i>sum[z]</i> and their <i>difference[x]</i> would have a common factor).  It is now easy to see that each of these number must themselves be squares (thru unique factorization theorems).  Setting <img class="tex" alt="r^2 = \frac{(z+x)}{2}" src="./UVa 106 - Algorithmist_files/85920335363447eff5ca71dd6bbdea6b.png"> and <img class="tex" alt="s^2 = \frac{(z-x)}{2}" src="./UVa 106 - Algorithmist_files/deaa32072c8650012d954ad34b1439d9.png">, and you will finally reach the previous equation of:
+</p><p><span class="texhtml" dir="ltr">(<i>r</i><sup>2</sup> - <i>s</i><sup>2</sup>)<sup>2</sup> + (2<i>r</i><i>s</i>)<sup>2</sup> = (<i>r</i><sup>2</sup> + <i>s</i><sup>2</sup>)<sup>2</sup></span>
+</p><p>Since <img class="tex" alt="\sqrt{ 1000000 } = 1000" src="./UVa 106 - Algorithmist_files/72f2ff9f245263fa4bf2138606f1c6f2.png">, we can use all <i>r,s</i> pair to generate the triples.
+</p><p>You can also prove that, <i>x,y,z</i> are relative prime iff <i>r,s</i> are relative prime. ( using that fact that R.PRIME(r,s) and one and only one of r,s is even number  ==&gt; R.PRIME(r+s, r-s) ). This can further reduce the run time.
+</p>
+<h2><span class="editsection">[<a href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit&section=4" title="Edit section: Input">edit</a>]</span> <span class="mw-headline" id="Input"> Input </span></h2>
+<pre>10
+25
+100
+1000000
+</pre>
+<h2><span class="editsection">[<a href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit&section=5" title="Edit section: Output">edit</a>]</span> <span class="mw-headline" id="Output"> Output </span></h2>
+<pre>1 4
+4 9
+16 27
+159139 133926
+</pre>
+<h2><span class="editsection">[<a href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit&section=6" title="Edit section: Solution">edit</a>]</span> <span class="mw-headline" id="Solution"> Solution </span></h2>
+<ul><li>C++: <a rel="nofollow" class="external free" href="http://acm-solution.blogspot.com/2010/11/acm-uva-106-fermat-vs-pythagoras.html">http://acm-solution.blogspot.com/2010/11/acm-fgafa.uva-106-fermat-vs-pythagoras.html</a>
+</li></ul>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 148/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key wikidb:pcache:idhash:784-0!1!0!!en!*!* and timestamp 20121119041911 -->
+</div>				<!-- /bodycontent -->
+								<!-- printfooter -->
+				<div class="printfooter">
+				Retrieved from "<a href="http://www.algorithmist.com/index.php?title=UVa_106&oldid=11862">http://www.algorithmist.com/index.php?title=UVa_106&amp;oldid=11862</a>"				</div>
+				<!-- /printfooter -->
+												<!-- catlinks -->
+				<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks"><a href="http://www.algorithmist.com/index.php/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="http://www.algorithmist.com/index.php/Category:UVa_Online_Judge" title="Category:UVa Online Judge">UVa Online Judge</a></li><li><a href="http://www.algorithmist.com/index.php/Category:Math" title="Category:Math">Math</a></li><li><a href="http://www.algorithmist.com/index.php/Category:Number_Theory" title="Category:Number Theory">Number Theory</a></li></ul></div></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+				<!-- debughtml -->
+								<!-- /debughtml -->
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+		<li id="pt-login"><a href="http://www.algorithmist.com/index.php?title=Special:UserLogin&returnto=UVa+106" title="You are encouraged to log in; however, it is not mandatory [alt-o]" accesskey="o">Log in / create account</a></li>
+	</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li id="ca-nstab-main" class="selected"><span><a href="./UVa 106 - Algorithmist_files/UVa 106 - Algorithmist.htm" title="View the content page [alt-c]" accesskey="c">Page</a></span></li>
+					<li id="ca-talk"><span><a href="http://www.algorithmist.com/index.php/Talk:UVa_106" title="Discussion about the content page [alt-t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+		<h5><span>Variants</span><a href="http://www.algorithmist.com/index.php/UVa_106#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="./UVa 106 - Algorithmist_files/UVa 106 - Algorithmist.htm">Read</a></span></li>
+					<li id="ca-edit"><span><a href="http://www.algorithmist.com/index.php?title=UVa_106&action=edit" title="You can edit this page. Please use the preview button before saving [alt-e]" accesskey="e">Edit</a></span></li>
+					<li id="ca-history" class="collapsible"><span><a href="http://www.algorithmist.com/index.php?title=UVa_106&action=history" title="Past revisions of this page [alt-h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="http://www.algorithmist.com/index.php/UVa_106#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://www.algorithmist.com/index.php" id="searchform">
+		<input type="hidden" name="title" value="Special:Search">
+				<input type="search" name="search" title="Search Algorithmist [alt-f]" accesskey="f" id="searchInput" autocomplete="off">		<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton">		<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton">			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(/images/3/31/Algorithmist_logo.png);" href="http://www.algorithmist.com/index.php/Main_Page" title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id="p-navigation">
+	<h5>Navigation</h5>
+	<div class="body">
+		<ul>
+			<li id="n-mainpage"><a href="http://www.algorithmist.com/index.php/Main_Page" title="Visit the main page [alt-z]" accesskey="z">Main Page</a></li>
+			<li id="n-Programming-Contest-Calendar"><a href="http://www.algorithmist.com/index.php/Programming_Contest_Calendar">Programming Contest Calendar</a></li>
+			<li id="n-UVa"><a href="http://www.algorithmist.com/index.php/UVa">UVa</a></li>
+			<li id="n-Sphere-Online-Judge"><a href="http://www.algorithmist.com/index.php/Sphere_Online_Judge">Sphere Online Judge</a></li>
+			<li id="n-recentchanges"><a href="http://www.algorithmist.com/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [alt-r]" accesskey="r">Recent changes</a></li>
+			<li id="n-randompage"><a href="http://www.algorithmist.com/index.php/Special:Random" title="Load a random page [alt-x]" accesskey="x">Random page</a></li>
+			<li id="n-help"><a href="http://www.algorithmist.com/index.php/Help:Contents" title="The place to find out">Help</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+			<li id="t-whatlinkshere"><a href="http://www.algorithmist.com/index.php/Special:WhatLinksHere/UVa_106" title="A list of all wiki pages that link here [alt-j]" accesskey="j">What links here</a></li>
+			<li id="t-recentchangeslinked"><a href="http://www.algorithmist.com/index.php/Special:RecentChangesLinked/UVa_106" title="Recent changes in pages linked from this page [alt-k]" accesskey="k">Related changes</a></li>
+			<li id="t-specialpages"><a href="http://www.algorithmist.com/index.php/Special:SpecialPages" title="A list of all special pages [alt-q]" accesskey="q">Special pages</a></li>
+			<li><a href="http://www.algorithmist.com/index.php?title=UVa_106&printable=yes" rel="alternate">Printable version</a></li>
+			<li id="t-permalink"><a href="http://www.algorithmist.com/index.php?title=UVa_106&oldid=11862" title="Permanent link to this revision of the page">Permanent link</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 15 November 2010, at 20:42.</li>
+											<li id="footer-info-viewcount">This page has been accessed 10,220 times.</li>
+											<li id="footer-info-copyright">Content is available under <a class="external" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.2</a>.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="http://www.algorithmist.com/index.php/Algorithmist:Privacy_policy" title="Algorithmist:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="http://www.algorithmist.com/index.php/Algorithmist:About" title="Algorithmist:About">About Algorithmist</a></li>
+											<li id="footer-places-disclaimer"><a href="http://www.algorithmist.com/index.php/Algorithmist:General_disclaimer" title="Algorithmist:General disclaimer">Disclaimers</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+					<li id="footer-copyrightico">
+						<a href="http://www.gnu.org/copyleft/fdl.html"><img src="./UVa 106 - Algorithmist_files/gnu-fdl.png" alt="GNU Free Documentation License 1.2" width="88" height="31"></a>
+					</li>
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="./UVa 106 - Algorithmist_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31"></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		<script src="./UVa 106 - Algorithmist_files/load(3).php"></script>
+<script>if(window.mw){
+	mw.loader.load(["mediawiki.user", "mediawiki.util", "mediawiki.page.ready", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax", "mediawiki.legacy.mwsuggest"]);
+}
+</script><script type="text/javascript" src="./UVa 106 - Algorithmist_files/load(4).php"></script>
+<script>if(window.mw){
+	mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,"watchlistdays":3,"watchlisthideanons":0,
+	"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;mw.user.tokens.set({"editToken":"+\\","watchToken":false});;mw.loader.state({"user.options":"ready","user.tokens":"ready"});
+	
+	/* cache key: wikidb:resourceloader:filter:minify-js:4:19a4b18a9ac79a6b8c60b24af4668814 */
+}
+</script><!-- Served in 0.297 secs. -->
+	
+
+</body></html>

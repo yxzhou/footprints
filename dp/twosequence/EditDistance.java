@@ -85,7 +85,7 @@ public class EditDistance
   
   
   /*
-   * calculate the min steps change, ( same as uva.dp.StringComputerN164 )
+   * calculate the min steps change, ( same as fgafa.uva.dp.StringComputerN164 )
    * input arr1={a1, a2, ---, am},  arr2={b1, b2, ---, bn}  
    * 
    * We use the notation dp[i][j] = the min steps change of x[0..i] and y[0..j]
