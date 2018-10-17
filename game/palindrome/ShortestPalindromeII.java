@@ -1,6 +1,7 @@
 package fgafa.game.palindrome;
 
-import org.junit.Assert;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A palindrome is a String that is spelled the same forward and backwards. Given a String base that may or may not be a palindrome,
@@ -50,7 +51,19 @@ import org.junit.Assert;
 public class ShortestPalindromeII {
 
     public String shortest(String base){
-        if(null == base || base.length() < 2){
+        if(null == base){
+            return base;
+        }
+
+        return shortest(base, new HashMap<>());
+    }
+
+    private String shortest(String base, Map<String, String> cache){
+        if(cache.containsKey(base)){
+            return cache.get(base);
+        }
+
+        if(base.length() < 2){
             return base;
         }
 
@@ -58,20 +71,23 @@ public class ShortestPalindromeII {
         char head = base.charAt(0);
         char tail = base.charAt(length - 1);
 
+        String result;
         if(head == tail){
-            return head + shortest(base.substring(1, length - 1)) + tail;
-        }
-
-        String keepHead = head + shortest(base.substring(1, length)) + head;
-        String keepTail = tail + shortest(base.substring(0, length - 1)) + tail;
-
-        if(keepHead.length() == keepTail.length()){
-            return keepHead.compareTo(keepTail) < 0 ? keepHead : keepTail;
+            result = head + shortest(base.substring(1, length - 1), cache) + tail;
         }else{
-            return keepHead.length() < keepTail.length()? keepHead : keepTail;
-        }
+            String keepHead = head + shortest(base.substring(1, length), cache) + head;
+            String keepTail = tail + shortest(base.substring(0, length - 1), cache) + tail;
 
+            if(keepHead.length() == keepTail.length()){
+                result = keepHead.compareTo(keepTail) < 0 ? keepHead : keepTail;
+            }else{
+                result = keepHead.length() < keepTail.length()? keepHead : keepTail;
+            }
+        }
+        cache.put(base, result);
+        return result;
     }
+
 
     public static void main(String[] args){
         String[][] inputs = {

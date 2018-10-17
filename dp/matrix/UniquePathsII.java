@@ -1,6 +1,6 @@
 package fgafa.dp.matrix;
 /*
- * Follow up for "Unique Paths":
+ * Follow up for "Unique AvoidRoads":
  * 
  * Now consider if some obstacles are added to the grids. How many unique paths would there be?
  * 

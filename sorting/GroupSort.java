@@ -33,7 +33,6 @@ public class GroupSort
    */
     /*Time O(n) Space O(1) */
     public void sortColors_n(int[] nums) {
-        // check
         if (null == nums) {
             return;
         }
@@ -46,7 +45,7 @@ public class GroupSort
             } else if (2 == nums[p]) {
                 swap(nums, j, p);
                 j--;
-                p--;
+                p--;  //note
             }
         }
 
