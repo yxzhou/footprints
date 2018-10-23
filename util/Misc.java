@@ -1,14 +1,9 @@
 package fgafa.util;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -344,6 +339,25 @@ public class Misc
     return returnValue;
   }
 
+    public static StringBuffer array2String(List<String> list) {
+        StringBuffer returnValue = new StringBuffer();
+
+      if(null == list){
+        return returnValue.append("null");
+      }
+
+        for (int i = 0; i < list.size(); i++) {
+            returnValue.append(list.get(i));
+            returnValue.append(", ");
+        }
+
+        int length = returnValue.length();
+        if(length > 2){
+            returnValue.delete(length -2, length);
+        }
+
+        return returnValue;
+    }
 
   public static StringBuffer array2String(String[][] array) {
     StringBuffer returnValue = new StringBuffer();
@@ -399,6 +413,24 @@ public class Misc
     }
 
     return true;
+  }
+
+  public static boolean compare(Object[] o1, Object[] o2){
+      if(o1 == null){
+          return o2 == null;
+      }
+
+      if(o1.length != o2.length){
+          return false;
+      }
+
+      for(int i = 0; i < o1.length; i++){
+          if(o1[i].equals(o2[i])){
+              return false;
+          }
+      }
+
+      return true;
   }
 
 

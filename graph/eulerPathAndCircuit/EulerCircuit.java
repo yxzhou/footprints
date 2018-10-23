@@ -1,25 +1,29 @@
 package fgafa.graph.eulerPathAndCircuit;
 
+import fgafa.util.Misc;
+
 import java.util.HashMap;
 import java.util.Map;
 
 
-import fgafa.util.Misc;
-
-
 /**
- *  If give you 0 and 1, it can construct 00, 01, 10 and 11. 
+ *
+ *
+ *  If give you 0 and 1, it can construct 00, 01, 10 and 11.
  *  The shortest string to include them all are 00110 or 01100 or 10011
  *  
  *  Now give you 0, 1, -, 9, it can construct 4-digits string, 0000, 0001, -, 9999. 
  *  Would you build the shortest string to include them all ? 
  *
  */
-/*
+/**
  * It's a Euler Circuit issue. 
  * 
  * To 0000, 0001, - , 9999, totally it's n = 10*10*10*10 vertices. The length of the shortest string is n + 1 
+ *
+ * ——https://www.geeksforgeeks.org/eulerian-path-and-circuit/
  * 
+ *
  */
 
 public class EulerCircuit {

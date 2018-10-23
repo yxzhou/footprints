@@ -1,8 +1,8 @@
 package fgafa.graph.itinerary;
 
-import java.util.*;
-
 import fgafa.util.Misc;
+
+import java.util.*;
 
 /**
  *
@@ -16,6 +16,7 @@ import fgafa.util.Misc;
  *
  */
 
+//todo
 public class ItineraryPath {
 
     public List<String> itineraryPath(String[][] flights, String startPoint){
@@ -38,12 +39,12 @@ public class ItineraryPath {
         Stack<String> stack = new Stack<>();
         LinkedList<String> path = new LinkedList<>();
         String curr = startPoint;
-        for(int i = 0; i < flights.length; i++){
-            if(!adjacencies.containsKey(curr)){
-                break;
-            }
+        outer: for(int i = 0; i < flights.length; i++){
+            while(!adjacencies.containsKey(curr) || adjacencies.get(curr).isEmpty()){
+                if(path.isEmpty()){
+                   break outer;
+                }
 
-            while(adjacencies.get(curr).isEmpty()){
                 stack.push(curr);
                 curr = path.removeLast();
             }
@@ -67,6 +68,10 @@ public class ItineraryPath {
             end = iterator.next();
 
             String edge = start + "-" + end;
+            if(!edges.containsKey(edge)){
+                return null;
+            }
+
             int n = edges.get(edge);
             if( n == 1){
                 count++;
@@ -77,7 +82,7 @@ public class ItineraryPath {
             start = end;
         }
 
-        System.out.println(count + " " + flights.length);
+        //System.out.println(count + " " + flights.length);
         return count == flights.length ? path : null;
 
     }
@@ -90,22 +95,32 @@ public class ItineraryPath {
                 { { { "A", "B" }, { "B", "C" }, { "C", "D" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "C" }, { "B", "D" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "C" }, { "C", "D" } }, { { "B" } } },
+                { { { "A", "B" }, { "B", "C" }, { "C", "D" } }, { { "C" } } },
+                { { { "A", "B" }, { "B", "C" }, { "C", "D" } }, { { "D" } } },
+                { { { "A", "B" }, { "B", "C" }, { "C", "D" } }, { { "E" } } },
                 { { { "A", "B" }, { "B", "C" }, { "C", "A" } }, { { "A" } } },
                 { { { "A", "B" }, { "A", "C" }, { "B", "C" }, { "C", "A" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "C" }, { "B", "D" }, { "C", "A" } }, { { "A" } } },
+                { { { "A", "B" }, { "B", "C" }, { "B", "D" }, { "D", "A" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "C" }, { "B", "D" }, { "C", "A" }, { "D", "A" } }, { { "A" } } },
-                { { { "A", "B" }, { "B", "C" }, { "C", "D" }, { "C", "E" }, { "D", "B" } }, { { "A" } } }
+                { { { "A", "B" }, { "B", "D" }, { "D", "B" }, { "B", "A" }, { "A", "C" } }, { { "A" } } },
+                { { { "A", "B" }, { "B", "z" }, { "C", "D" }, { "C", "E" }, { "D", "B" } }, { { "A" } } }
         };
 
         String[] expects = {
-                "[A, B, C, D]",
+                "A, B, C, D",
                 "null",
                 "null",
-                "[A, B, C, A]",
-                "[A, B, C, A, C]",
-                "[A, B, C, A, B, D]",
-                "[A, B, C, A, B, D, A]",
-                "[A, B, C, D, B, C, E]"
+                "null",
+                "null",
+                "null",
+                "A, B, C, A",
+                "A, B, C, A, C",
+                "A, B, C, A, B, D",
+                "A, B, D, A, B, C",
+                "A, B, C, A, B, D, A",
+                "A, B, D, B, A, C",
+                "A, B, C, D, B, C, E"
         };
 
         ItineraryPath sv = new ItineraryPath();
@@ -113,7 +128,7 @@ public class ItineraryPath {
         for(int i = 0; i < cases.length; i++){
             List<String> result = sv.itineraryPath(cases[i][0], cases[i][1][0][0]);
 
-            System.out.println(String.format("\n%d:  %s", i, Misc.array2String(cases[i][0])));
+            System.out.println(String.format("\n%d:  %s\n start from: %s\n %b", i, Misc.array2String(cases[i][0]), cases[i][1][0][0], expects[i].equals(Misc.array2String(result).toString())));
             Misc.printArrayList(result);
         }
 
