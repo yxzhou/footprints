@@ -2,8 +2,6 @@ package fgafa.graph;
 
 import java.util.ArrayList;
 
-import fgafa.graph.DFS.Vertex;
-
 public class Graph
 {
 

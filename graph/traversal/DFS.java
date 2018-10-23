@@ -1,6 +1,7 @@
 package fgafa.graph;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DFS
 {
@@ -11,7 +12,8 @@ public class DFS
     String color;
     Vertex parent;
     // store all adjacency vertex,  adjacency list
-    ArrayList<Vertex> next = new ArrayList<Vertex>();
+
+    List<Vertex> next = new ArrayList<Vertex>();
 
     // flag
     int time; 

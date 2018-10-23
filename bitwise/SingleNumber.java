@@ -54,21 +54,21 @@ public class SingleNumber {
     }
     
 	/**
-	 * @param A : An integer array
+	 * @param nums : An integer array
 	 * @return : An integer 
 	 */
-    public int singleNumberII_n(int[] A) {
+    public int singleNumberII_n(int[] nums) {
         //check
-        if(null == A || 0 == A.length){
-            return 0; //exception
+        if(null == nums || 0 == nums.length){
+            throw new IllegalArgumentException("The input array should not be null or empty.");
         }
         
         //main
         int ret = 0;
         int bit = 0;
-        for(int i = 0; i<32; i++){
+        for(int i = 0; i < 32; i++){
             bit = 0;
-            for(int n : A){
+            for(int n : nums){
                 bit += (n >> i) & 1;
                 bit %= 3;
             }
