@@ -65,11 +65,11 @@ public class SingleNumber {
         
         //main
         int ret = 0;
-        int bit = 0;
         for(int i = 0; i < 32; i++){
-            bit = 0;
+            int bit = 0;
+            int x = (1 << i);
             for(int n : nums){
-                bit += (n >> i) & 1;
+                bit += n & x;
                 bit %= 3;
             }
             
@@ -124,9 +124,10 @@ public class SingleNumber {
 	
 	public static void main(String[] args) {
 		//
-		System.out.println("&:" + (2 & 2) + " " + (1 & 2));
-		System.out.println("|:" + (2 | 2) + " " + (1 | 2));
-		System.out.println("^:" + (2 ^ 2) + " " + (1 ^ 2));
+        System.out.println("<<: " + (1 << 3) + " " + (1 << 31));
+		System.out.println("&: " + (2 & 2) + " " + (1 & 2));
+		System.out.println("|: " + (2 | 2) + " " + (1 | 2));
+		System.out.println("^: " + (2 ^ 2) + " " + (1 ^ 2));
 		
 		SingleNumber sv = new SingleNumber();
 		
@@ -135,9 +136,9 @@ public class SingleNumber {
 				{0xFFFFFFF0, 0x0000000F, 0x0000000F},
 		};
 
-		for(int[] A : input){
-			System.out.println("\nInput: " + Misc.array2String(A));
-			System.out.println("Output: " + sv.singleNumber(A));
+		for(int[] nums : input){
+			System.out.println("\nInput: " + Misc.array2String(nums));
+			System.out.println("Output: " + sv.singleNumber(nums));
 		}
 		
 		
@@ -146,9 +147,9 @@ public class SingleNumber {
 				{2,2,2,1},
 				{2,2,2,1,1,1,4}
 		};
-		for(int[] A : input2){
-			System.out.println("\nInput: " + Misc.array2String(A));
-			System.out.println("Output: " + sv.singleNumberII(A));
+		for(int[] nums : input2){
+			System.out.println("\nInput: " + Misc.array2String(nums));
+			System.out.println("Output: " + sv.singleNumberII(nums) + " " + sv.singleNumberII_n(nums));
 		}
 		
 		System.out.println("\n=========================");

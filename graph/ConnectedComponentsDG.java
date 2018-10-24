@@ -34,7 +34,7 @@ public class ConnectedComponentsDG {
 	     * @param nodes a array of Directed graph node
 	     * @return a connected set of a directed graph
 	     */
-	    public List<List<Integer>> connectedSet2(ArrayList<DirectedGraphNode> nodes) {
+	    public List<List<Integer>> connectedSet2(List<DirectedGraphNode> nodes) {
 	        List<List<Integer>> result = new ArrayList<List<Integer>>();
 	        
 	        //check
@@ -95,9 +95,15 @@ public class ConnectedComponentsDG {
 	    
 		/**
 		 * Definition for Directed graph.  */
-		  class DirectedGraphNode {
-		      int label;
-		      ArrayList<DirectedGraphNode> neighbors;
-		      DirectedGraphNode(int x) { label = x; neighbors = new ArrayList<DirectedGraphNode>(); }
-		 };
+		class DirectedGraphNode {
+			int label;
+			List<DirectedGraphNode> neighbors;
+
+			DirectedGraphNode(int x) {
+				label = x;
+				neighbors = new ArrayList<DirectedGraphNode>();
+			}
+		}
+
+	;
 }

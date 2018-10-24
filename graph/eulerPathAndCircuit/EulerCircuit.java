@@ -8,141 +8,169 @@ import java.util.Map;
 
 /**
  *
+ *  ——https://www.geeksforgeeks.org/eulerian-path-and-circuit/
  *
- *  If give you 0 and 1, it can construct 00, 01, 10 and 11.
- *  The shortest string to include them all are 00110 or 01100 or 10011
- *  
- *  Now give you 0, 1, -, 9, it can construct 4-digits string, 0000, 0001, -, 9999. 
- *  Would you build the shortest string to include them all ? 
+ *  *Eulerian Path is a path in graph that visits every edge exactly once.
+ *    same as problem of "Is it possible to draw a given graph without lifting pencil from the paper and without tracing any of the edges more than once"
+ *  Eulerian Circuit is an Eulerian Path which starts and ends on the same vertex.
  *
- */
-/**
- * It's a Euler Circuit issue. 
- * 
- * To 0000, 0001, - , 9999, totally it's n = 10*10*10*10 vertices. The length of the shortest string is n + 1 
+ *  *Hamiltonian Path in an undirected graph is a path that visits each vertex exactly once.
+ *  A Hamiltonian cycle (or Hamiltonian circuit) is a Hamiltonian Path such that there is an edge (in graph) from the last vertex to the first vertex of the Hamiltonian Path.
  *
- * ——https://www.geeksforgeeks.org/eulerian-path-and-circuit/
- * 
+ *  find whether a given graph has a Hamiltonian Path is NP complete problem for a general graph.
+ *  find whether a given graph has a Eulerian Path or not, it's polynomial time, O(V+E)
+ *
+ *  Eulerian Cycle
+ *  An undirected graph has Eulerian cycle if following two conditions are true.
+ *  ….a) All vertices with non-zero degree are connected. We don’t care about vertices with zero degree because they don’t belong to Eulerian Cycle or Path (we only consider all edges).
+ *  ….b) All vertices have even degree.
+ *
+ *  Eulerian Path
+ *  An undirected graph has Eulerian Path if following two conditions are true.
+ *  ….a) Same as condition (a) for Eulerian Cycle
+ *  ….b) If two vertices have odd degree and all other vertices have even degree. Note that only one vertex with odd degree is not possible in an undirected graph (sum of all degrees is always even in an undirected graph)
+ *
+ *  A graph is called Eulerian if it has an Eulerian Cycle and called Semi-Eulerian if it has an Eulerian Path.
+ *  Note that a graph with no edges is considered Eulerian because there are no edges to traverse.
+ *
+ *  An directed graph has Eulerian Path if
+ *    a) the "related" undirected graph has Eulerian Path
+ *    b) ?? find the start point and find the Eulerian Path
+ *
+ *  How does this work?
+ *  In Eulerian path, each time we visit a vertex v, we walk through two unvisited edges with one end point as v. ( in a DG, it's inDgree and outDegree ) Therefore, all middle vertices in Eulerian Path must have even degree.
+ *  For Eulerian Cycle, any vertex can be middle vertex, therefore all vertices must have even degree.
  *
  */
 
 public class EulerCircuit {
-    
-    public String getEulerCircuit(char[] arr, int k){
-        Map<String, Integer> map = new HashMap<>();
-        
-        String[] starts = new String[2];
-        
-        StringBuilder tmp = new StringBuilder();
-        for(int i = 1; i < k; i++){
-            tmp.append('0');
-        }
-        
-        starts[0] = tmp.toString();
-        starts[1] = String.valueOf(arr);
-        
-        StringBuilder result = new StringBuilder();
-        
-        final int N = (int)Math.pow(arr.length, k);
-        final int FULL = ( 1 << arr.length ) - 1;//example 0x11 1111 1111.
-        
-        for(int i = 0; i < starts.length && N + 1 != result.length(); i++){
-            String curr = starts[i];
-            result.append(curr);
-            int state;
-            
-            for(int j = 0; j <= N; j++){
-                if(!map.containsKey(curr)){
-                    map.put(curr, 0);
+
+    /**
+     *
+     * @param edges, a list of edges, such as edges[i][j] means the edge from vertex 0 to vertex 1, edges[i][j] == 0, means not connected
+     * @param verticesNumber, such as n, it means there are vertices [0, 1, --, n- 1]
+     * @return
+     */
+    public int isEulerian_DG(int[][] edges, int verticesNumber){
+
+        int[] indegrees = new int[verticesNumber];
+        int[] outdegrees = new int[verticesNumber];
+        for(int i = 0; i < verticesNumber; i++){
+            for(int j = 0; j < verticesNumber; j++){
+                if(edges[i][j] > 0){
+                    indegrees[j]++;
+                    outdegrees[i]++;
                 }
-                
-                int last = -1;
-                state = map.get(curr);
-                
-                if(state == FULL){
-                    int length = result.length();
-                    
-                    last = char2Int(result.charAt(length - 1));
-                    result.deleteCharAt(length - 1);
-                    
-                    curr = result.substring(result.length() - k + 1);
-                    
-                    state = map.get(curr);
-                    state = setBit(state, last, false);
-                    map.put(curr, state);
-                }
-                
-                int p = indexOfZero(state, last);
-                
-                state = setBit(state, p, true);
-                map.put(curr, state);
-                
-                result.append(p);
-                curr = result.substring(result.length() - k + 1);
-                
             }
-            
         }
-        
-        
-        return result.toString();
+
+
+        return 0;
     }
-    
-    /*
-     * get the bit in the index position of n
-     * 
-     * @return: false means 0; true means 1  
-     * 
-     */
-    private static boolean getBit(int n, int index) {
-      return (n & (1 << index)) > 0;
+
+    private boolean isConnectted_DG(int[][] edges, int verticesNumber){
+        boolean[] visited = new boolean[verticesNumber];
+        int[] groupId = new int[verticesNumber];
+
+        for(int i = 0; i < verticesNumber; i++){
+            //traverse_dfs(edges,0, groupId);
+        }
+
+
+        for(int i = 0; i < visited.length; i++){
+            if(!visited[i]){
+                return false;
+            }
+        }
+
+        return true;
 
     }
-    /*
-     * set the bit in the index position of n
-     * 
-     * @boolean b, true means to set 1, false means to set 0
-     * @return: the new int  
-     * 
-     */
-    private static int setBit(int n, int index, boolean b) {
-      if(b)
-        return (n | (1 << index));
-      else
-        return (n & ~(1 << index));
-      
-    }
-    
-    
-    private int indexOfZero(int value, int start){
-        int i = start + 1;
-        int base = ( 1 << i );
-        
-        for( ; ( value & base ) == 1; base <<= 1, i++ );
-        
-        return i; // '0' is 48
-    }
-    
-    private static final int ASCII_VALUE_OF_ZERO = 48; // '0' is 48, '1' is 49,
-    
-    public static int char2Int(char c){
-      return (int)c - ASCII_VALUE_OF_ZERO;
-    }
-    
-    public static char int2Char(int digit){
-      return   (char) (ASCII_VALUE_OF_ZERO + digit);
-    } 
-    
-    public static void main(String[] args) {
-        EulerCircuit sv = new EulerCircuit();
-        
-        char[][] arr = {"10".toCharArray(),  "9876543210".toCharArray()};
-        int[] kk = {2, 4};
 
-        for(int i = 0; i < arr.length; i++){
-            System.out.println(String.format("\nInput: %s, %d", Misc.array2String(arr[i]), kk[i]));
-            System.out.println(String.format("Output: %s", sv.getEulerCircuit(arr[i], kk[i]) ));
+
+
+    /**
+     *
+     * @param edges
+     * @param verticesNumber
+     * @return 2, semi-eulerian; 1, eulerian; 0, neither eulerian or semi-eulerian
+     */
+    public int isEulerian_UDG(int[][] edges, int verticesNumber){
+
+        int edgesNumber = 0;
+        int oddCount = 0;
+
+        for(int i = 0; i < verticesNumber; i++){
+            int count = 0;
+            for(int j = 0; j < verticesNumber / 2; j++){
+                if(edges[i][j] > 0){
+                    edgesNumber++;
+                    count++;
+                }
+            }
+
+            if(1 == (count & 1)){
+                oddCount++;
+            }
+        }
+
+        if(edgesNumber == 0){
+            return 2; // when no edge in the graph, all vertices are isolate
+        }
+
+        //if odd count is 0, then eulerian possible
+        //if odd count is 2, then semi-eulerian possible
+        if(oddCount != 2 && oddCount != 0){
+            return 0;
+        }
+
+        if(isConnectted_UDG(edges, verticesNumber)){
+            return oddCount == 2 ? 1 : 2;
+        }
+
+        return 0;
+    }
+
+    private boolean isConnectted_UDG(int[][] edges, int verticesNumber){
+        boolean[] visited = new boolean[verticesNumber];
+
+        traverse_dfs(edges,0, visited);
+
+        for(int i = 0; i < visited.length; i++){
+            if(!visited[i]){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void traverse_dfs(int[][] edges, int vertexId, boolean[] visited){
+        if(visited[vertexId]){
+            return;
+        }
+
+        visited[vertexId] = true;
+
+        for(int j = 0; j < visited.length; j++){
+            if(edges[vertexId][j] > 0){
+                traverse_dfs(edges, j, visited);
+            }
         }
     }
+
+
+    final static int STATUS_BEFORE_VISIT = 0;
+    final static int STATUS_VISITING = 1;
+    final static int STATUS_VISITED = 2;
+
+    private void traverse_dfs(int[][] edges, int vertexId, int[] status, int[] groupId){
+        if(status[vertexId] == STATUS_VISITED){
+            return;
+        }
+
+
+    }
+
 
 }
