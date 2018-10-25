@@ -3,8 +3,10 @@ package fgafa.graph.traversal;
 import fgafa.util.Misc;
 
 /**
- * Given a forest( includes 1 or more graphs),
- *
+ *  Given 1 or more directed graphs, get the sequence id.
+ *  example
+ *    a -> b -> c,  return 2, 1, 0
+ *    a -> b -> c, c -> b,  b -> d, return 2, 1, 1, 0
  *
  */
 

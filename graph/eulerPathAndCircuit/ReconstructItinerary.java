@@ -1,14 +1,8 @@
 package fgafa.graph.eulerPathAndCircuit;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Stack;
-
 import fgafa.util.Misc;
+
+import java.util.*;
 
 /**
  *
@@ -24,64 +18,32 @@ import fgafa.util.Misc;
  */
 
 public class ReconstructItinerary {
-    
-    //You may assume all tickets form at least one valid itinerary. (Euler Path)
-    
-    public List<String> findItinerary(String[][] tickets, String start) {
-        Map<String, PriorityQueue<String>> map = new HashMap<>();
-        for (String[] sa : tickets) {
-            if (!map.containsKey(sa[0])) {
-                map.put(sa[0], new PriorityQueue<String>());
-            }
-            map.get(sa[0]).add(sa[1]);
-        }
-        
-        String cur = start;
-        Stack<String> stack = new Stack<String>();
-        LinkedList<String> result = new LinkedList<>();
-
-        //dfs
-        for(int i = 0; i < tickets.length; i++) {
-            while (!map.containsKey(cur) || map.get(cur).isEmpty()) {
-                stack.push(cur);
-                cur = result.removeLast();
-            }
-            result.add(cur);
-            cur = map.get(cur).poll();
-        }
-        
-        result.add(cur);
-        while (!stack.isEmpty()) {
-            result.add(stack.pop());
-        }
-        return result;
-    }
-
 
     public List<String> itineraryPath(String[][] flights, String startPoint){
         if(null == flights || flights.length == 0){
             return new LinkedList<>();
         }
 
+        Set<String> flightsSet = new HashSet<>(flights.length);
         Map<String, PriorityQueue<String>> adjacencies = new HashMap<>();
-        Map<String, Integer> edges = new HashMap<>();
         for(String[] flight : flights){
             if(!adjacencies.containsKey(flight[0])){
                 adjacencies.put(flight[0], new PriorityQueue<>());
             }
             adjacencies.get(flight[0]).add(flight[1]);
-            edges.put(flight[0] + "-" +flight[1], 1);
+
+            flightsSet.add(flight[0] + "-"+ flight[1]);
         }
 
         Stack<String> stack = new Stack<>();
         LinkedList<String> path = new LinkedList<>();
         String curr = startPoint;
         for(int i = 0; i < flights.length; i++){
-            if(!adjacencies.containsKey(curr)){
-                break;
-            }
+            while(!adjacencies.containsKey(curr) || adjacencies.get(curr).isEmpty()){
+                if(path.isEmpty()){
+                   return null;
+                }
 
-            while(adjacencies.get(curr).isEmpty()){
                 stack.push(curr);
                 curr = path.removeLast();
             }
@@ -95,27 +57,23 @@ public class ReconstructItinerary {
             path.add(stack.pop());
         }
 
-        int count = 0;
-        Iterator<String> iterator = path.listIterator();
-        String start = iterator.next();
-        String end;
-        while(iterator.hasNext()){
-            end = iterator.next();
-            String edge = start + "-" + end;
+        if(path.size() != flights.length + 1 ){
+            return null;
+        }
 
-            if(!edges.containsKey(edge)){
+        Iterator cities = path.iterator();
+        String from = (String)cities.next();
+        while( cities.hasNext() ){
+            String to = (String)cities.next();
+
+            if(!flightsSet.contains(from + "-" + to)){
                 return null;
             }
 
-            int n = edges.get(edge);
-            if( n == 1){
-                count++;
-            }
-            edges.put(edge, n - 1);
-            start = end;
+            from = to;
         }
 
-        return count == flights.length ? path : null;
+        return path;
     }
 
     public static void main(String[] args){
@@ -136,7 +94,7 @@ public class ReconstructItinerary {
                 { { { "A", "B" }, { "B", "C" }, { "B", "D" }, { "D", "A" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "C" }, { "B", "D" }, { "C", "A" }, { "D", "A" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "D" }, { "D", "B" }, { "B", "A" }, { "A", "C" } }, { { "A" } } },
-                { { { "A", "B" }, { "B", "z" }, { "C", "D" }, { "C", "E" }, { "D", "B" } }, { { "A" } } }
+                { { { "A", "B" }, { "B", "C" }, { "C", "D" }, { "C", "E" }, { "D", "B" } }, { { "A" } } }
         };
 
         String[] expects = {
@@ -162,9 +120,14 @@ public class ReconstructItinerary {
 
         for(int i = 0; i < cases.length; i++){
             List<String> result = sv.itineraryPath(cases[i][0], cases[i][1][0][0]);
+            boolean isMatch = expects[i].equals(Misc.array2String(result).toString());
 
-            System.out.println(String.format("\n%d:  %s\n start from: %s\n %b", i, Misc.array2String(cases[i][0]), cases[i][1][0][0], expects[i].equals(Misc.array2String(result).toString())));
-            Misc.printArrayList(result);
+            System.out.println(String.format("\n%d:  %s\n start from: %s\n%b", i, Misc.array2String(cases[i][0]), cases[i][1][0][0], isMatch));
+            if(!isMatch){
+                System.out.println(expects[i]);
+                System.out.println(Misc.array2String(result).toString());
+            }
+
         }
 
     }

@@ -1,9 +1,9 @@
 package fgafa.graph.eulerPathAndCircuit;
 
+import fgafa.util.Misc;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import fgafa.util.Misc;
 
 /**
  *
@@ -131,12 +131,11 @@ public class EulerCircuitII {
     public static void main(String[] args) {
         EulerCircuitII sv = new EulerCircuitII();
 
-        char[][] arr = {"10".toCharArray(),  "9876543210".toCharArray()};
+        String[] arr = {"10",  "9876543210"};
         int[] kk = {2, 4};
 
         for(int i = 0; i < arr.length; i++){
-            System.out.println(String.format("\nInput: %s, %d", Misc.array2String(arr[i]), kk[i]));
-            System.out.println(String.format("Output: %s", sv.getEulerCircuit(arr[i], kk[i]) ));
+            System.out.println(String.format("\nInput: %s, %d\nOutput:%s", Misc.array2String(arr[i].toCharArray()), kk[i], sv.getEulerCircuit(arr[i].toCharArray(), kk[i])));
         }
     }
 

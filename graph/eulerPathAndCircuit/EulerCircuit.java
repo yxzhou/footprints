@@ -1,11 +1,5 @@
 package fgafa.graph.eulerPathAndCircuit;
 
-import fgafa.util.Misc;
-
-import java.util.HashMap;
-import java.util.Map;
-
-
 /**
  *
  *  ——https://www.geeksforgeeks.org/eulerian-path-and-circuit/
@@ -64,6 +58,7 @@ public class EulerCircuit {
             }
         }
 
+        //todo
 
         return 0;
     }
