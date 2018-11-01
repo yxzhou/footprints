@@ -65,51 +65,53 @@ public class BestBuyandSell
    * Add two arrays and find the maximum profit.
    */
   public int maxProfitIII(int[] prices) {
-    if(prices == null || prices.length < 2)
-      return 0;    
-    
-    int length = prices.length;
-    int[] leftMaxProfit = new int[length]; //leftProfit[i] = the max profit between 0 to i, default value all are 0
-    int[] rightMaxProfit = new int[length]; //rightProfix[i] = the max profit between i to length, default value all are 0
+      if (prices == null || prices.length < 2)
+          return 0;
 
-      //from left to right,
-    int bottom = prices[0];
-    leftMaxProfit[0] = 0;
-    for (int i = 1; i < length; i++) {
-      if (prices[i] < bottom) {
-          bottom = prices[i];
+      int length = prices.length;
+
+      //from left to right
+      int[] leftMaxProfit = new int[length]; //leftProfit[i] = the max profit between 0 to i, default value all are 0
+      leftMaxProfit[0] = 0;
+      for (int bottom = prices[0], i = 1; i < length; i++) {
+          if (prices[i] < bottom) {
+              bottom = prices[i];
+
+              leftMaxProfit[i] = leftMaxProfit[i - 1];
+          } else {
+              leftMaxProfit[i] = Math.max(prices[i] - bottom, leftMaxProfit[i - 1]);
+          }
       }
 
-      leftMaxProfit[i] = Math.max(prices[i] - bottom, leftMaxProfit[i - 1]);
-    }
+      //from right to left
+      int[] rightMaxProfit = new int[length]; //rightProfix[i] = the max profit between i to length, default value all are 0
+      rightMaxProfit[length - 1] = 0;
+      for (int top = prices[length - 1], i = length - 2; i >= 0; i--) {
+          if (prices[i] > top) {
+              top = prices[i];
 
-    //from right to left
-    int top = prices[length - 1];
-    rightMaxProfit[length - 1] = 0;
-    for (int i = length - 2; i >= 0; i--) {
-      if (prices[i] > top) {
-          top = prices[i];
+              rightMaxProfit[i] = rightMaxProfit[i + 1];
+          } else {
+              rightMaxProfit[i] = Math.max(top - prices[i], rightMaxProfit[i + 1]);
+          }
       }
 
-      rightMaxProfit[i] = Math.max(top - prices[i], rightMaxProfit[i + 1]);
-    }
-    
-    int profit = 0;
-    for (int i = length - 2; i >= 0; i--) 
-      profit = Math.max(profit, leftMaxProfit[i] + rightMaxProfit[i]);
-    
-    return profit;
+      int maxProfit = leftMaxProfit[length - 1];
+      for (int i = length - 2; i >= 0; i--) {
+          maxProfit = Math.max(maxProfit, leftMaxProfit[i] + rightMaxProfit[i + 1]);
+      }
+
+      return maxProfit;
   }
-  
+
   public int maxProfitIII_n(int[] prices) {
       if(null == prices || prices.length < 2){
           return 0;
       }
 
-      int size = prices.length;
-      int[] leftMaxProfit = new int[size]; //default all are 0
-      int bottom = prices[0];
-      for(int i = 1; i < size; i++){
+      int length = prices.length;
+      int[] leftMaxProfit = new int[length]; //default all are 0
+      for(int bottom = prices[0], i = 1; i < length; i++){
           if(prices[i] < bottom){
               bottom = prices[i];
               
@@ -119,17 +121,17 @@ public class BestBuyandSell
           }
       }
       
-      int result = 0;
+      int result = leftMaxProfit[length - 1];
       int rightMaxProfit = 0;
-      int top = prices[size - 1];
-      for(int i = size - 2; i >= 0; i--){
+      int top = prices[length - 1];
+      for(int i = length - 2; i >= 0; i--){
+          result = Math.max(result, leftMaxProfit[i] + rightMaxProfit);
+
           if(prices[i] > top){
               top = prices[i];
           }else{
               rightMaxProfit = Math.max(rightMaxProfit, top - prices[i]);
           }
-          
-          result = Math.max(result, leftMaxProfit[i] + rightMaxProfit);
       }
       
       return result;

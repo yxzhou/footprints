@@ -14,38 +14,39 @@ public class TraversalLevalOrder {
 
     final static int ORDER_ID_DEFAULT = 0;
     final static int ORDER_ID_DEFAULT_LOOP = -1;
-    final static int STATUS_BEFORE_READING = 0;
-    final static int STATUS_READING = 1;
-    final static int STATUS_READ = 2;
+
+    enum STATUS {
+        INIT, READING, READ
+    }
 
     public int[] sequence(int[][] damages, int length){
         int[] orders = new int[length]; // default all are 0
-        int[] status = new int[length]; // 0-before reading, 1-in reading, 2-read. default all are 0
+        STATUS[] statuses = new STATUS[length];
         int[] groupId = new int[length];
         for(int i = 0; i < length; i++){
             orders[i] = ORDER_ID_DEFAULT;
-            status[i] = STATUS_BEFORE_READING;
+            statuses[i] = STATUS.INIT;
             groupId[i] = i;
         }
 
         for(int i = 0; i < length; i++){
-            dfs(damages, length, status, orders, groupId, i);
+            dfs(damages, length, statuses, orders, groupId, i);
         }
 
         return orders;
     }
 
-    private int dfs(int[][] damages, int length, int[] status, int[] orders, int[] groupId, int i){
+    private int dfs(int[][] damages, int length, STATUS[] status, int[] orders, int[] groupId, int i){
 
-        if(status[i] == STATUS_READ){
+        if(status[i] == STATUS.READ){
             return orders[i];
         }
 
-        if(status[i] == STATUS_READING){ //found loop
+        if(status[i] == STATUS.READING){ //found loop
             return ORDER_ID_DEFAULT_LOOP;
         }
 
-        status[i] = STATUS_READING;
+        status[i] = STATUS.READING;
         boolean findLoop = false;
         for(int j = 0; j < length; j++){
             if(j != i && damages[i][j] > 0){
@@ -61,7 +62,7 @@ public class TraversalLevalOrder {
                 }
             }
         }
-        status[i] = STATUS_READ;
+        status[i] = STATUS.READ;
 
         if(findLoop && groupId[i] == i){ //the start of a loop
             for(int k = 0; k < length; k++ ){

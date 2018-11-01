@@ -66,12 +66,24 @@ public class Random
    
   public int random7() // returns 1 to 7 with equal probability
   {
-      int i;
-      i = 5*random5() + random5() - 5;
-      if (i < 22)
-          return i%7 + 1;
+      int i = 5*random5() - random5();
+
+      if (i < 21) {
+          return i % 7 + 1;
+      }
+
       return random7();
   }
+
+    public int random7_2(){
+        int x = random5() * 5 + random5();
+
+        if(x >= 7 && x < 28){
+            return x / 7;
+        }
+
+        return random7();
+    }
   
   /*
    * Given a function random01() that returns integers 0 or 1 with equal probability, 

@@ -1,10 +1,16 @@
-package fgafa.topCoder;
+package fgafa.topCoder.graph;
 
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+
+import fgafa.graph.traversal.TraversalLevalOrder;
 
 /**
  *
@@ -87,12 +93,19 @@ import java.util.Set;
  *
  * Thoughts:
  *   1 it's n boss, so the possible shot sequence is n!
- *   brute force it's to calculate n!
- *   2
+ *   brute force,  recursive
+ *
+ *   2 similar with topological order or graph.traversal.TraversalLevelOrder
+ *   2.1 calculate the "level" in some vertices, ( it's all vertices at the beginning )
+ *   2.2 from the higher level to lower level,
+ *      if it's 1 vertex in this level,  calculated directly
+ *      if it's multiple vertices in this level, (there is 1 or more circle ), for every vertex each:
+ *        loop 2.1 with the vertices in this level execept this one.
+ *
  *
  */
 
-//todo based on graph.traversal.TraversalLevelOrder
+//todo the detail implement and more thought
 public class KiloManX {
 
     public int leastShots(String[] damageChart, int[] bossHealth){

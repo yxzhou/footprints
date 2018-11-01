@@ -1,4 +1,4 @@
-package fgafa.topCoder;
+package fgafa.topCoder.graph;
 
 import fgafa.util.Misc;
 
@@ -57,6 +57,10 @@ import fgafa.util.Misc;
  */
 
 public class Circuits {
+
+    /**
+     * Note: it's directed, acyclic graph
+     */
 
     public int howLong(String[] connects, String[] costs){
         final int length = connects.length;

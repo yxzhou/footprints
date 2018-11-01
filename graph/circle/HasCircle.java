@@ -10,6 +10,8 @@ public class HasCircle {
      */
     public boolean hasCircleInDG(int[][] edges, int n){
 
+        //todo
+        return false;
     }
 
     /**
@@ -23,7 +25,8 @@ public class HasCircle {
      *
      */
     public boolean hasCircleInUDG(int[][] edges, int n){
-
+        //todo
+        return false;
     }
 
 }

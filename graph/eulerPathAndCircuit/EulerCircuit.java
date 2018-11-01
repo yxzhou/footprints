@@ -41,53 +41,8 @@ public class EulerCircuit {
 
     /**
      *
-     * @param edges, a list of edges, such as edges[i][j] means the edge from vertex 0 to vertex 1, edges[i][j] == 0, means not connected
+     * @param edges, a list of undirected edges, such as edges[i][j] means the edge between vertex 0 and vertex 1, edges[i][j] == 0, means not connected
      * @param verticesNumber, such as n, it means there are vertices [0, 1, --, n- 1]
-     * @return
-     */
-    public int isEulerian_DG(int[][] edges, int verticesNumber){
-
-        int[] indegrees = new int[verticesNumber];
-        int[] outdegrees = new int[verticesNumber];
-        for(int i = 0; i < verticesNumber; i++){
-            for(int j = 0; j < verticesNumber; j++){
-                if(edges[i][j] > 0){
-                    indegrees[j]++;
-                    outdegrees[i]++;
-                }
-            }
-        }
-
-        //todo
-
-        return 0;
-    }
-
-    private boolean isConnectted_DG(int[][] edges, int verticesNumber){
-        boolean[] visited = new boolean[verticesNumber];
-        int[] groupId = new int[verticesNumber];
-
-        for(int i = 0; i < verticesNumber; i++){
-            //traverse_dfs(edges,0, groupId);
-        }
-
-
-        for(int i = 0; i < visited.length; i++){
-            if(!visited[i]){
-                return false;
-            }
-        }
-
-        return true;
-
-    }
-
-
-
-    /**
-     *
-     * @param edges
-     * @param verticesNumber
      * @return 2, semi-eulerian; 1, eulerian; 0, neither eulerian or semi-eulerian
      */
     public int isEulerian_UDG(int[][] edges, int verticesNumber){
@@ -153,19 +108,5 @@ public class EulerCircuit {
             }
         }
     }
-
-
-    final static int STATUS_BEFORE_VISIT = 0;
-    final static int STATUS_VISITING = 1;
-    final static int STATUS_VISITED = 2;
-
-    private void traverse_dfs(int[][] edges, int vertexId, int[] status, int[] groupId){
-        if(status[vertexId] == STATUS_VISITED){
-            return;
-        }
-
-
-    }
-
 
 }
