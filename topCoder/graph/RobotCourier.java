@@ -117,6 +117,8 @@ import fgafa.util.Misc;
  *
  */
 
+
+//todo bug!!
 public class RobotCourier {
 
     public int minDistance(String[] scoutPath){
