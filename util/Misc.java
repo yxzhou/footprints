@@ -357,7 +357,7 @@ public class Misc
     return returnValue;
   }
 
-    public static StringBuffer array2String(List<String> list) {
+    public static <T> StringBuffer array2String(List<T> list) {
         StringBuffer returnValue = new StringBuffer();
 
       if(null == list){

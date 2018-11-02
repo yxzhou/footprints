@@ -30,21 +30,6 @@ package fgafa.datastructure.segmentTree;
 public class SegmentTreeBuildWithMax2 {
 
 	/**
-	 * Definition of Node:
-	 */
-	class SegmentTreeNode {
-		int start;
-		int end;
-		int max;
-
-		SegmentTreeNode(int start, int end, int max) {
-			this.start = start;
-			this.end = end;
-			this.max = max;
-		}
-	}
-
-	/**
 	 * @param nums
 	 *            : a list of integer
 	 * @return: The root of Segment Tree
@@ -82,7 +67,7 @@ public class SegmentTreeBuildWithMax2 {
 			build(tree, leftSon, start, mid, nums);
 			build(tree, leftSon = 1,  mid + 1, end, nums);
 
-			tree[nodeIndex] = Math.max(tree[leftSon], tree[leftSon = 1]);
+			tree[nodeIndex] = Math.max(tree[leftSon], tree[leftSon + 1]);
 		}
 	}
 	

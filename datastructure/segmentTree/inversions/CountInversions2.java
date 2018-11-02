@@ -3,6 +3,11 @@ package fgafa.datastructure.segmentTree.inversions;
 import java.util.Arrays;
 
 /**
+ * Example:
+ * Input: arr[] = {8, 4, 2, 1}
+ * Output: 6
+ *    because there are six inversions (8, 4) (8, 2) (8, 1) (4, 2) (4, 1) (2, 1)
+ *
  *  Further improvement, define a AVL tree to store (number, inversion number),
  *               4
  *            /     \
@@ -28,6 +33,7 @@ public class CountInversions2 {
         int[] orderedInput = new int[length];
         System.arraycopy(nums, 0, orderedInput, 0, length);
         Arrays.sort(orderedInput);
+
         initTree(tree, orderedInput, length);
 
         int count = 0;
