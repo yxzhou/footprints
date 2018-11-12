@@ -102,8 +102,8 @@ public class TextBreak {
         while(left < length){
             int right = left + k; //when k = 10, left = 0, check the 10th instead of 9th
 
-            if((right < length)){
-                while(text.charAt(right) != ' '){
+            if(right < length){
+                while(text.charAt(right) != ' ' && right > left){
                     right--;
                 }
 
