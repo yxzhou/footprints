@@ -188,47 +188,54 @@ public class SpiralMatrix
       
     return list;
   }
-  
-	public List<Integer> spiralOrder_n(int[][] matrix) {
-		List<Integer> list = new ArrayList<Integer>();
 
-		// check
-		if ( null == matrix || 0 == matrix.length  || 0 == matrix[0].length)
-			return list;
+    public List<Integer> spiralMatric_n(int[][] matric){
+        List<Integer> result = new ArrayList<>();
 
-		int topLeftX = 0;
-		int topLeftY = 0;
-		int bottomRightX = matrix[0].length - 1;
-		int bottomRightY = matrix.length - 1;
-		for( ; topLeftX < bottomRightX && topLeftY < bottomRightY; topLeftX++, topLeftY++, bottomRightX--, bottomRightY--){
-			for( int x = topLeftX; x<bottomRightX; x++ ){
-				list.add(matrix[topLeftY][x]);
-			}
-			for( int y=topLeftY; y<bottomRightY; y++){
-				list.add(matrix[y][bottomRightX]);
-			}
-			for( int x = bottomRightX; x>topLeftX; x-- ){
-				list.add(matrix[bottomRightY][x]);
-			}
-			for( int y = bottomRightY; y>topLeftY; y-- ){
-				list.add(matrix[y][topLeftX]);
-			}
-		}
-		
-		if(topLeftY == bottomRightY){
-			for( int x = topLeftX; x<=bottomRightX; x++ ){
-				list.add(matrix[topLeftY][x]);
-			}
-			return list;
-		}
-		if(topLeftX == bottomRightX){
-			for( int y=topLeftY; y<=bottomRightY; y++){
-				list.add(matrix[y][bottomRightX]);
-			}
-			return list;
-		}
-		return list;
-	}
+        if(null == matric || 0 == matric.length || 0 == matric[0].length){
+            return result;
+        }
+
+
+        int topRight = 0;
+        int row = matric.length - 1;
+        int column = matric[0].length - 1;
+
+        for( ; topRight < row && topRight < column; topRight++, row--, column--){
+            for(int i = topRight; i < column; i++){
+                result.add(matric[topRight][i]);
+            }
+
+            for(int i = topRight; i < row; i++){
+                result.add(matric[i][column]);
+            }
+
+            for(int i = column; i > topRight; i--){
+                result.add(matric[row][i]);
+            }
+
+            for(int i = row; i > topRight; i--){
+                result.add(matric[i][topRight]);
+            }
+        }
+
+        /*The rest:
+        *  case 1, one point
+        *  case 2, one row
+        *  case 3, one column
+        */
+        if(topRight == column){ //for case 1, case 2
+            for(int i = topRight; i <= row; i++){
+                result.add(matric[i][column]);
+            }
+        }else if(topRight == row){ //for case 3
+            for(int i = topRight; i <= column; i++){
+                result.add(matric[topRight][i]);
+            }
+        }
+
+        return result;
+    }
   
 	public List<Integer> spiralOrder_n2(int[][] matrix) {
 		List<Integer> list = new ArrayList<Integer>();
