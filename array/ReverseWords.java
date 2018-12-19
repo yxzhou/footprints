@@ -12,7 +12,7 @@ import fgafa.util.Misc;
  *  Q2 "tseb hsiw ot uoy"
  *  Q3 "best wish to you"
  */
-public class Reverse
+public class ReverseWords
 {
 
   /*
@@ -73,39 +73,8 @@ public class Reverse
 	 * How about multiple spaces between two words? 
 	 *   Reduce them to a single space in the reversed string.
 	 */
+
 	public String reverseWords(String s) {
-		if(null ==s || 1 > s.length())
-			return s;
-		
-		Stack<String> stack = new Stack<>();
-		int i=0, j=0;
-		for( ; i<s.length(); i++){
-			if( s.charAt(i) == ' '){
-				if(j == i){
-					j ++;
-				}else{
-					stack.add(s.substring(j, i));
-					j = i+1;
-				}
-			}
-		}
-		if(j<i){
-			stack.add(s.substring(j, i));
-		}
-		
-		StringBuilder ret = new StringBuilder();
-		while(!stack.isEmpty()){
-			ret.append(stack.pop());
-			ret.append(" ");
-		}
-		if( ret.length() > 0){
-			ret.deleteCharAt(ret.length() -1);
-		}
-		
-		return ret.toString();
-	}
-  
-	public String reverseWords_n(String s) {
 		if(null ==s || 1 > s.length())
 			return s;
 		
@@ -135,8 +104,24 @@ public class Reverse
 		}
 		return sb.toString();
 	}
-	
-	
+
+	public String reverseWords_n(String s) {
+		if (null == s || 1 > s.length()) {
+			return s;
+		}
+
+		/*
+		  _https://docs.oracle.com/javase/tutorial/essential/regex/quant.html
+		  \\s+ will split your string on one or more spaces
+		 */
+		String[] words = s.trim().split("\\s+");
+		String result = "";
+		for(int i = words.length - 1; i > 0; i--) {
+			result += words[i] + " ";
+		}
+
+		return result + words[0];
+	}
 	
 	private void swapWholeStr(char[] input, int start, int end) {
 		char tmp;
@@ -183,7 +168,7 @@ public class Reverse
   public static void main(String[] args) {
     String[] input = {"today...is..friday","",".","..","test", ".test", "test."};
     
-    Reverse sv = new Reverse();
+    ReverseWords sv = new ReverseWords();
     
     for(String s : input){
       System.out.println("Input:  " + s);

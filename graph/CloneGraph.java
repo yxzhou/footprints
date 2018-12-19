@@ -207,8 +207,7 @@ public class CloneGraph {
      */
     public UndirectedGraphNode cloneGraph_n(UndirectedGraphNode node) {
         UndirectedGraphNode result = null;
-        
-        //check
+
         if(null == node){
             return result;
         }
@@ -240,7 +239,31 @@ public class CloneGraph {
         
         return result;
     }
-	
+
+
+	public UndirectedGraphNode cloneGraph_n_dfs(UndirectedGraphNode node) {
+		if(null == node){
+			return null;
+		}
+
+		return cloneGraph_n_dfs(node, new HashMap<Integer, UndirectedGraphNode>()); //Map<label, node>
+	}
+
+	private UndirectedGraphNode cloneGraph_n_dfs(UndirectedGraphNode node, Map<Integer, UndirectedGraphNode> map){
+		if(map.containsKey(node.label)){
+			return map.get(node.label);
+		}
+
+		UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
+		map.put(node.label, newNode);
+
+		for(UndirectedGraphNode neighbor : node.neighbors){
+			newNode.neighbors.add(cloneGraph_n_dfs(neighbor, map));
+		}
+
+		return newNode;
+	}
+
 	
 	public static void main(String[] args) {
 		CloneGraph sv = new CloneGraph();

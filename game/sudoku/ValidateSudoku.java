@@ -115,7 +115,7 @@ public class ValidateSudoku
    * Time O(),  Space O()
    */
 	
-   public boolean isValidSudoku_n(char[][] board) {
+   public boolean isValidSudoku(char[][] board) {
        //check
        if(null == board || 9 != board.length || 9 != board[0].length){
            return false;
@@ -173,20 +173,20 @@ public class ValidateSudoku
        return false;
    }
    
-	public boolean isValidSudoku(int[][] board) {
+	public boolean isValidSudoku_n(int[][] board) {
 		//check
 		
-		//init
+		//init, default all are false
 		boolean[][] rows = new boolean[9][9];
 		boolean[][] cols = new boolean[9][9];
 		boolean[][] blocks = new boolean[9][9];
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				rows[i][j] = false;
-				cols[i][j] = false;
-				blocks[i][j] = false;
-			}
-		}
+//		for (int i = 0; i < 9; i++) {
+//			for (int j = 0; j < 9; j++) {
+//				rows[i][j] = false;
+//				cols[i][j] = false;
+//				blocks[i][j] = false;
+//			}
+//		}
 		
 		//
 		int value;
