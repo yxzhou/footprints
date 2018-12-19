@@ -73,7 +73,7 @@ public class DecodeWays
   
   
   /* same as the numDecodings_recur(String s) , from right to left*/
-  public  int decodeWays_dp(String s) {
+  public int decodeWays_dp(String s) {
     
     //check
     if(s == null || s.length() == 0 )
@@ -84,22 +84,23 @@ public class DecodeWays
     
     int n = s.length();
     
-    int[] c = new int[n+1];
-    c[0] = 1;
-    
-    for(int i = 1; i <= n; i++ ) {
+    int[] dp = new int[n+1];
+    dp[0] = 1;
+    dp[1] = 1;
 
-      if ( s.charAt(i-1) > '0' && s.charAt(i-1) <= '9')
-        c[i] += c[i-1];
+    for(int i = 2; i <= n; i++ ) {
+      if ( s.charAt(i-1) > '0' && s.charAt(i-1) <= '9') {
+          dp[i] += dp[i - 1];
+      }
       
-		if (i >= 2
-				&& ((s.charAt(i - 2) == '1' && s.charAt(i - 1) >= '0' && s.charAt(i - 1) <= '9') 
-						|| (s.charAt(i - 2) == '2' && s.charAt(i - 1) >= '0' && s.charAt(i - 1) <= '6')))
-			c[i] += c[i - 2];
+		if ((s.charAt(i - 2) == '1' && s.charAt(i - 1) >= '0' && s.charAt(i - 1) <= '9')
+						|| (s.charAt(i - 2) == '2' && s.charAt(i - 1) >= '0' && s.charAt(i - 1) <= '6')) {
+            dp[i] += dp[i - 2];
+        }
       
     }
   
-    return c[n];
+    return dp[n];
   }
   
   public int decodeWays_n(String s){
