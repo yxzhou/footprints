@@ -1,6 +1,8 @@
 package fgafa.greedy;
 
 import fgafa.util.Misc;
+import junit.framework.Assert;
+import org.junit.Test;
 
 /**
  * 
@@ -8,9 +10,10 @@ import fgafa.util.Misc;
  * Each element in the array represents your maximum jump length at that position.<br>
  * Determine if you are able to reach the last index.<br>
  * For example:<br>
- * A = [2,3,1,1,4], return true.<br>
- * A = [3,2,1,0,4], return false.<br>
- * 
+ * [2,3,1,1,4], return true.
+ * [3,2,1,0,4], return false.
+ * [2, 0, 1, 0] returns true
+ * [1, 1, 0, 1] returns false.
  *
  */
 
@@ -51,19 +54,16 @@ public class JumpGame
   }
 
 
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    JumpGame sv = new JumpGame();
+
+  @Test public void test() {
+
     int[][] A = {null,{},{0},{0,1}, {1,2}, {2,0}, {2,0,0}, {0,1,1,1}, {2,3,1,1,4},{3,2,1,0,4}};
     boolean[] exp = {false, false, true, false, true, true, true, false, true, false};
     
     for(int i=0; i< A.length; i++){
-      System.out.println("\n -"+i+"- Input:"+ Misc.array2String( A[i] ));
-
-      System.out.println("Output:"+sv.canJump_x(A[i]) + "\t" + exp[i]);
-      System.out.println("Output:"+sv.canJump_n(A[i]) + "\t" + exp[i]);
+        Assert.assertEquals(exp[i], canJump_n(A[i]));
+        Assert.assertEquals(exp[i], canJump_x(A[i]));
+        
     }
 
   }

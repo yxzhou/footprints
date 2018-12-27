@@ -1,4 +1,4 @@
-package fgafa.easy;
+package fgafa.array.anagram;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import fgafa.util.Misc;
+import org.junit.Test;
 
 /**
  * 
@@ -27,14 +28,18 @@ import fgafa.util.Misc;
     ["a","z"]
     ]
  *
+ *  Thoughts:
+ *     1) to ["abc","bcd","xyz"], b - a = 1,  c - b = 1, y - x = 1, z - y = 1,
+ *     1) to ["az", "ba"], z - a = 25, a - b = -1,  25 = -1 + 26.
+ *     2) to ["a","z"],
+ *
  */
 
 public class GroupShiftedStrings {
 
     public List<List<String>> groupStrings(String[] strings) {
         List<List<String>> result = new ArrayList<>();
-        
-        //check
+
         if(null == strings || 0 == strings.length){
             return result;
         }
@@ -67,18 +72,17 @@ public class GroupShiftedStrings {
         return sb.toString();
     }
     
-    public static void main(String[] args){
+    @Test public void test(){
         
         String[][] input = {
                     {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"}
         };
-        
-        GroupShiftedStrings sv = new GroupShiftedStrings();
+
         
         for(int i = 0; i < input.length; i++){
             System.out.println(String.format(" Input: %s", Misc.array2String(input[i])));
             System.out.println("Output:");
-            Misc.printListList(sv.groupStrings(input[i]));
+            Misc.printListList(groupStrings(input[i]));
         }
     }
     
