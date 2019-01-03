@@ -63,7 +63,7 @@ public class JumpGame
     for(int i=0; i< A.length; i++){
         Assert.assertEquals(exp[i], canJump_n(A[i]));
         Assert.assertEquals(exp[i], canJump_x(A[i]));
-        
+
     }
 
   }

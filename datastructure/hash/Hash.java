@@ -133,8 +133,7 @@ public class Hash
 
       if ((i & 1) == 0) {
         hash ^= ((hash << 7) ^ ch ^ (hash >> 3));
-      }
-      else {
+      } else {
         hash ^= (~((hash << 11) ^ ch ^ (hash >> 5)));
       }
     }
@@ -146,8 +145,10 @@ public class Hash
   // JS Hash Function
   // It's from Justin Sobel
   double JSHash(char[] chars) {
-    if (null == chars || 0 == chars.length) // return 0 if the input is null
+    if (null == chars || 0 == chars.length) { // return 0 if the input is null
       return 0;
+    }
+
     long hash = 1315423911;
     for (char ch : chars) {
       hash ^= ((hash << 5) + ch + (hash >> 2));
@@ -175,8 +176,10 @@ public class Hash
   // FNV Hash Function
   // It's used in Unix System, and in Microsoft's hash_map
   double FNVHash(char[] chars) {
-    if (null == chars || 0 == chars.length) // return 0 if the input is null
+    if (null == chars || 0 == chars.length) { // return 0 if the input is null
       return 0;
+    }
+
     long hash = 2166136261L;
     for (char ch : chars) {
       hash *= 16777619;
@@ -187,16 +190,17 @@ public class Hash
 
   // DJB hash Function
   // it's from Daniel J. Bernstein
-  double DJBHash(char[] chars)
-  {
-    if (null == chars || 0 == chars.length) // return 0 if the input is null
+  double DJBHash(char[] chars) {
+    if (null == chars || 0 == chars.length){ // return 0 if the input is null
       return 0;
-      long hash = 5381;
-      for (char ch : chars) {
-      
-          hash += (hash << 5) + ch;
-      }
-      return hash;
+    }
+
+    long hash = 5381;
+    for (char ch : chars) {
+
+        hash += (hash << 5) + ch;
+    }
+    return hash;
   }
 
   //PJW Hash Function

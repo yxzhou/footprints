@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package fgafa.dailyCoding.grid2D;
 
 import java.util.LinkedList;
 import java.util.Queue;
