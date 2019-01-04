@@ -1,5 +1,8 @@
 package fgafa.dailyCoding;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  *
  * Given two strings A and B, return whether or not A can be shifted some number of times to get B.
@@ -66,13 +69,13 @@ public class ShiftedStrings {
 
         int size = from.length();
         for(int i = 0, j = size - 1; i < size; i++, j--){
-            hashcode1Left = hash(hashcode2Left) + from.charAt(i);
+            hashcode1Left = hash(hashcode1Left) + from.charAt(i);
             hashcode1Right = hashcode1Right - hash(from.charAt(i), j);
 
             hashcode2Left = reverseHash(hashcode2Left - to.charAt(j));
             hashcode2Right = hashcode2Right + hash(to.charAt(j), i);
 
-            if(hashcode1Left == hashcode2Right && hashcode1Right == hashcode2Left && from.substring(0, i + 1).equals(to.substring(j)) && from.substring(i + 1).equals(to.substring(0, j + 1))){
+            if(hashcode1Left == hashcode2Right && hashcode1Right == hashcode2Left && from.substring(0, i + 1).equals(to.substring(j)) && from.substring(i + 1).equals(to.substring(0, j))){
                 return true;
             }
 
@@ -83,8 +86,8 @@ public class ShiftedStrings {
 
     private int hash(String str){
         int hashcode = 0;
-        for(int i = 0; i < str.length(); i++){
-            hashcode = hash(hashcode) + str.charAt(i);
+        for(char c : str.toCharArray()){
+            hashcode = hash(hashcode) + c;
         }
 
         return hashcode;
@@ -123,7 +126,6 @@ public class ShiftedStrings {
 
         int xor1= xor(from);
         int xor2 = xor(to);
-
         if (xor1 == xor2 && from.equals(to)) {
             return true;
         }
@@ -157,4 +159,19 @@ public class ShiftedStrings {
         return result;
     }
 
+    @Test public void test(){
+
+        Assert.assertTrue(isShifted("abcde", "cdeab"));
+        Assert.assertTrue(isShifted_n("abcde", "cdeab"));
+        Assert.assertTrue(isShifted_XOR("abcde", "cdeab"));
+
+        Assert.assertTrue(isShifted("abc", "abc"));
+        Assert.assertTrue(isShifted_n("abc", "abc"));
+        Assert.assertTrue(isShifted_XOR("abc", "abc"));
+
+        Assert.assertFalse(isShifted("abc", "acb"));
+        Assert.assertFalse(isShifted_n("abc", "acb"));
+        Assert.assertFalse(isShifted_XOR("abc", "acb"));
+
+    }
 }
