@@ -139,16 +139,16 @@ public class H2O {
 
 /**
  *    Note:
- *    1 "call check() in h() and o()" VS "call check() in special thread"
+ *    1 "call check() in h() and o()" VS "call check() in a special thread"
  *       There is an issue in "call check() in h() and o()":
  *       if the check() is before CONDITIONO.awaitUninterruptibly(), it will miss some H2O output.
  *       Example to use-case, input,  H, H, H, O.  It would no output.
  *       if the check() is after CONDITIONO.awaitUninterruptibly(), all threads will be in wait, no H2O output.
  *       Example to use-case, input,  H, H, H, O.  every thread will be in wait, no chance to call check().
  *
- *    2 It would throw IllegalMonitorStateExcepton if the current thread is not the owner of the lock.
+ *    2 It would throw IllegalMonitorStateException if the current thread is not the owner of the lock.
  *
- *    3 because there is LOCK.lock(), COUNTH is same to set as integer and AtomicInteger
+ *    3 because there is LOCK.lock(), COUNTH and COUNTO is same to set as integer and AtomicInteger
  *
  *    4 when use thread pool, if the pool size is not big enough, all threads maybe be blocked
  */
