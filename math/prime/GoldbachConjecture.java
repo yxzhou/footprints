@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.prime;
+package fgafa.math.prime;
 
 import java.util.ArrayList;
 import java.util.List;

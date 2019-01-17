@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package fgafa.math;
 
 /**
  *
@@ -12,7 +12,7 @@ package fgafa.dailyCoding;
  *
  */
 
-public class PowXY {
+public class Power {
 
     public int pow(int x, int y){
         int result = 1;
@@ -32,7 +32,7 @@ public class PowXY {
 
     public static void main(String[] args){
 
-        PowXY sv = new PowXY();
+        Power sv = new Power();
 
         int[][] cases = {
                 {2, 5},

@@ -14,7 +14,7 @@ package fgafa.math;
  *
  */
 
-public class FastPower {
+public class PowerAndMod {
 
     /*
      * @param a, b, n: 32bit integers

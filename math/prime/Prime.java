@@ -1,4 +1,4 @@
-package fgafa.math;
+package fgafa.math.prime;
 
 import java.lang.Math;
 
