@@ -1,4 +1,4 @@
-package fgafa.util.Random;
+package fgafa.util.random;
 
 
 

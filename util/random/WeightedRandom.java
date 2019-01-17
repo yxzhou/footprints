@@ -1,4 +1,4 @@
-package fgafa.util.Random;
+package fgafa.util.random;
 
 public class WeightedRandom
 {
@@ -47,7 +47,7 @@ public class WeightedRandom
       int n = query.length;
 
       for (int i = 0; i < n; ++i)
-          System.out.printf("Random number from first %d numbers is %d \n",
+          System.out.printf("random number from first %d numbers is %d \n",
                                   i+1, selectRandom(query[i], occurrence[i]));
       
   }
