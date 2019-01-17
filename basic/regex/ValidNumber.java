@@ -148,8 +148,9 @@ public class ValidNumber
 
     };
 
-
-
+    /**
+     * refer: ValidNumber.docx
+     */
     public boolean isNumber_FiniteAutomata(String s) {
 
         int transitionTable[][] = {

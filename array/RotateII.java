@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package fgafa.array;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.junit.Test;
  *    abcde -> cdeab -> bcdea -> deabc, true
  */
 
-public class ShiftedStrings {
+public class RotateII {
 
     /**
      *   Time O(n*n)

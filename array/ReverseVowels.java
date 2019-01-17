@@ -29,7 +29,6 @@ public class ReverseVowels {
     
     
     public String reverseVowels(String s) {
-        //check
         if(null == s || s.isEmpty()){
             return s;
         }
@@ -64,10 +63,6 @@ public class ReverseVowels {
         str[left] = str[right];
         str[right] = tmp;
     }
-    
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
 
-    }
 
 }

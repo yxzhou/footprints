@@ -103,7 +103,25 @@ public class Misc
       System.out.println();
   }
 
-  
+  public static void printArray_Int(int[] list) {
+    if(list == null || list.length == 0){
+      System.out.println("Null");
+      return;
+    }
+
+    StringBuilder result = new StringBuilder();
+
+    result.append("[");
+
+    for (int i = 0; i < list.length; i++) {
+      result.append(list[i]).append(",\t");
+    }
+
+    result.delete(result.length() - 2, result.length());
+    result.append("]");
+    System.out.println(result.toString());
+  }
+
   public static void printArrayList(List<String> list) {
     if(list == null || list.size() == 0){
       System.out.println("Null");

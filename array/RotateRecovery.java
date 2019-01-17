@@ -1,6 +1,6 @@
 package fgafa.array;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -24,9 +24,8 @@ public class RotateRecovery {
      * @param nums: The rotated sorted array
      * @return: void
      */
-    public void recoverRotatedSortedArray(ArrayList<Integer> nums) {
-        // check
-        if(null == nums || 2 > nums.size()){
+    public void recoverRotatedSortedArray(List<Integer> nums) {
+        if(null == nums || nums.size() < 2){
             return;
         }
         
@@ -41,15 +40,13 @@ public class RotateRecovery {
         reverse(nums, 0, nums.size() - 1);
     }
     
-    private void reverse(ArrayList<Integer> nums, int s, int e){
-        while(s < e){
+    private void reverse(List<Integer> nums, int s, int e){
+        for(; s < e; s++, e--){
         	swap(nums, s, e);
-        	s++;
-        	e--;
         }
     }
     
-    private void swap(ArrayList<Integer> nums, int i, int j){
+    private void swap(List<Integer> nums, int i, int j){
         int tmp = nums.get(i);
         nums.set(i, nums.get(j));
         nums.set(j, tmp);
