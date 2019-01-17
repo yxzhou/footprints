@@ -1,4 +1,4 @@
-package fgafa.array;
+package fgafa.array.swapReverseRotate;
 
 import fgafa.util.Misc;
 import org.junit.Test;
