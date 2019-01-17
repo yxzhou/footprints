@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package fgafa.array.swapReverseRotate;
 
 import java.util.*;
 
