@@ -2,6 +2,8 @@ package fgafa.datastructure.hash;
 
 import java.util.Hashtable;
 
+import org.junit.Test;
+
 /*
  * 
  * refer to  http://www.byvoid.com/blog/string-hash-compare/
@@ -29,13 +31,10 @@ public class Hash
 {
 
   // BKDR Hash Function
-  // It's from Brian Kernighan and Dennis Ritchie, detail see <<The C
-  // Programming Language>>. It's used by Java SDK with the factor 31.
-  // DJBX33A
-  // collision: "rQ" and "qp" has the same hash result when the R is 31. So are
-  // "rQrQ", "rQqp", "qprQ", "qpqp",
-  // and so you can get 2 to the n-th power of strings with the same hash result
-  // (the length is 2*n )
+  // It's from Brian Kernighan and Dennis Ritchie, detail see <<The C Programming Language>>.
+  // It's used by Java SDK with the factor 31.
+  // collision: "rQ" and "qp" has the same hash result when the R is 31. So are "rQrQ", "rQqp", "qprQ", "qpqp",
+  // and so you can get 2 to the n-th power of strings with the same hash result (the length is 2*n )
 
   /*
    * From <<Effective Java>> The value 31 was chosen because it is an odd prime.
@@ -248,7 +247,7 @@ public class Hash
 //  }
   
   
-  public void testHashtable(){
+  @Test public void testHashtable(){
     Hashtable<String, String> ht = new Hashtable<String, String>();
     
     ht.put("rQ", "rQ01");
@@ -288,9 +287,6 @@ public class Hash
       System.out.println( return1);
       
     }
-    
-    //test java.util.Hashtable
-    hf.testHashtable();
     
     System.out.println("-----end------" );
   }

@@ -25,7 +25,7 @@ import java.lang.Math;
  *  input: (0->2->1) (6)
  * output: (0*6, 2*6, 1*6) => (0, 12, 6) => (0, 2, 7)    
  * 
- *  TODO  ---
+ *  TODO
  *  120*16
  *  input: (0->2->1) (6, 1)
  * output: (0*6, 2*6, 1*6) => (0, 12, 6) => (0, 2, 7)   
@@ -43,7 +43,7 @@ public class Mathmatics
 
   /*
    * There are many method of computing square roots,  here it's Newton's method
-   * 
+   *
    *  input, int n.
    * output, double x, x^2 is close to n.
    * 
@@ -51,7 +51,8 @@ public class Mathmatics
    *  f(x) = x^2 - n;  
    *  f'(x) = 2x;   
    * 
-   *  f'(x0) = (f(x0) - 0)/(x0 - x1)  // 2 points of (x0, f(x0)) and (x1, 0) 
+   *  f'(x0) = (f(x0) - 0)/(x0 - x1)  // 2 points of (x0, f(x0)) and (x1, 0)
+   *
    *  => x1 = x0 - f(x0)/f'(x0)
    *  => x1 = x0 - (x0^2 - n) / (2x0)
    *  

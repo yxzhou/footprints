@@ -145,7 +145,14 @@ public class BestBuyandSell
 	 * Note: You may not engage in multiple transactions at the same time (ie,
 	 * you must sell the stock before you buy again).
 	 * 
-	 * 
+	 * Thoughts:
+     *  define dp[i][k] as the max profit that buy and sell at most k transactions in array(0, i)
+     *  define p[i][j] as the max profit that buy and sell 1 transactions in array(i, j)
+     *
+     *  dp[i][0] = 0, for i from 0 to n
+     *  dp[i][1] = max(dp[j][0] + p[j + 1][i]),  for j from 0 to i - 1
+     *
+     *
 	 */
   /**
    * Time O( k * n * n * n),   Space O(n *k)
@@ -194,6 +201,45 @@ public class BestBuyandSell
       
       return maxDiff; 
   }
+
+    public int maxProfit_k(int k, int[] prices) {
+        //check
+        if (null == prices || 0 == prices.length || k < 1) {
+            return 0;
+        }
+
+        int n = prices.length;
+
+        if(n - 1 < k){
+            return maxProfitII(prices);
+        }
+
+        //define p[i][j] as the max profit that buy and sell 1 transactions in array(i, j)
+        int[][] p = new int[n][n];
+        for(int i = 0; i < n; i++){
+            int min = prices[i];
+            for(int j = i + 1; j < n; j++){
+                min = Math.min(min, prices[j]);
+                p[i][j] = Math.max(p[i][j - 1], prices[j] - min);
+            }
+        }
+
+        //define dp[k][i] as the max profit that buy and sell at most k transactions in array(0, i)
+        int[][] dp = new int[k + 1][n];
+        for(int i = 1; i <= k; i++ ){
+            dp[i][i] = dp[i - 1][i - 1] + Math.max(0, prices[i] - prices[i - 1]);
+
+            for(int j = i + 1; j < n; j++){
+                for(int q = i - 1; q < j; q ++){
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][q] + p[q][j]);
+                }
+            }
+
+        }
+
+        return dp[k][n - 1];
+    }
+
 
   /**
    * 
