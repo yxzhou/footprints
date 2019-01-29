@@ -1,7 +1,8 @@
 package fgafa.basic.Iterator;
 
 /**
- * Given an Iterator class interface with methods: next() and hasNext(), design and implement a PeekingIterator that support the peek() operation -- it essentially peek() at the element that will be returned by the next call to next().
+ * Given an Iterator class interface with methods: next() and hasNext(),
+ * design and implement a PeekableIterator that support the peek() operation -- it essentially peek() at the element that will be returned by the next call to next().
 
     Here is an example. Assume that the iterator is initialized to the beginning of the list: [1, 2, 3].
     
@@ -11,28 +12,28 @@ package fgafa.basic.Iterator;
     
     You call next() the final time and it returns 3, the last element. Calling hasNext() after that should return false.
     
-    Show Hint 
+
     Follow up: How would you extend your design to be generic and work with all types, not just integer?
  */
 
 import java.util.Iterator;
 
-public class PeekingIterator implements Iterator<Integer> {
-    Iterator<Integer> itr;
-    Integer peekedValue = null;
+public class PeekableIterator<E> implements Iterator<E> {
+    Iterator<E> itr;
+    E peekedValue = null;
     boolean hasPeekedValue = false;
 
-    public PeekingIterator(Iterator<Integer> iterator) {
+    public PeekableIterator(Iterator<E> iterator) {
         this.itr = iterator;
     }
 
     // Returns the next element in the iteration without advancing the iterator.
-    public Integer peek() {
-        if(!hasNext()){
-            return null;
-        }
-        
+    public E peek() {
         if(!hasPeekedValue){
+            if(!itr.hasNext()){
+                return null;
+            }
+
             peekedValue = itr.next();
             hasPeekedValue = true;
         }
@@ -41,17 +42,17 @@ public class PeekingIterator implements Iterator<Integer> {
     }
 
     @Override
-    public Integer next() {
-        if(!hasNext()){
-            return null;
-        }
-        
+    public E next() {
         if(hasPeekedValue){
-            Integer result = peekedValue;
+            E result = peekedValue;
             peekedValue= null;
             hasPeekedValue = false;
             return result;  
         }else{
+            if(!itr.hasNext()){
+                return null;
+            }
+
             return itr.next();
         }
     }
