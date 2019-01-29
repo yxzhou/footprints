@@ -37,7 +37,7 @@ public class CoinChangeII {
      * 
      * Note:  Sometimes the greedy solution cann't get the optimal change 
      *   such as,  1) the coin value is a special array. (8, 5, 1) is not. 
-     *             2) the coin/candidate is unlimited    
+     *             2) the coin/candidate is limited
      * 
      * @param target
      * @param candidates
