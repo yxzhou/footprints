@@ -1,6 +1,7 @@
 package fgafa.bitwise;
 
 import fgafa.util.Misc;
+import org.junit.Test;
 
 public class SingleNumber {
 
@@ -82,11 +83,11 @@ public class SingleNumber {
     }
     
 	/**
-	 * Given an array of integers, every element appears twice except for two.
-	 * Find that two.
-	 * 
-	 * Note: Your algorithm should have a linear runtime complexity. Could you
-	 * implement it without using extra memory?
+     * Given an array of integers in which two elements appear exactly once and all other elements appear exactly twice,
+     * find the two elements that appear only once.
+     * For example, given the array [2, 4, 6, 8, 10, 2, 6, 10], return 4 and 8. The order does not matter.
+     *
+     * Follow-up: Can you do this in linear time and constant space?
 	 */
 
     public int[] twoNumber_n(int[] nums) {
@@ -101,7 +102,7 @@ public class SingleNumber {
             xor ^= n;
         }
         
-        //2 from right to left, get the first 1 in the xor
+        //2 check the xor from right to left, get the first 1 in the xor
         int i = 0;
         for( ; i < 32; i++){
             if(((xor >> i)& 1) == 1 ){
@@ -114,22 +115,20 @@ public class SingleNumber {
         for(int n : nums){
             if(((n >> i)& 1) == 1){
                 ret[0] ^= n;
-            }else{
-                ret[1] ^= n;
             }
         }
-        
+        ret[1] = xor ^ ret[0];
+
         return ret;
     }
-	
-	public static void main(String[] args) {
+
+    @Test
+	public void test() {
 		//
         System.out.println("<<: " + (1 << 3) + " " + (1 << 31));
 		System.out.println("&: " + (2 & 2) + " " + (1 & 2));
 		System.out.println("|: " + (2 | 2) + " " + (1 | 2));
 		System.out.println("^: " + (2 ^ 2) + " " + (1 ^ 2));
-		
-		SingleNumber sv = new SingleNumber();
 		
 		int[][] input = {
 				{2,2,1},
@@ -138,7 +137,7 @@ public class SingleNumber {
 
 		for(int[] nums : input){
 			System.out.println("\nInput: " + Misc.array2String(nums));
-			System.out.println("Output: " + sv.singleNumber(nums));
+			System.out.println("Output: " + singleNumber(nums));
 		}
 		
 		
@@ -149,10 +148,13 @@ public class SingleNumber {
 		};
 		for(int[] nums : input2){
 			System.out.println("\nInput: " + Misc.array2String(nums));
-			System.out.println("Output: " + sv.singleNumberII(nums) + " " + sv.singleNumberII_n(nums));
+			System.out.println("Output: " + singleNumberII(nums) + " " + singleNumberII_n(nums));
 		}
 		
 		System.out.println("\n=========================");
+
+        Misc.printArray_Int(twoNumber_n(new int[]{2, 4, 6, 8, 10, 2, 6, 10}));
+
 	}
 
 }
