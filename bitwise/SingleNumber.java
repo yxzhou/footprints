@@ -124,6 +124,8 @@ public class SingleNumber {
 
     @Test
 	public void test() {
+        System.out.println(System.currentTimeMillis());
+
 		//
         System.out.println("<<: " + (1 << 3) + " " + (1 << 31));
 		System.out.println("&: " + (2 & 2) + " " + (1 & 2));
