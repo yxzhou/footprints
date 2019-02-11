@@ -94,6 +94,10 @@ public class GrayCode
   }
   
   /*
+   * n = 1,  0,  1
+   * n = 2,  00, 01, 11, 10,
+   * n = 3,  000, 001, 011, 010, 110, 111, 101, 100
+   *
    * Time O(2^n)   
    */
 	public List<Integer> grayCode2(int n) {
@@ -109,17 +113,16 @@ public class GrayCode
 		return result;
 	}
   
-    public ArrayList<Integer> grayCode22(int n) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        //check
+    public List<Integer> grayCode22(int n) {
+        List<Integer> result = new ArrayList<Integer>();
         if(n < 0){
             return result;
         }
         
         result.add(0);
-        int high;
-        for(int i = 0; i < n ; i++){
-            high = 1 << i;
+        result.add(1);
+        for(int i = 1; i < n ; i++){
+            int high = 1 << i;
             for(int j = result.size() - 1; j >= 0; j--){
                 result.add( high + result.get(j) );
             }

@@ -1,8 +1,5 @@
 package fgafa.dailyCoding.tree;
 
-import java.util.PriorityQueue;
-
-import fgafa.tree.BinaryTree;
 import fgafa.tree.Print;
 import fgafa.tree.TreeNode;
 
