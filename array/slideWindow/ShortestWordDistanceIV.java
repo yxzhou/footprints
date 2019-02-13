@@ -80,12 +80,10 @@ public class ShortestWordDistanceIV {
                                     String s0,
                                     String s1,
                                     String s2) {
-        // check input
         if (null == textSearch || null == s0 || null == s1 || null == s2) {
             throw new IllegalArgumentException(" ");
         }
 
-        //
         StringTokenizer st = new StringTokenizer(textSearch);
         int p00 = -1, p01 = -1;
         int p1 = -1;

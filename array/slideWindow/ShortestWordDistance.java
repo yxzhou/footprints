@@ -1,5 +1,8 @@
 package fgafa.array.slideWindow;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * 
  * Given a list of words and two words word1 and word2, 
@@ -49,4 +52,47 @@ public class ShortestWordDistance {
         
         return min == Integer.MAX_VALUE ? -1 : min;
     }
+
+    /**
+     * Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.
+     *
+     * For example, given words "hello", and "world" and a text content of "dog cat hello cat dog dog hello cat world",
+     * return 1 because there's only one word "cat" in between the two words.
+     *
+     *
+     */
+    public int smallestDistance(String word1, String word2, String words){
+        if(words == null || word1 == null || word2 == null){
+            return -1;
+        }
+
+        String[] wordsArray = words.split(" ");
+
+        int poistions0 = -1;
+        int poistions1 = -1;
+
+        int distances = Integer.MAX_VALUE;
+
+        for(int i = 0; i < wordsArray.length; i++){
+            String word = wordsArray[i];
+            if(word.equals(word1)){
+                poistions0 = i;
+            }else if(word.equals(word2)){
+                poistions1 = i;
+            }
+
+            if(poistions0 != -1 && poistions1 != -1){
+                distances = Math.min(distances, Math.abs(poistions1 - poistions0));
+            }
+        }
+
+        return distances == Integer.MAX_VALUE ? distances : distances - 1;
+    }
+
+    @Test public void test(){
+
+        Assert.assertEquals(1, smallestDistance("hello", "world", "dog cat hello cat dog dog hello cat world"));
+
+    }
+
 }
