@@ -1,10 +1,8 @@
 package fgafa.tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import fgafa.util.Misc;
+
+import java.util.*;
 
 /*
  * 
@@ -114,4 +112,7 @@ public class TraversalVerticalOrder {
         }
 
     }
+
+
+
 }
