@@ -1,6 +1,9 @@
 package fgafa.array.subArraySum;
 
 
+import junit.framework.Assert;
+import org.junit.Test;
+
 /**
  * 
  * Given an array of n positive integers and a positive integer s, find the
@@ -18,7 +21,6 @@ public class MinLengthSubarraySumBiggerThan {
 
     /*Time O(n)*/
     public int minSubArrayLen(int[] nums, int s) {
-        // check
         if(null == nums || 0 == nums.length || 1 > s){
             return -1;
         }
@@ -44,18 +46,42 @@ public class MinLengthSubarraySumBiggerThan {
         
         return minSize == Integer.MAX_VALUE ? -1 : minSize;
     }
-    
+
+    public int minSubArrayLen(int s, int[] nums) {
+        if(null == nums){
+            return 0;
+        }
+
+        int min = Integer.MAX_VALUE;
+        int sum = 0;
+        int left = 0;
+        for(int right = 0; right < nums.length; ){
+            if(sum < s){
+                sum += nums[right];
+                right++;
+            }else{
+                min = Math.min(min, right - left );
+                sum -= nums[left];
+                left++;
+            }
+        }
+
+        while(sum >= s && left < nums.length){
+            min = Math.min(min, nums.length - left);
+            sum -= nums[left];
+            left++;
+        }
+
+        return min == Integer.MAX_VALUE ? 0 : min;
+    }
+
     
     /**
-     * 
-     * Case #1,  {1, 1}  3
-     * Case #2,  {3, 4}  2
-     * Case #3,  {2,3,1,2,4,3}  7
+     *
      * 
       */
     
     public int minSubArrayLen_n(int s, int[] nums) {
-        //check input
         if(null == nums || 0 == nums.length || s < 0){
             return 0;
         }
@@ -79,9 +105,14 @@ public class MinLengthSubarraySumBiggerThan {
         return result == Integer.MAX_VALUE ? 0 : result;  //**
     }
     
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    @Test
+    public void test(){
+        Assert.assertEquals(2, minSubArrayLen(7, new int[]{2,3,1,2,4,3}));
+        Assert.assertEquals(2, minSubArrayLen(15, new int[]{5,1,3,5,10,7,4,9,2,8}));
 
-	}
+        Assert.assertEquals(0, minSubArrayLen(3, new int[]{1, 1}));
+        Assert.assertEquals(1, minSubArrayLen(2, new int[]{3, 4}));
+        //Assert.assertEquals(2, minSubArrayLen(15, new int[]{5,1,3,5,10,7,4,9,2,8}));
+    }
 
 }

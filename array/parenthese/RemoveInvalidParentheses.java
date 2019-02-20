@@ -1,11 +1,11 @@
 package fgafa.array.parenthese;
 
+import fgafa.util.Misc;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import fgafa.util.Misc;
 
 /**
  * 
@@ -119,6 +119,47 @@ public class RemoveInvalidParentheses {
         return tmp.toString();
     }
 
+    public List<String> removeInvalidParentheses_2(String s) {
+        List<String> result = new ArrayList<>();
+
+        if(null == s || 0 == s.length()){
+            result.add("");
+            return result;
+        }
+
+        helper(s, result, 0, 0, new char[]{'(', ')'});
+
+        return result;
+    }
+
+    public void helper(String s, List<String> result, int last_i, int last_j,  char[] par) {
+        for (int counter = 0, i = last_i; i < s.length(); ++i) {
+            if (s.charAt(i) == par[0]){
+                counter++;
+            } else if (s.charAt(i) == par[1]){
+                counter--;
+            }
+
+            if (counter >= 0) continue;
+
+            for (int j = last_j; j <= i; ++j) {
+                if (s.charAt(j) == par[1] && (j == last_j || s.charAt(j - 1) != par[1])) {
+                    helper(s.substring(0, j) + s.substring(j + 1, s.length()), result, i, j, par);
+                }
+            }
+
+            return;
+        }
+
+        String reversed = new StringBuilder(s).reverse().toString();
+        if (par[0] == '(') {// finished left to right
+            helper(reversed, result, 0, 0, new char[]{')', '('});
+        } else { // finished right to left
+            result.add(reversed);
+        }
+    }
+
+
     public static void main(String[] args){
         RemoveInvalidParentheses sv = new RemoveInvalidParentheses();
         
@@ -139,6 +180,8 @@ public class RemoveInvalidParentheses {
             System.out.println(String.format("\nInput: %s, Output: ", input[i]));
             
             Misc.printArrayList(sv.removeInvalidParentheses(input[i]));
+
+            Misc.printArrayList(sv.removeInvalidParentheses_2(input[i]));
         }
     }
 }

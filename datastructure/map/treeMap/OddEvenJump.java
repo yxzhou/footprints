@@ -3,14 +3,20 @@ package fgafa.datastructure.map.treeMap;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.util.TreeMap;
+
+
+
 /**
  *
  * You are given an integer array A.  From some starting index, you can make a series of jumps.  The (1st, 3rd, 5th, ...) jumps in the series are called odd numbered jumps, and the (2nd, 4th, 6th, ...) jumps in the series are called even numbered jumps.
 
  You may from index i jump forward to index j (with i < j) in the following way:
 
- During odd numbered jumps (ie. jumps 1, 3, 5, ...), you jump to the index j such that A[i] <= A[j] and A[j] is the smallest possible value.  If there are multiple such indexes j, you can only jump to the smallest such index j.
- During even numbered jumps (ie. jumps 2, 4, 6, ...), you jump to the index j such that A[i] >= A[j] and A[j] is the largest possible value.  If there are multiple such indexes j, you can only jump to the smallest such index j.
+ During odd numbered jumps (ie. jumps 1, 3, 5, ...), you jump to the index j such that A[i] <= A[j] and A[j] is the smallest possible value.
+ If there are multiple such indexes j, you can only jump to the smallest such index j.
+ During even numbered jumps (ie. jumps 2, 4, 6, ...), you jump to the index j such that A[i] >= A[j] and A[j] is the largest possible value.
+ If there are multiple such indexes j, you can only jump to the smallest such index j.
  (It may be the case that for some index i, there are no legal jumps.)
  A starting index is good if, starting from that index, you can reach the end of the array (index A.length - 1) by jumping some number of times (possibly 0 or more than once.)
 
@@ -68,16 +74,62 @@ import org.junit.Test;
  */
 
 public class OddEvenJump {
-
+    /**
+     *  Time O(n*logn)  Space O(n)
+     */
     public int oddEvenJumps(int[] A) {
+        if(null == A || 0 == A.length){
+            return 0;
+        }
 
+        int len = A.length;
+        boolean[] oddJump = new boolean[len]; //default all are false
+        boolean[] evenJump = new boolean[len]; //default all are false
+        oddJump[len - 1] = true;
+        evenJump[len - 1] = true;
 
-        return 1;
+        TreeMap<Integer, Integer> value2Position = new TreeMap<>();
+        value2Position.put(A[len - 1], len - 1);
+        for(int i = len - 2; i >= 0; i--){
+            if(value2Position.containsKey(A[i])){
+                oddJump[i] = evenJump[value2Position.get(A[i])];
+                evenJump[i] = oddJump[value2Position.get(A[i])];
+
+                value2Position.put(A[i], i);
+                continue;
+            }
+
+            Integer higherKey = value2Position.higherKey(A[i]);
+            if(higherKey == null){
+                oddJump[i] = false;
+            }else{
+                oddJump[i] = evenJump[value2Position.get(higherKey)];
+            }
+
+            Integer lowerKey = value2Position.lowerKey(A[i]);
+            if(lowerKey == null){
+                evenJump[i] = false;
+            }else{
+                evenJump[i] = oddJump[value2Position.get(lowerKey)];
+            }
+
+            value2Position.put(A[i], i);
+        }
+
+        int counter = 0;
+        for(int i = 0; i < len; i++){
+            if(oddJump[i]){  // only check the fist jump, it's odd jump
+                counter++;
+            }
+        }
+        return counter;
     }
 
     @Test
     public void test(){
         Assert.assertEquals(2, oddEvenJumps(new int[]{10,13,12,14,15}));
+        Assert.assertEquals(3, oddEvenJumps(new int[]{2,3,1,1,4}));
+        Assert.assertEquals(3, oddEvenJumps(new int[]{5,1,3,4,2}));
 
     }
 }

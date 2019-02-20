@@ -118,17 +118,7 @@ public class ReverseBits {
 	      return (n & ~(1 << index));
 	    
 	  }
-	  
-	  public static int reverse_xor(int bits){
-	    if(bits < 0 || bits > Integer.MAX_VALUE ) // bits > Integer.MAX_VALUE is useless
-	      return -1;
-	    
-	    int length = 30;  // a Java int is 32 bits in all JVMs and on all platforms
-	    while((bits & (1 << length )) == 0 ) 
-	      length --;
-	      
-	    return bits ^ (( 1 << length + 1) - 1);
-	  }
+
 	  
 	  /**
 	   * 
