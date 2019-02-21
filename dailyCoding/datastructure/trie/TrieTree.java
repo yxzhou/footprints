@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.datastructure;
+package fgafa.dailyCoding.datastructure.trie;
 
 import java.util.ArrayList;
 import java.util.List;
