@@ -9,7 +9,7 @@ public class DFS
   public class Vertex implements Comparable<Vertex>
   {
     int key;
-    String color;
+    String color; // "white" - init; "gray" - visiting; "black" - visited
     Vertex parent;
     // store all adjacency vertex,  adjacency list
 

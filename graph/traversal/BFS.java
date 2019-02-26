@@ -9,7 +9,7 @@ public class BFS
   public class Vertex
   {
       int key;
-      String color;
+      String color; // "white" - init; "gray" - visiting; "black" - visited
       Vertex parent;
       // store all adjacency vertex,  adjacency list
       ArrayList<Vertex> next = new ArrayList<Vertex>();
