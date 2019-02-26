@@ -7,13 +7,15 @@ import org.junit.Test;
 import java.util.*;
 
 /**
- *  Dijkstra, Single source shortest path algorithm. nonnegative weights.
+ *  DijkstraSP, Single source shortest path algorithm. not work for negative weights.
  *
  */
-public class Dijkstra {
+public class DijkstraSP {
 
     /**
-     *  time O(vertexNumber * vertexNumber)
+     *  define V = vertexNumber,  E = edgeNumber
+     *  Time O(V ^ 2)
+     *
      * @param graph, a graph represented using adjacency matrix representation, graph[i][j] means the weight on edge from v_i to v_j.
      *               graph[i][j] == 0, means there is no edge from v_i to v_j.
      */
@@ -55,7 +57,8 @@ public class Dijkstra {
     /**
      * with PriorityQueue
      *
-     * time O(edgeNumber * log(vertexNumber))
+     * define V = vertexNumber,  E = edgeNumber
+     * Time O(E * logV),  so this is specially for sparse graph (E << V^2)
      *
      * @param adj, a graph represented using adjacency representation, adj.get(i) is a List<Node> means the neighbors of v_i.
      *
