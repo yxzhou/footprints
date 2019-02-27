@@ -25,12 +25,12 @@ public class FloyedWarshallSP {
 
         for(int pivot = 0; pivot < vertexNumber; pivot++){
             for(int from = 0; from < vertexNumber; from++){
-                if(graph[from][pivot] == Integer.MAX_VALUE){ //to avoid int over flow
+                if(graph[from][pivot] == Integer.MAX_VALUE || graph[from][pivot] == 0){ //to avoid int over flow
                     continue;
                 }
 
                 for(int to = 0; to < vertexNumber; to++){
-                    if(graph[pivot][to] == Integer.MAX_VALUE){
+                    if(graph[pivot][to] == Integer.MAX_VALUE || graph[pivot][to] == 0){
                         continue;
                     }
 
