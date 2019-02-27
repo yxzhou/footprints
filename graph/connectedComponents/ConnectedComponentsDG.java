@@ -1,4 +1,4 @@
-package fgafa.graph;
+package fgafa.graph.connectedComponents;
 
 import java.util.ArrayList;
 import java.util.Collections;
