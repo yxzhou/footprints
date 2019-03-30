@@ -20,10 +20,8 @@ import java.util.List;
 
 public class ShortestExcerpt
 {
-  static String content[] = {"a", "c", "d", "a", "c", "b", "d", "e", "a", "a",
-      "b"};
+  static String content[] = {"a", "c", "d", "a", "c", "b", "d", "e", "a", "a", "b"};
   static String keyword[] = {"b", "c", "d"};
-
 
 
   public static void main(String args[]) {

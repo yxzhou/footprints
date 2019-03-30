@@ -1,11 +1,7 @@
 package fgafa.math;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
-import java.lang.Math;
 
 
 /*
@@ -262,7 +258,51 @@ public class Mathmatics
       
     return resultSB.reverse().toString();
   }
-  
+
+    public String addStrings(String num1, String num2) {
+        if(num1 == null){
+            return num2;
+        }
+        if(num2 == null){
+            return num1;
+        }
+
+        if(num1.length() > num2.length()){
+            return addStrings(num2, num1);
+        }
+
+        StringBuilder result = new StringBuilder(num2.length() + 1);
+
+        int i = num1.length() - 1;
+        int j = num2.length() - 1;
+
+        int carry = 0;
+        int value = 0;
+        int base = '0';
+        int base2 = base + base;
+        for( ; i >= 0 && j >= 0; i--, j--){
+            value = num1.charAt(i) + num2.charAt(j) - base2 + carry;
+
+            carry = value / 10;
+
+            result.append( value % 10 );
+        }
+
+        for( ; j >= 0 ; j--){
+            value = num2.charAt(j) - base + carry;
+
+            carry = value / 10;
+
+            result.append( value % 10 );
+        }
+
+        if(carry != 0){
+            result.append( carry );
+        }
+
+        return result.reverse().toString();
+    }
+
 	/**
 	 * 
 	 * Given a non-negative number represented as an array of digits, plus one

@@ -18,17 +18,7 @@ For the following binary search tree, in-order traversal by using iterator is [1
 1      11
  \       \
   6       12
- */
 
-/*
- * Example of iterate a tree:
- * BSTIterator iterator = new BSTIterator(root);
- * while (iterator.hasNext()) {
- *    TreeNode node = iterator.next();
- *    do something for node
- * } 
- */
-/**  
 Challenge
 Extra memory usage O(h), h is the height of the tree.
 
@@ -36,13 +26,18 @@ Super Star: Extra memory usage O(1)
  *
  */
 
+/**
+ * pre-defined
+ *  Definition of TreeNode:
+ */
 
-/* Extra memory usage O(h) */
-public class BinarySearchTreeIterator {
+
+/* average time O(1) and extra memory usage O(h) */
+public class BinaryTreeIterator {
     private Stack<TreeNode> stack = new Stack<TreeNode>();
 
     // @param root: The root of binary tree.
-    public BinarySearchTreeIterator(TreeNode root) {
+    public BinaryTreeIterator(TreeNode root) {
         TreeNode p = root;
         while (null != p) {
             stack.push(p);
@@ -71,11 +66,7 @@ public class BinarySearchTreeIterator {
 
         return result;
     }
-        
-        
-    /**
-     * Definition of TreeNode:
-     */
+
     public class TreeNode {
         public int val;
         public TreeNode left, right;
@@ -85,16 +76,15 @@ public class BinarySearchTreeIterator {
             this.left = this.right = null;
         }
     }
-
 }
 
-/* Extra memory usage O(h) */
- class BinarySearchTreeIterator2 {
+/* average time O(1) and extra memory usage O(h) */
+ class BinaryTreeIterator2 {
     private Stack<TreeNode> stack = new Stack<TreeNode>();
     private TreeNode curr = null;
 
     // @param root: The root of binary tree.
-    public BinarySearchTreeIterator2(TreeNode root) {
+    public BinaryTreeIterator2(TreeNode root) {
         curr = root;
     }
 
@@ -119,11 +109,7 @@ public class BinarySearchTreeIterator {
         curr = result.right;
         return result;
     }
-        
-        
-    /**
-     * Definition of TreeNode:
-     */
+
     public class TreeNode {
         public int val;
         public TreeNode left, right;
@@ -133,16 +119,15 @@ public class BinarySearchTreeIterator {
             this.left = this.right = null;
         }
     }
-
  }
  
- /* average time O(1) and average extra memory usage O(1) */
- class BinarySearchTreeIterator3 {
+ /* average time O(1) and extra memory usage O(1) */
+ class BinaryTreeIterator3 {
      private TreeNode curr = null;
      private TreeNode pre = null;;
 
      // @param root: The root of binary tree.
-     public BinarySearchTreeIterator3(TreeNode root) {
+     public BinaryTreeIterator3(TreeNode root) {
          curr = root;
      }
 
@@ -152,6 +137,7 @@ public class BinarySearchTreeIterator {
      }
 
      // @return: return next node
+     /** average time O(1) */
      public TreeNode next() {
          if(null == curr){
              return null;
@@ -178,11 +164,7 @@ public class BinarySearchTreeIterator {
          curr = curr.right;
          return result;
      }
-         
-         
-     /**
-      * Definition of TreeNode:
-      */
+
      public class TreeNode {
          public int val;
          public TreeNode left, right;
@@ -192,5 +174,4 @@ public class BinarySearchTreeIterator {
              this.left = this.right = null;
          }
      }
-
   }

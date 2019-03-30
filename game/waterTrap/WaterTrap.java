@@ -1,7 +1,5 @@
 package fgafa.game.waterTrap;
 
-import java.util.Stack;
-
 import fgafa.util.Misc;
 
 /**
@@ -20,12 +18,7 @@ import fgafa.util.Misc;
  * 
  */
 
-public class WaterTrap
-{
-
-
-
-
+public class WaterTrap {
   
   /**
    * Time O(n)  Space O(1)

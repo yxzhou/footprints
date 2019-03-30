@@ -1,20 +1,16 @@
 package fgafa.array.subArraySum;
 
+import fgafa.util.Misc;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import fgafa.util.Misc;
 
 public class MaxSubarraySumDiff {
 
 	
 	/**
 	 * 
-	 * Given an array with integers.
-	 * 
-	 * Find two non-overlapping subarrays A and B, which |SUM(A) - SUM(B)| is
-	 * the largest.
-	 * 
+	 * Given an array with integers. Find two non-overlapping subarrays A and B, which |SUM(A) - SUM(B)| is the largest.
 	 * Return the largest difference.
 	 * 
 	 * Example For [1, 2, -3, 1], return 6
@@ -24,7 +20,6 @@ public class MaxSubarraySumDiff {
 	 * Challenge O(n) time and O(n) space.
 	 */
     public int maxDiffSubArrays(ArrayList<Integer> nums) {
-        //check
     	if(null == nums || 2 > nums.size()){
     		return Integer.MAX_VALUE; //error
     	}

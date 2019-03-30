@@ -1,10 +1,8 @@
 package fgafa.datastructure.interval;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import javafx.util.Pair;
+
+import java.util.*;
 
 /**
  * 
@@ -44,14 +42,16 @@ public class MeetingRoom {
         return true;
     }
 
-    public int minMeetingRooms(Interval[] intervals) {
-        //check
+    /**
+     *
+     * @param intervals
+     * @return the interval that need maximum meeting room
+     */
+    public Interval minMeetingRooms(Interval[] intervals) {
         if(null == intervals || 0 == intervals.length){
-            return 0;
+            return null;
         }
-        
-        int result = 0;
-        
+
         //get 2 arrays, the startTimes and endTimes
         int size = intervals.length;
         int[] starts = new int[size];
@@ -59,22 +59,28 @@ public class MeetingRoom {
         int i = 0;
         for(Interval it : intervals){
             starts[i] = it.start;
-            ends[i++] = it.end;
+            ends[i] = it.end;
+            i++;
         }
-        
-        //sort
+
         Arrays.sort(starts);
         Arrays.sort(ends);
-        
-        //main
+
+        int max = 0;
+        int count = 0;
+        Interval result = null;
         i = 0;
-        int j = 0;
-        while( i < size && j < size ){
+        for( int j = 0; i < size && j < size;  ){
             if(starts[i] < ends[i]){
-                result++;
+                count++;
                 i++;
+
+                if(max < count){
+                    max = count;
+                    result = new Interval(starts[i], ends[j]);
+                }
             }else if(starts[i] > ends[i]){ // 
-                result--;
+                count--;
                 j++;
             }else{ // ==
                 i++;
@@ -102,44 +108,27 @@ public class MeetingRoom {
     
     
     public int minMeetingRooms_n(Interval[] intervals) {
-        //check
         if(null == intervals || 0 == intervals.length){
             return 0;
         }
     
-        List<Pair> list = new ArrayList<>();
+        List<Pair<Integer, Integer>> list = new ArrayList<>();
         for(Interval interval : intervals){
             list.add(new Pair(interval.start, 1));
             list.add(new Pair(interval.end, -1));
         }
         
-        Collections.sort(list);
+        Collections.sort(list, (p1, p2) -> (p1.getKey() == p2.getKey() ? p1.getValue() - p2.getValue() : p1.getKey() - p2.getKey()) );
         
         int result = 0;
         int count = 0;
         for(Pair p : list){
-            count += p.value;
+            count += (int)p.getValue();
             
             result = Math.max(result, count);
         }
         
         return result;
     }
-    
-    private class Pair implements Comparable<Pair> {
-        int x; //x position
-        int value;
-        
-        Pair(int x, int value){
-            this.x = x;
-            this.value = value;
-        }
-        
-        @Override
-        public int compareTo(Pair o) {
-            int diff = this.x - o.x;
-            return diff == 0 ? this.value - o.value : diff;
-        } 
-        
-    }
+
 }

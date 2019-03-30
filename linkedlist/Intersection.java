@@ -1,6 +1,7 @@
 package fgafa.linkedlist;
 
-import fgafa.util.Misc;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -66,30 +67,128 @@ public class Intersection {
 		return result;
 	}
 
+	public ListNode getIntersectionNode_2(ListNode headA, ListNode headB) {
+		if(headA == null || headB == null){
+			return null;
+		}
+
+		ListNode tailA = headA;
+		while(tailA.next != null){//assume there is no cycle in A and B
+			tailA = tailA.next;
+		}
+
+		tailA.next = headA;
+
+		ListNode fast = headB;
+		ListNode slow = headB;
+		while(fast != null && fast.next != null){
+			fast = fast.next.next;
+			slow = slow.next;
+
+			if(fast == slow){
+				fast = headB;
+				while(fast != slow){
+					slow = slow.next;
+					fast = fast.next;
+				}
+
+				tailA.next = null;
+				return fast;
+			}
+		}
+
+		tailA.next = null;
+		return null;
+	}
+
+	public ListNode getIntersectionNode_n(ListNode headA, ListNode headB) {
+		if(headA == null || headB == null){
+			return null;
+		}
+
+		//find tail of headA, connect as a cycle
+		ListNode tailA = headA;
+		while(tailA.next != null){
+			tailA = tailA.next;
+		}
+		tailA.next = headA;
+
+		ListNode fast = headB;
+		ListNode slow = headB;
+		ListNode result = null;
+		while(fast.next != null && fast.next.next != null ){
+			fast = fast.next.next;
+			slow = slow.next;
+
+			if(fast == slow){
+				while(headB != slow){
+					headB = headB.next;
+					slow = slow.next;
+				}
+
+				result = slow;
+				break;
+			}
+		}
+
+		tailA.next = null;
+		return result;
+	}
+
 	public static void main(String[] args) {
 		Intersection sv = new Intersection();
 
-		int[][] x = { { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 } };
+		int[][][] x = {
+				{ { 1, 2, 3 }, {1, 2, 3} },
+				{ { 1, 2, 3, 4 }, {1, 2, 3, 4} },
+				{ { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, {7, 8, 9, 10, 11, 12, 13} },
+				{ {7, 8, 9, 10, 11, 12, 13}, { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 } }
+		};
 
-		ListNode virtualHead, curr;
+		ListNode[] heads;
 		for (int i = 0; i < x.length; i++) {
-			System.out.println("\nArray 000:" + Misc.array2String(x[i]));
+			heads = sv.build(x[i][0], x[i][1]);
 
-			virtualHead = new ListNode(-1);
-			curr = virtualHead;
-			if (x[i] != null) {
-				for (int j : x[i]) {
-					curr.next = new ListNode(j);
-					curr = curr.next;
-				}
-			}
+		    System.out.println("\nInput: ");
+		    ListNode.printList(heads[0]);
+			ListNode.printList(heads[1]);
 
-		    System.out.println("List 001: ");   
-		    ListNode.printList(virtualHead.next);
-		      
-			System.out.println("  Result: " + sv.getIntersectionNode(virtualHead.next, virtualHead.next));
+			ListNode intersection = sv.getIntersectionNode_n(heads[0], heads[1]);
+
+			System.out.println("  Result: " + (intersection == null ? null : intersection.val));
 		}
 	}
 	
 
+	private ListNode[] build(int[] A, int[] B){
+		Map<Integer, ListNode> map = new HashMap<>();
+
+		ListNode virtualHeadA = new ListNode(-1);
+		ListNode curr = virtualHeadA;
+		if (A != null) {
+			for (int j : A) {
+				curr.next = new ListNode(j);
+				curr = curr.next;
+
+				map.put(j, curr);
+			}
+		}
+
+		ListNode virtualHeadB = new ListNode(-1);
+		curr = virtualHeadB;
+		if (B != null) {
+			for (int j : B) {
+				if(map.containsKey(j)){
+					curr.next = map.get(j);
+				}else{
+					curr.next = new ListNode(j);
+					map.put(j, curr.next);
+				}
+
+				curr = curr.next;
+			}
+		}
+
+		return new ListNode[]{virtualHeadA.next, virtualHeadB.next};
+	}
 }

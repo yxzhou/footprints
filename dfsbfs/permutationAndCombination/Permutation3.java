@@ -1,10 +1,8 @@
 package fgafa.dfsbfs.permutationAndCombination;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 import fgafa.util.Misc;
+
+import java.util.*;
 
 public class Permutation3 {
 
@@ -12,8 +10,8 @@ public class Permutation3 {
      * @param nums: A list of integers.
      * @return: A list of permutations.
      */
-    public ArrayList<ArrayList<Integer>> permute_swap(ArrayList<Integer> nums) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+    public List<List<Integer>> permute_swap(ArrayList<Integer> nums) {
+        List<List<Integer>> result = new ArrayList<>();
         //check
         if(null == nums || 0 == nums.size()){
             return result;
@@ -24,7 +22,7 @@ public class Permutation3 {
         return result;
     }
     
-    private void permute_swap(ArrayList<Integer> nums, int i, ArrayList<ArrayList<Integer>> result){
+    private void permute_swap(ArrayList<Integer> nums, int i, List<List<Integer>> result){
         if(i == nums.size() - 1){
             result.add(new ArrayList<Integer>(nums));
             return;
@@ -39,7 +37,7 @@ public class Permutation3 {
         }
     }
     
-    private void swap(ArrayList<Integer> nums, int i, int j){
+    private void swap(List<Integer> nums, int i, int j){
         int tmp = nums.get(i);
         nums.set(i, nums.get(j));
         nums.set(j, tmp);
@@ -53,16 +51,16 @@ public class Permutation3 {
      * Step 2, insert 2:  [12], [21] 
      * Step 3, insert 3:  [123], [132], [312], [213] [231], [321]
      */
-    public ArrayList<ArrayList<Integer>> permute_insert(ArrayList<Integer> nums) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+    public List<List<Integer>> permute_insert(ArrayList<Integer> nums) {
+        List<List<Integer>> result = new ArrayList<>();
         //check
         if(null == nums || 0 == nums.size()){
             return result;
         }
         
         result.add(new ArrayList<Integer>());
-        ArrayList<Integer> curr;
-        ArrayList<Integer> next;
+        List<Integer> curr;
+        List<Integer> next;
         for(int i = 0; i < nums.size(); i++){
         	for(int j = result.size() - 1; j >= 0 ; j--){
         		curr = result.get(j);
@@ -78,28 +76,32 @@ public class Permutation3 {
         
         return result;
     }
-    
-    public ArrayList<ArrayList<Integer>> permuteUnique_swap(ArrayList<Integer> nums) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        //check
+
+
+    /**
+     *   Wrong !!
+     */
+    public List<List<Integer>> permuteUnique_swap_wrong(List<Integer> nums) {
+        List<List<Integer>> result = new ArrayList<>();
         if(null == nums || 0 == nums.size()){
             return result;
         }
         
         Collections.sort(nums);
+
         permuteUnique_swap(nums, 0, result);
         
         return result;
     }
     
-    private void permuteUnique_swap(ArrayList<Integer> nums, int i, ArrayList<ArrayList<Integer>> result){
+    private void permuteUnique_swap(List<Integer> nums, int i, List<List<Integer>> result){
         if(i == nums.size() - 1){
             result.add(new ArrayList<Integer>(nums));
             return;
         }
-        
+
         for(int j = i; j < nums.size(); j++){
-        	if(j > i && nums.get(j) == nums.get(j - 1)){
+        	if(j > i && nums.get(j) != nums.get(j - 1)){
         		continue;
         	}
             swap(nums, i, j);
@@ -111,9 +113,8 @@ public class Permutation3 {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> permuteUnique_insert(ArrayList<Integer> nums) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        //check
+    public List<List<Integer>> permuteUnique_insert(List<Integer> nums) {
+        List<List<Integer>> result = new ArrayList<>();
         if(null == nums || 0 == nums.size()){
             return result;
         }
@@ -121,8 +122,8 @@ public class Permutation3 {
         Collections.sort(nums);
         
         result.add(new ArrayList<Integer>());
-        ArrayList<Integer> curr;
-        ArrayList<Integer> next;
+        List<Integer> curr;
+        List<Integer> next;
         for(int i = 0; i < nums.size(); i++){
         	for(int j = result.size() - 1; j >= 0 ; j--){
         		curr = result.get(j);
@@ -146,7 +147,9 @@ public class Permutation3 {
         
         return result;
     }
-    
+
+
+
 	public static void main(String[] args) {
 		Permutation3 sv = new Permutation3();
 
@@ -182,8 +185,8 @@ public class Permutation3 {
 //			System.out.println("--permutation_insert--");
 //			Misc.printListList(sv.permute_insert(num));
 
-			System.out.println("--permuteUnique_swap--");
-			Misc.printListList(sv.permuteUnique_swap(new ArrayList<Integer>(Arrays.asList(num))));
+			System.out.println("--permuteUnique_swap_wrong--");
+			//Misc.printListList(sv.permuteUnique_swap(new ArrayList<Integer>(Arrays.asList(num))));
 			
 			System.out.println("--permuteUnique_insert--");			
 			Misc.printListList(sv.permuteUnique_insert(new ArrayList<Integer>(Arrays.asList(num))));

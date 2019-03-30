@@ -1,8 +1,8 @@
 package fgafa.matrix;
 
-import java.util.Stack;
-
 import fgafa.util.Misc;
+
+import java.util.Stack;
 
 public class MaxSquare {
 
@@ -75,7 +75,43 @@ public class MaxSquare {
     	
     	return max;
     }
-    
+
+	public int maxSquare_n(int[][] matrix) {
+		if(null == matrix || 0 == matrix.length || 0 == matrix[0].length ){
+			return 0;
+		}
+
+		int rowNumber = matrix.length;
+		int columnNumber = matrix[0].length;
+
+		int[] heights = new int[columnNumber + 1];
+		int max = 0;
+
+		for(int row = 0; row < rowNumber; row++ ){
+			for(int column = 0; column < columnNumber; column++ ){
+				if(matrix[row][column] == 1){
+					heights[column]++;
+				}else{
+					heights[column] = 0;
+				}
+			}
+
+			Stack<Integer> stack = new Stack<>();
+			for(int i = 0; i <= columnNumber; ){
+				if(stack.isEmpty() || heights[stack.peek()] <= heights[i]){
+					stack.add(i);
+					i++;
+				}else{ //heights[stack.peek()] > heights[i]
+					int top = stack.pop();
+
+					max = Math.max( max, Math.min(heights[top], stack.isEmpty() ? i : i - stack.peek() - 1) );
+				}
+			}
+		}
+
+		return max * max;
+	}
+
     /**
      * 当我们判断以某个点为正方形右下角时最大的正方形时， 那它的上方， 左方和左上方三个点也一定是某个正方形的右下角，
      * 否则该点为右下角的正方形最大就是它自己了。 这是定性的判断， 那具体的最大正方形边长呢？ 我们知道， 该点为右下角的正方形的最大边长，
@@ -150,8 +186,14 @@ public class MaxSquare {
 		MaxSquare sv = new MaxSquare();
 		
 		int[][][] matrix = { 
-		        {{0}},
-		            
+		        //{{0}},
+				{
+					{ 1, 1, 1 },
+					{ 1, 1, 1 },
+					{ 1, 1, 1 },
+					{ 1, 0, 0 }
+				},
+
 				{
 					{ 1, 0, 1, 0, 0 }, 
 					{ 1, 0, 1, 1, 1 },
@@ -181,6 +223,7 @@ public class MaxSquare {
 		for(int i = 0; i < matrix.length; i++){
 		    System.out.println( Misc.array2String(matrix[i]) );
 		    System.out.println(sv.maxSquare(matrix[i]));
+			System.out.println(sv.maxSquare_n(matrix[i]));
 		    
 		    System.out.println(sv.maxSquare_dp(matrix[i]));
 		    System.out.println(sv.maxSquare_dp_n(matrix[i]));

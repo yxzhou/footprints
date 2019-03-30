@@ -8,7 +8,7 @@ function sayHello(name){
     var text = 'Hello ' + name;
     var say = function(){
         console.log(text);
-    }  // define the function, and assign the function reference to "say"
+    };  // define the function, and assign the function reference to "say"
 
     say(); //
 }
@@ -22,7 +22,7 @@ function sayHello2(name){
     var text = 'Hello ' + name; // local variable
     var say = function() {
         console.log(text);
-    }
+    };
 
     return say;
 }
@@ -38,7 +38,7 @@ function say667(){
     var num = 42;
     var say = function(){
         console.log(num);
-    }
+    };
     num++;
     return say;
 }
@@ -57,11 +57,11 @@ function setupSomeGlobals() {
     //store some reference to function as global variables
     gLogNumber = function() {
         console.log(num);
-    }
+    };
 
     gIncreaseNumber = function () {
         num++;
-    }
+    };
 
     gSetNumber = function (x) {
         num = x;
@@ -135,7 +135,7 @@ testList(); //logs "item2 undefined" 3 times
 function sayAlice() {
     var say = function () {
         console.log(alice);
-    }
+    };
 
     //local variable that ends up within clo
     var alice = 'Hello Alice';
@@ -162,7 +162,7 @@ function newClosure(someNum, someRef){
         console.log('num: ' + num +
         '; anArray: ' + anArray.toLocaleString() +
         '; ref.someVar: ' + ref.someVar + ';');
-    }
+    };
 
     obj = {someVar: 4};
     fn1 = newClosure(4, obj);

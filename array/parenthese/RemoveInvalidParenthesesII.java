@@ -1,7 +1,5 @@
 package fgafa.array.parenthese;
 
-import fgafa.util.Misc;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +18,7 @@ import java.util.Set;
  *
  */
 
-public class RemoveInvalidParentheses {
+public class RemoveInvalidParenthesesII {
 
     public List<String> removeInvalidParentheses(String s) {
         List<String> result = new ArrayList<>();
@@ -119,7 +117,75 @@ public class RemoveInvalidParentheses {
         return tmp.toString();
     }
 
-    public List<String> removeInvalidParentheses_2(String s) {
+
+    /**
+     * return all valid
+     *
+     * best solution, please see RemoveInvalidParentheseII.
+     *
+     */
+    public List<String> removeInvalidParentheses_n(String s) {
+
+        if (null == s || s.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Set<String> result = new HashSet<>();
+        helper(s.toCharArray(), 0, new char[]{'(',')'}, result);
+
+
+        return new ArrayList<>(result);
+    }
+
+    private void helper(char[] chars, int l, char[] pair, Set<String> result){
+
+        int count = 0;
+        for(int i = l; i < chars.length; i++){
+            char c = chars[i];
+
+            if(c == pair[1] && count == 0){
+                char[] newChars = new char[chars.length - 1];
+
+                for(int j = 0; j <= i; j++){
+                    //if(chars[j] == pair[1] && ( j == 0 || (j > 0 && chars[j] != chars[j - 1]))){
+                    if(chars[j] == pair[1] && ( j == 0 || chars[j] != chars[j - 1])){
+                        System.arraycopy(chars, 0, newChars, 0, j);
+                        System.arraycopy(chars, j + 1, newChars, j, chars.length - j - 1);
+
+                        helper(newChars, i, pair, result);
+                    }
+                }
+                return;
+            }
+
+            if( c == pair[0]){
+                count++;
+            }else if( c == pair[1]){
+                count--;
+            }
+        }
+
+        //if(count >= 0){
+        reverse(chars);
+        if(pair[0] == '('){
+            helper(chars, 0, new char[]{')','('}, result);
+        }else{
+            result.add(String.valueOf(chars));
+        }
+        //}
+
+    }
+
+    private void reverse(char[] chars){
+        char tmp;
+        for(int l = 0, r = chars.length - 1; l < r; l++, r--){
+            tmp = chars[l];
+            chars[l] = chars[r];
+            chars[r] = tmp;
+        }
+    }
+
+    public List<String> removeInvalidParentheses_x(String s) {
         List<String> result = new ArrayList<>();
 
         if(null == s || 0 == s.length()){
@@ -161,7 +227,7 @@ public class RemoveInvalidParentheses {
 
 
     public static void main(String[] args){
-        RemoveInvalidParentheses sv = new RemoveInvalidParentheses();
+        RemoveInvalidParenthesesII sv = new RemoveInvalidParenthesesII();
         
         String[] input = {
                     null,       //""
@@ -179,9 +245,9 @@ public class RemoveInvalidParentheses {
         for(int i = 0; i < input.length; i++){
             System.out.println(String.format("\nInput: %s, Output: ", input[i]));
             
-            Misc.printArrayList(sv.removeInvalidParentheses(input[i]));
-
-            Misc.printArrayList(sv.removeInvalidParentheses_2(input[i]));
+            System.out.println(sv.removeInvalidParentheses(input[i]));
+            System.out.println(sv.removeInvalidParentheses_n(input[i]));
+            System.out.println(sv.removeInvalidParentheses_x(input[i]));
         }
     }
 }

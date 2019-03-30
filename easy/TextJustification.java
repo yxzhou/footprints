@@ -1,9 +1,9 @@
 package fgafa.easy;
 
+import fgafa.util.Misc;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import fgafa.util.Misc;
 
 /*
  * Given an array of words and a length L, format the text such that each line 
@@ -43,7 +43,7 @@ import fgafa.util.Misc;
 public class TextJustification
 {
 
-  public ArrayList<String> fullJustify(String[] words, int L) {
+  public ArrayList<String> fullJustify_1(String[] words, int L) {
     ArrayList<String> returnvalue = new ArrayList<String>();
     
     if(words == null || words.length == 0){
@@ -120,35 +120,50 @@ public class TextJustification
     
     return sb.toString();
   }
-  
-    public List<String> fullJustify_n(String[] words,
-                                      int L) {
-        List<String> returnvalue = new ArrayList<>();
 
-        if (words == null || words.length == 0) {
-            return returnvalue;
-        }
+    public List<String> fullJustify_1_n(String[] words, int L) {
+        List<String> lines = new ArrayList<String>();
 
-        int rest = L;
-        int i = 0;
-        int j = 0;
-        while (j < words.length) {
-
-            if (words[j].length() <= rest) {
-                rest -= words[j].length() + 1;
-                j++;
-            } else {
-                returnvalue.add(buildLine(words, L, i, j, rest));
-
-                i = j;
-                rest = L;
+        int index = 0;
+        while (index < words.length) {
+            int count = words[index].length();
+            int last = index + 1;
+            while (last < words.length) {
+                if (words[last].length() + count + 1 > L) break;
+                count += words[last].length() + 1;
+                last++;
             }
 
+            StringBuilder builder = new StringBuilder();
+            int diff = last - index - 1;
+            // if last line or number of words in the line is 1, left-justified
+            if (last == words.length || diff == 0) {
+                for (int i = index; i < last; i++) {
+                    builder.append(words[i] + " ");
+                }
+                builder.deleteCharAt(builder.length() - 1);
+                for (int i = builder.length(); i < L; i++) {
+                    builder.append(" ");
+                }
+            } else {
+                // middle justified
+                int spaces = (L - count) / diff;
+                int r = (L - count) % diff;
+                for (int i = index; i < last; i++) {
+                    builder.append(words[i]);
+                    if (i < last - 1) {
+                        for (int j = 0; j <= (spaces + ((i - index) < r ? 1 : 0)); j++) {
+                            builder.append(" ");
+                        }
+                    }
+                }
+            }
+            lines.add(builder.toString());
+            index = last;
         }
-        
-        returnvalue.add(buildLine(words, L, i, j, rest));
 
-        return returnvalue;
+
+        return lines;
     }
 
 
@@ -176,6 +191,35 @@ public class TextJustification
         result.add(buildLine(words, length, left, right, rest));
 
         return result;
+    }
+
+    public List<String> fullJustify_2_n(String[] words, int L) {
+        List<String> returnvalue = new ArrayList<>();
+
+        if (words == null || words.length == 0) {
+            return returnvalue;
+        }
+
+        int rest = L;
+        int i = 0;
+        int j = 0;
+        while (j < words.length) {
+
+            if (words[j].length() <= rest) {
+                rest -= words[j].length() + 1;
+                j++;
+            } else {
+                returnvalue.add(buildLine(words, L, i, j, rest));
+
+                i = j;
+                rest = L;
+            }
+
+        }
+
+        returnvalue.add(buildLine(words, L, i, j, rest));
+
+        return returnvalue;
     }
 
     private String buildLine(String[] words,
@@ -218,6 +262,7 @@ public class TextJustification
         return result.toString();
     }
 
+
   /**
    * @param args
    */
@@ -235,9 +280,12 @@ public class TextJustification
       
       System.out.println("Input :" + Misc.array2String(words[i]) + " " + L[i]);
       
-      Misc.printArrayList(sv.fullJustify(words[i], L[i]));  
+      Misc.printArrayList(sv.fullJustify_1(words[i], L[i]));
+
+        Misc.printArrayList(sv.fullJustify_1_n(words[i], L[i]));
       
-      Misc.printArrayList(sv.fullJustify_n(words[i], L[i]));
+      Misc.printArrayList(sv.fullJustify_2_n(words[i], L[i]));
+
 
       Misc.printArrayList(sv.fullJustify_2(words[i], L[i]));
     }

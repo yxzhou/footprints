@@ -50,15 +50,12 @@ public class Rotate
     
     private void reverse(char[] str, int i, int j){
         for( ;i < j; i++, j--){
-            swapTwo(str, i, j);
+            char c = str[i];
+            str[i] = str[j];
+            str[j] = c;
         }
     }
-    
-    private void swapTwo(char[] str, int i, int j){
-        char c = str[i];
-        str[i] = str[j];
-        str[j] = c;
-    }
+
 
 	/**
 	 * 

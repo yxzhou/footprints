@@ -199,46 +199,51 @@ public class ShortestExcerpt2
    * Time O(n)  space O(m)
    */
   public String minWindow(String S, String T) {
-    //check
-    if(S == null || T== null || S.length()==0 || S.length() < T.length())
-      return null;
-    
-    int[] need = new int[256];
-    for(char c : T.toCharArray())
-      need[c] ++;
-    
-    int[] found = new int[256];
-    int count = 0;
-    int minWinLen = S.length(), minWinStart = 0;
-    
-    char ch;
-    for(int start = 0, end = 0, len = 0; end < S.length(); end++){
-      ch = S.charAt(end);
-      if(need[ch] == 0) 
-        continue;
-      if(++found[ch] <= need[ch]) 
-        count++;
-      
-      if(count == T.length()){
-        ch = S.charAt(start);
-        while(need[ch] == 0 || found[ch] > need[ch]){
-          if(found[ch] > need[ch])
-            found[ch] --;
-          start ++;
-          ch = S.charAt(start);
-        }
-        
-        len = end - start + 1;
-        if(len < minWinLen){
-          minWinLen = len;
-          minWinStart = start;
-        }
-          
+      if (S == null || T == null || S.length() == 0 || S.length() < T.length()) {
+          return null;
       }
-      
-    }
-    
-    return S.substring(minWinStart, minWinStart + minWinLen);
+
+      int[] need = new int[256];
+      for (char c : T.toCharArray()) {
+          need[c]++;
+      }
+
+      int[] found = new int[256];
+      int count = 0;
+      int minWinLen = S.length();
+      int minWinStart = 0;
+
+      char ch;
+      for (int start = 0, end = 0, len = 0; end < S.length(); end++) {
+          ch = S.charAt(end);
+          if (need[ch] == 0) {
+              continue;
+          }
+
+          if (++found[ch] <= need[ch]) {
+              count++;
+          }
+
+          if (count == T.length()) {
+              ch = S.charAt(start);
+              while (need[ch] == 0 || found[ch] > need[ch]) {
+                  if (found[ch] > need[ch])
+                      found[ch]--;
+                  start++;
+                  ch = S.charAt(start);
+              }
+
+              len = end - start + 1;
+              if (len < minWinLen) {
+                  minWinLen = len;
+                  minWinStart = start;
+              }
+
+          }
+
+      }
+
+      return S.substring(minWinStart, minWinStart + minWinLen);
   }
    
   

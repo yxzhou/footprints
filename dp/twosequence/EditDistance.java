@@ -25,14 +25,14 @@ package fgafa.dp.twosequence;
 public class EditDistance
 {
 
-  public int minDistance_recur(String word1, String word2) {    
-    //check
-    if(word1 == null && word2 == null)
-      return 0;
-    else if(word1 == null || word1.length() == 0)
-      return word2.length();
-    else if(word2 == null || word2.length() == 0)
-      return word1.length();
+  public int minDistance_recur(String word1, String word2) {
+    if(word1 == null && word2 == null) {
+        return 0;
+    } else if(word1 == null || word1.length() == 0) {
+        return word2.length();
+    } else if(word2 == null || word2.length() == 0) {
+        return word1.length();
+    }
 
     int len1 = word1.length();
     int len2 = word2.length();
@@ -100,6 +100,14 @@ public class EditDistance
    * 
    */
   public int minDistance_DP(String word1, String word2) {
+      if(word1 == null && word2 == null) {
+          return 0;
+      } else if(word1 == null ) {
+          return word2.length();
+      } else if(word2 == null ) {
+          return word1.length();
+      }
+
       final int m = word1.length();
       final int n = word2.length();
 
@@ -109,18 +117,16 @@ public class EditDistance
           dp[0][j] = j;
       }
 
-      for (int i = 0; i <= n; i++) {
+      for (int i = 0; i <= m; i++) {
           dp[i][0] = i;
       }
 
+      char[] chars1 = word1.toCharArray();
+      char[] chars2 = word2.toCharArray();
       for (int i = 1; i <= m; i++) {
           for (int j = 1; j <= n; j++) {
-
-              boolean isEqual = word1.charAt(i - 1) == word2.charAt(j - 1);
-
-              dp[i][j] = dp[i - 1][j - 1] + (isEqual ? 0 : 1);
+              dp[i][j] = dp[i - 1][j - 1] + (chars1[i - 1] == chars2[j - 1] ? 0 : 1);
               dp[i][j] = Math.min(dp[i][j], Math.min(dp[i][j - 1], dp[i - 1][j]) + 1);
-
           }
       }
 
@@ -229,13 +235,13 @@ public class EditDistance
   public static void main(String[] args) {
     EditDistance sv = new EditDistance();
     
-    String[] s1 = {null, "", "horse"};
-    String[] s2 = {null, "", "ros"};
+    String[] s1 = {null, "", "horse", "ros", "intention"};
+    String[] s2 = {null, "", "ros", "horse", "execution"};
     
     for(int i=0; i< s1.length; i++){
       System.out.println("\nInput s1:"+s1[i]+", s2:"+s2[i]);
       System.out.println("Output  :"+ sv.minDistance_recur(s1[i], s2[i]));
-      
+        System.out.println("Output  :"+ sv.minDistance_DP(s1[i], s2[i]));
     }
 
   }

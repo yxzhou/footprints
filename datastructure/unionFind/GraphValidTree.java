@@ -1,5 +1,13 @@
 package fgafa.datastructure.unionFind;
 
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 /**
  * 
  * Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), 
@@ -66,4 +74,64 @@ public class GraphValidTree {
 		
     	return p;
     }
+
+    /**  validTree_topological not work  */
+
+	public boolean validTree_topological(int n, int[][] edges) {
+		if(null == edges || n < 2 || n - 1 != edges.length){
+			return false;
+		}
+
+		List<Integer>[] neighbors = new ArrayList[n];
+		int[] inDegrees = new int[n]; //default all are 0
+		for(int[] edge : edges){
+			if(neighbors[edge[0]] == null){
+				neighbors[edge[0]] = new ArrayList<>();
+			}
+			neighbors[edge[0]].add(edge[1]);
+			inDegrees[edge[1]]++;
+
+			if(neighbors[edge[1]] == null){
+				neighbors[edge[1]] = new ArrayList<>();
+			}
+			neighbors[edge[1]].add(edge[0]);
+			inDegrees[edge[0]]++;
+		}
+
+		Queue<Integer> queue = new LinkedList<>();
+		int count = 0;
+		for(int i = 0; i < n; i++){
+			if(inDegrees[i] == 0){
+				queue.add(i);
+				count++;
+			}
+		}
+
+		int curr;
+		while(!queue.isEmpty()){
+			curr = queue.poll();
+
+			if(null == neighbors[curr]){
+				continue;
+			}
+
+			for(Integer next : neighbors[curr]){
+				inDegrees[next]--;
+
+				if(inDegrees[next] == 0){
+					queue.add(next);
+					count++;
+				}
+			}
+		}
+
+		return count == n;
+	}
+
+
+	@Test
+	public void test(){
+		//Assert.assertTrue(validTree_topological(5, new int[][]{{0, 1}, {0, 2}, {0, 3}, {1, 4}}));
+		Assert.assertFalse(validTree_topological(5, new int[][]{{0, 1}, {0, 4}, {1, 4}, {2, 3}}));
+	}
 }

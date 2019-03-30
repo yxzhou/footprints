@@ -27,100 +27,101 @@ import fgafa.util.Misc;
  *
  */
 
-public class WaterTrapII
-{
+public class WaterTrapII {
 
-  /*
-   * Time O(n*n)
-   */
-  public int maxArea(int[] height) {
-    int result = 0;  // till to now, the max water Trap
-    
-    //check
-    if(height == null || height.length  < 2)
-      return result;
-    
-    int len = height.length;
-     
-    int curr = 0; // the current water Trap between [i, j]
-    int currH = 0;
-    for(int i=0; i< len; i++){
-      currH = height[i];
-      curr = Math.min(currH, height[len - 1]) * (len - i -1);
-      result = Math.max(result, curr);
-      
-      for(int j=i; j < len-1 ; ){
-        if(currH <= Math.min(height[j], height[j+1]) ){
-          j++;
-          continue;
+    /*
+     * Time O(n*n)
+     */
+    public int maxArea(int[] height) {
+        int result = 0;  // till to now, the max water Trap
+
+        if (height == null || height.length < 2) {
+            return result;
         }
-          
-        curr = Math.min(currH, height[j]) * (j -i);
-        result = Math.max(result, curr);   
-          
-        j++;
-      }
+
+        int len = height.length;
+
+        int curr = 0; // the current water Trap between [i, j]
+        int currH = 0;
+        for (int i = 0; i < len; i++) {
+            currH = height[i];
+            curr = Math.min(currH, height[len - 1]) * (len - i - 1);
+            result = Math.max(result, curr);
+
+            for (int j = i; j < len - 1; ) {
+                if (currH <= Math.min(height[j], height[j + 1])) {
+                    j++;
+                    continue;
+                }
+
+                curr = Math.min(currH, height[j]) * (j - i);
+                result = Math.max(result, curr);
+
+                j++;
+            }
+        }
+
+        return result;
     }
-    
-    return result;
-  }
-  
-  /*
-   * Time O(n),  it's better than maxArea3
-   */
-  public int maxArea2_x(int[] height) {
-    int result = 0;  // till to now, the max water Trap
-    
-    //check
-    if(height == null || height.length  < 2){
-      return result;
+
+    /*
+     * Time O(n),  it's better than maxArea3
+     */
+    public int maxArea2_x(int[] height) {
+        int result = 0;
+
+        if (height == null || height.length < 2) {
+            return result;
+        }
+
+        int left = 0;
+        int right = height.length - 1;
+        int heighth = 0;
+        int tmpHeighth = 0;
+        while (left < right) {
+            tmpHeighth = Math.min(height[left], height[right]);
+            if (tmpHeighth > heighth) {
+                heighth = tmpHeighth;
+
+                result = Math.max(result, heighth * (right - left));
+            }
+
+            if (height[left] <= heighth) {
+                left++;
+            }
+            if (height[right] <= heighth) {
+                right--;
+            }
+        }
+
+        return result;
     }
-    
-    int left = 0, right = height.length - 1;
-    int heighth = 0, tmpHeighth = 0;
-    while(left < right){
-      tmpHeighth = Math.min(height[left], height[right]);
-      if( tmpHeighth > heighth){
-        heighth = tmpHeighth;
-        
-        result = Math.max(result, heighth*(right - left));        
-      }
-      
-      if(height[left] <= heighth){
-        left ++;
-      }
-      if(height[right] <= heighth){
-        right --;
-      }
+
+    /*
+     * Time O(n)
+     */
+    public int maxArea3(int[] height) {
+        int result = 0;  // till to now, the max water Trap
+
+        if (height == null || height.length < 2) {
+            return result;
+        }
+
+        int left = 0;
+        int right = height.length - 1;
+        while (left < right) {
+            result = Math.max(result, Math.min(height[left], height[right]) * (right - left));
+
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+
+        }
+
+        return result;
     }
-    
-    return result;
-  }
-  
-  /*
-   * Time O(n)
-   */
-  public int maxArea3(int[] height) {
-    int result = 0;  // till to now, the max water Trap
-    
-    //check
-    if(height == null || height.length  < 2)
-      return result;
-    
-    int left = 0, right = height.length - 1;
-    while(left < right){
-      result = Math.max(result, Math.min(height[left], height[right])*(right - left));        
-      
-      if (height[left] < height[right]){
-        left ++;
-      }else{
-        right --;
-      }
-      
-    }
-    
-    return result;
-  }
   
   /**
    * @param heights: an array of integers

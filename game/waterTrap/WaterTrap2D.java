@@ -1,40 +1,26 @@
 package fgafa.game.waterTrap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 
- * Given n x m non-negative integers representing an elevation map 2d where the
- * area of each cell is 1 x 1, compute how much water it is able to trap after
- * raining.
+ * Given n x m non-negative integers representing an elevation map 2d where the area of each cell is 1 x 1,
+ * compute how much water it is able to trap after raining.
  *
- *Example
- *Given 5*4 matrix
+ *Example Given 5*4 matrix
+ * [
+ *  [12,13,0,12]
+ *  [13,4,13,12]
+ *  [13,8,10,12]
+ *  [12,13,12,12]
+ *  [13,13,13,13]
+ * ]
  *
- *[12,13,0,12]
- *[13,4,13,12]
- *[13,8,10,12]
- *[12,13,12,12]
- *[13,13,13,13]
- *
- *return 14.
+ * return 14.
  *
  */
 public class WaterTrap2D {
 
-    /**
-     * @param heights: a matrix of integers
-     * @return: an integer
-     */
     public int trapRainWater(int[][] heights) {
         // check, the matrix must be 3+ rows and 3+ columns
         if( null == heights ){
@@ -163,6 +149,7 @@ public class WaterTrap2D {
     private String build(int x, int y){
     	return x + "," + y;
     }
+
     private int[] split(String xy){
     	int i = xy.indexOf(",");
     	int[] ret = new int[2];
@@ -216,62 +203,61 @@ public class WaterTrap2D {
 		}
 	}
 
-	/*
-	 * from outside to inside. flooding method, BFS
-	 * 
-	 * Time O(m * n * log(m + n) ), space O(m * n)
-	 */
-	public int trapRainWater_x(int[][] heights) {
-		// check, the matrix must be 3+ rows and 3+ columns
-		if (null == heights) {
-			return 0;
-		}
-		int rowNum = heights.length;
-		int colNum = heights[0].length;
-		if (3 > rowNum || 3 > colNum) {
-			return 0;
-		}
+    /*
+     * from outside to inside. flooding method, BFS
+     *
+     * Time O(m * n * log(m + n) ), space O(m * n)
+     */
+    public int trapRainWater_x(int[][] heights) {
+        // check, the matrix must be 3+ rows and 3+ columns
+        if (null == heights) {
+            return 0;
+        }
+        int rowNum = heights.length;
+        int colNum = heights[0].length;
+        if (3 > rowNum || 3 > colNum) {
+            return 0;
+        }
 
-		// init
-		int[] dx = { 1, -1, 0, 0 };
-		int[] dy = { 0, 0, 1, -1 };
+        // init
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
 
-		PriorityQueue<Cell> q = new PriorityQueue<>((rowNum + colNum) * 2);
+        PriorityQueue<Cell> q = new PriorityQueue<>((rowNum + colNum) * 2);
 
-		boolean[][] isVisited = new boolean[rowNum][colNum];//default all are false
-		
-		//check 4 edges in the outside 
-		for (int row = 0; row < rowNum; row++) {
-			q.offer(new Cell(row, 0, heights[row][0]));
-			q.offer(new Cell(row, colNum - 1, heights[row][colNum - 1]));
-			isVisited[row][0] = true;
-			isVisited[row][colNum - 1] = true;
-		}
-		for (int col = 0; col < colNum; col++) {
-			q.offer(new Cell(0, col, heights[0][col]));
-			q.offer(new Cell(rowNum - 1, col, heights[rowNum - 1][col]));
-			isVisited[0][col] = true;
-			isVisited[rowNum - 1][col] = true;
-		}
-		
-		//flooding
-		int ans = 0;
-		while (!q.isEmpty()) {
-			Cell curr = q.poll();
+        boolean[][] isVisited = new boolean[rowNum][colNum];//default all are false
 
-			for (int i = 0; i < 4; i++) {
-				int x = curr.x + dx[i];
-				int y = curr.y + dy[i];
-				if (0 <= x && x < rowNum && 0 <= y && y < colNum
-						&& !isVisited[x][y]) {
+        //check 4 edges in the outside
+        for (int row = 0; row < rowNum; row++) {
+            q.offer(new Cell(row, 0, heights[row][0]));
+            q.offer(new Cell(row, colNum - 1, heights[row][colNum - 1]));
+            isVisited[row][0] = true;
+            isVisited[row][colNum - 1] = true;
+        }
+        for (int col = 0; col < colNum; col++) {
+            q.offer(new Cell(0, col, heights[0][col]));
+            q.offer(new Cell(rowNum - 1, col, heights[rowNum - 1][col]));
+            isVisited[0][col] = true;
+            isVisited[rowNum - 1][col] = true;
+        }
 
-					isVisited[x][y] = true;
-					q.offer(new Cell(x, y, Math.max(curr.h, heights[x][y])));
-					ans = ans + Math.max(0, curr.h - heights[x][y]);
-				}
-			}
-		}
-		return ans;
-	}
+        //flooding
+        int ans = 0;
+        while (!q.isEmpty()) {
+            Cell curr = q.poll();
+
+            for (int i = 0; i < 4; i++) {
+                int x = curr.x + dx[i];
+                int y = curr.y + dy[i];
+                if (0 <= x && x < rowNum && 0 <= y && y < colNum && !isVisited[x][y]) {
+
+                    isVisited[x][y] = true;
+                    q.offer(new Cell(x, y, Math.max(curr.h, heights[x][y])));
+                    ans = ans + Math.max(0, curr.h - heights[x][y]);
+                }
+            }
+        }
+        return ans;
+    }
 	 
 }

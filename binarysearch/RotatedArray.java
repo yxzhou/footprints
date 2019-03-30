@@ -14,31 +14,29 @@ public class RotatedArray {
    * Time O(logn) Space O(1)
    */
 	  
-    public int binarySearch_Rotated(int[] seqNum,
-                                    int num) {
-        // check
-        if (seqNum == null) {
+    public int binarySearch_Rotated(int[] nums, int target) {
+        if (nums == null) {
             return -1;
         }
 
         int left = 0;
-        int right = seqNum.length - 1;
+        int right = nums.length - 1;
         int mid = 0;
         while (left <= right) {
             mid = left + ((right - left) >> 1); // Avoid overflow
 
-            if (seqNum[mid] == num) {
+            if (nums[mid] == target) {
                 return mid;
             }
 
-            if (seqNum[left] <= seqNum[mid]) { // the left half (left, mid) is sorted
-                if (seqNum[left] <= num && num < seqNum[mid]) { // num is in [left, mid)
+            if (nums[left] <= nums[mid]) { // the left half (left, mid) is sorted
+                if (nums[left] <= target && target < nums[mid]) { // num is in [left, mid)
                     right = mid - 1;
                 } else { // num is in (mid, right]
                     left = mid + 1;
                 }
             } else { // the right half is sorted
-                if (seqNum[mid] < num && num <= seqNum[right]) {// num is in (mid, right]
+                if (nums[mid] < target && target <= nums[right]) {// num is in (mid, right]
                     left = mid + 1;
                 } else { // num is in [left, mid)
                     right = mid - 1;

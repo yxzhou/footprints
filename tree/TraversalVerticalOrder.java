@@ -52,7 +52,7 @@ public class TraversalVerticalOrder {
         int height = height(root);
         int n = (1 << (height - 1));
         for(int i = n; i >= 0; i--){
-            result.add(new ArrayList<Integer>());
+            result.add(new ArrayList<>());
         }
         
         helper(root, result, 0, n);

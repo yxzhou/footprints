@@ -3,6 +3,13 @@ package fgafa.graph.traversal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ *  define N as the vertex number, and E as teh edge number
+ *  when the graph stored as matrix ( int[][] ),  the time O(N * N)
+ *  when the graph stored as adjacent list ( List[], or Vertice[] ), the time complexity is O(N + E)
+ *
+ */
+
 public class BFS
 {
 

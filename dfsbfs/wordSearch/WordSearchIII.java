@@ -12,8 +12,7 @@ public class WordSearchIII {
      */
     
     public List<String> findWords_trie_n(char[] board, String[] words) {
-        //make sure there is no duplicted char in board 
-        
+        //make sure there is no duplicted char in board
         List<String> result = new ArrayList<String>();
  
         Trie trie = new Trie();

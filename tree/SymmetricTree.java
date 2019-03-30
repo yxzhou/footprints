@@ -31,23 +31,23 @@ public class SymmetricTree
    * right.left symmetric? Time O(n), Space O(1)
    */
   public boolean isSymmetric_R(TreeNode root) {
-    // check
-    if (root == null)
-      return true;
+    if (root == null) {
+        return true;
+    }
 
     return helper(root.left, root.right);
-
   }
 
 
 
   private boolean helper(TreeNode tree, TreeNode tree2) {
+    if (tree == null || tree2 == null) {
+        return tree == tree2;
+    }
 
-    if (tree == null || tree2 == null)
-      return tree == tree2;
-
-    if (tree.val != tree2.val)
-      return false;
+    if (tree.val != tree2.val) {
+        return false;
+    }
 
     return helper(tree.right, tree2.left)
         && helper(tree.left, tree2.right);
@@ -61,9 +61,9 @@ public class SymmetricTree
    * list. Time O(n), Space O(n)
    */
   public boolean isSymmetric_inOrder(TreeNode root) {
-    // check
-    if (root == null)
-      return true;
+    if (root == null) {
+        return true;
+    }
 
     // main, travel by in-order
     ArrayList<String> inOrder = new ArrayList<String>();
@@ -72,22 +72,21 @@ public class SymmetricTree
     return isSymmetric(inOrder);
   }
 
-
-
   private void inOrder_recursive(TreeNode node, ArrayList<String> list) {
-    if (node.left != null)
-      inOrder_recursive(node.left, list);
-    else
-      list.add("#");
+    if (node.left != null) {
+        inOrder_recursive(node.left, list);
+    }else {
+        list.add("#");
+    }
 
     list.add(String.valueOf(node.val));
 
-    if (node.right != null)
-      inOrder_recursive(node.right, list);
-    else
-      list.add("#");
+    if (node.right != null) {
+        inOrder_recursive(node.right, list);
+    }else {
+        list.add("#");
+    }
   }
-
 
 
   private void inOrder_iterative(TreeNode node, ArrayList<String> list) {
@@ -119,18 +118,13 @@ public class SymmetricTree
   }
 
 
-
-
-
-
-
   /*
    * level-order travel <br> Time O(n) Space O(n) (better than in-order travel)
    */
 	public boolean isSymmetric_levelOrder(TreeNode root) {
-		// check
-		if (root == null)
-			return true;
+		if (root == null) {
+            return true;
+        }
 
 		// main, travel by level-order
 		return levelOrder_iterative(root);
@@ -150,18 +144,21 @@ public class SymmetricTree
 			if (currNode.left != null) {
 				nextLevel.add(currNode.left);
 				list.add(String.valueOf(currNode.left.val));
-			} else
-				list.add("#");
+			} else {
+                list.add("#");
+            }
 
 			if (currNode.right != null) {
 				nextLevel.add(currNode.right);
 				list.add(String.valueOf(currNode.right.val));
-			} else
-				list.add("#");
+			} else {
+                list.add("#");
+            }
 
 			if (currLevel.isEmpty()) {
-				if (!isSymmetric(list))
-					return false;
+				if (!isSymmetric(list)) {
+                    return false;
+                }
 
 				currLevel = nextLevel;
 				list = new ArrayList<String>();

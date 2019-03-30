@@ -128,7 +128,7 @@ public class Regex {
                         + " \t\t the pattern is: " + p[i]
                         + " \n\t are they matched:" + isMatch(t[i], p[i])
                         + "\t" + sv.isMatch_dp(t[i], p[i]) + "\t"
-                        + sv.isMatch_dp_n(t[i], p[i]) + "\t" + ans[i]);
+                        + sv.isMatch_dp_x(t[i], p[i]) + "\t" + ans[i]);
             if (result != ans[i])
                 System.out.println("\t??");
             else
@@ -193,9 +193,7 @@ public class Regex {
         }
     }
 
-    public boolean isMatch_dp(String s,
-                              String p) {
-        // check
+    public boolean isMatch_dp(String s, String p) {
         if (null == s) {
             return null == p;
         }
@@ -203,21 +201,19 @@ public class Regex {
             return false;
         }
 
-        int slen = s.length();
-        int plen = p.length();
-        boolean dp[][] = new boolean[slen + 1][plen + 1];
+        boolean dp[][] = new boolean[s.length() + 1][p.length() + 1];
         dp[0][0] = true;
 
-        for (int i = 0; i <= slen; i++)
-            for (int j = 0; j <= plen; j++) {
+        for (int i = 0; i <= s.length(); i++)
+            for (int j = 0; j <= p.length(); j++) {
                 if (i == 0 && j == 0) {
                     continue;
                 }
-                if (j > 1 && dp[i][j - 2] && p.charAt(j - 1) == '*') { // "a" match "ab*"
+                if (j > 1 && dp[i][j - 2] && p.charAt(j - 1) == '*') { // "a" match "ab*", when * match zero the preceding element
                     dp[i][j] = true;
                 }
                 if (i > 0 && j > 0 && dp[i - 1][j - 1]
-                            && isMatch(s.charAt(i - 1), p.charAt(j - 1))) { //
+                            && isMatch(s.charAt(i - 1), p.charAt(j - 1))) { // ab match ab or ab match a.
                     dp[i][j] = true;
                 }
                 if (i > 0 && j > 1 && dp[i - 1][j] && p.charAt(j - 1) == '*'
@@ -226,12 +222,45 @@ public class Regex {
                 }
             }
 
-        return dp[slen][plen];
+        return dp[s.length()][p.length()];
     }
 
     private boolean isMatch(char a,
                             char b) {
         return a == b || b == '.';
+    }
+
+    public boolean isMatch_dp_x(String s, String p) {
+        if(null == s){
+            return null == p;
+        }
+
+        if(null == p){
+            return false;
+        }
+
+        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+        dp[0][0] = true;
+
+        for(int i = 0; i <= s.length(); i++){
+            for(int j = 0; j <= p.length();j++){
+                if(i == 0 && j == 0){
+                    continue;
+                }
+
+                if(j > 1 && p.charAt(j - 1) == '*'){
+                    dp[i][j] = dp[i][j - 2];
+                }
+                if(i > 0 && j > 0 && (p.charAt(j - 1) == s.charAt(i - 1) || p.charAt(j - 1) == '.' )){
+                    dp[i][j] = dp[i - 1][j - 1] ? true : dp[i][j];
+                }
+                if(j > 1 && p.charAt(j - 1) == '*' && i > 0 && ( p.charAt(j - 2) == s.charAt(i - 1) || p.charAt(j - 2) == '.' )){
+                    dp[i][j] = dp[i - 1][j] ? true : dp[i][j];
+                }
+            }
+        }
+
+        return dp[s.length()][p.length()];
     }
 
     /**
@@ -240,7 +269,7 @@ public class Regex {
      * @return: A boolean
      */
     public boolean isMatch_dp_n(String s, String p) {
-        // check
+
         if (null == s) {
             return null == p;
         }

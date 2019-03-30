@@ -2,6 +2,7 @@ package fgafa;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Test
 {
@@ -23,6 +24,7 @@ public class Test
   static int i = 5;
   
   public static void main(String[] args) throws Exception {
+
     float a = 12;
     double d = 18;
     
@@ -279,8 +281,9 @@ public class Test
     }
     
     System.out.println("--Time--"+System.currentTimeMillis());
-    
-    
+
+      List<Integer>[] neighbors = new ArrayList[2];
+
   }
   
 

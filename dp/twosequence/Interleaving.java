@@ -2,7 +2,7 @@ package fgafa.dp.twosequence;
 
 import java.util.ArrayList;
 
-/* 
+/**
  * If all characters of C match either with a character of A or a character of B
  *  and length of C is sum of lengths of A and B, 
  * then C is an interleaving A and B.
@@ -17,9 +17,6 @@ import java.util.ArrayList;
 public class Interleaving
 {
 
-  /**
-   * @param args
-   */
   public static void main(String[] args) {
     long startnano = System.nanoTime(); 
     long startmill = System.currentTimeMillis();
@@ -219,48 +216,45 @@ public class Interleaving
   }
   
   /**
-   * Determine whether s3 is formed by interleaving of s1 and s2.
-   * @param s1, s2, s3: As description.
-   * @return: true or false.
+   * Time O(n * m), Space O(m)
    */
   public boolean isInterleave_n(String s1, String s2, String s3) {
-	  if(null == s3){
-		  return false;
-	  }else if(null == s1){
-		  return s2.equals(s3);
-	  }else if(null == s2){
-		  return s1.equals(s3);
-	  }else if(s1.length() + s2.length() != s3.length()){
-		  return false;
-	  }
-	  
-	  int m = s1.length();
-	  int n = s2.length();
-	  if(m > n){
-		  return isInterleave_n(s2, s1, s3);
-	  }
-	  boolean[] isMatch = new boolean[m + 1]; //default all are false
-	  isMatch[0] = true;
-	  
-	  for(int i = 0; i < m; i++){
-		  if(s1.charAt(i) == s3.charAt(i)){
-			  isMatch[i + 1] = true;
-		  }else{
-			  break;
-		  }
-	  }
-	  
-		for (int j = 0; j < n; j++) { // s2
-			isMatch[0] = s3.charAt(j) == s2.charAt(j) && isMatch[0];
-			
-			for (int i = 0; i < m; i++) { // s1
-				isMatch[i + 1] = (isMatch[i] && s1.charAt(i) == s3.charAt(i + j + 1))
-						|| (isMatch[i + 1] && s2.charAt(j) == s3.charAt(i + j + 1));
-			}
-		}
-	  
-	  
-      return isMatch[m];
+    if (null == s3) {
+        return false;
+    } else if (null == s1) {
+        return s2.equals(s3);
+    } else if (null == s2) {
+        return s1.equals(s3);
+    } else if (s1.length() + s2.length() != s3.length()) {
+        return false;
+    }
+
+    int m = s1.length();
+    int n = s2.length();
+    if (m > n) {
+        return isInterleave_n(s2, s1, s3);
+    }
+    boolean[] isMatch = new boolean[m + 1]; //default all are false
+    isMatch[0] = true;
+
+    for (int i = 0; i < m; i++) {
+        if (s1.charAt(i) == s3.charAt(i)) {
+            isMatch[i + 1] = true;
+        } else {
+            break;
+        }
+    }
+
+    for (int j = 0; j < n; j++) { // s2
+        isMatch[0] = s3.charAt(j) == s2.charAt(j) && isMatch[0];
+
+        for (int i = 0; i < m; i++) { // s1
+            isMatch[i + 1] = (isMatch[i] && s1.charAt(i) == s3.charAt(i + j + 1))
+                    || (isMatch[i + 1] && s2.charAt(j) == s3.charAt(i + j + 1));
+      }
+    }
+
+    return isMatch[m];
   }
   
   /*Time O(m*n)  Space O(n)*/

@@ -226,30 +226,74 @@ public class MergeSortedLists
          return dummy.next;
      }
 
+    public ListNode mergeKLists_heap_n(List<ListNode> lists) {
+        if (null == lists || 0 == lists.size()){
+            return null;
+        }
+
+        // PriorityQueue is a sorted queue
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<>(lists.size(),
+                (n1, n2)-> Integer.compare(n1.val, n2.val));
+
+        // add first node of each list to the queue
+        for (ListNode list : lists) {
+            if (list != null){
+                minHeap.add(list);
+            }
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy; // serve as a pointer/cursor
+        ListNode min;
+        while (!minHeap.isEmpty()) {
+            min = (ListNode)minHeap.poll();
+
+            tail.next = new ListNode(min.val);
+            tail = tail.next;
+
+            if(null != min.next){
+                minHeap.add(min.next);
+            }
+        }
+
+        return dummy.next;
+    }
   
   
   /**
    * @param args
    */
   public static void main(String[] args) {
-    int[][] arr = //{{1},{0}};
-      //{{},{-1,5,11},{},{6,10}};
-      {{-5,-2,0,1,1,2},{-7,-6,-3},{-8,-7,-4,-4,0,2,3,4},{}};    
+      int[][] arr = //{{1},{0}};
+              //{{},{-1,5,11},{},{6,10}};
+              {{-5, -2, 0, 1, 1, 2}, {-7, -6, -3}, {-8, -7, -4, -4, 0, 2, 3, 4}, {}};
 
-    ArrayList<ListNode> lists = new ArrayList<ListNode> ();
-    for(int i=0; i< arr.length; i++ ){
-      lists.add(createList(arr[i]));
-    }
-    
-    MergeSortedLists  sv = new MergeSortedLists();
-    ListNode result = sv.mergeKLists_heap(lists);
-    
-    while(result != null){
-      System.out.print(result.val );
-      System.out.print("->");
-      
-      result = result.next;
-    }
+      ArrayList<ListNode> lists = new ArrayList<ListNode>();
+      for (int i = 0; i < arr.length; i++) {
+          lists.add(createList(arr[i]));
+      }
+
+      MergeSortedLists sv = new MergeSortedLists();
+
+      ListNode result2 = sv.mergeKLists_heap_n(lists);
+      ListNode result = sv.mergeKLists_heap(lists);
+
+      while (result != null) {
+          System.out.print(result.val);
+          System.out.print("->");
+
+          result = result.next;
+      }
+
+      System.out.println("");
+      while (result2 != null) {
+          System.out.print(result2.val);
+          System.out.print("->");
+
+          result2 = result2.next;
+      }
+
+
   }
 
 }

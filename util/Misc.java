@@ -154,10 +154,10 @@ public class Misc
 	        return;
 	      }
 	      
-        for (int i = 0; i < result.size(); i++) {
-            System.out.print("\t-" + i + "-\t" );
-        }
-        System.out.println();
+//        for (int i = 0; i < result.size(); i++) {
+//            System.out.print("\t-" + i + "-\t" );
+//        }
+//        System.out.println();
         for (int i = 0; i < result.size(); i++) {
             System.out.print("\t" + result.get(i) + "\t");
         }
@@ -186,7 +186,7 @@ public class Misc
 	      }
 	      
 	      for (int i = 0; i < result.size(); i++) {
-	    	  System.out.print("---"+i+"---");
+	    	  //System.out.print("---"+i+"---");
 	    	  printList(result.get(i));
 	      }
 	      

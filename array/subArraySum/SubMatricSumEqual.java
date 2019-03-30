@@ -1,21 +1,17 @@
 package fgafa.array.subArraySum;
 
+import fgafa.util.Misc;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import fgafa.util.Misc;
 
 public class SubMatricSumEqual {
 
 	/**
+	 * Given an integer matrix, find a submatrix where the sum of numbers is zero.
+	 * Your code should return the coordinate of the left-up and right-down number.
 	 * 
-	 * Given an integer matrix, find a submatrix where the sum of numbers is
-	 * zero. Your code should return the coordinate of the left-up and
-	 * right-down number.
-	 * 
-	 * Example
-	 * Given matrix
-	 * 
+	 * Example  Given matrix
 	 * [
 	 *   [1 ,5 ,7],
 	 *   [3 ,7 ,-8],
@@ -23,9 +19,7 @@ public class SubMatricSumEqual {
 	 * ]
 	 * return [(1,1), (2,2)]
 	 * 
-	 * Challenge
-	 * O(n^3) time.
-	 * 
+	 * Challenge O(n^3) time.
 	 */
     /**
      * @param matrix an integer matrix
@@ -33,7 +27,6 @@ public class SubMatricSumEqual {
      */
     public int[][] submatrixSum(int[][] matrix) {
         int[][] ans = new int[2][2];
-        // check
         if(null == matrix){
             return ans;
         }

@@ -25,8 +25,9 @@ public class MergeIntervals {
         List<Interval> result = new ArrayList<>();
 
         // check
-        if (null == intervals || 0 == intervals.size())
+        if (null == intervals || 0 == intervals.size()){
             return result;
+        }
 
         // order the input intervals by start
         Collections.sort(intervals, new Comparator<Interval>() {

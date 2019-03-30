@@ -1,6 +1,7 @@
 package fgafa.datastructure.interval;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class AirplaneNumber {
 
 	/**
-	 * @param intervals
+	 * @param airplanes
 	 *            : An interval array
 	 * @return: Count of airplanes are in the sky.
 	 */
@@ -45,31 +46,33 @@ public class AirplaneNumber {
 	}
 	    
 	public int countOfAirplanes_n(List<Interval> airplanes) {
-		// check
 		if (null == airplanes) {
 			return 0;
 		}
 		
 		int size = airplanes.size();
-		List<Integer> starts = new ArrayList<Integer>(size);
-		List<Integer> ends = new ArrayList<Integer>(size);
+		int[] starts = new int[size];
+		int[] ends = new int[size];
+		
+		int k = 0;
 		for (Interval x : airplanes) {
-			starts.add(x.start);
-			ends.add(x.end);
+			starts[k] = x.start;
+			ends[k] = x.end;
+			k++;
 		}
-		
-		Collections.sort(starts);
-		Collections.sort(ends);
-		
+
+		Arrays.sort(starts);
+		Arrays.sort(ends);
+
 		int max = 0;
 		int count = 0;
 		for(int i = 0, j = 0; i < size && j < size; ){
-			if(starts.get(i) < ends.get(j)){
+			if(starts[i] < ends[j]){
 				count++;
 				i++;
 				
 				max = Math.max(max, count);
-			}else if(starts.get(i) > ends.get(j)){
+			}else if(starts[i] > ends[j]){
 				count--;
 				j++;
 			}else{ // ==
@@ -80,6 +83,32 @@ public class AirplaneNumber {
 		
 		return max;
 	}
+
+	public int countOfAirplanes_x(List<Interval> airplanes) {
+		if (null == airplanes) {
+			return 0;
+		}
+
+		int size = airplanes.size();
+
+		List<int[]> events = new ArrayList<>(size * 2);
+		for(Interval interval : airplanes){
+			events.add(new int[]{interval.start, 1});
+			events.add(new int[]{interval.end, -1});
+		}
+
+		Collections.sort(events, (e1, e2) -> e1[0] == e2[0] ? e1[1] - e2[1] : e1[0] - e2[0]);
+
+		int counter = 0;
+		int max = 0;
+		for(int[] event : events){
+			counter += event[1];
+			max = Math.max(max, counter);
+		}
+
+		return max;
+	}
+
 /**
 	class Pair implements Comparable<Pair>{
 		Integer key;
@@ -106,7 +135,7 @@ public class AirplaneNumber {
 	}
 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
 
 	}
 

@@ -112,36 +112,40 @@ public class Square
     
     int m = grid.length; // row
     int n = grid[0].length;  //column
-    int[][][][] max = new int[m + 1][n + 1][m + 1][n + 1];
-    max[1][1][1][1] = grid[0][0];
+    int[][][][] dp = new int[m + 1][n + 1][m + 1][n + 1];
+    dp[1][1][1][1] = grid[0][0];
     
 //    for(int row =2; row <= m; row ++){
-//      max[row][1][1][1] = max[row-1][1][1][1] +  grid[row-1][0];
+//      dp[row][1][1][1] = dp[row-1][1][1][1] +  grid[row-1][0];
 //      
 //      for(int p=1; p<=row; p++){
-//        max[row][1][p][1] = max[row][1][1][1];
-//        max[p][1][row][1] = max[row][1][1][1];
+//        dp[row][1][p][1] = dp[row][1][1][1];
+//        dp[p][1][row][1] = dp[row][1][1][1];
 //      }  
 //        
 //    }
 //    for(int col =2; col <= n; col ++){
-//      max[1][col][1][1] = max[1][col-1][1][1] +  grid[0][col-1];
+//      dp[1][col][1][1] = dp[1][col-1][1][1] +  grid[0][col-1];
 //      
 //      for(int q=1; q<=col; q++){
-//        max[1][col][1][q] = max[1][col][1][1];
-//        max[1][q][1][col] = max[1][col][1][1];
+//        dp[1][col][1][q] = dp[1][col][1][1];
+//        dp[1][q][1][col] = dp[1][col][1][1];
 //      }  
 //    }
     
-    for(int x = 1; x <= m; x ++ )
-      for(int y = 1; y <= n; y ++)
-        for(int p = 1; p <= m; p ++ )
-          for(int q = 1; q <= n; q ++)        
-            max[x][y][p][q] = max(max[x][y-1][p][q-1], max[x-1][y][p][q-1], max[x][y-1][p-1][q], max[x-1][y][p-1][q]) 
-                + grid[x-1][y-1] + ((x==p && y==q) ? 0 : grid[p-1][q-1]) ;
-      
+    for(int x = 1; x <= m; x ++ ) {
+      for (int y = 1; y <= n; y++) {
+
+        for (int p = 1; p <= m; p++) {
+          for (int q = 1; q <= n; q++) {
+            dp[x][y][p][q] = max(dp[x][y - 1][p][q - 1], dp[x - 1][y][p][q - 1], dp[x][y - 1][p - 1][q], dp[x - 1][y][p - 1][q])
+                    + grid[x - 1][y - 1] + ((x == p && y == q) ? 0 : grid[p - 1][q - 1]);
+          }
+        }
+      }
+    }
     
-    return max[m][n][m][n];
+    return dp[m][n][m][n];
   }
   
   private int max(int x1, int x2, int x3, int x4){
@@ -157,36 +161,40 @@ public class Square
     
     int m = grid.length; // row
     int n = grid[0].length;  //column
-    int[][][][] max = new int[m + 1][n + 1][m + 1][n + 1];
-    max[m-1][n-1][m-1][n-1] = grid[0][0];
+    int[][][][] dp = new int[m + 1][n + 1][m + 1][n + 1];
+    dp[m-1][n-1][m-1][n-1] = grid[0][0];
     
 //    for(int row=m-1; row >=0; row --){
-//      max[row][1][1][1] = max[row-1][1][1][1] +  grid[row-1][0];
+//      dp[row][1][1][1] = dp[row-1][1][1][1] +  grid[row-1][0];
 //      
 //      for(int p=1; p<=row; p++){
-//        max[row][1][p][1] = max[row][1][1][1];
-//        max[p][1][row][1] = max[row][1][1][1];
+//        dp[row][1][p][1] = dp[row][1][1][1];
+//        dp[p][1][row][1] = dp[row][1][1][1];
 //      }  
 //        
 //    }
 //    for(int col =2; col <= n; col ++){
-//      max[1][col][1][1] = max[1][col-1][1][1] +  grid[0][col-1];
+//      dp[1][col][1][1] = dp[1][col-1][1][1] +  grid[0][col-1];
 //      
 //      for(int q=1; q<=col; q++){
-//        max[1][col][1][q] = max[1][col][1][1];
-//        max[1][q][1][col] = max[1][col][1][1];
+//        dp[1][col][1][q] = dp[1][col][1][1];
+//        dp[1][q][1][col] = dp[1][col][1][1];
 //      }  
 //    }
     
-    for(int x = m-1; x >= 0; x -- )
-      for(int y = n-1; y >= 0; y --)
-        for(int p = m-1; p >= 0; p -- )
-          for(int q = n-1; q >= 0; q --)        
-            max[x][y][p][q] = max(max[x][y+1][p][q+1], max[x+1][y][p][q+1], max[x][y+1][p+1][q], max[x+1][y][p+1][q]) 
-                + grid[x][y] + ((x==p && y==q) ? 0 : grid[p][q]) ;
+    for(int x = m-1; x >= 0; x -- ) {
+      for (int y = n - 1; y >= 0; y--) {
+        for (int p = m - 1; p >= 0; p--) {
+          for (int q = n - 1; q >= 0; q--) {
+            dp[x][y][p][q] = max(dp[x][y + 1][p][q + 1], dp[x + 1][y][p][q + 1], dp[x][y + 1][p + 1][q], dp[x + 1][y][p + 1][q])
+                    + grid[x][y] + ((x == p && y == q) ? 0 : grid[p][q]);
+          }
+        }
+      }
+    }
       
     
-    return max[0][0][0][0];
+    return dp[0][0][0][0];
   }
   /**
    * @param args

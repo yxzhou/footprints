@@ -19,8 +19,8 @@ public class SingleNumber {
         }
 
         int ret = 0;
-        for (int i = 0; i < A.length; i++) {
-            ret ^= A[i];
+        for (int a : A) {
+            ret ^= a;
         }
 
         return ret;
