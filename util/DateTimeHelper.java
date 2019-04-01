@@ -143,7 +143,7 @@ public class DateTimeHelper
 
 
   /*
-   * Returns true if the Calendar date is one of the following US holidays:
+   * Returns true if the SplitDurationByMonth date is one of the following US holidays:
    * New Years Day, Martin Luther King Jr Day, Presidents Day, Memorial Day,
    * Independence Day, Labor Day, Columbus Day, Veterans Day, Thanksgiving
    * Day,

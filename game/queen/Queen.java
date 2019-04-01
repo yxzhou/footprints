@@ -81,7 +81,7 @@ public class Queen
 //  }
 
   public static void main(String[] args) {
-    //Calendar start = Calendar.getInstance();
+    //SplitDurationByMonth start = SplitDurationByMonth.getInstance();
     int n = 12; // default value
 
     if (args.length > 0)

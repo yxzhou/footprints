@@ -71,7 +71,7 @@ public class SearchForARange
 
 	public int[] searchRange_x(int[] A, int target) {
 		int[] result = {-1, -1};
-		if (null == A || 0 == A.length) {
+		if (null == A || 0 == A.length || target < A[0] || target > A[A.length - 1]) {
 			return result;
 		}
 

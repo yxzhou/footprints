@@ -157,4 +157,15 @@ public class MyTest {
         Misc.printArray_Int(find(new int[]{1, 4, 20, 3, 10, 5}, 5));
         Misc.printArray_Int(find(new int[]{1, 4, 20, 3, 10, 5}, 33));
     }
+
+    @Test
+    public void testDouble(){
+        int x = 2;
+        int y = 3;
+        double z = (double)x / y;
+
+        System.out.println(x/y);
+        System.out.println(z);
+
+    }
 }

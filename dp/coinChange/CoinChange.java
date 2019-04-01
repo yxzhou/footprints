@@ -1,9 +1,10 @@
-package fgafa.dp;
-
-import java.util.Arrays;
-import java.util.List;
+package fgafa.dp.coinChange;
 
 import fgafa.util.Misc;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 
@@ -24,7 +25,7 @@ import fgafa.util.Misc;
  *
  */
 
-public class CoinChangeII {
+public class CoinChange {
 
     
     /**
@@ -96,54 +97,6 @@ public class CoinChangeII {
         }  
         
         return coinsUsed[target] == target ? -1 : coinsUsed[target];
-    }  
-    
-    public int getOptimalChange_DP1(int amount, int[] coins) {  
-        //check
-        if(null == coins || 0 == coins.length || amount < 1 ){
-            return 0;
-        }
-        
-        Arrays.sort(coins);
-        
-        int start = 0;
-        while(start < coins.length && coins[start] <= 0 ){
-            start++;
-        }
-        int end = start;
-        for(int k = start + 1; k < coins.length; k++ ){
-            if(coins[end] != coins[k]){
-                end ++;
-                coins[end] = coins[k];
-            }
-        }
-        
-        int[] dp = new int[amount + 1]; //default all are 0
-        for(int j = start; j <= end && coins[j] <= amount; j++ ){
-            dp[coins[j]] = 1;
-        }
-        
-        int pre;
-        l1: for(int curr = 1; curr <= amount; curr++){
-            l2: for(int j = start; j <= end; j++){
-                
-                if( coins[j] >= curr ){
-                    continue l1;
-                }
-                
-                pre = curr - coins[j];
-                if(dp[pre] > 0){
-                    if(dp[curr] == 0 ){
-                        dp[curr] = dp[pre] + 1;
-                    }else{
-                        dp[curr] = Math.min(dp[curr], dp[pre] + 1);
-                    }
-                }
-                    
-            }
-        }
-        
-        return dp[amount] == 0 ? -1 : dp[amount];
     }
     
     
@@ -193,23 +146,104 @@ public class CoinChangeII {
         
         return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
-    
+
+    public int coinChange_DP(int[] coins, int amount) {
+        if(null == coins || 0 == coins.length || amount < 1 ){
+            return 0;
+        }
+
+        Arrays.sort(coins);
+
+        if(amount < coins[0]){
+            return -1;
+        }
+
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        int length = coins.length;
+        int diff;
+        for(int i = coins[0]; i <= amount; i++){
+            for(int j = 0; j < length && coins[j] <= i; j++){
+                diff = i - coins[j];
+
+                if(dp[diff] != Integer.MAX_VALUE ){
+                    dp[i] = Math.min(dp[i], dp[diff] + 1);
+                }
+
+            }
+        }
+
+
+        return dp[amount] == Integer.MAX_VALUE? -1 : dp[amount];
+    }
+
+    public int coinChange_bfs(int[] coins, int amount) {
+        if(null == coins || 0 == coins.length || amount < 1 ){
+            return 0;
+        }
+
+        Arrays.sort(coins);
+
+        if(amount < coins[0]){
+            return -1;
+        }
+
+        boolean[] dp = new boolean[amount - coins[0] + 1];
+
+        //bfs
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(amount);
+
+        int n;
+        int c = coins.length - 1;
+        int diff;
+        int counter = 0;
+        while(!queue.isEmpty()){
+            counter++;
+
+            while(c >= 0 && coins[c] > amount){
+                c--;
+            }
+            amount -= coins[0];
+
+            for(int i = queue.size(); i > 0; i--){
+                n = queue.poll();
+
+                for(int j = c; j >= 0; j--){
+                    diff = n - coins[j];
+
+                    if( diff > 0 && !dp[diff]){
+                        dp[diff] = true;
+                        queue.add(diff);
+                    }else if(diff == 0 ){
+                        return counter;
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+
     
     public static void main(String[] args) {  
-        CoinChangeII sv = new CoinChangeII();
+        CoinChange sv = new CoinChange();
         
         // the candidate is in descend order
-        int[][] coinValue = {{ 25, 21, 10, 5, 1 }, {10, 1, 2, 7, 6, 1, 5}, { 25, 10, 5, 1 }, {8, 5, 1}, {4, 3, 2}, {4, 2}};  
+        int[][] coinValue = {{1}, {2}, { 25, 21, 10, 5, 1 }, {10, 1, 2, 7, 6, 1, 5}, { 25, 10, 5, 1 }, {8, 5, 1}, {4, 3, 2}, {4, 2}};
         // the target for making change. 
-        int[] target = {65, 8, 67, 20, 20, 5};  
+        int[] target = {0, 1, 65, 8, 67, 20, 20, 5};
 
         for(int i = 0; i<target.length; i++){
           System.out.println("\n--getOptimalChange_DP of "+ target[i] + " from " + Misc.array2String(coinValue[i]) + " is: " + sv.getOptimalChange_DP_wrong(target[i], coinValue[i]));
           System.out.println("--getOptimalChange_Greedy of "+ target[i] + " from " + Misc.array2String(coinValue[i]) + " is: " + sv.getOptimalChange_Greedy(target[i], coinValue[i]));
           
-          System.out.println("--getOptimalChange_DP1 of "+ target[i] + " from " + Misc.array2String(coinValue[i]) + " is: " + sv.getOptimalChange_DP1(target[i], coinValue[i]));
           System.out.println("--getOptimalChange_DP2 of "+ target[i] + " from " + Misc.array2String(coinValue[i]) + " is: " + sv.getOptimalChange_DP2(target[i], coinValue[i]));
-          
+
+          System.out.println(String.format("-coinChange_DP- %s %d , %d", Misc.array2String(coinValue[i]), target[i], sv.coinChange_DP(coinValue[i], target[i])) );
+          System.out.println(String.format("-coinChange_bfs- %s %d , %d", Misc.array2String(coinValue[i]), target[i], sv.coinChange_bfs(coinValue[i], target[i])) );
         }
 
     } 

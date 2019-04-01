@@ -24,14 +24,14 @@ public class DateLegacySupportExample {
         LocalDateTime date = LocalDateTime.ofInstant(timestamp, ZoneId.of(ZoneId.SHORT_IDS.get("PST")));
         System.out.println("Date = " + date);//Date = 2014-04-28T16:28:54.340
 
-        //Calendar to Instant
+        //SplitDurationByMonth to Instant
         Instant time = Calendar.getInstance().toInstant();
         System.out.println(time);//2014-04-28T23:28:54.395Z
         //TimeZone to ZoneId
         ZoneId defaultZone = TimeZone.getDefault().toZoneId();
         System.out.println(defaultZone);//America/Los_Angeles
 
-        //ZonedDateTime from specific Calendar
+        //ZonedDateTime from specific SplitDurationByMonth
         ZonedDateTime gregorianCalendarDateTime = new GregorianCalendar().toZonedDateTime();
         System.out.println(gregorianCalendarDateTime);//2014-04-28T16:28:54.404-07:00[America/Los_Angeles]
 

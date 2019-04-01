@@ -105,7 +105,7 @@ public class Misc
 
   public static void printArray_Int(int[] list) {
     if(list == null || list.length == 0){
-      System.out.println("Null");
+      System.out.println("[]");
       return;
     }
 

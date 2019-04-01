@@ -252,7 +252,7 @@ public class MinimumWindowSubstring
      * @param target
      * @return "" if not found.
      */
-    public String minWindow_xxx(String source, String target) {
+    public String minWindow_x3(String source, String target) {
         if(null == source || null == target || 0 == target.length() || source.length() < target.length()){
             return "";
         }
@@ -308,26 +308,73 @@ public class MinimumWindowSubstring
         
         return minWindow == initWindow? "" : minWindow;
     }
-    
+
+    public String minWindow_x4(String s, String t) {
+        if(null == s || null == t || t.isEmpty() || s.length() < t.length()){
+            return "";
+        }
+
+        Map<Character, Integer> need = new HashMap<>();
+        for(char c : t.toCharArray()){
+            need.put(c, need.containsKey(c)? need.get(c) + 1 : 1);
+        }
+
+        int status = need.size();
+        int[] min = new int[]{-1, s.length()}; // the min slide window. m[0], the start point; m[1], the size
+        char c;
+        for(int l = 0, r = 0; r < s.length(); r++){
+            c = s.charAt(r);
+            if( need.containsKey(c) ){
+                need.put(c, need.get(c) - 1);
+
+                if(need.get(c) == 0){
+                    status--;
+                }
+            }
+
+            if(status == 0){
+                while(status == 0){
+                    c = s.charAt(l++);
+                    if(need.containsKey(c)){
+                        need.put(c, need.get(c) + 1);
+
+                        if(need.get(c) > 0){
+                            status++;
+                        }
+                    }
+                }
+
+                if(min[1] > r - l){
+                    min[0] = l - 1;
+                    min[1] = r - l;
+                }
+            }
+        }
+
+        return min[0] == -1? "" : s.substring(min[0], min[0] + min[1] + 2);
+    }
+
   /**
    * @param args
    */
   public static void main(String[] args) {
-    String[] s = {"a","a","ab","a", "aa", "bba","bbaa", "bdab", "ADOBECODEBANC", "ADOBECODEBANCA"};
-    String[] t = {"a","b","a","ab", "aa", "ab","aba", "ab", "ABC", "ABCA"};
+      String[] s = {"a", "a", "ab", "a", "aa", "bba", "bbaa", "bdab", "ADOBECODEBANC", "ADOBECODEBANCA"};
+      String[] t = {"a", "b", "a", "ab", "aa", "ab", "aba", "ab", "ABC", "ABCA"};
 
-    MinimumWindowSubstring sv = new MinimumWindowSubstring();
-    for(int i=7; i< s.length; i++){
-      
-      System.out.println("\nInput:"+s[i]+" "+t[i]);
-      
-      System.out.println("minWindow: " + sv.minWindow_n(s[i], t[i]));
-      
-      System.out.println("minWindow_x: " + sv.minWindow_x(s[i], t[i]));
-      System.out.println("minWindow_x2: " + sv.minWindow_x2(s[i], t[i]));
-      System.out.println("minWindow_xx: " + sv.minWindow_xx(s[i], t[i]));
-      System.out.println("minWindow_xxx: " + sv.minWindow_xxx(s[i], t[i]));
-    }
+      MinimumWindowSubstring sv = new MinimumWindowSubstring();
+      for (int i = 7; i < s.length; i++) {
+
+          System.out.println("\nInput:" + s[i] + " " + t[i]);
+
+          System.out.println("minWindow: " + sv.minWindow_n(s[i], t[i]));
+
+          System.out.println("minWindow_x: " + sv.minWindow_x(s[i], t[i]));
+          System.out.println("minWindow_x2: " + sv.minWindow_x2(s[i], t[i]));
+          System.out.println("minWindow_xx: " + sv.minWindow_xx(s[i], t[i]));
+          System.out.println("minWindow_x3: " + sv.minWindow_x3(s[i], t[i]));
+
+          System.out.println("minWindow_x3: " + sv.minWindow_x4(s[i], t[i]));
+      }
 
   }
 

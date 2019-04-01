@@ -1,9 +1,9 @@
-package fgafa.dp;
+package fgafa.dp.coinChange;
+
+import fgafa.util.Misc;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fgafa.util.Misc;
 
 /**
  * Q1, Find all possible solutions recursively
@@ -16,8 +16,7 @@ import fgafa.util.Misc;
  * 
  */
 
-public class CoinChange
-{
+public class CoinChangeIII {
   
   public List<String> getAllCombinations_R(int target, int[] candidates){
     //check
@@ -53,7 +52,7 @@ public class CoinChange
    
   
   public static void main(String[] args) {  
-      CoinChange sv = new CoinChange();
+      CoinChangeIII sv = new CoinChangeIII();
       
       // the candidate is in descend order
       int[][] coinValue = {{ 25, 21, 10, 5, 1 }, {10, 1, 2, 7, 6, 1, 5}, { 25, 10, 5, 1 }, {8, 5, 1}};  
