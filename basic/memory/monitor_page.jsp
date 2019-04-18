@@ -11,7 +11,7 @@
 		<title>monitor page</title>
 	</head>
 	<body>
-    <div id="aaa" style="position:absolute;top:0;left:0;background-color:#FFFFFF;width:100%;height:100%">
+    <div ids="aaa" style="position:absolute;top:0;left:0;background-color:#FFFFFF;width:100%;height:100%">
     <table>
 	    <tr><td>DB Connection pool:</td></tr>
     	<tr><td><%=TnpDbUtil.THREADCONNECTIONMAP.toString()%></td></tr>

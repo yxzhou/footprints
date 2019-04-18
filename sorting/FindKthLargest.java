@@ -1,7 +1,24 @@
 package fgafa.sorting;
 
-import java.util.ArrayList;
+import org.junit.Assert;
+
 import java.util.Random;
+
+/**
+ *
+ * Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+ *
+ * Example:
+ * Input: [3,2,1,5,6,4] and k = 2
+ * Output: 5
+ *
+ * Input: [3,2,3,1,2,4,5,5,6] and k = 4
+ * Output: 4
+ *
+ * Note:
+ * You may assume k is always valid, 1 ≤ k ≤ array's length.
+ *
+ */
 
 public class FindKthLargest {
 
@@ -27,111 +44,68 @@ public class FindKthLargest {
         
         return largests[1];
     }
-    
-    public int findkthLargest(int[] nums, int k){
-        //check
+
+    public int findKthLargest(int[] nums, int k) {
         if(null == nums || k < 1 || k > nums.length){
             return -1;
         }
-        
+
         Random random = new Random();
-        int low = 0;
-        int high = nums.length - 1;
-        int pivot;
         k--;
-        while(low < high){
-            pivot = low + random.nextInt(high - low + 1);
-            
-            pivot = quickSort(nums, low, high, pivot);
-            
-            if(k == pivot){
-                return nums[pivot];
-            }else if(k < pivot){
-                high = pivot - 1;
+
+        for(int left = 0, right = nums.length - 1, p = 0; left <= right; ){
+            p = partition(nums, left, right, left + random.nextInt(right - left + 1));
+
+            if(p == k){
+                return nums[k];
+            }else if(p < k){
+                left = p + 1;
             }else{
-                low = pivot + 1;
+                right = p - 1;
             }
         }
-        
-        return nums[low];
+
+        //this should not happen
+        return -1;
     }
-    
-    private int quickSort(int[] nums, int low, int high, int pivot){
-        swap(nums, low, pivot);
-        pivot = high;
-        high--;
-        while(low <= high){
-            if(nums[low] < nums[pivot]){
-                swap(nums, low, high);
-                high--;
+
+    private int partition(int[] nums, int left, int right, int i){
+        swap(nums, left, i);
+
+        int pivot = nums[left];
+        i = left + 1;
+
+        while(i <= right){
+            if(nums[i] >= pivot){
+                i++;
             }else{
-                low++;
+                swap(nums, right, i);
+                right--;
             }
         }
-        
-        swap(nums, low, pivot);
-        return low;
+
+        swap(nums, left, i - 1);
+        return i - 1;
     }
-    
+
     private void swap(int[] nums, int i, int j){
         int tmp = nums[i];
         nums[i] = nums[j];
         nums[j] = tmp;
     }
-    
-    public int kthLargestElement(int k, ArrayList<Integer> numbers) {
-        //check
-        if(null == numbers || 1 > k || k > numbers.size()){
-            return Integer.MIN_VALUE;
-        }
-        
-        int low = 0;
-        int high = numbers.size() - 1;
-        int pivot;
-        k--;
-        Random random = new Random();
-        while(low < high){
-        	pivot = low + random.nextInt(high - low + 1);
-            pivot = quicksort(numbers, low, high, pivot);
-            
-            if(k == pivot ){
-                return numbers.get(k);
-            }else if(k < pivot){
-                high = pivot - 1;
-            }else{
-                low = pivot + 1;
-            }
-        }
-        
-        return numbers.get(low);
-    }
-    
-    private int quicksort(ArrayList<Integer> numbers, int low, int high, int pivot){
-        swap(numbers, high, pivot);
-        pivot = high;
-        high--;
-        while(low <= high){
-            if(numbers.get(low) >= numbers.get(pivot)){
-                low++;
-            }else{
-                swap(numbers, low, high);
-                high--;
-            }
-        }
 
-        swap(numbers, low, pivot);
-        return low;
-    }
-    
-    private void swap(ArrayList<Integer> numbers, int i, int j){
-        Integer tmp = numbers.get(i);
-        numbers.set(i, numbers.get(j));
-        numbers.set(j, tmp);
-    }
-    
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        System.out.println("==start==");
 
+        FindKthLargest sv = new FindKthLargest();
+
+        // Input: [3,2,1,5,6,4] and k = 2 * Output: 5
+        // Input: [3,2,3,1,2,4,5,5,6] and k = 4   * Output: 4
+
+        Assert.assertEquals(5, sv.findKthLargest(new int[]{3,2,1,5,6,4}, 2));
+        Assert.assertEquals(4, sv.findKthLargest(new int[]{3,2,3,1,2,4,5,5,6}, 4));
+
+        //System.out.println(sv.findKthLargest(new int[]{3,2,3,1,2,4,5,5,6}, 4));
     }
 
 }

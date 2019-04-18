@@ -41,7 +41,7 @@ Class Diagram
       ParkingSpace[] spaces;
       
    Vehicle
-      int id;
+      int ids;
       String plate;
       VehicleType type;
       long parkingStartTime;

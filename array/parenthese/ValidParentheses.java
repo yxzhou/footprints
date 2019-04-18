@@ -5,8 +5,7 @@ public class ValidParentheses
 {   
     
     /*
-     * Given a string containing just the characters '(', ')', 
-     * determine if the input string is valid.
+     * Given a string containing just the characters '(', ')', determine if the input string is valid.
      * 
      * The brackets must close in the correct order, 
      *  "(())" and "()()" are all valid 

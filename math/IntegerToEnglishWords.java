@@ -16,60 +16,7 @@ import java.util.Random;
 
 public class IntegerToEnglishWords {
 
-    private String[] words1000 = {"", "Thousand ", "Million ", "Billion " };
-    private int[]    nums   = {1, 1000, 1000000, 1000000000 };  //1, 1000, 1,000,000, 1,000,000,000
-    
-    public String numberToWords(int num) {
-        //non-negative integer, guaranteed to be less than 231 -
-        
-        if(0 == num){
-            return word1[0];
-        }
-        
-        StringBuilder result = new StringBuilder();
-        
-        for(int i = nums.length - 1; i >= 0; i--){
-            if(num >= nums[i]){
-                result.append(helper(num / nums[i] ));
-                result.append(words1000[i]);
-                
-                num %= nums[i];
-            }
-        }
-        
-        return result.toString().trim();
-        
-    }
-    
-    /* 1 - 999 */
-    private String helper(int num){
-        StringBuilder result = new StringBuilder();
-        
-        //hundren digit
-        if(num >= 100){
-            result.append(word1[num / 100]);
-            result.append(" Hundred ");
-            num %= 100;
-        }
-        
-        //ten digit
-        //[20, 99]
-        if(num >= 20 ){
-            int tenDigit = num / 10;
-            result.append(word20[tenDigit]);
-            result.append(" ");
-            
-            num -= tenDigit * 10;
-        }
-        
-        //[1, 19]
-        if( num > 0 ){
-            result.append(word1[num]);
-            result.append(" ");
-        }
-        
-        return result.toString();
-    }
+
     
     /*
      * number to string    
@@ -174,7 +121,7 @@ public class IntegerToEnglishWords {
           //num = random.nextInt(99);
           num = num + i * random.nextInt(9);
           
-          System.out.println( num + ": \t" + sv.number2String_million(num) + " \t== " + sv.numberToWords(num));      
+          System.out.println( num + ": \t" + sv.number2String_million(num) );
         }
         
     }

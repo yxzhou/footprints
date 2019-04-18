@@ -23,7 +23,6 @@ public class Read4II {
     public Read4II(){
         
     }
-    
 
     /**
      * The read function may be called multiple times.
@@ -35,20 +34,20 @@ public class Read4II {
         int total = 0;
 
         while (total < n) {
-            int curr = 0;
+            int read = 0;
             if(offset > 0){
-                curr = buffer.length;
+                read = buffer.length;
             }else{
-                curr = read4(buffer);
+                read = read4(buffer);
             }
             
-            int bytes = Math.min(n - total, curr - offset);
+            int bytes = Math.min(n - total, read - offset);
             
             System.arraycopy(buffer /* src */, offset /* srcPos */, buf /* dest */, total /* destPos */, bytes /* length */);
             total += bytes;
             offset = (offset + bytes) % BLOCKSIZE;
             
-            if (curr < BLOCKSIZE){ // for case, n >= filesize
+            if (read < BLOCKSIZE){ // for case, n >= filesize
                 break;
             }
         }
@@ -62,4 +61,38 @@ public class Read4II {
         return Math.random() > 0.5 ? 2 : 4;
     }
     
+}
+
+
+/////////// practice ////////////
+class Read4II_practice{
+    final static int BLOCK_SIZE = 4;
+    char[] block = new char[BLOCK_SIZE];
+    int offset = 0;
+
+    public int read(char[] buf, int n){
+        int size = 0;
+
+        while( size < n){
+
+            if(offset > 0){
+                if(n <= offset){
+
+                }
+            }
+
+            int read = read4(block);
+
+
+        }
+
+        return size;
+    }
+
+
+    // API funciton
+    int read4(char[] buf) {
+        // this is a fake
+        return Math.random() > 0.5 ? 2 : 4;
+    }
 }

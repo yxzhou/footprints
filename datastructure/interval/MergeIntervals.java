@@ -1,9 +1,8 @@
 package fgafa.datastructure.interval;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import org.junit.Test;
+
+import java.util.*;
 
 /**
  * Given a collection of intervals, merge all overlapping intervals.
@@ -51,5 +50,36 @@ public class MergeIntervals {
         }
 
         return result;
+    }
+
+
+    public int[][] merge(int[][] intervals) {
+        if(null == intervals || intervals.length < 2){
+            return intervals;
+        }
+
+        Arrays.sort(intervals, (i1, i2) -> (i1[0] == i2[0] ? i1[1] - i2[1] : i1[0] - i2[0]));
+
+        int i = 0;
+        for(int j = 1; j < intervals.length; j++){
+            // merge intervals[i] and intervals[j]
+            if(intervals[i][1] < intervals[j][0]){
+                i++;
+                intervals[i] = intervals[j];
+            }else{
+                intervals[i][1] = Math.max(intervals[i][1], intervals[j][1]);
+            }
+        }
+
+        return Arrays.copyOfRange(intervals, 0, i + 1);
+    }
+
+    @Test
+    public void test(){
+        Arrays.stream(merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})).map(interval -> String.format("[%d, %d], ", interval[0], interval[1])).forEach(System.out::print);
+        System.out.println("\n[[1,6],[8,10],[15,18]]\n");
+
+        Arrays.stream(merge(new int[][]{{1, 4}, {4, 6}})).map(interval -> String.format("[%d, %d], ", interval[0], interval[1])).forEach(System.out::print);
+        System.out.println("\n[[1,6]]\n");
     }
 }

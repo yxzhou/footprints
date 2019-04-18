@@ -1,6 +1,6 @@
 package fgafa.dfsbfs.wordSearch;
 
-/*
+/**
  * Given a 2D board and a word, find if the word exists in the grid.
  * <br>
  * The word can be constructed from letters of sequentially adjacent cell,<br> 
@@ -24,94 +24,57 @@ package fgafa.dfsbfs.wordSearch;
 public class WordSearch
 {
 
-  /* */
-  public boolean exist_dfs(char[][] board, String word) {
-      if (word == null || word.length() == 0) {
-          return true;
-      }
-      if (board == null) {
+    /* */
+    public boolean exist(char[][] board, String word) {
+      if(null == board || null == word){
           return false;
       }
 
-    int rows = board.length;
-    int cols = board[0].length;
-    boolean[][] isUsed = new boolean[rows][cols]; // default it's false;
+      int rowsNum = board.length;
+      int colsNum = board[0].length;
 
-    for (int row = 0; row < rows; row++) {
-      for (int col = 0; col < cols; col++) {
-        if (exist(board, row, col, word, 0, isUsed))
-          return true;
-      }
-    }
+      boolean[][] visited = new boolean[rowsNum][colsNum]; //default all are false
+      char[] target = word.toCharArray();
 
-    return false;
-  }
-
-
-  /* dfs */
-  private boolean exist(char[][] board, int row, int col, String word,
-      int start, boolean[][] isUsed) {
-    //
-	if(row > -1 && row < board.length && col > -1 && col < board[0].length && !isUsed[row][col]){
-	    isUsed[row][col] = true;
-	
-	    if (board[row][col] == word.charAt(start)) {
-	      if (start == word.length() - 1 
-	          || exist(board, row - 1, col, word, start + 1, isUsed)
-	          || exist(board, row + 1, col, word, start + 1, isUsed)
-	          || exist(board, row, col - 1, word, start + 1, isUsed)
-	          || exist(board, row, col + 1, word, start + 1, isUsed)){
-		        return true;
-	      }
-	    }
-	
-	    isUsed[row][col] = false;  //back tracking
-	}
-	
-    return false;
-  }
-
-
-  public boolean exist_2(char[][] board, String word) {
-      if (word == null || word.length() == 0) {
-          return true;
-      }
-      if (board == null) {
-          return false;
-      }
-      
-      for (int i = 0; i < board.length; i++) {
-          for (int j = 0; j < board[0].length; j++) {
-              if (board[i][j] == word.charAt(0)) {
-                  if (search(board, i, j, word, 0)) {
-                      return true;
-                  }
+      for(int row = 0; row < rowsNum; row++){
+          for(int col = 0; col < colsNum; col++){
+              if(dfs(board, row, col, target, 0, visited)){
+                  return true;
               }
           }
       }
+
       return false;
-  }
+    }
 
-    private boolean search(char[][] board, int i, int j, String word, int start) {
+    static int[][] diffs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-        if (i > -1 && i < board.length && j > -1 && j < board[0].length && board[i][j] == word.charAt(start)) {
-            board[i][j] = '#';
+    private boolean dfs(char[][] board, int row, int col, char[] word, int i, boolean[][] visited){
 
-            boolean rst = start == word.length() - 1
-                        || search(board, i, j - 1, word, start + 1)
-                        || search(board, i, j + 1, word, start + 1)
-                        || search(board, i + 1, j, word, start + 1)
-                        || search(board, i - 1, j, word, start + 1);
-
-            board[i][j] = word.charAt(start); // back tracking
-            
-            return rst;
+        if(row < 0 || col < 0 || row >= board.length || col >= board[0].length || word[i] != board[row][col] || visited[row][col]){
+            return false;
         }
+
+        if(i == word.length - 1){
+            return true;
+        }
+
+        visited[row][col] = true;
+
+        for(int[] diff : diffs){
+            if(dfs(board, row + diff[0], col + diff[1], word, i + 1, visited)){
+                return true;
+            }
+        }
+
+        visited[row][col] = false;
 
         return false;
     }
 
-  /**
+
+
+    /**
    * @param args
    */
   public static void main(String[] args) {

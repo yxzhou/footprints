@@ -10,7 +10,7 @@ import java.util.List;
 
  Hint: Try preprocessing the dictionary into a more efficient data structure to speed up queries.
  *
- * Tags: Twitter, data structure
+ * Tags: Trie, data structure
  */
 
 public class TrieTree {
