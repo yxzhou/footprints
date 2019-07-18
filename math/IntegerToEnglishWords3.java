@@ -32,7 +32,7 @@ public class IntegerToEnglishWords3 {
     private static String[] tens = {"", "", "Twenty", "Thirty", "Forty", "Fifty","Sixty", "Seventy", "Eighty", "Ninety"};
 
     private static String[] thousands = {"", "Thousand ", "Million ", "Billion " };
-    private static int[]    nums   = {1, 1000, 1000_000, 1000_000_000 };
+    private static int[] levels = {1, 1000, 1000_000, 1000_000_000 };
 
     public String numberToWords(int num) {
         //non-negative integer, guaranteed to be less than 2^31 - 1
@@ -43,12 +43,12 @@ public class IntegerToEnglishWords3 {
 
         StringBuilder result = new StringBuilder();
 
-        for(int i = nums.length - 1; i >= 0; i--){
-            if(num >= nums[i]){
-                result.append(helper(num / nums[i] ));
+        for(int i = levels.length - 1; i >= 0; i--){
+            if(num >= levels[i]){
+                result.append(helper(num / levels[i] ));
                 result.append(thousands[i]);
 
-                num %= nums[i];
+                num %= levels[i];
             }
         }
 

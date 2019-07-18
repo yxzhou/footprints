@@ -1,397 +1,34 @@
 package fgafa.graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /*
- * Given two words of equal length that are in a dictionary, write a method to transform one word into another
- * word by changing only one letter at a time. The new word you get in each step must be in the dictionary. 
- * 
- *  Example:
- *  input:  DAMP, LIKE
- *  output: DAMP -> LAMP -> LIMP -> LIME -> LIKE
- *  
- *  careercup 219.
- * 
+ * TODO??
+ *  Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that:
+ *
+ *  Only one letter can be changed at a time
+ *  Each intermediate word must exist in the dictionary
+ *  For example,
+ *
+ *  Given:
+ *  start = "hit"
+ *  end = "cog"
+ *  dict = ["hot","dot","dog","lot","log"]
+ *
+ *  Return
+ *
+ *  [
+ *    ["hit","hot","dot","dog","cog"],
+ *    ["hit","hot","lot","log","cog"]
+ *  ]
+ *  Note:
+ *
+ *  All words have the same length.
+ *  All words contain only lowercase alphabetic characters.
  */
-public class WordLadder
-{
 
-  private static Hashtable<String, Boolean> htDictionary = new Hashtable<String, Boolean>();
-  private static HashSet<String> dict = new HashSet<String>();
-  static { 
-    String[] st = {"LAMP", "LIMP", "LAKP", "LAME", "LIKP", "LIME", "LAKE",
-        "LIKE", // change the first one, 2*2*2
-        "DIMP", "DIKP", "DIME", "DIKE", // keep the first one, change the second one, 2*2
-        "DAKP", "DAKE", //keep the first two, change the third one, 2
-        "DAME" //keep the first three, change the last one
-    };
+public class WordLadderII {
 
-    boolean[] b = {true, true, false, true, false, true, true, true, false,
-        false, true, true, false, false, true};
-
-    for (int i = 0; i < st.length; i++) {
-      htDictionary.put(st[i], Boolean.valueOf(b[i]));
-      
-      if(b[i])
-        dict.add(st[i]);
-    }
-    
-  }
-
-
-
-  private String getNewStr(String str, char c, int i, int len) {
-    StringBuffer sb = new StringBuffer();
-
-    sb.append(str.substring(0, i));  // include 0, not i
-    sb.append(c);
-    sb.append(str.substring(i+1, len));
-
-    return sb.toString(); 
-  }
-
-
-  /* wrong !! */
-  private boolean convert(String str1, String str2) {
-    boolean returnValue = false;
-    //default check
-    if (str1 == null || str2 == null || str1.length() != str2.length())
-      return returnValue;
-
-    //init
-    int len = str1.length();
-    String tmp;
-    int i = 0;
-    int iTmp = 0;
-    char[] chars1 = str1.toCharArray();
-    char[] chars2 = str2.toCharArray();
-
-    Stack<Integer> st1 = new Stack<Integer>(); //store the change steps
-    Stack<String> st2 = new Stack<String>(); // store the temporary STRING according to the change steps
-    st2.add(str1);
-    Stack<Integer> st3 = new Stack<Integer>(); //store the not changed index
-    for (int j = len - 1; j >= 0; j--) {
-      st3.push(j);
-    }
-
-    while (st1.size() < len) {
-      i = st3.pop();
-      tmp = st2.peek();
-      tmp = tmp.replaceFirst(String.valueOf(chars1[i]), String
-          .valueOf(chars2[i]));
-
-      if (htDictionary.get(tmp)) {
-        st1.push(i);
-        st2.push(tmp);
-      }
-      else {
-        iTmp = st3.pop();
-        st3.push(i);
-        st3.push(iTmp);
-      }
-
-    }
-
-    //
-    return returnValue;
-  }
-
-  /*
-   * wrong !!  
-   * Given:
-   * start = "hit"
-   * end = "cog"
-   * dict = ["hot","dot","dog","lot","log"] 
-   * 
-   * recurr 
-   * 
-   */
-  private static int SUM = 0;
-  private static List<Stack> list = new ArrayList<Stack>();
-  public void convertR(String str1, String str2, Stack<String> st) {
-    //init
-    String tmp;
-    int len = str1.length();
-    char[] chars2 = str2.toCharArray();
-
-    if(!list.isEmpty())
-      return;
-    
-    if(str1.equals(str2)){
-      SUM++;
-      list.add(st);      
-
-    }else{
-      for (int i = 0; i < str1.length(); i++) {
-        char[] chars1 = str1.toCharArray();
-
-        if (chars1[i] != chars2[i]) {
-          tmp = getNewStr(str1, chars2[i], i, len);
-
-          if (htDictionary.get(tmp)) {
-            Stack<String> stTmp = (Stack<String>) st.clone();
-            stTmp.push(tmp);
-
-            convertR(tmp, str2, stTmp);
-          }
-        }
-      }
-
-      st = null;
-    }
-
-  }
-
-/*
- * Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:
- * 
- * Only one letter can be changed at a time
- * Each intermediate word must exist in the dictionary
- * For example,
- * 
- * Given:
- * start = "hit"
- * end = "cog"
- * dict = ["hot","dot","dog","lot","log"]
- * As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
- * return its length 5.
- * 
- * Note:
- * Return 0 if there is no such transformation sequence.
- * All words have the same length.
- * All words contain only lowercase alphabetic characters.  
- */
-  public int ladderLength(String start, String end, HashSet<String> dict) {
-    if((start == null && end == null) || start.length() != end.length() )
-      return 0;
-
-    //HashMap<String, Integer> cache = new HashMap<String, Integer>(); 
-    //int ladderLength = ladderLength_recursion(start, end, dict, cache);   
-    //if (ladderLength < Integer.MAX_VALUE)
-    //  return ladderLength + 1;
-    //return 0;
-    
-    return ladderLength_iterance(start, end, dict); 
-    
-  }
-  
-  /* stack over flow O(26^n) */
-  private int ladderLength_recursion(String start, String end, HashSet<String> dict, HashMap<String, Integer> cache) {
-    if(start.equals(end))
-      return 0;
-    
-    int minLadderLength = Integer.MAX_VALUE, ladderLength;
-    String middle;
-    for(int i=0; i<start.length(); i++){
-      //if(start.charAt(i) != end.charAt(i)){   //wrong!!
-      for(char c = 'A'; c<='Z'; c++){  
-        middle = getNewStr(start, c, i, start.length());
-        if(dict.contains(middle)){
-          if(cache.containsKey(middle))
-            ladderLength = cache.get(middle); 
-          else {  
-            ladderLength = ladderLength_recursion(middle, end, dict, cache);
-            cache.put(middle, ladderLength);
-          }
-          if(ladderLength < Integer.MAX_VALUE)
-            ladderLength++;
-            
-          minLadderLength = Math.min( minLadderLength, ladderLength);
-        }  
-      }
-    }
-    
-    return  minLadderLength; 
-  }
-  
-  private int ladderLength_iterance(String start, String end, HashSet<String> dict) {
-    if(start.equals(end))
-      return 1;  // 2 ??
-    
-    HashSet<String> allWords = new HashSet<String>(); 
-    LinkedList<String> currWords= new LinkedList<String>();
-    allWords.add(start);
-    currWords.add(start);
-    int count = 1, wordLength = start.length();
-    
-    String thisWord, tmpWord, tmpWordRight, tmpWordLeft;
-    while(!currWords.isEmpty()){
-      count ++;
-
-      for(int i=currWords.size(); i>0; i--){
-        thisWord = currWords.pop(); 
-        
-        for(int j=0; j<wordLength; j++){
-          tmpWordRight = thisWord.substring(0, j);
-          tmpWordLeft = thisWord.substring(j+1, wordLength);
-          
-          for(char c='A'; c<='Z'; c++){
-            //tmpWord = getNewStr(thisWord, c, j, wordLength);
-            tmpWord = tmpWordRight + c + tmpWordLeft;
-            
-            if(!allWords.contains(tmpWord) && dict.contains(tmpWord)){
-              if(tmpWord.equals(end))
-                return count;              
-              
-              allWords.add(tmpWord);
-              currWords.addLast(tmpWord);
-              
-            }              
-          }          
-        }
-
-      }
-    }
-    
-    return 0;
-  }  
-
-
-	public int ladderLength_n(String start, String end, Set<String> dict) {
-		if (null == start || null == end || start.length() != end.length()
-				|| null == dict ) {
-			return 0;
-		}
-
-		Set<String> visited = new HashSet<>();
-		Queue<String> queue = new LinkedList<>();
-		visited.add(start);
-		queue.add(start);
-
-		String currWord, tmpWord;
-		char[] currChars;
-		char originChar;
-		int count = 1;
-		while (!queue.isEmpty()) {
-			count++;
-
-			for (int i = queue.size(); i > 0; i--) {
-				currWord = queue.poll();
-				currChars = currWord.toCharArray();
-
-				for (int j = 0; j < currChars.length; j++) {
-					originChar = currChars[j];
-					for (char c = 'a'; c <= 'z'; c++) {
-						if(c == originChar){
-							continue;
-						}
-						currChars[j] = c;
-						tmpWord = new String(currChars);
-
-						if (tmpWord.equals(end)) {
-							return count;
-						}
-
-						if (!visited.contains(tmpWord) && dict.contains(tmpWord)) {
-							visited.add(tmpWord);
-							queue.offer(tmpWord);
-						}
-					}
-					currChars[j] = originChar;
-				}
-
-			}
-		}
-
-		return 0;
-	}
-  
-	/**
-	 * Solution: Graph BFS 这道题想明白后非常简单，其实就是求最短路径问题，自然是BFS方法，其实问题可以用Graph来很好的解释。
-	 * 顶点是每个字符串，如果相差一个字符，我们就可以连一条边， 一个字符串的边的数量最大值可能是 25 * L. 然后连线，形成Graph,
-	 * 这样就是start - end的最短路径问题. 每次我们可以从start 出发，找adjacent string, 然后 enqueue,
-	 * 下次再遍历下一层，这样第一次到end的时候，shortest = length + 1.
-	 * 
-	 * 这题目的特点: 1. dict来代替BFS 中 visited 标记，直接remove from dict 就代表遍历过了 或者 不存在 2.
-	 * 都小写字母, 字符串长度固定. 问题简单化(如果不固定，就不是只换一个char这种简单情形了，会复杂的多，跟这题也会大不相同)
-	 * 
-	 * Time Complexity. 有点不太确定 最差情况: 对于每一个词, 查询应该是26*wordLength.
-	 * 然后一直遍历完所有dict才找到答案. O(dict.size * 26*wordLength) Space 只需要一个Queue
-	 * 存储邻接点，最大是dict的size, 因为dict不会是规模的，所以算是O(1)
-	 * 
-	 */
-
-	/* BFS is much better than DFS*/
-	public int ladderLength_x(String start, String end, Set<String> dict) {
-		if (null == start || null == end || start.length() != end.length()
-				|| null == dict ) {
-			return 0;
-		}
-
-		Queue<String> queue = new LinkedList<String>();
-		queue.offer(start);
-		dict.remove(start);
-		
-		String tmpWord;
-		char[] chars;
-		char currChar;
-		int count = 1;
-		while (!queue.isEmpty()) {
-			count++;
-
-			for (int i = queue.size(); i > 0; i--) {
-			    chars = queue.poll().toCharArray();
-
-				for (int j = 0; j < chars.length; j++) {
-					currChar = chars[j];
-					
-					for (char c = 'a'; c <= 'z'; c++) {
-						chars[j] = c;
-						tmpWord = new String(chars);
-						
-						if (tmpWord.equals(end)) {
-							return count;
-						}
-
-						if (dict.contains(tmpWord)) {
-							queue.offer(tmpWord);
-							dict.remove(tmpWord);
-						}
-					}
-					
-					chars[j] = currChar;
-				}
-			}
-		}
-		return 0;
-	}
-
-
-  /*
-   * TODO??
-   *  Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that:
-   *  
-   *  Only one letter can be changed at a time
-   *  Each intermediate word must exist in the dictionary
-   *  For example,
-   *  
-   *  Given:
-   *  start = "hit"
-   *  end = "cog"
-   *  dict = ["hot","dot","dog","lot","log"]
-   *  
-   *  Return
-   *  
-   *  [
-   *    ["hit","hot","dot","dog","cog"],
-   *    ["hit","hot","lot","log","cog"]
-   *  ]
-   *  Note:
-   *  
-   *  All words have the same length.
-   *  All words contain only lowercase alphabetic characters.
-   */
 	public List<List<String>> findLadders_all(String start, String end, Set<String> dict) {
 		//init return value
 		List<List<String>> result = new ArrayList<>();
@@ -823,13 +460,9 @@ public class WordLadder
 	String[] ends	= {"c","dog", "cog"};
 	String[][] dicts = {{"a", "b", "c"},{"hot","dog","dot"}, {"hot","dot","dog","lot","log"}};
 	
-    WordLadder sv = new WordLadder();
+    WordLadderII sv = new WordLadderII();
 
     for(int i = 0; i < starts.length; i++){
-        System.out.println("\nconvert " + starts[i] +" to "+ ends[i] +": ");
-        
-        System.out.println(sv.ladderLength_n(starts[i], ends[i], sv.convert(dicts[i])));
-        System.out.println(sv.ladderLength_x(starts[i], ends[i], sv.convert(dicts[i])));
         
         System.out.println(sv.findLadders_all(starts[i], ends[i], sv.convert(dicts[i])));
         

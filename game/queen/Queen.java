@@ -51,18 +51,19 @@ public class Queen
   }
   
   public int countSolution(int k, int[] pattern){
-      int n= pattern.length;
-      assert(k<=n);
+      int n = pattern.length;
+      assert (k <= n);
       int res = 0;
       main:
-      for(int i=0;i<n;i++){
-          for(int j=0;j<k-1;j++){
-              if(pattern[j]==i||Math.abs(j-k+1)==Math.abs(pattern[j]-i))
-              continue main;
+      for (int i = 0; i < n; i++) {
+          for (int j = 0; j < k - 1; j++) {
+              if (pattern[j] == i || Math.abs(j - k + 1) == Math.abs(pattern[j] - i)) {
+                  continue main;
+              }
           }
-          pattern[k-1]=i;
-          if(k==n) return 1;
-          else res+=countSolution(k+1,pattern);
+          pattern[k - 1] = i;
+          if (k == n) return 1;
+          else res += countSolution(k + 1, pattern);
       }
       return res;
   }

@@ -1,10 +1,5 @@
 package fgafa.dailyCoding;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Scanner;
-
 /**
  *
  * Using a read7() method that returns 7 characters from a file, implement readN(n) which reads n characters.

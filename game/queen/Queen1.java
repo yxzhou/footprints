@@ -28,6 +28,7 @@ public class Queen1 {
             }
             if (!ok)
                 continue;
+
             sol[row] = col;
             if (row == n - 1) {
                 count++;

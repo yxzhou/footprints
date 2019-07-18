@@ -1,8 +1,6 @@
 package fgafa.basic.Iterator;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 
@@ -24,51 +22,88 @@ import java.util.Stack;
 
 public class NestedIterator implements Iterator<Integer> {
 
-    Stack<Iterator> stack = new Stack<>();
-    
-    public NestedIterator(List<List> nestedList) {
+    /**
+     * // This is the interface that allows for creating nested lists.
+     * // You should not implement it, or speculate about its implementation
+     *
+     */
+     public interface NestedInteger {
+
+         // @return true if this NestedInteger holds a single integer, rather than a nested list.
+         public boolean isInteger();
+
+         // @return the single integer that this NestedInteger holds, if it holds a single integer
+         // Return null if this NestedInteger holds a nested list
+         public Integer getInteger();
+
+         // @return the nested list that this NestedInteger holds, if it holds a nested list
+         // Return null if this NestedInteger holds a single integer
+         public List<NestedInteger> getList();
+     }
+
+
+    Stack<Iterator<NestedInteger>> stack;
+    NestedInteger top = null;
+
+    public NestedIterator(List<NestedInteger> nestedList) {
+        stack = new Stack<>();
         stack.add(nestedList.iterator());
-    }
-    
-    
-    @Override
-    public boolean hasNext() {
-        while(!stack.isEmpty()){
-            Iterator it = stack.peek();
-            if(it.hasNext()){
-                return true;
-            }else{
-                stack.pop();
-            }
-        }
-        
-        return false;
     }
 
     @Override
     public Integer next() {
+        if(hasNext()){
+            Integer result = top.getInteger();
+            top = null;
+            return result;
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean hasNext() {
+
+        if(top != null){
+            return true;
+        }
+
         while(!stack.isEmpty()){
-            Iterator it = stack.peek();
-            if(it.hasNext()){
-                Object curr = it.next();
-                
-                if(curr instanceof List){
-                    stack.pop();
-                    stack.add(((List) curr).iterator());
-                    
-                    return next();
-                }else{
-                    return (Integer)curr;
+            if(stack.peek().hasNext()){
+                NestedInteger curr = stack.peek().next();
+
+                if(curr.isInteger()){
+                    top = curr;
+                    return true;
+                }else { //
+                    stack.add(curr.getList().iterator());
                 }
+
             }else{
                 stack.pop();
             }
         }
-        return null;
+
+        return false;
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        NestedIterator sv;
+
+       //[[1,1],2,[1,1]]
+        List<List> nestedList = new ArrayList<>();
+        nestedList.add(Arrays.asList(1, 1));
+        //nestedList.add(2);
+        nestedList.add(Arrays.asList(1,1));
+
+        //sv = new NestedIterator(nestedList);
+
+
+        //[1,[4,[6]]]
+
+//        while(sv.hasNext()){
+//
+//        }
 
     }
 

@@ -1,8 +1,6 @@
 package fgafa.array;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /*
@@ -70,63 +68,38 @@ public class longestConsecutiveSequence {
         
         return max;
     }
-    
 
-    
-    public int longestConsecutive_2(int[] num) {
-        //check
-        if(null == num || 0 == num.length){
+    public int longestConsecutive_n(int[] nums) {
+        if(null == nums){
             return 0;
         }
-        
+
+        if(nums.length < 2){
+            return nums.length;
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for(int n : nums){
+            set.add(n);
+        }
+
         int max = 0;
-        Map<Integer, Interval> map = new HashMap<Integer, Interval>();
-        Interval interval;
-        for(int n : num){
-            if(!map.containsKey(n)){
-                interval = new Interval(n, n);
-                map.put(n, interval);
-                
-                if(map.containsKey(n-1)){
-                    interval.merge(map.get(n-1));
+        for(int n : nums){
+            if(!set.contains(n - 1)){
+                int count = 1;
+
+                while(set.contains(++n)){
+                    count++;
                 }
-                if(map.containsKey(n+1)){
-                    interval.merge(map.get(n+1));
-                }
-                
-                map.put(interval.start, interval);
-                map.put(interval.end, interval);
-                
-                max = Math.max(max, interval.size());
+
+                max = Math.max(max, count);
             }
         }
-        
-        return max + 1;
+
+        return max;
     }
     
-    class Interval{
-        int start;
-        int end;
-        
-        public Interval(int s, int e){
-            this.start = s;
-            this.end = e;
-        }
-        
-        public void merge(Interval other){
-//            if(this.end < other.start - 1 || other.end < this.start - 1){
-//                return;
-//            }
-            
-            this.start = Math.min(this.start, other.start);
-            this.end = Math.max(this.end, other.end);
-        }
-        
-        public int size(){
-            return end - start;
-        }
-    }
-    
+
     
 	public static void main(String[] args) {
 

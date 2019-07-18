@@ -62,13 +62,17 @@ public class String2
     String[] target = {   "", "a",  "ab",    "c",   "b",   "cd", "bcd", "issip"};
     int r ;
     for(int i =0; i< src.length; i++){
-      r = indexOf(src[i].toCharArray(), target[i].toCharArray());
-      System.out.print("--indexOf(\""+src[i]+"\",\""+target[i]+"\") is:"+ r);
-      System.out.println("  "+ (r == src[i].indexOf(target[i])));
-      
-      r = strStr(src[i], target[i]);
-      System.out.print("--strStr(\""+src[i]+"\",\""+target[i]+"\") is:"+ r);
-      System.out.println("  "+ (r == src[i].indexOf(target[i])));
+        r = indexOf(src[i].toCharArray(), target[i].toCharArray());
+        System.out.print("\n--indexOf(\""+src[i]+"\",\""+target[i]+"\") is:"+ r);
+        System.out.println("  "+ (r == src[i].indexOf(target[i])));
+
+        r = strStr(src[i], target[i]);
+        System.out.print("--strStr(\""+src[i]+"\",\""+target[i]+"\") is:"+ r);
+        System.out.println("  "+ (r == src[i].indexOf(target[i])));
+
+        r = strStr_n(src[i], target[i]);
+        System.out.print("--strStr_n(\""+src[i]+"\",\""+target[i]+"\") is:"+ r);
+        System.out.println("  "+ (r == src[i].indexOf(target[i])));
     }
     
     
@@ -129,7 +133,10 @@ public class String2
       
     }
 
-    
+    String s1 = "1";
+    String s2 = "";
+
+    s2 += s1.charAt(0);
     
   }
 
@@ -282,7 +289,53 @@ public class String2
       
       return -1;
   }
-  
+
+    public static int strStr_n(String haystack, String needle) {
+        if(null == haystack || null == needle || haystack.length() < needle.length()){
+            return -1;
+        }
+
+        int n = needle.length();
+        long target = hash(needle);
+
+        long curr = hash(haystack.substring(0, n));
+
+        for(int i = 0, end = haystack.length() - n ; i <= end; i++){
+            if(curr == target && haystack.substring(i, i + n).equals(needle)){
+                return i;
+            }
+
+            if(i < end){
+                curr = rehash(curr, n, haystack.charAt(i), haystack.charAt(i + n));
+            }
+        }
+
+        return -1;
+    }
+
+    private static long hash(String s){
+        long hash = 0;
+
+        for(char c : s.toCharArray()){
+            hash += (hash << 5) + c;
+        }
+
+        return hash;
+    }
+
+    private static long rehash(long hash, int length, char removeChar, char addChar){
+        long remove = removeChar;
+        while(length > 1){
+            remove += (remove << 5) ;
+            length--;
+        }
+
+        hash -= remove;
+        hash += (hash << 5) + addChar;
+
+        return hash;
+    }
+
   /**
    * Replace all occurrence of the given pattern to ‘X’. For example, given that
    * the pattern=”abc”, replace “abcdeffdfegabcabc” with “XdeffdfegX”. Note that

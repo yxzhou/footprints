@@ -1,11 +1,11 @@
 package fgafa.math.expression;
 
+import fgafa.util.Misc;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-
-import fgafa.util.Misc;
 
 /**
  * 
@@ -135,8 +135,9 @@ public class ExpressionAndOperators {
         }
     }
     
-    
-    public List<String> addOperators_2(String num, int target) {
+
+    //dfs
+    public List<String> addOperators_dfs(String num, int target) {
         List<String> res = new ArrayList<String>();
         dfs(num, target, 0, 0, "", res);
         return res;
@@ -152,7 +153,7 @@ public class ExpressionAndOperators {
             }
             
             String next = num.substring(i);
-            if(temp.length() >0) {
+            if(temp.length() > 0) {
                 dfs(next, target, cur + Long.parseLong(str), Long.parseLong(str), temp + "+" +str, res);
                 dfs(next, target, cur - Long.parseLong(str), -Long.parseLong(str), temp + "-" +str, res);
                 dfs(next, target, (cur - diff) + diff * Long.parseLong(str), diff * Long.parseLong(str), temp + "*" +str, res);
@@ -161,7 +162,119 @@ public class ExpressionAndOperators {
             }
         }
     }
-    
+
+    public List<String> addOperators_dfs2(String num, int target) {
+        List<String> result = new LinkedList<>();
+
+        if(null == num || num.length() == 0){
+            return result;
+        }
+
+        dfs(num, 0, target, 0, 0, "", result);
+
+        return result;
+    }
+
+    private void dfs(String num, int i, int target, long curr, long last, String path, List<String> result) {
+
+        if(i == num.length() && target == curr){
+            result.add(path);
+        }
+
+        String s;
+        long n;
+        for(int j = i + 1; j <= num.length(); j++){
+            s = num.substring(i, j);
+            n = Long.parseLong(s);
+
+            if(s.length() > 1 && s.charAt(0) == '0' ){
+                break;
+            }
+
+            if(path.length() == 0){
+                dfs(num, j, target, n, n, s, result);
+            }else{
+                dfs(num, j, target, curr + n, n, path + "+" + s, result );
+                dfs(num, j, target, curr - n, -n, path + "-" + s, result );
+
+                dfs(num, j, target, curr - last + last * n, last * n, path + "*" + s, result );
+            }
+        }
+    }
+
+    //dp  TODO
+    class Node{
+        String exp;  //expression
+        long v;  //value of the above expression
+        long last; // the last number of the expression
+
+        Node(String exp, long v, long last){
+            this.exp = exp;
+            this.v = v;
+            this.last = last;
+        }
+    }
+
+    public List<String> addOperators_dp(String num, int target) {
+        if(null == num || num.length() == 0 ){
+            return new LinkedList<>();
+        }
+
+        int n = num.length();
+        List<Node>[] dp = new List[n];
+
+        String s;
+        for(int i = 0; i < n; i++){
+            dp[i] = new LinkedList<>();
+            s = num.substring(0, i + 1);
+
+            if(validLong(s)){
+                dp[i].add(new Node(s, Long.parseLong(s), Long.parseLong(s)));
+            }
+
+            for(int j = 0; j < i; j++){
+                s = num.substring(j + 1, i + 1);
+
+                if(validLong(s)){
+                    for(Node pre : dp[j]){
+                        dp[i].add(new Node(pre.exp + "+" + s, pre.v + Long.parseLong(s), Long.parseLong(s) ));
+                        dp[i].add(new Node(pre.exp + "-" + s, pre.v - Long.parseLong(s), -Long.parseLong(s) ));
+                        dp[i].add(new Node(pre.exp + "*" + s, (pre.v - pre.last) + pre.last * Long.parseLong(s), pre.last * Long.parseLong(s)));
+                    }
+                }
+            }
+        }
+
+        List<String> result = new LinkedList<>();
+
+        for(Node node : dp[n - 1]){
+            if(node.v == target){
+                result.add(node.exp);
+            }
+        }
+
+        return result;
+    }
+
+
+    private boolean validLong(String s){
+        if(s.equals("0")){
+            return true;
+        }
+        if(s.startsWith("0")){
+            return false;
+        }
+
+        try{
+            Long.parseLong(s);
+            return true;
+        }catch(NumberFormatException nfe){
+            return false;
+        }
+    }
+
+
+
     public static void main(String[] args){
  
         
@@ -198,14 +311,18 @@ public class ExpressionAndOperators {
         int[] targets = {6,8,5,0,9191, -2147483648, -1234, -12345, -123456, -1234567, -2147483648};
 
         for(int i = 0; i < input.length; i++){
-            System.out.println(String.format("Input: %s, %d", input[i], targets[i]));
-            
+            System.out.println(String.format("\nInput: %s, %d", input[i], targets[i]));
+
             long startTime = System.currentTimeMillis();
-            Misc.printArrayList(sv.addOperators(input[i], targets[i]));
-            System.out.println(System.currentTimeMillis() - startTime);
+//            Misc.printArrayList(sv.addOperators(input[i], targets[i]));
+//            System.out.println(System.currentTimeMillis() - startTime);
             
             startTime = System.currentTimeMillis();
-            Misc.printArrayList(sv.addOperators_2(input[i], targets[i]));
+            Misc.printArrayList(sv.addOperators_dfs(input[i], targets[i]));
+            System.out.println(System.currentTimeMillis() - startTime);
+
+            startTime = System.currentTimeMillis();
+            Misc.printArrayList(sv.addOperators_dp(input[i], targets[i]));
             System.out.println(System.currentTimeMillis() - startTime);
         }
     }

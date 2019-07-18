@@ -43,34 +43,26 @@ public class FindMissing
    * @return: an integer
    */
   public int findMissing_n(int[] nums) {
-      //check
-	  if(null == nums || 0 == nums.length){
-		  return 0;
-	  }
-	  
-	  int size = nums.length;
-	  for(int i = 0; i < size; ){
-		  if(i != nums[i] && nums[i] < size){
-			  swap(nums, i, nums[i]);
-		  }else{
-			  i++;
-		  }
-	  }
-	  
-	  for(int i = 0; i < size; i++){
-		  if( i != nums[i] ){
-			  return i;
-		  }
-	  }
-	  
-	  return size;
+      for(int i = 0, end = nums.length; i < end; ){
+          if(i != nums[i] && nums[i] >= 0 && nums[i] < end && nums[i] != nums[nums[i]]){
+              //swap
+              int tmp = nums[i];
+              nums[i] = nums[tmp];
+              nums[tmp] = tmp;
+          } else{
+              i++;
+          }
+      }
+
+      for(int i = 0, end = nums.length; i < end; i++ ){
+          if(i != nums[i]){
+              return i;
+          }
+      }
+
+      return nums.length;
   }
-  
-  private void swap(int[] nums, int i, int j){
-	  int tmp = nums[i];
-	  nums[i] = nums[j];
-	  nums[j] = tmp;
-  }
+
   
   /**
    * 
@@ -83,7 +75,6 @@ public class FindMissing
    * 
    */
   public int findMissing_XOR(int[] nums) {
-      //check
 	  if(null == nums || 0 == nums.length){
 		  return 0; // error code
 	  }
@@ -103,6 +94,17 @@ public class FindMissing
       int missing = x1 ^ x2;
       return missing == 0 ? nums.length : missing;
   }
+
+    public int findMissing_XOR_n(int[] nums) {
+        int result = nums.length;
+
+        for(int i = 0, end = result; i < end; i++){
+            result ^= i;
+            result ^= nums[i];
+        }
+
+        return result;
+    }
   
   /**
    * @param args

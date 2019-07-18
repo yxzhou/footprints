@@ -1,10 +1,9 @@
 package fgafa.array;
 
-import java.util.HashSet;
-
-import java.util.Set;
-
 import fgafa.util.Misc;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /*
  * Design an algorithm and write code to remove the duplicate characters in a string without using any 
@@ -23,9 +22,9 @@ public class RemoveDuplicate {
             return 0;
         }
 
-        if (str.length > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Can't support so big array size !");
-        }
+//        if (str.length > Integer.MAX_VALUE) {
+//            throw new IllegalArgumentException("Can't support so big array size !");
+//        }
 
         int len = str.length;
         int tail = 1;
@@ -88,25 +87,25 @@ public class RemoveDuplicate {
    * Your function should return length = 2, and A is now [1,2].
    */
   /* Time O(n), Space O(1) */
-    public int removeDuplicatesInSortedArray(int[] A) {
-        if (A == null) {
+    public int removeDuplicatesInSortedArray(int[] nums) {
+        if (nums == null) {
             return 0;
         }
 
-        int len = A.length;
-        if (len == 0 || len == 1) {
-            return len;
+        int length = nums.length;
+        if (length < 2) {
+            return length;
         }
 
         int i = 0;
-        for (int j = 1; j < len; j++) {
-            if (A[i] != A[j]) {
+        for (int j = 1; j < length; j++) {
+            if (nums[i] != nums[j]) {
                 i++;
-                A[i] = A[j];
+                nums[i] = nums[j];
             }
         }
 
-        return i;
+        return i + 1;
     }
   
   /**
@@ -120,20 +119,20 @@ public class RemoveDuplicate {
    * 
    */
     /* Time O(n), Space O(1) */
-    public int removeDuplicatesInSortedArrayII(int[] A) {
-        // check
-        if (A == null) {
+    public int removeDuplicatesInSortedArrayII(int[] nums) {
+        if (nums == null) {
             return 0;
         }
 
-        if (A.length < 2) {
-            return A.length;
+        int length = nums.length;
+        if (length < 2) {
+            return length;
         }
 
         int i = 2;
-        for (int j = 2; j < A.length; j++) {
-            if (A[i - 2] != A[j]) {
-                A[i] = A[j];
+        for (int j = 2; j < length; j++) {
+            if (nums[i - 2] != nums[j]) {
+                nums[i] = nums[j];
                 i++;
             }
         }

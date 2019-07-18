@@ -3,8 +3,8 @@ package fgafa;
 import fgafa.util.Misc;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MyTest {
 
@@ -167,5 +167,141 @@ public class MyTest {
         System.out.println(x/y);
         System.out.println(z);
 
+
+        int[][] xx = { {0, 3}, {1, 2}, {2, 3}, {-2, 4}, {-4, 2} };
+
+        for(int[] p : xx){
+            System.out.println( " == " + (-(double)p[0]/p[1]));
+        }
+
+        List<Integer>[] buses = new ArrayList[3];
+        Arrays.fill(buses, new ArrayList());
+
+        Map<Integer, List<Integer>> stations = new HashMap<>();
+
+        Set<Integer> target = new HashSet<>();  //<bus>
+        target.addAll(stations.get(2));
+
+    }
+
+    @Test
+    public void testIf() {
+        int x = 2;
+
+        if(x > 0){
+            System.out.println(x + " > 0");
+        }else if(x > 1){
+            System.out.println(x + " > 1");
+        }else if(x > 2){
+            System.out.println(x + " > 2");
+        }
+
+    }
+
+
+    @Test
+    public void testHeap(){
+
+        class Wraper{
+            int key;
+            int value;
+
+            Wraper(int key, int value){
+                this.key = key;
+                this.value = value;
+            }
+
+            @Override
+            public String toString() {
+                return key + "-" + value + "\t";
+            }
+        }
+
+        PriorityQueue<Wraper> minHeap = new PriorityQueue<>((p1, p2) -> (Integer.compare(p1.value, p2.value)));
+
+        Wraper p0 = new Wraper(0, 20);
+        Wraper p1 = new Wraper(1, 21);
+        Wraper p2 = new Wraper(2, 22);
+        minHeap.add(p0);
+        minHeap.add(p1);
+        minHeap.add(p2);
+        System.out.println();
+        minHeap.stream().forEach(System.out::print);
+
+        p1.value = 31;
+        System.out.println();
+        minHeap.stream().forEach(System.out::print);
+
+        minHeap.remove(p1);
+        minHeap.add(p1);
+        System.out.println();
+        minHeap.stream().forEach(System.out::print);
+
+    }
+
+    class Tweet{
+        int tweetId;
+        long timestamp;
+
+        Tweet(int tweetId, long timestamp){
+            this.tweetId = tweetId;
+            this.timestamp = timestamp;
+        }
+    }
+
+    @Test
+    public void testQueue2List(){
+
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(1);
+        queue.add(2);
+
+        List<Integer> list = new ArrayList<>(queue);
+        System.out.println(list);
+
+
+        Deque<Tweet> deque = new LinkedList<>();
+        deque.add(new Tweet(1, 1001));
+        deque.add(new Tweet(2, 1002));
+        deque.add(new Tweet(3, 1003));
+
+        List<Integer> list2 = deque.stream().map(t -> t.tweetId).collect(Collectors.toList());
+        Collections.reverse(list2);
+
+        System.out.println(list2);
+        System.out.println(deque.size());
+
+
+        LinkedList<Integer> list3 = new LinkedList<>();
+        for(Tweet t : deque){
+            list3.addFirst(t.tweetId);
+        }
+
+        System.out.println(list3);
+        System.out.println(deque.size());
+
+    }
+
+    private List testList(){
+        LinkedList<Integer> result = new LinkedList<>();
+        result.addFirst(11);
+
+        return result;
+    }
+
+    private void valid(){
+        valid(3);
+    }
+
+    private void valid(int i, int j){
+        if(i < 0 || i >= 5 || j < 0 || j >= 5 || i > j){
+            throw new IllegalArgumentException("  ");
+        }
+    }
+
+    private void valid(int i){
+        if(i < 0 || i >= 5){
+            throw new IllegalArgumentException("  ");
+        }
     }
 }

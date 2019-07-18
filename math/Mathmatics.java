@@ -598,6 +598,75 @@ public class Mathmatics
 		}
 		return 0 == sb.length()? "0" : sb.toString();
 	}
+
+
+    /**
+     *
+     * Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+     *
+     * Example 1:
+     * Input: num1 = "2", num2 = "3"
+     * Output: "6"
+     *
+     * Example 2:
+     * Input: num1 = "123", num2 = "456"
+     * Output: "56088"
+     *
+     * Note:
+     * The length of both num1 and num2 is < 110.
+     * Both num1 and num2 contain only digits 0-9.
+     * Both num1 and num2 do not contain any leading zero, except the number 0 itself.
+     * You must not use any built-in BigInteger library or convert the inputs to integer directly.
+     *
+     */
+    public String multiply_x(String num1, String num2) {
+        if(num1.equals("0") || num2.equals("0")){
+            return "0";
+        }
+
+        char[] c1 = num1.toCharArray();
+        char[] c2 = num2.toCharArray();
+
+        int l1 = c1.length;
+        int l2 = c2.length;
+
+        int[] result = new int[l1 + l2]; //default all are 0
+        //Arrays.fill(result, 0);
+
+        int n;
+        int m;
+        for(int i = l1 - 1, p = result.length - 1; i >= 0; i--, p--){
+            n = c1[i] - '0';
+
+            if(n == 0){
+                continue;
+            }
+
+            for(int j = l2 - 1, q = p; j >= 0; j--, q--){
+                m = c2[j] - '0';
+
+                result[q] += m * n;
+            }
+        }
+
+        for(int p = result.length - 1; p > 0; p--){
+            result[p - 1] +=  result[p] / 10;
+            result[p] %= 10;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        boolean flag = true;
+        for (int i = 0; i < result.length; i++) {
+            if(flag && result[i] == 0){
+                continue;
+            }
+
+            flag = false;
+            sb.append(result[i]);
+        }
+        return sb.toString();
+    }
+
   /**
    * case1:  000=> 0
    * case2:  0012=> 12 

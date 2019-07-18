@@ -9,7 +9,7 @@ import fgafa.linkedlist.ListNode;
  * Follow up: Could you do it in O(n) time and O(1) space?
  *
  */
-public class LinkedList {
+public class PalindromeLinkedList {
 
 	public boolean isPalindrome(ListNode head) {
 		//check

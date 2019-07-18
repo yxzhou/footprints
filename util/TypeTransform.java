@@ -2,7 +2,6 @@ package fgafa.util;
 
 import java.math.BigDecimal;
 import java.util.Stack;
-import java.util.StringTokenizer;
 
 public class TypeTransform
 {
@@ -10,8 +9,7 @@ public class TypeTransform
 
   
   /**
-   * 
-   * @param d 
+   *
    * @return 
    */
   public static String decimal2BinaryStr(double decimal) {
@@ -165,9 +163,7 @@ public class TypeTransform
   
   /**
    * subtraction with BigDecimal 
-   * 
-   * @param v1 minuend
-   * @param v2 subtrahend
+   *
    * @return the result of 
    */
   private static double sub(double minuend, double subtrahend) {
@@ -194,203 +190,101 @@ public class TypeTransform
   }
   
   /*
-   * convert a ASCII String to int number  
+   * convert a ASCII String to int number.
+   *
+   * cases:
    * if the string is null or empty or with specail character, such as "12a3", throws IllegalArgumentException
    * if the string is "+" or "-", throws IllegalArgumentException.
    * if the string is "+0" or "-0", return 0
    * if the string is "123" or "+123", return 123; if the string is "-123", return -123.
    * if the string is "0012", return 12
-   * if the string-integer is overflow, return Integer.MAX_VALUE or Integer.MIN_VALUE 
+   * if the string-integer is overflow, return Integer.MAX_VALUE or Integer.MIN_VALUE
+   *
+   * ?? if it's "10e2"
+   *
    */
   public static int atoi(String number) {
-    //check input
-    if (null == number)
-      //throw new IllegalArgumentException("can't convert to a Integer.");
-      return 0;
+      if (null == number) {
+          throw new IllegalArgumentException("can't convert to a Integer.");
+      }
 
-    //trim the number
-    number = number.trim();
-    
-    if(0 == number.length() || "+".equals(number) || "-".equals(number))
-      //throw new IllegalArgumentException("can't convert to a Integer.");
-      return 0;
-    
-    //check for sign as the first character, 
-    char sign = number.charAt(0);
-    if ('+' == sign || '-' == sign)
-      number = number.substring(1);
+      //trim the number
+      number = number.trim();
+      if (0 == number.length() || "+".equals(number) || "-".equals(number)) {
+          throw new IllegalArgumentException("can't convert to a Integer.");
+      }
 
-    boolean negate = false;
-    if ('-' == sign)
-      negate = true;
+      long result = 0;
+      int i = 0;
 
-    //
-    long returnNumber = 0;
-    char digit;
-    for (int i = 0; i <  number.length(); i++) {
-      digit = number.charAt(i);
+      //check for sign as the first character,
+      boolean negated = false;
+      char sign = number.charAt(0);
+      if ('+' == sign){
+          i++;
+      }else if('-' == sign){
+          i++;
+          negated = true;
+      }
 
-      //check, throw Exception when it's not from 0-9
-      if (!(digit >= '0' && digit <= '9'))
-        //throw new IllegalArgumentException("The String contains characters other than digit at :" + i);
-        break;
+      char c;
+      for ( ; i < number.length(); i++) {
+          c = number.charAt(i);
 
-      //324 = (3 * 10 + 2)* 10 + 4
-      returnNumber = returnNumber * 10 + (int) (digit - '0');
-    }
+          if (c >= '0' && c <= '9'){
+              result = result * 10 + (c - '0');
+          }else{
+              throw new IllegalArgumentException("The String contains characters other than digit:" + c);
+          }
 
-    //if negative, do it
-    if (negate)
-      returnNumber = 0 - returnNumber;
+      }
 
-    if(returnNumber > Integer.MAX_VALUE)
-      return Integer.MAX_VALUE;
-      
-    if(returnNumber < Integer.MIN_VALUE)
-      return Integer.MIN_VALUE;
-      
-    //return
-    return (int)returnNumber;
+      if (negated) {
+          result = 0 - result;
+      }
 
+      result = Math.min(result, Integer.MAX_VALUE);
+      result = Math.max(result, Integer.MIN_VALUE);
+
+      return (int) result;
   }
 
-	/**
-	 * 
-	 * The function first discards as many whitespace characters as necessary
-	 * until the first non-whitespace character is found. Then, starting from
-	 * this character, takes an optional initial plus or minus sign followed by
-	 * as many numerical digits as possible, and interprets them as a numerical
-	 * value.
-	 * 
-	 * The string can contain additional characters after those that form the
-	 * integral number, which are ignored and have no effect on the behavior of
-	 * this function.
-	 * 
-	 * If the first sequence of non-whitespace characters in str is not a valid
-	 * integral number, or if no such sequence exists because either str is
-	 * empty or it contains only whitespace characters, no conversion is
-	 * performed.
-	 * 
-	 * If no valid conversion could be performed, a zero value is returned. If
-	 * the correct value is out of the range of representable values, INT_MAX
-	 * (2147483647) or INT_MIN (-2147483648) is returned.
-	 */
-  public static int atoi_X(String str) {
-	  if(null == str)
-		  return 0;
-	  
-	  str = str.trim();//remove the space
-	  if(0 == str.length()){
-		  return 0;
-	  }
-	  boolean isNegative = false;
-	  if('-' == str.charAt(0)){
-		  isNegative = true;
-	  }
-      
-	  int i = 0;
-	  if('-' == str.charAt(0) || '+' == str.charAt(0)){
-		  i ++;
-	  }
-	  
-	  long ret = 0;
-
-	  int digit;
-	  for( ; i<str.length() && str.charAt(i) == '0'; i++);
-	  for( int end = Math.min(str.length(), i + 12); i<end ; i++){ // 12 to avoid out of long range
-		  digit = str.charAt(i) - '0'; // '0' is 48
-		  if(digit < 0 || digit > 9)
-			  break;
-		  
-		  ret = ret * 10 + digit;
-	  }		  
-	  
-	  if(isNegative){
-		  ret = 0 - ret;
-	  }
-	  ret = Math.max(ret, Integer.MIN_VALUE);
-	  ret = Math.min(ret, Integer.MAX_VALUE);
-	  
-	  return (int)ret;
-  }
-
-  public static int atoi_X2(String str) {
-	  if(null == str)
-		  return 0;
-	  
-	  int i = 0;
-	  for( ; i<str.length() && str.charAt(i) == ' '; i++);//ignore the space at the beginning
-	  if(i == str.length()){
-		  return 0;
-	  }
-	  boolean isNegative = false;
-	  if('-' == str.charAt(i)){
-		  isNegative = true;
-	  }
-      
-	  if('-' == str.charAt(i) || '+' == str.charAt(i)){
-		  i++;
-	  }
-	  
-	  for( ; i<str.length() && str.charAt(i) == '0'; i++);//ignore the 0 at the beginning
-	  
-	  long ret = 0;
-	  int digit;
-	  for( int end = Math.min(str.length(), i + 11) ; i<end ; i++){ // 12 to avoid out of long range
-		  digit = str.charAt(i) - '0'; // '0' is 48
-		  if(digit < 0 || digit > 9)
-			  break;
-		  
-		  ret = ret * 10 + digit;
-	  }		  
-	  
-	  if(isNegative){
-		  return (int)Math.max(0 - ret, Integer.MIN_VALUE);
-	  }else{
-		  return (int)Math.min(ret, Integer.MAX_VALUE);
-	  }
-  }
   
   /*
    * convert a int number to a ASCII character String 
    * if it's '-123', {'-','1','2','3'}
    * 
    */
-  public static StringBuffer itoa(int number) {
-    //check input
+  public static StringBuilder itoa(int number) {
 
-    //init
-    Stack stack = new Stack();
-    boolean negate = false;
+      long n = number;
+      boolean negated = false;
+      if (n < 0) {
+          negated = true;
+          n = 0 - n;
+      }
 
-    //
-    if (number < 0) {
-      negate = true;
-      number = 0 - number;
-    }
+      //init
+      Stack stack = new Stack();
+      int digit;
+      while (n > 0) {
+          digit = (int)(n % 10);
+          n = n / 10;
 
-    //
-    int digit;
-    while (number > 0) {
+          //stack.push((char) (ASCII_VALUE_OF_ZERO + digit));
+          stack.push(digit);
+      }
 
-      digit = number % 10;
-      number = number / 10;
+      StringBuilder result = new StringBuilder();
+      if (negated) {
+          result.append('-');
+      }
 
-      stack.push((char) (ASCII_VALUE_OF_ZERO + digit));
-    }
+      while (!stack.isEmpty()) {
+          result.append(stack.pop());
+      }
 
-    //if negative, do it
-    if (negate)
-      stack.push('-');
-
-    StringBuffer returnValue = new StringBuffer();
-    while (!stack.isEmpty()) {
-      returnValue.append(stack.pop());
-    }
-
-    //return
-    return returnValue;
-
+      return result;
   }
   
   public static void main(String[] args) {
@@ -400,38 +294,36 @@ public class TypeTransform
     //int x = instance.atoi(input);
 
     String[] input = {
-    		null,
-    		"",
-    		" ",
+    		//null,
+    		//"",
+    		//" ",
     		"012",
     		" 012 ",
     		"-0120",
     		"+0120",
     		"9999999999999999",
-    		"99999999a99999999",
+    		//"99999999a99999999",
     		"-999999999999999",
     		"999999999999999999999",
     		"9999999999999999999999999999999",
-    		"99999999a9999999999999",
+    		//"99999999a9999999999999",
     		"-99999999999999999999",
     		"-99999999999999999999999999999999",
     		"-00000999999999999999",
     };
     for(String str1 : input){
-        System.out.println(str1 + " --atoi-- \t=>" + atoi(str1)  + " \t=>" + atoi_X(str1) + " \t=>" + atoi_X2(str1));
+        int n = atoi(str1);
+
+        System.out.println(String.format("%s -> %d -> %s", str1, n, itoa(n)));
     }
 
-    System.out.println(number + " --atoi-- " + itoa(number));
+    //System.out.println(number + " --atoi-- " + itoa(number));
 
     //System.out.println(number + " --atoi from SDK-- " + String.valueOf(number));
 
     double decimal = 3.72d;  //??  -2.75
 
-    System.out.println(decimal + " --convert to binary-- "
-        + decimal2BinaryStr(decimal));
-
-
-    
+    System.out.println(decimal + " --convert to binary-- " + decimal2BinaryStr(decimal));
     
   }
 

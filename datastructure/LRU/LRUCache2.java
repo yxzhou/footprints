@@ -1,15 +1,10 @@
 package fgafa.datastructure.LRU;
 
+import fgafa.util.Misc;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
-import fgafa.util.Misc;
+import java.util.*;
 
 /**
  * Design and implement a data structure for Least Recently Used (LRU) cache. It
@@ -23,6 +18,18 @@ import fgafa.util.Misc;
  *  used item before inserting a new item.
  */
 public class LRUCache2 {
+	class Node {
+		public int val;
+		public int key;
+		public Node pre = null;
+		public Node next = null;
+
+		public Node(int key, int value) {
+			this.val = value;
+			this.key = key;
+		}
+	}
+
 	private int capacity = 10; //default value
 
 	private Map<Integer, Node> map = new HashMap<Integer, Node>(capacity);
@@ -106,17 +113,7 @@ public class LRUCache2 {
         tail.pre = node;
 	}
 	
-   class Node {
-        public int val;
-        public int key;
-        public Node pre = null;
-        public Node next = null;
 
-        public Node(int key, int value) {
-            this.val = value;
-            this.key = key;
-        }
-    }
 	   
 	   
 	public static void main(String[] args) throws ClassNotFoundException,

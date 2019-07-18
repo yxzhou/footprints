@@ -18,9 +18,6 @@ public final class KSum {
         
         if(k == 1){
             for(int n : num){
-
-
-
                 if(n == target){
                     Set<Integer> tmp = new HashSet<>();
                     tmp.add(n);
@@ -83,39 +80,40 @@ public final class KSum {
 
     /**
      * Solution:
-     * Define ksum[i][j][l]表示前j个元素里面取l个元素之和为i。
+     * Define f[n][k][t]表示 前n个元素里面取k个元素之和为t的个数。
      *
-     * 初始化：ksum[0][j][0] =1(j:0~n)，即前j个元素里面取0个元素使其和为0的方法只有1种，那就是什么都不取
-     * 状态函数： ksum[i][j][l] = ksum[i][j-1][l] + ksum[i-A[i-1]][j-1][l-1]
-     * 即前j个元素里面取l个元素之和为i由两种情况组成：
-     * 第一种情况为不包含第i个元素，即前j－1个元素里取l个元素使其和为i，
-     * 第二种情况为包含第i个元素，即前j－1个元素里取l－1个元素使其和为i-A[i-1]（前提是i-A[i-1]>=0）。
+     * 初始化：f[i][0][0] =1 (i:0~n)，即前i个元素里面取0个元素使其和为0的方法只有1种，那就是什么都不取
+     *
+     * 状态函数： f[in][k][t] = f[n - 1][k][t] + f[n - 1][k - 1][i-A[n-1]]
+     * 即前n个元素里面取k个元素之和为target,  由两种情况组成：
+     * 第一种情况为不包含第n个元素，即前n－1个元素里取k个元素使其和为t，f[n - 1][k][t]
+     * 第二种情况为包含第n个元素，即前n－1个元素里取k－1个元素使其和为 t-A[n-1], f[n - 1][k - 1][i-A[n-1]]（ 前提是 t-A[n-1]>=0 ）。
      */
-    /* Time O(  ) )*/
-    public int kSum_dp(int[] nums, int k, int target) {
+    /* Time O( n * k * target ) )*/
+    public int  kSum_dp(int[] nums, int k, int target) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
 
         int n = nums.length;
-        int[][][] ksum = new int[target + 1][n + 1][k + 1];
 
-        for (int j = 0; j <= n; j++) {
-            ksum[0][j][0] = 1;
+        int[][][] f = new int[n + 1][k + 1][target + 1]; //
+        for (int i = 0; i <= n; i++) {
+            f[i][0][0] = 1;
         }
 
-        for (int i = 1; i <= target; i++) {
-            for (int j = 1; j <= n; j++) {
-                for (int l = 1; l <= j && l <= k; l++) {
-                    ksum[i][j][l] = ksum[i][j - 1][l];
-                    if (i - nums[j - 1] >= 0) {
-                        ksum[i][j][l] += ksum[i - nums[j - 1]][j - 1][l - 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= k && j <= i; j++) {
+                for (int t = 1; t <= target; t++) {
+                    f[i][j][t] = 0;
+                    if (t >= nums[i - 1]) {
+                        f[i][j][t] = f[i - 1][j - 1][t - nums[i - 1]];
                     }
-                }
-            }
-        }
-
-        return ksum[target][n][k];
+                    f[i][j][t] += f[i - 1][j][t];
+                } // for t
+            } // for j
+        } // for i
+        return f[n][k][target];
     }
 
     

@@ -28,42 +28,43 @@ public class ReservoirSample
   public final static int K = 5;
   public static int[] RESERVOIR = new int[K];
 
-
-
   public static void selectKItems(int stream[], int n, int k) {
-    int i; // index for elements in stream[]
+      int i; // index for elements in stream[]
 
-    // reservoir[] is the output array. Initialize it with
-    // first k elements from stream[]
-    for (i = 0; i < k; i++)
-      RESERVOIR[i] = stream[i];
+      // reservoir[] is the output array. Initialize it with
+      // first k elements from stream[]
+      for (i = 0; i < k; i++) {
+          RESERVOIR[i] = stream[i];
+      }
 
-
-    // Iterate from the (k+1)th element to nth element
-    for (; i < n; i++) {
-      // Pick a random index from 0 to i.
       java.util.Random random = new java.util.Random();
-      int j = random.nextInt(i + 1);
 
-      // If the randomly picked index is smaller than k, then replace
-      // the element present at the index with new element from stream
-      if (j < k)
-        RESERVOIR[j] = stream[i];
-    }
+      // Iterate from the (k+1)th element to nth element
+      for (; i < n; i++) {
 
-    System.out.println("Following are k randomly selected items");
-    printArray(RESERVOIR, k);
+          // Pick a random index from 0 to i.
+          int j = random.nextInt(i + 1);
+
+          // If the randomly picked index is smaller than k, then replace
+          // the element present at the index with new element from stream
+          if (j < k) {
+              RESERVOIR[j] = stream[i];
+          }
+      }
+
+      System.out.println("Following are k randomly selected items");
+      printArray(RESERVOIR, k);
   }
 
 
 
   // Driver program to test above function.
   public static void main(String[] args) {
-    int stream[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    int n = stream.length;
+      int stream[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+      int n = stream.length;
 
 
-    selectKItems(stream, n, K);
+      selectKItems(stream, n, K);
 
   }
 
@@ -71,9 +72,11 @@ public class ReservoirSample
 
   // A utility function to print an array
   private static void printArray(int stream[], int n) {
-    for (int i = 0; i < n; i++)
-      System.out.printf("%d ", stream[i]);
-    System.out.printf("%n");
+      for (int i = 0; i < n; i++){
+          System.out.printf("%d ", stream[i]);
+      }
+
+      System.out.printf("%n");
   }
 
 
