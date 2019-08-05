@@ -147,7 +147,7 @@ public class Square
     
     return dp[m][n][m][n];
   }
-  
+
   private int max(int x1, int x2, int x3, int x4){
     return Math.max(Math.max(x1, x2), Math.max(x3, x4));
   }

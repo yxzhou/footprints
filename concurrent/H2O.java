@@ -33,8 +33,8 @@ public class H2O {
                 LOCK.lock();
                 try {
                     System.out.println(currThread + " Output a H2O");
-                    CONDITIONH.signal();
-                    CONDITIONH.signal();
+                        CONDITIONH.signal();
+                        CONDITIONH.signal();
                     CONDITIONO.signal();
 
                     COUNTH -= 2;

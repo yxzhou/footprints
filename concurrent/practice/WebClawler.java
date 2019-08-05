@@ -14,7 +14,6 @@ public class WebClawler {
         long startTime = System.currentTimeMillis();
 
         Set<String> visited = new HashSet<>();
-
         Queue<String> urls = new LinkedList<>();
         visited.add(startPoint);
         urls.add(startPoint);

@@ -226,6 +226,9 @@ public class RemoveInvalidParenthesesII {
     }
 
 
+
+
+
     public static void main(String[] args){
         RemoveInvalidParenthesesII sv = new RemoveInvalidParenthesesII();
         
@@ -248,6 +251,12 @@ public class RemoveInvalidParenthesesII {
             System.out.println(sv.removeInvalidParentheses(input[i]));
             System.out.println(sv.removeInvalidParentheses_n(input[i]));
             System.out.println(sv.removeInvalidParentheses_x(input[i]));
+
+//
+//            Misc.printArrayList(sv.removeInvalidParentheses(input[i]));
+//
+//            Misc.printArrayList(sv.removeInvalidParentheses_2(input[i]));
+
         }
     }
 }

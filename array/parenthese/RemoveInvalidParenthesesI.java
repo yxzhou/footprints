@@ -1,15 +1,18 @@
 package fgafa.array.parenthese;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
 
- Note: The input string may contain letters other than the parentheses ( and ).
+     Note: The input string may contain letters other than the parentheses ( and ).
 
- Examples:
- "()())()" -> anyone of ["()()()", "(())()"]
- "(a)())()" -> anyone of ["(a)()()", "(a())()"]
- ")(" -> [""]
+     Examples:
+     "()())()" -> anyone of ["()()()", "(())()"]
+     "(a)())()" -> anyone of ["(a)()()", "(a())()"]
+     ")(" -> [""]
  *
  */
 
@@ -158,6 +161,50 @@ public class RemoveInvalidParenthesesI {
     }
 
 
+    public List<String> removeInvalidParentheses_n(String s) {
+        List<String> result = new ArrayList<>();
+
+        if (null == s || s.isEmpty()) {
+            return result;
+        }
+
+//        StringBuilder mid = helper(s, new char[]{'(',')'});
+//        StringBuilder result = helper(mid.reverse().toString(), new char[]{')','('});
+
+
+        return result;
+    }
+
+    private void helper(char[] chars, int l, int r, char[] pair, List<String> result){
+
+        int count = 0;
+        for(int i = l; i < chars.length; i++){
+            char c = chars[i];
+
+            if(c == pair[1] && count == 0){
+
+                continue;
+            }
+
+            if( c == pair[0]){
+                count++;
+            }else if( c == pair[1]){
+                count--;
+            }
+        }
+
+        if(count == 0){
+            reverse(chars);
+            if(pair[0] == '('){
+                helper(chars, l, r, new char[]{')', '('}, result);
+            }else{
+                result.add(String.valueOf(chars));
+            }
+        }
+
+    }
+
+
     public static void main(String[] args){
         RemoveInvalidParenthesesI sv = new RemoveInvalidParenthesesI();
 
@@ -185,7 +232,6 @@ public class RemoveInvalidParenthesesI {
             System.out.println(sv.removeInvalidParentheses_anyone_n(input[i]));
 
             System.out.println(sv.removeInvalidParentheses_anyone_n2(input[i]));
-
         }
     }
 }
