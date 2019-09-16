@@ -15,7 +15,7 @@ import java.util.Stack;
 
  push(int x), which pushes an integer x onto the stack.
  pop(), which removes and returns the most frequent element in the stack.
- If there is a tie for most frequent element, the element closest to the top of the stack is removed and returned.
+ If there is a tie for most frequent element, the element closestPair to the top of the stack is removed and returned.
 
 
  Example 1:
@@ -30,7 +30,7 @@ import java.util.Stack;
  pop() -> returns 5, as 5 is the most frequent.
  The stack becomes [5,7,5,7,4].
 
- pop() -> returns 7, as 5 and 7 is the most frequent, but 7 is closest to the top.
+ pop() -> returns 7, as 5 and 7 is the most frequent, but 7 is closestPair to the top.
  The stack becomes [5,7,5,4].
 
  pop() -> returns 5.

@@ -99,12 +99,12 @@ public class ThreeSum
 	  
   /**
    * 
-   * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. 
+   * Given an array S of n integers, find three integers in S such that the sum is closestPair to a given number, target.
    * Return the sum of the three integers. 
    * You may assume that each input would have exactly one solution.
    * e.g: 
    *   input:  S = {-1 2 1 -4}, and target = 1.
-   *   output: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+   *   output: The sum that is closestPair to the target is 2. (-1 + 2 + 1 = 2).
    * 
    */
     /*Time O(nlogn) + O(n^2), Space O(1)*/

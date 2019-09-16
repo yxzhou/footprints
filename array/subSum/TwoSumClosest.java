@@ -6,7 +6,7 @@ public class TwoSumClosest {
 
     /**
      *   Problem:
-     *   Given an array nums of n integers, find two integers in nums such that the sum is closest to a given number, target.
+     *   Given an array nums of n integers, find two integers in nums such that the sum is closestPair to a given number, target.
      *   Return the difference between the sum of the two integers and the target.
      *
      *   Example"

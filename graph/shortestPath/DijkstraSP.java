@@ -71,7 +71,7 @@ public class DijkstraSP {
         Arrays.fill(distances, Integer.MAX_VALUE);
         distances[start] = 0;
 
-        PriorityQueue<Node> minHeap = new PriorityQueue<>((n1, n2) -> Integer.compare(n1.distance, n2.distance));
+        PriorityQueue<Node> minHeap = new PriorityQueue<>(Comparator.comparingInt(n -> n.distance));
         minHeap.add(new Node(start, 0));
 
         Set<Integer> visited = new HashSet<>();

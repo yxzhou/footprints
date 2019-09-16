@@ -88,7 +88,7 @@ public class Trie {
         return curr;
     }
 
-	class TrieNode {
+	public class TrieNode {
 	    TrieNode[] children = new TrieNode[26]; //default all are NULL
 	    boolean isWord = false;
 	    

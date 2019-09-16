@@ -76,8 +76,8 @@ public class PrimeGroup {
 //
 //        System.out.println(r);
 
-        Assert.assertEquals(Arrays.asList(5, 10, 20), largestPrimeGroup(new ArrayList<>(List.of(3, 5, 10, 20, 21))));
-        Assert.assertEquals(Arrays.asList(5, 10, 20), largestPrimeGroup(new ArrayList<>(List.of(3, 5, 10, 20, 21))));
+        Assert.assertEquals(Arrays.asList(5, 10, 20), largestPrimeGroup(Arrays.asList(3, 5, 10, 20, 21)));
+        Assert.assertEquals(Arrays.asList(5, 10, 20), largestPrimeGroup(Arrays.asList(3, 5, 10, 20, 21)));
     }
 
 }
