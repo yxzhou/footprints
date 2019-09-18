@@ -92,6 +92,12 @@ public class Bit {
         
         return num == 1;
     }
+
+	/**
+	 * from
+	 *
+	 *
+	 */
     
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

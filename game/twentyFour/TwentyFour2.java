@@ -1,367 +1,190 @@
 package fgafa.game.twentyFour;
 
+import java.util.Arrays;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class TwentyFour2
-{
-   
-   // to store all solutions
-  private List allResults = new ArrayList();
+/**
+ * The 24 game is played as follows. You are given a list of four integers, each between 1 and 9, in a fixed order. By placing the operators +, -, *, and / between the numbers, and grouping them with parentheses, determine whether it is possible to reach the value 24.
+ * <p>
+ * For example, given the input [5, 2, 7, 8], you should return True, since (5 * 2 - 7) * 8 = 24.
+ * <p>
+ * Write a function that plays the 24 game.
+ * <p>
+ *
+ * Thoughts:
+ * The final expression, example (5 * 2 - 7) * 8
+ * 1) It includes four integers. that is from the input, new int[]{a, b, c, d}.
+ * It can be abcd, abdc or adbc ---, total it's 4*3*2*1.
+ *
+ * 2) Between every two integers, there is a operator,  {+, -, *, /},
+ * It can be +++ or +--, total it's 4*4*4
+ *
+ * 3) The parentheses is used to change the calculation sequence. With parentheses,
+ * It can calculate the second operator at first,  5 * (2 - 7) * 8
+ * The calculate the third operator at second,   5 * ( (2 - 7) * 8 )
+ * Total, it's 3*2*1
+ */
 
-  // There are 4 operator 
-  static char[] op={'+','-','*','/'};  
-  // to store the operators in one solution
-  int[] operators = new int[3]; 
-  
-  // operator, it includs +, -, *, /
-  private int operator1, operator2, operator3;
+public class TwentyFour2 {
 
-  // there are 4 input integer
-  private float[] inputedNumbers = new float[4];
-  // the 4 integer would be in a order
-  private float[] sortedNumbers = new float[4];
-  
-  // to the 4 input integer, ABCD. They can be ABDC, BDAC, etc. Total it's 4*3*2 = 24. 
-  private int[][] indexs = {
-      {0, 1, 2, 3}, 
-      {0, 1, 3, 2}, 
-      {0, 2, 1, 3},
-      {0, 2, 3, 1}, 
-      {0, 3, 1, 2}, 
-      {0, 3, 2, 1}, 
-      {1, 0, 2, 3}, 
-      {1, 0, 3, 2},
-      {1, 2, 0, 3}, 
-      {1, 2, 3, 0}, 
-      {1, 3, 0, 2}, 
-      {1, 3, 2, 0}, 
-      {2, 0, 1, 3},
-      {2, 0, 3, 1}, 
-      {2, 1, 0, 3}, 
-      {2, 1, 3, 0}, 
-      {2, 3, 0, 1}, 
-      {2, 3, 1, 0},
-      {3, 0, 1, 2}, 
-      {3, 0, 2, 1}, 
-      {3, 1, 0, 2}, 
-      {3, 1, 2, 0}, 
-      {3, 2, 0, 1},
-      {3, 2, 1, 0}};
-  
-  // Totally it will be 24 round
-  private int round = 0;
-
-
-
-  public int getRound() {
-    return this.round;
-  }
-
-
-
-  public void setRound(int round) {
-    this.round = round;
-  }
-
-  // binary tree, the root is result[0]
-  // when result[0] == 24, it means xxx.
-  private float result[] = new float[9];
-
-
-
-  private void print(String s) {
-    System.out.println(s);
-  }
-
-
-
-  // get the input 4 integer
-  private boolean setNumbers(String[] str) {
-    if (str.length != 4) {
-      print("Please input 4 Integers!");
-      return false;
-    }
-    try {
-      inputedNumbers[0] = Integer.parseInt(str[0]);
-      inputedNumbers[1] = Integer.parseInt(str[1]);
-      inputedNumbers[2] = Integer.parseInt(str[2]);
-      inputedNumbers[3] = Integer.parseInt(str[3]);
-    }
-    catch (Exception ex) {
-      print("Please input 4 Integers!");
-      return false;
-    }
-    return true;
-  }
-
-
-
-  //
-  private void setResult(int index, float value) {
-    result[index] = value;
-  }
-
-
-
-  //
-  private float getResult(int index) {
-    return result[index];
-  }
-
-
-
-  // get the
-  private String generateNumSentence(int intOptr, float opnd1, float opnd2,
-      float rst) {
-    String ret = "";
-    switch (intOptr) {
-      case 0:
-        ret = opnd1 + "+" + opnd2 + "=" + rst;
-        // Notes: it's rst instead of result.
-        break;
-      case 1:
-        ret = opnd1 + "-" + opnd2 + "=" + rst;
-        break;
-      case 2:
-        ret = opnd2 + "-" + opnd1 + "=" + rst;
-        break;
-      case 3:
-        ret = opnd1 + "*" + opnd2 + "=" + rst;
-        break;
-      case 4:
-        ret = opnd1 + "/" + opnd2 + "=" + rst;
-        break;
-      case 5:
-        ret = opnd2 + "/" + opnd1 + "=" + rst;
-        break;
-
-    }
-    return ret;
-  }
-
-
-
-  private void printResult() {
-    /** TODO */
-    int count = 0;
-    int howManyAnswers = this.allResults.size();
-    if (howManyAnswers > 0) {
-      print("total " + howManyAnswers + " solutions");
-      for (Iterator i = this.allResults.iterator(); i.hasNext();) {
-        print("No." + (++count) + "\n" + i.next());
-      }
-    }
-    else {
-      print("no solution!");
-    }
-  }
-
-
-
-  //
-  private void sortNumbers(int rnd) {
-    if (rnd < 0 || rnd > 23) {
-      print("Error!");
-      return;
-    }
-    sortedNumbers[0] = inputedNumbers[indexs[rnd][0]];
-    sortedNumbers[1] = inputedNumbers[indexs[rnd][1]];
-    sortedNumbers[2] = inputedNumbers[indexs[rnd][2]];
-    sortedNumbers[3] = inputedNumbers[indexs[rnd][3]];
-  }
-
-
-
-  // calculate the 2 input integer
-  private float getMidValue(int i, float m, float n) {
-    float ret = 0f;
-    switch (i) {
-      case 0:
-        ret = m + n;
-        break;
-
-      case 1:
-        ret = m - n;
-        break;
-
-//      case 2:
-//        ret = n - m;
-//        break;
-
-      case 3:
-        ret = m * n;
-        break;
-
-      case 4:
-        try {
-          ret = m / n;
+    public boolean get24(int[] inputs) {
+        if (null == inputs || inputs.length != 4) {
+            throw new IllegalArgumentException("");
         }
-        catch (Exception ex1) {
-          ret = Float.MAX_VALUE;
+
+        return fillInIntegers(inputs, new int[3], 0);
+    }
+
+    private boolean fillInIntegers(int[] inputs, int[] operatorIds, int end) {
+        if (end == inputs.length - 1) {
+            if (fillInOperatorIds(inputs, operatorIds, 0)) {
+                return true;
+            }
         }
-        break;
 
-//      case 5:
-//        try {
-//          ret = n / m;
-//        }
-//        catch (Exception ex2) {
-//          ret = Float.MAX_VALUE;
-//        }
-//        break;
+        for (int i = end; i < inputs.length; i++) {
+            swap(inputs, i, end);
 
-    }
-    return ret;
-  }
-   
-   /**
-    * There are 2 binary tree. it means 2 calculate method
-    *****************************************************************************
-    ******(OP3) -- 24  
-    ***** /   \        
-    ****(OP2) (D)      
-    **  /    \          
-    * (OP1) (C)        
-    * /   \            
-    *(A)  (B)           
-    *****************************************************************************
-    ********(OP3) -- 24  
-    *      /     \      
-    *   (OP1)    (OP2)  
-    *   /   \    /    \ 
-    * (A)   (B)(C)    (D) 
-    *****************************************************************************     
-    *     
-    **/
-   
-   private void calculate() {
-    setResult(3, sortedNumbers[0]);
-    setResult(4, sortedNumbers[1]);
-    setResult(5, sortedNumbers[2]);
-    setResult(6, sortedNumbers[3]);
-    for (int i = 0; i < 6; i++) {
-      setResult(1, getMidValue(i, getResult(3), getResult(4)));
-      for (int j = 0; j < 6; j++) {
-        setResult(2, getMidValue(j, getResult(5), getResult(6)));
-        for (int k = 0; k < 6; k++) {
-          setResult(0, getMidValue(k, getResult(1), getResult(2)));
-          if (Math.abs(getResult(0) - 24) < 0.001) {
-            this.operator1 = i;
-            this.operator2 = j;
-            this.operator3 = k;
-            // store the calculate method
-            saveResult(1);
+            if (fillInIntegers(inputs, operatorIds,end + 1)) {
+                return true;
+            }
 
-          }
-          if (i == 5 && j == 5 && k == 5) {
-            calculate_1();
-          }
+            swap(inputs, i, end);
         }
-      }
+
+        return false;
     }
-  }
 
-
-
-  /**
-   * 
-   */
-  private void saveResult(int type) {
-    // TODO Auto-generated method stub
-    String ns = null;
-    switch (type) {
-      case 1:
-        ns = "Step1:"
-            + this.generateNumSentence(this.operator1, this.getResult(3),
-                this.getResult(4), this.getResult(1)) + "\n";
-        ns += "Step2:"
-            + this.generateNumSentence(this.operator2, this.getResult(5),
-                this.getResult(6), this.getResult(2)) + "\n";
-        ns += "Step3:"
-            + this.generateNumSentence(this.operator3, this.getResult(1),
-                this.getResult(2), this.getResult(0)) + "\n";
-        break;
-      case 2:
-        ns = "Step1:"
-            + this.generateNumSentence(this.operator1, this.getResult(7),
-                this.getResult(8), this.getResult(3)) + "\n";
-        ns += "Step2:"
-            + this.generateNumSentence(this.operator2, this.getResult(3),
-                this.getResult(4), this.getResult(1)) + "\n";
-        ns += "Step3:"
-            + this.generateNumSentence(this.operator3, this.getResult(1),
-                this.getResult(2), this.getResult(0)) + "\n";
-        break;
-    }
-    boolean dup = false;
-    for (Iterator i = this.allResults.iterator(); i.hasNext();) {
-      if (ns.equals((String) i.next())) {
-        dup = true;
-        break;
-      }
-    }
-    if (!dup) {
-      this.allResults.add(ns);
-    }
-  }
-
-
-
-  // 2nd calculate method
-  private void calculate_1() {
-    setResult(7, sortedNumbers[0]);
-    setResult(8, sortedNumbers[1]);
-    setResult(4, sortedNumbers[2]);
-    setResult(2, sortedNumbers[3]);
-    for (int i = 0; i < 6; i++) {
-      setResult(3, getMidValue(i, getResult(7), getResult(8)));
-      for (int j = 0; j < 6; j++) {
-        setResult(1, getMidValue(j, getResult(3), getResult(4)));
-        for (int k = 0; k < 6; k++) {
-          setResult(0, getMidValue(k, getResult(1), getResult(2)));
-          if (Math.abs(getResult(0) - 24) < 0.001) {
-              this.operator1 = i;
-              this.operator2 = j;
-              this.operator3 = k;
-            // 
-            saveResult(2);
-
-          }
-          else if (i == 5 && j == 5 && k == 5) {
-            // print("No solution at round "+(this.getRound()+1)+"!");
-          }
+    private boolean fillInOperatorIds(int[] integers, int[] operatorIds, int end) {
+        if (end == operatorIds.length) {
+            return calculate(integers, operatorIds, 3) == 24;
         }
-      }
+
+        // There are 4 operator {'+','-','*','/'};
+        for (int id = 0; id < 4; id++) {
+            operatorIds[end] = id;
+
+            if (fillInOperatorIds(integers, operatorIds, end + 1)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-  }
-
-
-
-  public static void main(String[] args) {
-
-    TwentyFour2 cal = new TwentyFour2();
-    
-    String[] inputs = {"3","2","5","4"};
-
-    if (!cal.setNumbers(inputs)) {
-      return;
+    private void swap(int[] inputs, int i, int j) {
+        int tmp = inputs[i];
+        inputs[i] = inputs[j];
+        inputs[j] = tmp;
     }
 
-    //to the 4 input integer, ABCD. They can be ABDC, BDAC, etc. Total it's 4*3*2 = 24. 
-    for (int i = 0; i < 24; i++) {
-      cal.setRound(i);
-      cal.sortNumbers(i);
-      cal.calculate();
-      //   cal.printResult();
+
+    /**
+     * calculate the expression,
+     *
+     * @param integers,    it includes integers, firstly it's four integers.
+     * @param operatorIds, it includes operatorIds, firstly it's three operatorIds.
+     * @return
+     */
+    private int calculate(int[] integers, int[] operatorIds, int end) {
+        if (end == 1) {
+            int v = calculate(operatorIds[0], integers[0], integers[1]);
+
+            return v;
+        }
+
+        for (int i = 0; i < end; i++) {
+            int v = calculate(operatorIds[i], integers[i], integers[i + 1]);
+            if (v < 0) {
+                continue;
+            }
+
+            int tmp1 = integers[i];
+            int tmp2 = integers[i + 1];
+            int tmpOperatorId = operatorIds[i];
+
+            integers[i] = v;
+            System.arraycopy(integers, i + 2, integers, i + 1, integers.length - i - 2);
+            System.arraycopy(operatorIds, i + 1, operatorIds, i, operatorIds.length - i - 1);
+
+            if ( (v = calculate(integers, operatorIds, end - 1)) == 24) {
+                return 24;
+            }
+
+            //backtracking
+            System.arraycopy(integers, i + 1, integers, i + 2, integers.length - i - 2);
+            integers[i] = tmp1;
+            integers[i + 1] = tmp2;
+            System.arraycopy(operatorIds, i, operatorIds, i + 1, operatorIds.length - i - 1);
+            operatorIds[i] = tmpOperatorId;
+
+            //for print the expression
+//            if(v == 24){
+//                if(end == 3) {
+//                    System.out.print(String.format("%s %s ", Arrays.toString(integers), Arrays.toString(operatorIds)));
+//                }
+//
+//                return 24;
+//            }
+        }
+
+        return -1;
     }
 
-    cal.printResult();
-  }
 
+    /**
+     * calculate the 2 input integer
+     *
+     * @param operatorId, from
+     * @param m
+     * @param n
+     * @return
+     */
+    private int calculate(int operatorId, int m, int n) {
+        switch (operatorId) {
+            case 0:
+                return m + n;
+            case 1:
+                return m - n;
+            case 2:
+                return m * n;
+            case 3:
+                if(n == 0 || m % n > 0){
+                    return -1;
+                }
+                return m / n;
+            default:
+                return -1;
+        }
+    }
+
+
+    @Test
+    public void test() {
+        Assert.assertTrue(-1 == calculate(3, 4, 3));
+
+        Assert.assertTrue(get24(new int[]{5, 2, 7, 8}));
+        Assert.assertTrue(get24(new int[]{3, 2, 5, 4}));
+
+
+        Assert.assertFalse(get24(new int[]{1, 1, 1, 1}));
+
+
+        for(int i = 1; i < 10; i++){
+            for(int j = i; j < 10; j++){
+                for(int p = j; p < 10; p++){
+                    for(int q = p; q < 10; q++) {
+
+                        boolean result = get24(new int[]{i, j, p, q});
+                        System.out.print(String.format("{%d, %d, %d, %d} \t %b \n", i, j, p, q, result));
+
+                    }
+                }
+            }
+        }
+    }
 }
 
   

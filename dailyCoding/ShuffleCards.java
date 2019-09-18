@@ -1,9 +1,12 @@
 package fgafa.dailyCoding;
 
+import java.util.LinkedList;
 import java.util.Random;
+
 
 /**
  *
+ * Q1:
  * Given a function that generates perfectly random numbers between 1 and k (inclusive), where k is an input,
  * write a function that shuffles a deck of cards represented as an array using only swaps.
  *
@@ -12,19 +15,30 @@ import java.util.Random;
  * Hint: Make sure each one of the 52! permutations of the deck is equally likely.
  *
  * Tags: facebook
+ *
+ * Q2:
+ * Given a linked list, uniformly shuffle the nodes. What if we want to prioritize space over time?
+ *
+ * Tags: Apple
+ *
  */
 
 public class ShuffleCards {
 
     public void shuffle(int[] cards){
-        for(int i = 0, j = cards.length; i < cards.length; i++, j--) {
-            int pick = random(j) + i - 1;
+        for(int j = cards.length; j > 1; j--) {
+            int pick = random(j);
 
-            //swap
+            //swap pick and j
             int tmp = cards[pick];
-            cards[pick] = cards[i];
-            cards[i] = tmp;
+            cards[pick] = cards[j];
+            cards[j] = tmp;
         }
+    }
+
+    public void shuffle(LinkedList<Integer> cards){
+
+
     }
 
 

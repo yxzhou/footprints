@@ -1,4 +1,4 @@
-package fgafa.game.MajorityElement;
+package fgafa.game.majorityElement;
 
 import java.util.Arrays;
 import java.util.HashMap;
