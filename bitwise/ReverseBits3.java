@@ -6,33 +6,39 @@ import org.junit.Test;
  * Given a 32-bit integer, return the number with its bits reversed.
 
  For example,
-   given the binary number 0000 0000 1111 0000 1111 0000 1111 0000,
-                    return 1111 1111 0000 1111 0000 1111 0000 1111.
+ given the binary number 0000 0000 0000 0000 0000 0000 0000 1010,
+ return                  0000 0000 0000 0000 0000 0000 0000 0101.
  *
  * Tags: facebook
  *
  * Solution:
- *   1) xor,  0 ^ 1 = 1, 1 ^ 1 = 0
+ *   1)
  *
  */
 
-public class ReverseBits2 {
+public class ReverseBits3 {
 
-    public int bitsReverse(int n){
-        long mask = 1;
-        mask <<= 32;
-        mask--;
+    public static int bitsReverse(int n){
 
-        return (n ^ (int)mask);
+        if(n == Integer.MIN_VALUE){
+            return Integer.MAX_VALUE;
+        }
+
+        int r = 0;
+        boolean flag = false;
+        for( int base = (1 << 30); base > 0; base >>>= 1) {
+            if( (n & base) > 0 ){
+                flag = true;
+            } else if(flag){
+                r |= base;
+            }
+        }
+
+        return r;
     }
 
     @Test
     public void test(){
-
-//        long mask = 1;
-//        mask <<= 32;
-//        mask--;
-//        System.out.println(Integer.toBinaryString((int)mask));
 
         int[] input = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, Integer.MAX_VALUE, Integer.MIN_VALUE};
 

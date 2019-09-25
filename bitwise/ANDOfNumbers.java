@@ -8,31 +8,28 @@ package fgafa.bitwise;
  * solutions:
  * 1) Do bitwise AND from m, m+1, m+2, --- to n,  
  * Time complexity O(n - m + 1)
+ *
  * 2) Think about the number in [m, n], 
  *   if it has 2, (x and x+1), for sure, ( x & (x+1) ) & 0x1 == 0, 
  *   if it has 4, (x, x+1, x+2 and x+3), ( x & (x+1) & (x+2) & (x+3) ) & 0x11 == 0
  *   ---  
- * Time complexity O(log(n - m))
+ * Time complexity O( log(n - m) )
  */
 
 public class ANDOfNumbers {
     public int rangeBitwiseAnd_n(int m, int n) {
-//        if(0 == m){
-//            return 0;
+        assert m > 0 && n > 0 && m <= n;
+
+//        int diff = n - m;
+//        long mask = 1; //**
+//        int count = 0;
+//        while(mask <= diff){
+//            mask <<= 1;
+//            count++;
 //        }
-        
-//        if(m == n){
-//            return n;
-//        }
-        
-        int diff = n - m;
-        long mask = 1; //**
-        int count = 0;
-        while(mask <= diff){
-            mask <<= 1;
-            count++;
-        }
-        
+
+        int count = (int)( Math.log(n - m) / Math.log(2));
+
         return m & n & (0xffffffff << count);
         
     }
@@ -62,6 +59,11 @@ public class ANDOfNumbers {
                     {0, 2},
                     {1, 2},
                     {1, 3},
+                    {5, 6},
+                    {8, 9},
+                    {8, 10},
+                    {8, 11},
+                    {8, 12},
                     {1, 32},
                     {1, 33},
                     {2, 33},
@@ -71,7 +73,7 @@ public class ANDOfNumbers {
         ANDOfNumbers sv = new ANDOfNumbers();
         
         for(int i = 0; i < input.length; i++){
-            System.out.println(String.format("Input: %d - %d", input[i][0], input[i][1]));
+            System.out.println(String.format("Input: [%d, %d]", input[i][0], input[i][1]));
             
             System.out.println(String.format("Output: %d = %d", sv.rangeBitwiseAnd_2(input[i][0], input[i][1]), sv.rangeBitwiseAnd_n(input[i][0], input[i][1])));
         }

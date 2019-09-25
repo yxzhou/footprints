@@ -14,7 +14,7 @@ a|b = 0011 1101
 
 a^b = 0011 0001
 
-~a = 1100 0011
+~a = 1100 0011  =>  ~a = 1111 1111 1111 1111 1111 1111 1100 0011
 
 The following table lists the bitwise operators −
 
