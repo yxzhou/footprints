@@ -1,6 +1,6 @@
 package fgafa.datastructure;
 
-public class ArrayList<E>
+public class MyArrayList<E>
 {
   
 
@@ -11,7 +11,7 @@ public class ArrayList<E>
   
   
   //construction
-  public ArrayList(int initialCapacity) {
+  public MyArrayList(int initialCapacity) {
   super();
       if (initialCapacity < 0)
           throw new IllegalArgumentException("Illegal Capacity: "+
@@ -20,7 +20,7 @@ public class ArrayList<E>
   }
 
 
-  public ArrayList() {
+  public MyArrayList() {
     this(10);
   }
   

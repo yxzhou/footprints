@@ -1,6 +1,6 @@
 package fgafa.basic.interfaceAndAbstractClass;
 
-public interface List
+public interface MyList
 {
   /* only public, static and final,  may not have been initialized */
    public static final int size = 0;

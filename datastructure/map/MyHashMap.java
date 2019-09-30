@@ -1,4 +1,4 @@
 package fgafa.datastructure.map;
 
-public class HashMap {
+public class MyHashMap {
 }

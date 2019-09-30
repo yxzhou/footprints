@@ -1,6 +1,7 @@
 package fgafa.basic.interfaceAndAbstractClass;
 
-public class SortedList extends AbstractList implements List, Sortable
+
+public class SortedList extends AbstractList implements MyList, Sortable
 {
    
   
@@ -20,7 +21,7 @@ public class SortedList extends AbstractList implements List, Sortable
   }
   
   @Override
-  /**
+  /**ø
    * The type SortedList must implement the inherited abstract method List.getSize() and Sortable.getSize()
    * It may not be necessary if there is a getSize implemented method in AbstractList.   
    */
@@ -45,8 +46,8 @@ public class SortedList extends AbstractList implements List, Sortable
     
     /* Abstract class can be clarified, can't be initialized */
     //AbstractList abstractList = new AbstractList();
-    /* Interface can be clarified, can't be initialized */    
-    List list ;
+    /* Interface can be clarified, can't be initialized */
+    MyList list ;
     
     /*The field SortedList.size is ambiguous*/
     /*Roughly this is a example/problem in multiple inherit. */

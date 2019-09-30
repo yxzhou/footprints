@@ -255,9 +255,9 @@ public class PartitionList
       if(null == head){
           return head;
       }
-      
-      LinkedList smaller = new LinkedList();
-      LinkedList notSmaller = new LinkedList();
+
+      MyLinkedList smaller = new MyLinkedList();
+      MyLinkedList notSmaller = new MyLinkedList();
 
       while(null != head){
           if(head.val < x){
@@ -285,11 +285,11 @@ public class PartitionList
       return head;
   }
   
-  class LinkedList{
+  class MyLinkedList{
       ListNode head;
       ListNode tail;
       
-      LinkedList(){
+      MyLinkedList(){
           head = new ListNode(-1);
           tail = head;
           head.next = tail;
