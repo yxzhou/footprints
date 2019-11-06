@@ -1,4 +1,4 @@
-package fgafa.datastructure;
+package fgafa.datastructure.practice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.Set;
  *
  */
 
-public class MyDataStructure {
+public class AddRemoveAndRandom {
     Map<Integer, Set<Integer>> value2Index = new HashMap<>();
     //final int ENOUGH = Integer.MAX_VALUE;
     //int[] values = new int[ENOUGH];
@@ -67,7 +67,7 @@ public class MyDataStructure {
     }
     
     
-    void remove_randByIndex(){
+    void remove_randomByIndex(){
         int end = index2Value.size();
         Random random = new Random();
         int toRemovedIndex = random.nextInt(end);
@@ -77,7 +77,7 @@ public class MyDataStructure {
         indexs.remove(toRemovedIndex);
     }
     
-    void remove_randByValue(){
+    void remove_randomByValue(){
         Integer[] values = value2Index.keySet().toArray(new Integer[0]);
         
         int end = values.length;

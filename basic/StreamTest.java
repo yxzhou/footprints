@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 import java.util.StringJoiner;
-import java.util.concurrent.ForkJoinPool;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -88,10 +87,14 @@ public class StreamTest {
     public void testMap() throws Throwable{
         List<Integer> numbers = Arrays.asList(1,2,3,4,5,6);
 
-        int n1 = find1_oldWay(numbers);
-        int n2 = find1_withStream(numbers);
+        //int n1 = find1_oldWay(numbers);
+        //int n2 = find1_withStream(numbers);
 
-        assertEquals(n1, n2); // n1 == n2 == 8
+        //assertEquals(n1, n2); // n1 == n2 == 8
+
+        for(int i = 0; i < 5; i++){
+            System.out.println(findAny_withStream(numbers));
+        }
     }
 
 
@@ -118,6 +121,16 @@ public class StreamTest {
                 .findFirst()
                 .get();
     }
+
+
+    private Integer findAny_withStream(List<Integer> numbers) {
+
+        return numbers.stream()
+                //.map(x -> x * 2)   // double it
+                .findAny()
+                .get();
+    }
+
 
     @Test
     public void testMapAndSorted() {
