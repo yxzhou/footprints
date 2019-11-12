@@ -115,6 +115,28 @@ public class WaterTrap {
     }
 
 
+    public int trapRainWater_x(int[] heights) {
+        if(null == heights || 0 == heights.length){
+            return 0;
+        }
+
+        long sum = 0;  //** long instead of int
+        int min;
+        for(int l = 0, r = heights.length - 1; l < r;  ){
+            min = Math.min(heights[l], heights[r]);
+
+            for( ; heights[l] <= min && l < r; l++ ){
+                sum += min - heights[l];
+            }
+
+            for( ; heights[r] <= min && l < r; r--){
+                sum += min - heights[r];
+            }
+        }
+
+        return (int)sum;
+    }
+
     /**
      * @param args
      */
