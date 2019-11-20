@@ -72,8 +72,8 @@ public class WaterTrap {
 
 
     /**
-     * @param heights: an array of integers
-     * @return: a integer
+     * one point,
+     * Time complexity O(2n)
      */
     public int trapRainWater_n(int[] heights) {
         if(null == heights || 0 == heights.length){
@@ -115,6 +115,12 @@ public class WaterTrap {
     }
 
 
+    /**
+     * two points.
+     *
+     * Time complexity: O(n)
+     *
+     */
     public int trapRainWater_x(int[] heights) {
         if(null == heights || 0 == heights.length){
             return 0;
@@ -158,8 +164,9 @@ public class WaterTrap {
 
             int ret1 = sv.waterTrap(arr[i]);
             int retN = sv.trapRainWater_n(arr[i]);
+            int retX = sv.trapRainWater_x(arr[i]);
 
-            System.out.println(String.format("It can trap after a enough big rain: %d \t %d \t %b", ret1, retN, retN == expectation[i]));
+            System.out.println(String.format("It can trap after a enough big rain: %d \t%d \t%d \t%b", ret1, retN, retX, retN == expectation[i]));
 
         }
     }

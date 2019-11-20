@@ -1,4 +1,4 @@
-package fgafa.concurrent.threadInteraction;
+package fgafa.concurrent.practice.threadInteraction;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -13,41 +13,39 @@ import java.util.concurrent.locks.ReentrantLock;
  *    thread 3 or 4, foudn the wrapper is odd, print out and
  *    until wapper is to 100.
  *
+ *
  */
 
 public class InteractionWithLock {
 
-    private final static Lock LOCK = new ReentrantLock();
+    // shared objects
+    static final Lock LOCK = new ReentrantLock();
 
-    static class Wrapper {
-        int value = 0;
-    }
+    /** volatile */
+    static int count = 0;
+    static int end;
+    static boolean token = true;
 
-    static class MyThread implements Runnable{
+    class MyThread implements Runnable{
         String name;
-        int end;
-        int flag;
+        boolean flag;
 
-        Wrapper wrapper;
-
-        MyThread(String name, int end, int flag, Wrapper wrapper){
+        MyThread(String name, boolean flag){
             this.name = name;
-            this.end = end;
             this.flag = flag;
-
-            this.wrapper = wrapper;
         }
 
         @Override public void run(){
-            while(wrapper.value <= end){
-                if((wrapper.value & 1) == flag){
+            while(count <= end){
+                if(flag == token){
                     LOCK.lock();
 
                     try{
-                        if((wrapper.value & 1) == flag){
-                            System.out.println(wrapper.value + " \t " + Thread.currentThread().getName());
+                        if(count <= end && flag == token){
+                            System.out.println(name + " \t " + flag + "\t" + count);
 
-                            wrapper.value++;
+                            count++;
+                            token = !flag;
                         }
 
                     }finally {
@@ -68,13 +66,15 @@ public class InteractionWithLock {
 
     public static void main(String[] args){
 
-        Wrapper wrapper = new Wrapper();
+        end = 100;
 
-        new Thread(new MyThread("t11", 100, 0, wrapper)).start();
-        new Thread(new MyThread("t12", 100, 0, wrapper)).start();
+        InteractionWithLock outer = new InteractionWithLock();
 
-        new Thread(new MyThread("t21", 100, 1, wrapper)).start();
-        new Thread(new MyThread("t22", 100, 0, wrapper)).start();
+        new Thread(outer.new MyThread("t11", true)).start();
+        new Thread(outer.new MyThread("t12", true)).start();
+
+        new Thread(outer.new MyThread("t21", false)).start();
+        new Thread(outer.new MyThread("t22", false)).start();
     }
 
 

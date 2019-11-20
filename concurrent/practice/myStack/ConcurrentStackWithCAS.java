@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.stack;
+package fgafa.concurrent.practice.myStack;
 
 public class ConcurrentStackWithCAS {
     class StackNode {
@@ -7,8 +7,7 @@ public class ConcurrentStackWithCAS {
     }
 
     // lock cmpxchg
-    class AtomicReference<T>
-    {
+    class AtomicReference<T> {
         T ref;
 
         T get() { return ref; }

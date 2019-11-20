@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.stack;
+package fgafa.concurrent.practice.myStack;
 
 public class SingleThreadStack {
 

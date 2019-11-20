@@ -1,4 +1,4 @@
-package fgafa.concurrent;
+package fgafa.concurrent.practice;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -9,7 +9,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
- * 实现两个函数: H() and O(), 这两个函数会被多线程调用。当一个线程调用H或O时，如果当前已经有至少两个线程call H和一个线程call O。那么让两个call H和一个call O的线程返回（产生一个水分子），其他的都block
+ * 实现两个函数: H() and O(), 这两个函数会被多线程调用。当一个线程调用H或O时，如果当前已经有至少两个线程call H和一个线程call O。
+ * 那么让两个call H和一个call O的线程返回（产生一个水分子），其他的都block
  *
  */
 public class H2O {
@@ -33,8 +34,9 @@ public class H2O {
                 LOCK.lock();
                 try {
                     System.out.println(currThread + " Output a H2O");
-                        CONDITIONH.signal();
-                        CONDITIONH.signal();
+                    CONDITIONH.signal();
+                    CONDITIONH.signal();
+
                     CONDITIONO.signal();
 
                     COUNTH -= 2;

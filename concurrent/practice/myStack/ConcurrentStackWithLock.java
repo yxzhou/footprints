@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.stack;
+package fgafa.concurrent.practice.myStack;
 
 public class ConcurrentStackWithLock {
 
@@ -34,11 +34,11 @@ public class ConcurrentStackWithLock {
 
         lock.lock();
 
-        try{
-            if(head == null){
-                throw new IllegalStateException("The stack is empty, not support pop().");
-            }
+        if(head == null){
+            throw new IllegalStateException("The stack is empty, not support pop().");
+        }
 
+        try{
             int result = head.data;
             head = head.next;
 
