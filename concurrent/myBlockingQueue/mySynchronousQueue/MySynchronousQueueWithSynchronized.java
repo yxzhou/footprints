@@ -1,14 +1,12 @@
 package fgafa.concurrent.myBlockingQueue.mySynchronousQueue;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+public class MySynchronousQueueWithSynchronized<E> implements MySynchronousQueue<E>, java.io.Serializable {
 
-public class MySynchronousQueueWithLock<E> implements java.io.Serializable {
-
-    private boolean putting = false;
+    //private boolean putting = false;
 
     private E item = null;
 
+    @Override
     public synchronized E take() throws InterruptedException {
         while (item == null) {
             wait();
@@ -17,31 +15,38 @@ public class MySynchronousQueueWithLock<E> implements java.io.Serializable {
         E result = item;
 
         item = null;
+        //notify();
         notifyAll();
 
+        System.out.println("take: " + result);
         return result;
     }
 
+    @Override
     public synchronized void put(E item) throws InterruptedException {
         if(item == null) {
             return;
         }
 
-        while (putting){
+        //while (putting){
+        while (this.item != null) {
             wait();
         }
 
-        putting = true;
+        //putting = true;
 
         this.item = item;
+        //notify();
         notifyAll();
 
-        while (item != null) {
-            wait();
-        }
+        System.out.println("put: " + this.item);
 
-        putting = false;
-        notifyAll();
+//        while (item != null) {
+//            wait();
+//        }
+
+//        putting = false;
+//        notifyAll();
     }
 
 }
