@@ -33,7 +33,8 @@ public class InteractionWithSynchronized {
         @Override public void run(){
             while(count <= end){
                 if(flag == token){
-                    synchronized (MyThread.class){
+                    synchronized (this) {//object level lock
+                    //synchronized (MyThread.class){ //class level lock
                         if(count <= end && flag == token){
                             System.out.println(name + " \t " + flag + "\t" + count);
 

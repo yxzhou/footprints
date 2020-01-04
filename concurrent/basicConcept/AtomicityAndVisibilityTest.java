@@ -119,7 +119,8 @@ public class AtomicityAndVisibilityTest {
                 }
             },
             new Increase() { // thread safe, i's update and get both are in synchronized
-                private volatile int i = 0;
+                 /** volatile */
+                 private int i = 0;
 
                 public synchronized void increase(){
                     i++;
@@ -172,6 +173,97 @@ public class AtomicityAndVisibilityTest {
 
     }
 
+
+    @Test
+    public void test2(){
+
+        final Random random = new Random();
+
+        List<Increase> sharedObjects = Arrays.asList(
+                new Increase() { //not thread safe, i++ is not atomic operator
+                    private Integer i = 0;
+
+                    @Override
+                    public void increase(){
+                        i++;
+
+                        //System.out.println("---" + i + " " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public int get(){
+                        return i;
+                    }
+                },
+                new Increase() { //not thread safe, i++ is not atomic operator, 'volatile' only works on visibility
+                    private volatile Integer i = 0;
+
+                    @Override
+                    public void increase(){
+                        i++;
+
+                        //System.out.println("---" + i + " " + Thread.currentThread().getName());
+                    }
+
+                    @Override
+                    public int get(){
+                        return i;
+                    }
+                },
+                new Increase() { // thread safe, i's update and get both are in synchronized
+                    /** volatile */
+                    private Integer i = 0;
+
+                    public synchronized void increase(){
+                        i++;
+
+                        //System.out.println("---" + i + " " + Thread.currentThread().getName());
+                    }
+                    @Override
+                    public synchronized int get(){
+                        return i;
+                    }
+                },
+                new Increase() { // thread safe, AtomicInteger is atomicity and visibility
+                    private AtomicInteger i = new AtomicInteger(0);
+
+                    public synchronized void increase(){
+                        i.incrementAndGet();
+
+                        //System.out.println("---" + i + " " + Thread.currentThread().getName());
+                    }
+                    @Override
+                    public synchronized int get(){
+                        return i.get();
+                    }
+                }
+        );
+
+        final int TIMES = 50;
+        for(Increase sharedObject : sharedObjects) {
+            ExecutorService taskExecutor = Executors.newFixedThreadPool(10);
+
+            for (int i = 0; i < TIMES; i++) {
+                taskExecutor.submit(new MyThread(sharedObject));
+            }
+
+            //System.out.println("1 - "+ sharedObject.get() + " " + Thread.currentThread().getName());
+
+            taskExecutor.shutdown();
+
+            //System.out.println("2 - "+sharedObject.get() + " " + Thread.currentThread().getName());
+
+            try{
+                taskExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+            } catch (InterruptedException e){
+                //
+            }
+
+            System.out.println("3 - "+sharedObject.get() + " " + Thread.currentThread().getName());
+        }
+
+
+    }
 }
 
 

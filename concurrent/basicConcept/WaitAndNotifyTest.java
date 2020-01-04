@@ -43,7 +43,7 @@ public class WaitAndNotifyTest {
 //    public void test() {
     public static void main(String[] args){
         final SharedObject sharedObject = new SharedObject();
-        final Object object = new Object();
+        final Object lock = new Object();
         //Lock lock = new ReentrantLock();
 
         Thread thread1 = new Thread() {
@@ -51,7 +51,7 @@ public class WaitAndNotifyTest {
             public void run() {
                 System.out.println("start r1");
 
-                synchronized (object) {
+                synchronized (lock) {
                     for (int i = 0; i < 10; i++) {
                         System.out.println("r1 add 1");
                         sharedObject.add();
@@ -64,7 +64,7 @@ public class WaitAndNotifyTest {
 
                         if (sharedObject.size() == 5) {
                             System.out.println("r1 do notify");
-                            object.notify(); //this notify will trigger line #93, not immediately  until the current thread release the object's lock.
+                            lock.notify(); //this notify will trigger line #93, not immediately  until the current thread release the object's lock.
                         }
                     }
 
@@ -81,7 +81,7 @@ public class WaitAndNotifyTest {
             public void run() {
                 System.out.println("start r2");
 
-                synchronized (object){
+                synchronized (lock){
                     while ( sharedObject.size() != 5 && sharedObject.size() != 10 ){
                         //System.out.println("r2, sharedObject's size: " + sharedObject.size());
 
@@ -90,7 +90,7 @@ public class WaitAndNotifyTest {
 
                             System.out.println("r2 do wait");
 
-                            object.wait();
+                            lock.wait();
 
                             System.out.println("r2 wake up");
 
@@ -112,7 +112,6 @@ public class WaitAndNotifyTest {
          *
          */
         //thread2.run();
-
         thread2.start();
 
         try {

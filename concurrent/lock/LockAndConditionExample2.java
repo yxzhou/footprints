@@ -1,4 +1,4 @@
-package fgafa.concurrent;
+package fgafa.concurrent.lock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

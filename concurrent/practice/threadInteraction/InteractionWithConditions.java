@@ -59,12 +59,13 @@ public class InteractionWithConditions implements Runnable {
 
     public static void main(String[] args){
 
-
         new Thread(new InteractionWithConditions("t11", true)).start();
         new Thread(new InteractionWithConditions("t12", true)).start();
+        new Thread(new InteractionWithConditions("t13", true)).start();
 
         new Thread(new InteractionWithConditions("t21", false)).start();
         new Thread(new InteractionWithConditions("t22", false)).start();
+        new Thread(new InteractionWithConditions("t23", false)).start();
 
         LOCK.lock();
 

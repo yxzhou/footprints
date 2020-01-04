@@ -14,9 +14,8 @@ public class ReadWriteLockExample {
 
         readWriteLock.readLock().lock();
         try{
-            // multiple readers can enter this section
-            // if not locked for writing, and not writers waiting
-            // to lock for writing.
+            // multiple readers can enter this section if not locked for writing,
+            // and no writers waiting to lock for writing.
 
         }finally {
             readWriteLock.readLock().unlock();
