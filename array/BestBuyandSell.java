@@ -146,16 +146,19 @@ public class BestBuyandSell
 	 * you must sell the stock before you buy again).
 	 * 
 	 * Thoughts:
-     *  define dp[i][k] as the max profit that buy and sell at most k transactions in array(0, i)
+     *  define dp[k][i] as the max profit that buy and sell at most k transactions in array(0, i)
      *  define p[i][j] as the max profit that buy and sell 1 transactions in array(i, j)
      *
-     *  dp[i][0] = 0, for i from 0 to n
-     *  dp[i][1] = max(dp[j][0] + p[j + 1][i]),  for j from 0 to i - 1
+     *  if k > n - 1, it equals maxProfitII
      *
+     *  dp[0][0] = 0
+     *  dp[k][k] = dp[k - 1][k - 1] + Math.max(0, prices[k] - prices[k - 1]);
+     *
+     *  dp[k][i] = max(dp[k-1][j] + p[j + 1][i]),  for i from k to n, for j from 0 to i - 1
      *
 	 */
   /**
-   * Time O( k * n * n * n),   Space O(n *k)
+   * Time O( k * n * n * n),   Space O(n * k)
    */
   public int maxProfit(int k, int[] prices) {
       //check
@@ -172,6 +175,7 @@ public class BestBuyandSell
       
       //define p[i][j] as the max profit from 0 to j - 1 with at most i transactions
       int[][] p = new int[k + 1][days]; //default all are 0
+      p[0][0] = 0;
       
       for(int i = 1; i <= k; i++ ){
           p[i][i] = p[i - 1][i - 1] + Math.max(0, prices[i] - prices[i - 1]);
@@ -202,6 +206,9 @@ public class BestBuyandSell
       return maxDiff; 
   }
 
+    /**
+     * Time O( k * n * n ),   Space O(n * n)
+     */
     public int maxProfit_k(int k, int[] prices) {
         //check
         if (null == prices || 0 == prices.length || k < 1) {
@@ -226,6 +233,7 @@ public class BestBuyandSell
 
         //define dp[k][i] as the max profit that buy and sell at most k transactions in array(0, i)
         int[][] dp = new int[k + 1][n];
+        dp[0][0] = 0;
         for(int i = 1; i <= k; i++ ){
             dp[i][i] = dp[i - 1][i - 1] + Math.max(0, prices[i] - prices[i - 1]);
 
@@ -246,7 +254,7 @@ public class BestBuyandSell
    * refer to http://liangjiabin.com/blog/2015/04/leetcode-best-time-to-buy-and-sell-stock.html
    * 
    * 局部最优解 vs. 全局最优解：   
-   local[i][j] = max(global[i – 1][j – 1] + diff, local[i – 1][j] + diff)
+   local[i][j] = max(global[i – 1][j – 1], local[i – 1][j] + diff)
    global[i][j] = max(global[i – 1][j], local[i][j])
 
     local[i][j]和global[i][j]的区别是：
@@ -279,7 +287,7 @@ public class BestBuyandSell
             int diff = prices[i] - prices[i - 1];
             
             for (int j = 1; j <= k; j++) {
-                local[i][j] = Math.max(global[i - 1][j - 1] + diff, local[i - 1][j] + diff);
+                local[i][j] = Math.max(global[i - 1][j - 1], local[i - 1][j] + diff);
                 global[i][j] = Math.max(global[i - 1][j], local[i][j]);
              }
         }
@@ -308,8 +316,12 @@ public class BestBuyandSell
       for (int i = 1; i < days ; i++) {
           int diff = prices[i] - prices[i - 1];
           
-          for (int j = k; j > 0; j--) {
-              local[j] = Math.max(global[j - 1], local[j]) + diff;
+//          for (int j = k; j > 0; j--) {
+//              local[j] = Math.max(global[j - 1], local[j]) + diff;
+//              global[j] = Math.max(global[j], local[j]);
+//          }
+          for (int j = 1; j <= k; j++) {
+              local[j] = Math.max(global[j - 1], local[j] + diff);
               global[j] = Math.max(global[j], local[j]);
           }
       }
@@ -446,7 +458,7 @@ public class BestBuyandSell
     
     for(int i=0; i< prices_2.length; i++){
         System.out.println(String.format("Input : k = %d, Prices = %s ", k[i], Misc.array2String(prices_2[i])));
-        System.out.println("Output: "+ sv.maxProfit(k[i], prices_2[i]) + " - " + sv.maxProfit_n2(k[i], prices_2[i]));
+        System.out.println("Output: "+ sv.maxProfit_k(k[i], prices_2[i]) + " - " + sv.maxProfit_n2(k[i], prices_2[i]));
         
     }
     
