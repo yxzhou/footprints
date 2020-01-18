@@ -76,10 +76,10 @@ public class AddBinary
           tmp = carry;
           
           if(aIndex >= 0){
-              tmp = a.charAt(aIndex--) - 48; // '0' is 48
+              tmp += a.charAt(aIndex--) - 48; // '0' is 48
           }
           if(bIndex >= 0){
-              tmp = b.charAt(bIndex--) - 48; 
+              tmp += b.charAt(bIndex--) - 48;
           }
 
           carry = tmp / 2;
@@ -94,7 +94,41 @@ public class AddBinary
       
       return result.reverse().toString();
   }
-  
+
+
+    public String addBinary_x2(String a, String b) {
+        //check
+        if(null == a || 0 == a.length() || null == b || 0 == b.length()){
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+        int c = 0; //carry
+        int va = 0; //value
+        int vb = 0;
+        for(int aIndex = a.length()-1, bIndex = b.length()-1; bIndex >= 0 || aIndex >= 0; ){
+            if(aIndex >= 0){
+                va = a.charAt(aIndex--) - 48; // '0' is 48
+            }else{
+                va = 0;
+            }
+
+            if(bIndex >= 0){
+                vb = b.charAt(bIndex--) - 48;
+            }else {
+                vb = 0;
+            }
+
+            result.append(va ^ vb ^ c);
+            c = (va & vb) | (va & c) | (vb & c);
+        }
+
+        if(c > 0){
+            result.append(c);
+        }
+
+        return result.reverse().toString();
+    }
   /**
    * @param a a number
    * @param b a number
@@ -152,7 +186,8 @@ public class AddBinary
       System.out.println("Input b: "+ b[i]);
       
       System.out.println("Output : "+ sv.addBinary(a[i], b[i]));
-      System.out.println("Output : "+ sv.addBinary_n(a[i], b[i]));
+      System.out.println("Output : "+ sv.addBinary_x(a[i], b[i]));
+      System.out.println("Output : "+ sv.addBinary_x2(a[i], b[i]));
       
       System.out.println("Output : "+ aplusb(a[i], b[i]));
     }

@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
+ * Given a non-empty binary search tree and a target value, find the value in the BST that is closestPair to the target.
 
  Note:
 
  Given target value is a floating point.
- You are guaranteed to have only one unique value in the BST that is closest to the target.
+ You are guaranteed to have only one unique value in the BST that is closestPair to the target.
 
  Example:
  Input: root = [4,2,5,1,3], target = 3.714286

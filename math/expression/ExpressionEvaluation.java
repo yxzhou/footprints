@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 public class ExpressionEvaluation {
 
     /**
@@ -27,36 +30,21 @@ public class ExpressionEvaluation {
         }
         
         long result = 0;
-        int curr = 0;
+        int n = 0;
         char operator = '+';
         
         for(char c : expression.toCharArray()){
             if(c >= '0' && c <= '9'){
-                curr = curr * 10 + c - '0';
+                n = n * 10 + c - '0';
             }else if(c == '+' || c == '-'){
-                result = calculate( result, operator, curr);
+                result = calculate( result, operator, n);
                 operator = c;
-                curr = 0;
+                n = 0;
             } // else ignore, such as space
         }
         
-        result = calculate( result, operator, curr); //**
+        result = calculate( result, operator, n); //**
         return (int)result;
-    }
-
-    private long calculate(long a, char operator, long b){
-        switch (operator){
-            case '+':
-                return a + b;
-            case '-':
-                return a - b;
-            case '*':
-                return a * b;
-            case '/':
-                return a / b;
-            default:
-                throw new IllegalArgumentException("found incorrect character");
-        }
     }
     
     /**
@@ -173,7 +161,65 @@ public class ExpressionEvaluation {
         
         return (int)result;
     }
-    
+
+    /**
+     *
+     * This problem was asked by Facebook.
+     *
+     * Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
+     *
+     * Don't use eval or a similar built-in parser.
+     *
+     * For example, given '-1 + (2 + 3)', you should return 4.
+     *
+     */
+
+    public int evaluate_III_2(String expression) {
+        if(null == expression || expression.trim().isEmpty()){
+            return 0;
+        }
+
+        long result = 0;
+
+        expression += ')';
+
+        boolean sign = true; //default it's positive
+        long n = 0;
+
+        Stack<Long> stack = new Stack<>();
+
+        for(char c : expression.toCharArray()){
+            if(c >= '0' && c <= '9'){
+                n = n * 10 + c - '0';
+            }else if(c == '+' || c == '-'){
+                result += (sign ? 1 : -1) * n;
+                sign = ( c == '+');
+                n = 0;
+            }else if(c == '('){
+                stack.add(result);
+                stack.add(sign ? 1L : -1L);
+
+                result = 0;
+                sign = true;
+
+            }else if(c == ')'){
+                result += (sign ? 1 : -1) * n;
+                sign = true;
+                n = 0;
+
+                if(!stack.isEmpty()){
+                    result *= stack.pop();
+                }
+
+                if(!stack.isEmpty()){
+                    result += stack.pop();
+                }
+            } //else,  ignore the other characters, such as space
+        }
+
+        return (int)result;
+    }
+
     /**
      * Evaluate a simple expression string. 
      * The expression string contains:
@@ -213,7 +259,7 @@ public class ExpressionEvaluation {
                 i = j - 1;
             }else if(c == '+' || c == '-' || c == '*' || c == '/'){
                 if(c == '+' || c == '-'){
-                    while(!oprators.isEmpty()&&oprators.peek() != '('){
+                    while(!oprators.isEmpty() && oprators.peek() != '('){
                         calculate(oprators, datas);
                     }
                 }else{ //c == '*' || c == '/' 
@@ -249,69 +295,104 @@ public class ExpressionEvaluation {
         return end;
     }
 
+    private long calculate(long a, char operator, long b){
+        switch (operator){
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                return a / b;
+            default:
+                throw new IllegalArgumentException("found incorrect character");
+        }
+    }
+
     private void calculate(Stack<Character> op, Stack<Long> data){
         
         Long right = data.pop();
-        Long left = data.pop();
+        Long left = data.isEmpty() ? 0L : data.pop();
 
         data.push(calculate(left, op.pop(), right));
     }
-    
-    public static void main(String[] args) {
-        ExpressionEvaluation sv = new ExpressionEvaluation();
+
+    @Test
+    public void test() {
 
         System.out.println("\n================= I");
-        String[] input_I = { 
-                    "1 + 1", // = 2
-                    " 2-1 + 2 ", // = 3
-                    " 2 " // 2
-        };
 
-        for (String s : input_I) {
-            System.out.println(String.format(" %s = %d ", s, sv.evaluate_I(s)));
-        }
+        Assert.assertEquals(2, evaluate_I("1 + 1"));
+        Assert.assertEquals(3, evaluate_I("2-1 + 2"));
+        Assert.assertEquals(2, evaluate_I("2"));
+
          
         System.out.println("\n================= II");
-        List<String> input_II = new ArrayList<>(Arrays.asList(input_I));
-        
-        input_II.addAll(new ArrayList<>(Arrays.asList(
-                    "3+2*2", // = 7 
-                    " 3/2 ", // = 1 
-                    "3+5 / 2 ", // = 5
-                    "1*2 + 3", //5
-                    "3-2*2*2-3+12", // = 4 
-                    "6/2/3", // = 1 
-                    "3-2*2*2-3+12-6/2/3" // = 3 
-        )));
 
-        for (String s : input_II) {
-            System.out.println(String.format(" %s = %d ", s, sv.evaluate_II(s)));
-        }
+        Assert.assertEquals(2, evaluate_II("1 + 1"));
+        Assert.assertEquals(3, evaluate_II("2-1 + 2"));
+        Assert.assertEquals(2, evaluate_II("2"));
+
+        Assert.assertEquals(7, evaluate_II("3+2*2"));
+        Assert.assertEquals(1, evaluate_II(" 3/2"));
+        Assert.assertEquals(5, evaluate_II("3+5 / 2"));
+        Assert.assertEquals(5, evaluate_II("1*2 + 3"));
+        Assert.assertEquals(4, evaluate_II("3-2*2*2-3+12"));
+        Assert.assertEquals(1, evaluate_II("6/2/3"));
+        Assert.assertEquals(3, evaluate_II("3-2*2*2-3+12-6/2/3"));
+
         
         System.out.println("\n================= III");
-        List<String> input_III = new ArrayList<>(Arrays.asList(input_I));
-        input_III.addAll(Arrays.asList(
-                    "(1+(4+5+2)-3)+(6+8)", // = 23
-                    "(6-(1-2))" // 7
-        ));
 
-        for (String s : input_III) {
-            System.out.println(String.format(" %s = %d", s, sv.evaluate_III(s)));
-        }
-        
+        Assert.assertEquals(2, evaluate_III("1 + 1"));
+        Assert.assertEquals(3, evaluate_III("2-1 + 2"));
+        Assert.assertEquals(2, evaluate_III("2"));
+
+        Assert.assertEquals(23, evaluate_III("(1+(4+5+2)-3)+(6+8)"));
+        Assert.assertEquals(7, evaluate_III("(6-(1-2))"));
+        Assert.assertEquals(-12, evaluate_III("-12"));
+        Assert.assertEquals(21, evaluate_III("-1+22"));
+        Assert.assertEquals(6, evaluate_III("1-(2-(3 + 4))"));
+
+        System.out.println("\n================= III_2");
+
+        Assert.assertEquals(2, evaluate_III_2("1 + 1"));
+        Assert.assertEquals(3, evaluate_III_2("2-1 + 2"));
+        Assert.assertEquals(2, evaluate_III_2("2"));
+
+        Assert.assertEquals(23, evaluate_III_2("(1+(4+5+2)-3)+(6+8)"));
+        Assert.assertEquals(7, evaluate_III_2("(6-(1-2))"));
+        Assert.assertEquals(7, evaluate_III_2("((6-(1-2)))"));
+        Assert.assertEquals(-12, evaluate_III_2("-12"));
+        Assert.assertEquals(21, evaluate_III_2("-1+22"));
+        Assert.assertEquals(6, evaluate_III_2("1-(2-(3 + 4))"));
+
 
         System.out.println("\n================= IV");
-        List<String> input_IV = new ArrayList<>();
-        input_IV.addAll(input_II);
-        input_IV.addAll(input_III);
-        input_IV.addAll(Arrays.asList(
-                    "(1+(4+5*2)-3)/(6+6)", // = 1
-                    "2*6-(23+7)/(1+2)" // 2
-        ));
 
-        for (String s : input_IV) {
-            System.out.println(String.format(" %s = %d", s, sv.evaluate_IV(s)));
-        }             
+        Assert.assertEquals(2, evaluate_IV("1 + 1"));
+        Assert.assertEquals(3, evaluate_IV("2-1 + 2"));
+        Assert.assertEquals(2, evaluate_IV("2"));
+
+        Assert.assertEquals(7, evaluate_IV("3+2*2"));
+        Assert.assertEquals(1, evaluate_IV(" 3/2"));
+        Assert.assertEquals(5, evaluate_IV("3+5 / 2"));
+        Assert.assertEquals(5, evaluate_IV("1*2 + 3"));
+        Assert.assertEquals(4, evaluate_IV("3-2*2*2-3+12"));
+        Assert.assertEquals(1, evaluate_IV("6/2/3"));
+        Assert.assertEquals(3, evaluate_IV("3-2*2*2-3+12-6/2/3"));
+
+        Assert.assertEquals(23, evaluate_IV("(1+(4+5+2)-3)+(6+8)"));
+        Assert.assertEquals(7, evaluate_IV("(6-(1-2))"));
+        Assert.assertEquals(-12, evaluate_IV("-12"));
+        Assert.assertEquals(21, evaluate_IV("-1+22"));
+        Assert.assertEquals(6, evaluate_IV("1-(2-(3 + 4))"));
+
+        Assert.assertEquals(1, evaluate_IV("(1+(4+5*2)-3)/(6+6)"));
+        Assert.assertEquals(2, evaluate_IV("2*6-(23+7)/(1+2)"));
+
+        System.out.println("\n================= end ==");
     }
 
 }

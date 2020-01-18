@@ -17,7 +17,7 @@ public class NextPalindrome
         
     int[] arr = {1, 10, 100, 90, 900, 909, 9900, 99000, 10109, 10199, 9909};
     for(int i=0; i< arr.length; i++){
-      System.out.println(" The closest palindormic number of "+ arr[i] + " is: " +getClosedPalindrome(arr[i]));
+      System.out.println(" The closestPair palindormic number of "+ arr[i] + " is: " +getClosedPalindrome(arr[i]));
     }
     
     
@@ -91,7 +91,7 @@ public class NextPalindrome
 
   /*
    * 
-   * Return the closest palindromic Number of the positive input. <br> 
+   * Return the closestPair palindromic Number of the positive input. <br>
    * if n is a palindrome, return itself <br>
    * 
    * The palindromic number is decided by the LEFT part. 
@@ -102,7 +102,7 @@ public class NextPalindrome
    * when [c+1] = 10, (ab[c+1]ba) will be (a[b+1]0[b+1]a) ---- 
    * 
    * @param: n, 
-   * @return: the closest palindrome to n
+   * @return: the closestPair palindrome to n
    * 
    * 
    */

@@ -11,7 +11,7 @@ public class SubarraySumClosest {
 
 	/**
 	 * 
-	 * Given an integer array, find a subarray with sum closest to zero. Return
+	 * Given an integer array, find a subarray with sum closestPair to zero. Return
 	 * the indexes of the first number and last number.
 	 * 
 	 * Example

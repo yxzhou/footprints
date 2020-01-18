@@ -32,6 +32,8 @@ public class FlipCoins {
         return roundCounter;
     }
 
+
+
     Random random = new Random();
 
     private boolean isHeader(){

@@ -25,6 +25,8 @@ public class Test
   
   public static void main(String[] args) throws Exception {
 
+    System.out.println(" == " + (int) 8682522807148012L);
+
     float a = 12;
     double d = 18;
     
@@ -285,9 +287,7 @@ public class Test
       List<Integer>[] neighbors = new ArrayList[2];
 
   }
-  
 
 
-  
   
 }

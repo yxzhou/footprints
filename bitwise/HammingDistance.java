@@ -1,6 +1,9 @@
 package fgafa.bitwise;
 
 /**
+ * Hamming distance is a metric for comparing two binary data strings.
+ * While comparing two binary strings of equal length, Hamming distance is the number of bit positions in which the two bits are different.
+ *
  * (a) first, write a function to calculate the hamming distance between two binary numbers 
  * (b) write a function that takes a list of binary numbers and returns the sum of the hamming distances for each pair 
  * (c) find a solution for (b) that works in O(n) time.

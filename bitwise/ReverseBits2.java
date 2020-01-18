@@ -6,8 +6,8 @@ import org.junit.Test;
  * Given a 32-bit integer, return the number with its bits reversed.
 
  For example,
-   given the binary number 1111 0000 1111 0000 1111 0000 1111 0000,
-                    return 0000 1111 0000 1111 0000 1111 0000 1111.
+   given the binary number 0000 0000 1111 0000 1111 0000 1111 0000,
+                    return 1111 1111 0000 1111 0000 1111 0000 1111.
  *
  * Tags: facebook
  *
@@ -41,6 +41,7 @@ public class ReverseBits2 {
             int r = bitsReverse(n);
             System.out.println(Integer.toBinaryString(n));
             System.out.println(Integer.toBinaryString(r));
+            System.out.println(Integer.toBinaryString(~n));
             System.out.println();
         }
 

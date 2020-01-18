@@ -6,7 +6,8 @@ public class WeightedRandom
   /*
    * Weighted random sampling with a reservoir
    * 
-   * given a big table (checkIn - occurrence), and we need to write an efficient function to randomly select 1 checkIn where probability is based on the occurrence.
+   * given a big table (checkIn - occurrence), and we need to write an efficient function to randomly select 1 checkIn
+   * where probability is based on the occurrence.
    * 
    * Example:
    *  input (q1 - 20)(q2 - 10 )( q3 - 30)
@@ -19,20 +20,20 @@ public class WeightedRandom
   
   public static int selectRandom(int query, int weight){   
       int precount = sum;
-      sum+= weight;  // increment count of numbers seen so far
+      sum += weight;  // increment count of numbers seen so far
       
       // If this is the first element from stream, return it
-      if (sum == 1)
+      if (sum == 1) {
           res = query;
-      else
-      {
+      } else {
           // Generate a random number from 0 to count - 1
           java.util.Random random = new java.util.Random();
           int i = random.nextInt(sum);
    
           // Replace the prev random number with new number with weight/(count+weight) probability
-          if (i > precount)
-              res  = query;
+          if (i > precount) { // or (i <= weight)
+              res = query;
+          }
       }
       
       return res;
