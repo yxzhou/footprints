@@ -1,8 +1,8 @@
 package fgafa.datastructure.heap;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import javafx.util.Pair;
+
+import java.util.*;
 
 public class HeapTest {
 
@@ -26,6 +26,9 @@ public class HeapTest {
 		
 	    PriorityQueue<Integer> maxHeap_2 = 
 	                    new PriorityQueue<Integer>(Collections.reverseOrder());
+
+
+	    PriorityQueue<Pair<Integer, Integer>> minHeap_2 = new PriorityQueue<>((p1, p2) -> Integer.compare(p1.getValue(), p2.getValue()));
 	}
 
 }

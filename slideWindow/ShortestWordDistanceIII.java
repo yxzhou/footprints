@@ -1,4 +1,4 @@
-package fgafa.array.slideWindow;
+package fgafa.slideWindow;
 
 /**
  * 

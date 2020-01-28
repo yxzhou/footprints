@@ -1,6 +1,5 @@
 package fgafa.concurrent.myBlockingQueue;
 
-import com.sun.istack.internal.NotNull;
 
 
 /**
@@ -37,7 +36,7 @@ import com.sun.istack.internal.NotNull;
 
 public interface MyBlockingQueue<E> {
 
-    void put(@NotNull E e) throws InterruptedException;
-    @NotNull E poll() throws InterruptedException;
+    void put(E e) throws InterruptedException;
+     E poll() throws InterruptedException;
 
 }

@@ -1,9 +1,9 @@
 package fgafa.bitwise;
 
+import fgafa.util.Misc;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import fgafa.util.Misc;
 
 /**
  * 
@@ -26,44 +26,82 @@ public class CountBits {
         if(num < 0){
             return new int[0];
         }
-        
+
         List<Integer> list = new ArrayList<>();
-        
+
         list.add(0);
         if(num == 0){
             return list2Array(list);
         }
-        
+
         list.add(1);
         if(num == 1){
             return list2Array(list);
         }
-        
+
         int x = 4;
         for( ; x <= num; x <<= 1){
             for(int n = list.size(), i = 0; i < n; i++){
                 list.add(1 + list.get(i));
             }
         }
-        
+
         x >>= 1;
         for(int i = 0; x <= num; x++, i++ ){
             list.add(1 + list.get(i));
         }
-        
+
         return list2Array(list);
     }
-    
+
     private int[] list2Array(List<Integer> list){
         int[] arr = new int[list.size()];
-        
+
         for(int i = 0; i < list.size(); i++){
             arr[i] = list.get(i);
         }
-        
+
         return arr;
     }
-    
+
+
+    /**
+     * pop_count
+     */
+    public int[] countBits_x(int num) {
+        int[] r = new int[num + 1];
+        //r[0] = 0;
+
+        for(int i = 1; i <= num; i++){
+            r[i] = helper(i);
+        }
+
+        return r;
+    }
+
+    private int helper(int n){
+        int r = 1;
+
+        while ( (n &= (n - 1)) != 0){
+            r++;
+        }
+
+        return r;
+    }
+
+    /**
+     * pop_count + memorization
+     */
+    public int[] countBits_xx(int num) {
+        int[] r = new int[num + 1];
+
+        for(int i = 1; i <= num; i++){
+            r[i] = r[i & (i - 1)] + 1;
+            ///r[i] = r[i >>> 1] + ((i & 1) == 1? 1 : 0);
+        }
+
+        return r;
+    }
     
     public static void main(String[] args){
         CountBits sv = new CountBits();

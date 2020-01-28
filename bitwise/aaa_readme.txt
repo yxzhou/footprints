@@ -27,4 +27,4 @@ Operator                    Description                         Example
 ~ (bitwise compliment)      Binary Ones Complement Operator     (~A ) will give -61 which is 1100 0011 in 2's complement form due to a signed binary number.
 << (left shift)             Binary Left Shift Operator.         A << 2 will give 240 which is 1111 0000
 >> (right shift)            Binary Right Shift Operator.        A >> 2 will give 15 which is 1111
->>> (zero fill right shift) Shift right zero fill operator. A >>>2 will give 15 which is 0000 1111
+>>> (zero fill right shift) Shift right zero fill operator.     A >>>2 will give 15 which is 0000 1111

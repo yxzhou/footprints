@@ -121,12 +121,36 @@ public class WaterTrap {
      * Time complexity: O(n)
      *
      */
+    public int trapRainWater_x2(int[] heights) {
+        if(heights == null || heights.length < 3){
+            return 0;
+        }
+
+        int sum = 0;
+        int level = 0;
+        int min;
+        for(int l = 0, r = heights.length - 1; l < r; ){
+            min = Math.min(heights[l], heights[r]);
+
+            sum += Math.max(0, level - min);
+            level = Math.max(level, min);
+
+            if(heights[l] <= heights[r]){
+                l++;
+            }else{
+                r--;
+            }
+        }
+
+        return sum;
+    }
+
     public int trapRainWater_x(int[] heights) {
         if(null == heights || 0 == heights.length){
             return 0;
         }
 
-        long sum = 0;  //** long instead of int
+        int sum = 0;
         int min;
         for(int l = 0, r = heights.length - 1; l < r;  ){
             min = Math.min(heights[l], heights[r]);
@@ -140,8 +164,12 @@ public class WaterTrap {
             }
         }
 
-        return (int)sum;
+        return sum;
     }
+
+
+
+
 
     /**
      * @param args

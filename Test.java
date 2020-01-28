@@ -25,7 +25,17 @@ public class Test
   
   public static void main(String[] args) throws Exception {
 
+    int x =  -1 & 1;
+    System.out.println( -1 & 1 );
+    System.out.println( -2 & 1 );
+    System.out.println( 1 & 1 );
+    System.out.println( 2 & 1 );
+
     System.out.println(" == " + (int) 8682522807148012L);
+
+    String.valueOf(1);
+    Integer.toString(1);
+
 
     float a = 12;
     double d = 18;

@@ -1,12 +1,11 @@
 package fgafa.uva.dp.StackingBoxN103;
 
 import java.io.BufferedInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+
 //import java.util.Collections;
 //import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Scanner;
+
 //import java.util.Stack;
 
 class Main
@@ -96,19 +95,18 @@ class Main
       list.add(row, box);
     }
     
-//    class boxComparator implements Comparator<int[]>{
-//      public int compare(int[] box1, int[] box2)  
-//      {  
-//
-//        for(int i=0; i<box1.length; i++){
-//          if(box1[i] < box2[i] ){
-//            return -1;
-//          }
-//        }
-//
-//        return 1;
-//      } 
-//    }
+    class boxComparator implements Comparator<int[]> {
+      public int compare(int[] box1, int[] box2)
+      {
+        for(int i=0; i<box1.length; i++){
+          if(box1[i] < box2[i] ){
+            return -1;
+          }
+        }
+
+        return 1;
+      }
+    }
   
   /**
    * @param args

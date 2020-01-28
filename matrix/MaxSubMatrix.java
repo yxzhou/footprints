@@ -1,9 +1,9 @@
 package fgafa.matrix;
 
+import fgafa.util.Misc;
+
 import java.util.Random;
 import java.util.Stack;
-
-import fgafa.util.Misc;
 
 
 /*
@@ -85,159 +85,52 @@ public class MaxSubMatrix
    * Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle
    * containing all ones and return its area.
    * 
-   * O(n*m) version  Space O(n*m)
-   * 
-   * @param matrix
-   * @return
+   * Time O(n*m)  Space O(n*m)
+   *
+   * Using Histograms - Stack
    */
-  public int maximalRectangle1(char[][] matrix) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+
+  public int maximalRectangle(char[][] matrix) {
+    if(matrix == null || matrix.length == 0){
       return 0;
     }
 
-    final int M = matrix.length;
-    final int N = matrix[0].length;
+    int max = 0;
+    int r = matrix.length;
+    int c = matrix[0].length;
 
-    int[][] mx = new int[M][N]; // mx[M - 1][] store the tmp value (0 or 1).  mx[m][] store the height from M-1 to m.( 0<=m<=M-2 )
+    int[] height = new int[c];
+    Stack<Integer> s = new Stack<>();
 
-    for (int col = 0; col < N; col++) {
+    int top;
+    int w;
+    for(int i = 0; i < r; i++){
+      for(int j = 0; j < c; j++){
+        if(matrix[i][j] == '1'){
+          height[j] += 1;
+        }else{ // == '0'
+          height[j] = 0;
+        }
 
-      mx[M - 1][col] = matrix[M - 1][col] - '0';
-      for (int row = M - 2; row >= 0; row--) {
-        if (matrix[row][col] == '1') 
-          mx[row][col] = mx[row + 1][col] + 1;
-        else 
-          mx[row][col] = 0;
-        
+        /* Max rectangle in a histogram problem */
+        while(!s.isEmpty() && height[j] < height[s.peek()]){
+          top = s.pop();
+          w = s.isEmpty()? j : j - s.peek() - 1;
+          max = Math.max(max, height[top] * w);
+        }
+
+        s.push(j);
+      }
+
+      while(!s.isEmpty()){
+        top = s.pop();
+        w = s.isEmpty()? c : c - s.peek() - 1;
+        max = Math.max(max, height[top] * w);
       }
     }
 
-    int maxArea = 0;
-    for (int[] height : mx) {
-      /* Max rectangle in a histogram problem */
-      Stack<Integer> stack = new Stack<Integer>();
-      for (int i = 0; i < N; i++) {
-
-        if (stack.isEmpty() || height[i] >= height[stack.peek()]) {
-          stack.push(i);
-          continue;
-        }
-
-        int lastIdx = -1;
-        while (!stack.isEmpty() && height[i] < height[stack.peek()]) {
-          lastIdx = stack.pop();
-
-          maxArea = Math.max(maxArea, (i - lastIdx) * height[lastIdx]);
-        }
-
-        if (lastIdx >= 0) {
-          height[lastIdx] = height[i];
-          stack.push(lastIdx);
-        }
-        
-      }
-
-      while (!stack.isEmpty()) {
-        int idx = stack.pop();
-        
-        maxArea = Math.max(maxArea, (N - idx) * height[idx]);
-      }
-    }
-
-    return maxArea;
+    return max;
   }
-  
-  
-  public int maximalRectangle11(char[][] matrix) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-      return 0;
-    }
-
-    final int M = matrix.length;
-    final int N = matrix[0].length;
-
-    int[][] mx = new int[M][N]; // mx[M - 1][] store the tmp value (0 or 1).  mx[m][] store the height from M-1 to m.( 0<=m<=M-2 )
-
-    for (int col = 0; col < N; col++) {
-
-      mx[M - 1][col] = matrix[M - 1][col] - '0';
-      for (int row = M - 2; row >= 0; row--) {
-        if (matrix[row][col] == '1') 
-          mx[row][col] = mx[row + 1][col] + 1;
-        else 
-          mx[row][col] = 0;
-        
-      }
-    }
-
-    int maxArea = 0;
-    for (int[] height : mx) {
-      /* Max rectangle in a histogram problem */
-      Stack<Integer> stack = new Stack<Integer>();
-
-      int i=0;
-      while (i < N) {
-        if(stack.empty() || height[stack.peek()] <= height[i])
-            stack.push(i++);
-        else {
-            int t = stack.pop();  
-          
-            maxArea = Math.max(maxArea, height[t] * (stack.empty() ? i : i - stack.peek() - 1 ));
-        }
-      }
-  
-      while (!stack.isEmpty()) {
-        int t = stack.pop();
-        
-        maxArea = Math.max(maxArea, height[t] * (stack.empty() ? i : i - stack.peek() - 1 ));
-      }  
-      
-    }
-
-    return maxArea;
-  }
-
-  /* TODO  recorrect */
-  public int maximalRectangle2(char[][] matrix) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-      return 0;
-    }
-
-    final int M = matrix.length;
-    final int N = matrix[0].length;
-
-    int[] H = new int[N];
-    int[] L = new int[N];
-    int[] R = new int[N]; 
-
-    int ret = 0;
-    for (int i = 0; i < M; ++i) {
-        int left = 0, right = N;
-        // calculate L(i, j) from left to right
-        for (int j = 0; j < N; ++j) {
-            if (matrix[i][j] == '1') {
-                ++H[j];
-                L[j] = Math.max(L[j], left);
-            }
-            else {
-                left = j+1;
-                H[j] = 0; L[j] = 0; R[j] = N;
-            }
-        }
-        // calculate R(i, j) from right to right
-        for (int j = N-1; j >= 0; --j) {
-            if (matrix[i][j] == '1') {
-                R[j] = Math.min(R[j], right);
-                ret = Math.max(ret, H[j]*(R[j]-L[j]));
-            }
-            else {
-                right = j;
-            }
-        }
-    }
-
-    return ret;
-}
   
   
   /**
@@ -290,7 +183,7 @@ public class MaxSubMatrix
     }
 
     System.out.println( Misc.array2String(strs) );
-    System.out.println(sv.maximalRectangle1(matrix));
+    System.out.println(sv.maximalRectangle(matrix));
     
     
     System.out.println("------------End--maximalRectangle------------ ");
