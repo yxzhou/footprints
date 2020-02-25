@@ -1,14 +1,8 @@
 package fgafa.datastructure.heap;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-
 import fgafa.util.Misc;
+
+import java.util.*;
 
 /**
  * 
@@ -256,7 +250,53 @@ public class Skyline {
         
         return result;
     }
-	
+
+
+	public List<List<Integer>> getSkyline_20200206(int[][] buildings) {
+
+		int n = buildings.length;
+
+		int[][] edges = new int[n * 2][2]; // edges[i]={x, height}
+
+		int i = 0;
+		for(int[] b : buildings){
+			edges[i++] = new int[]{b[0], b[2]};
+			edges[i++] = new int[]{b[1], -b[2]};
+		}
+
+		Arrays.sort(edges, (e1, e2) -> { return e1[0] == e2[0] ? e2[1] - e1[1] : e1[0] - e2[0];});
+
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+		List<List<Integer>> result = new LinkedList<>();
+
+		int pre = 0;
+		int curr = 0;
+		for(int[] e : edges){
+
+			if(e[1] > 0){
+				maxHeap.add(e[1]);
+			}else if(e[1] < 0){
+				maxHeap.remove(-e[1]);
+			}else{
+				continue;
+			}
+
+			curr = maxHeap.isEmpty()? 0 : maxHeap.peek();
+
+			if(curr != pre){
+				pre = curr;
+
+				result.add(Arrays.asList(e[0], curr));
+			}
+
+		}
+
+		return result;
+	}
+
+
+
 	public static void main(String[] args) {
 		int[][] input = {{2, 9, 10}, {3, 7, 15}, {5, 12, 12}, {15, 20, 10}, {19, 24, 8} };
 		int[][] expect ={{2, 10}, {3, 15}, {7, 12}, {12, 0}, {15, 10}, {20, 8}, {24, 0}};

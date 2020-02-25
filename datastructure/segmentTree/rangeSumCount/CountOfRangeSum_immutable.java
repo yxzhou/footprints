@@ -3,6 +3,7 @@ package fgafa.datastructure.segmentTree.rangeSumCount;
 import fgafa.util.Misc;
 
 import java.util.Arrays;
+import java.util.TreeMap;
 
 /**
  * 
@@ -51,6 +52,32 @@ import java.util.Arrays;
 
 public class CountOfRangeSum_immutable {
 
+    public int countRangeSum_x(int[] nums, int lower, int upper) {
+
+        TreeMap<Long, Integer> treeMap = new TreeMap<>();
+
+        int count = 0;
+
+        long sum = 0l;
+        for(int x : nums){
+            sum += x;
+
+            if(sum >= lower && sum <= upper){
+                count++;
+            }
+
+            for(int c : treeMap.subMap(sum - upper, true, sum - lower, true).values() ){
+                count += c;
+            }
+            //count += treeMap.subMap(sum - upper, true, sum - lower, true).values().stream().mapToInt(Integer::valueOf).sum();
+
+            treeMap.put(sum, treeMap.getOrDefault(sum, 0) + 1);
+        }
+
+        return count;
+    }
+
+    /****          **/
     public int countRangeSum(int[] nums, int lower, int upper) {
         //check
         if(null == nums || 0 == nums.length){

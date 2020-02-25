@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -452,4 +454,14 @@ public class Misc
   }
 
 
+    public static List<List<String>> convert(String[][] strings){
+
+        List<List<String>> result = new LinkedList<>();
+
+        for(String[] ss : strings){
+            result.add(Arrays.asList(ss));
+        }
+
+        return result;
+    }
 }

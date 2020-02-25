@@ -38,6 +38,7 @@ public class CountOfSmallerNumberAfterItself {
         int[] orderedValue = new int[length];
         System.arraycopy(nums, 0, orderedValue, 0, length);
         Arrays.sort(orderedValue);
+
         TreeNode[] tree = new TreeNode[length];
         initTree(tree, orderedValue, length);
         

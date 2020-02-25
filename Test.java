@@ -1,8 +1,6 @@
 package fgafa;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Test
 {
@@ -24,6 +22,12 @@ public class Test
   static int i = 5;
   
   public static void main(String[] args) throws Exception {
+
+    Set<Integer> primes = new HashSet<>(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29));
+
+    System.out.println( Integer.toBinaryString(250));
+    System.out.println( -1 % 16);
+
 
     int x =  -1 & 1;
     System.out.println( -1 & 1 );
@@ -110,13 +114,24 @@ public class Test
 //    if(((double)(3 + 1) / 3 * 6 ) == 8)
 //    System.out.println( "--- "  );
     
-//    if(1==1){
-//      System.out.println( "-111-- "  );
-//    }else if(2==2){
-//      System.out.println( "-22-- "  );
-//    }else{
-//      System.out.println( "-333-- "  );
-//    }
+    if(1==1){
+      System.out.println( "-111-- "  );
+    }else if(2==2){
+      System.out.println( "-22-- "  );
+    }else{
+      System.out.println( "-333-- "  );
+    }
+
+    int y = 1;
+    if( y == 1 ){
+      System.out.println( "-111-- "  );
+      y = 2;
+    } else if(y == 2){
+      System.out.println( "-22-- "  );
+      y = 3;
+    } else{
+      System.out.println( "-333-- "  );
+    }
 
 
 //    tb.testIterator();

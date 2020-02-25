@@ -20,22 +20,25 @@ public class ANDOfNumbers {
     public int rangeBitwiseAnd_n(int m, int n) {
         assert m > 0 && n > 0 && m <= n;
 
-//        int diff = n - m;
-//        long mask = 1; //**
-//        int count = 0;
-//        while(mask <= diff){
-//            mask <<= 1;
-//            count++;
-//        }
+        int diff = n - m;
+        long mask = 1; //**
+        int count = 0;
+        while(mask <= diff){
+            mask <<= 1;
+            count++;
+        }
 
-        int count = (int)( Math.log(n - m) / Math.log(2));
+        //if(m == n){
+        //  return m;
+        //}
+        //int count = (int)( Math.log(n - m) / Math.log(2)) + 1;
 
         return m & n & (0xffffffff << count);
         
     }
     
     
-    public int rangeBitwiseAnd_2(int m, int n) {
+    public int rangeBitwiseAnd_bruteforce(int m, int n) {
         int result = 0xffffffff;
         for(int i = m; i <= n; i++){
             result &= i;
@@ -45,6 +48,23 @@ public class ANDOfNumbers {
     }
     
     public static void main(String[] args){
+
+        for(int diff = 0; diff < 50; diff++){
+
+            long mask = 1; //**
+            int count = 0;
+            while(mask <= diff){
+                mask <<= 1;
+                count++;
+            }
+
+            System.out.println( count + " " +  (int)( Math.log(diff ) / Math.log(2)) );
+
+
+        }
+
+        System.out.println();
+
         System.out.println( Integer.toBinaryString(0x7FFFFFFF << 2)  );
         
         
@@ -59,6 +79,7 @@ public class ANDOfNumbers {
                     {0, 2},
                     {1, 2},
                     {1, 3},
+                    {3, 6},
                     {5, 6},
                     {8, 9},
                     {8, 10},
@@ -75,7 +96,7 @@ public class ANDOfNumbers {
         for(int i = 0; i < input.length; i++){
             System.out.println(String.format("Input: [%d, %d]", input[i][0], input[i][1]));
             
-            System.out.println(String.format("Output: %d = %d", sv.rangeBitwiseAnd_2(input[i][0], input[i][1]), sv.rangeBitwiseAnd_n(input[i][0], input[i][1])));
+            System.out.println(String.format("Output: %d = %d", sv.rangeBitwiseAnd_bruteforce(input[i][0], input[i][1]), sv.rangeBitwiseAnd_n(input[i][0], input[i][1])));
         }
         
     }

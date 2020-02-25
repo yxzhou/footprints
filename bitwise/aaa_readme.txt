@@ -14,7 +14,7 @@ a|b = 0011 1101
 
 a^b = 0011 0001
 
-~a = 1100 0011  =>  ~a = 1111 1111 1111 1111 1111 1111 1100 0011
+~a = 1111 1111 1111 1111 1111 1111 1100 0011
 
 The following table lists the bitwise operators −
 
@@ -28,3 +28,17 @@ Operator                    Description                         Example
 << (left shift)             Binary Left Shift Operator.         A << 2 will give 240 which is 1111 0000
 >> (right shift)            Binary Right Shift Operator.        A >> 2 will give 15 which is 1111
 >>> (zero fill right shift) Shift right zero fill operator.     A >>>2 will give 15 which is 0000 1111
+
+
+
+操作	                    英文	                    举例
+取交集	                Set intersection	    a & b
+取并集	                Set Union	            a | b
+取A中不属于B的部分??	    Set subtraction	        a & ~b  = 0011 0000
+按位取反	                Set negation	        ~a,  or ALL_BITS ^ A
+*将某位设置为1	        Set bit	                a |= 1 << bit
+*将某位设置为0	        Clear bit	            a &= ~(1 << bit)
+*测试某位的值	            Test bit	            (a & 1 « bit) != 0
+*提取最后一个1	        Extract last bit	    a & -a,  or A & ~(A - 1) or x ^ (x & (x - 1))
+*删除最后一个1	        Remove last bit	        a & (a - 1)
+*获取全部为1的字节	    Get all 1-bits	        ~0,  or (1 << bit) - 1

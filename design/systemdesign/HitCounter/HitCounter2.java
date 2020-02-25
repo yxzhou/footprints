@@ -2,36 +2,44 @@ package fgafa.design.systemdesign.HitCounter;
 
 public class HitCounter2 {
 
-    int[] times = new int[300];
-    int[] counts = new int[300];
+    //TreeMap<Integer, Integer> stores;
+    int[] counts;
+    int[] timestamps;
+
+    static int K = 300;
 
     /** Initialize your data structure here. */
     public HitCounter2() {
-
+        //this.stores = new HashMap<>();
+        this.counts = new int[K];
+        this.timestamps = new int[K];
     }
 
     /** Record a hit.
      @param timestamp - The current timestamp (in seconds granularity). */
     public void hit(int timestamp) {
-        int index = timestamp % 300;
+        int i = timestamp % K;
 
-        if(times[index] < timestamp){
-            times[index]= timestamp;
-            counts[index] = 1;
-        }else{ // ==
-            counts[index]++;
+        if(timestamp == timestamps[i]){
+            counts[i]++;
+        }else{
+            //int count = counts[i];
+
+            counts[i] = 1;
+            timestamps[i] = timestamp;
+
+            //stores.put(timestamp, count);
         }
     }
 
     /** Return the number of hits in the past 5 minutes.
      @param timestamp - The current timestamp (in seconds granularity). */
     public int getHits(int timestamp) {
-        // (start, end]
-        int start = timestamp - 300;
-
         int sum = 0;
-        for(int i = 0; i < 300; i++ ){
-            if(times[i] > start ){
+
+        int start = timestamp - K;
+        for(int i = 0; i < K; i++){
+            if(timestamps[i] > start){
                 sum += counts[i];
             }
         }

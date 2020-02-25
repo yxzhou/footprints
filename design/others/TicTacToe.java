@@ -57,20 +57,18 @@ package fgafa.design.others;
 public class TicTacToe {
 
     int n;
-    boolean[][] visited;
-
-    int[] rowStatus;
-    int[] colStatus;
-    int diagonStatus = 0;
-    int antiDiagonStatus = 0;
+    int[] rows;
+    int[] cols;
+    int diagon;
+    int antiDiagon;
 
     /** Initialize your data structure here. */
     public TicTacToe(int n) {
         this.n = n;
-        this.visited = new boolean[n][n]; //default all are false;
-
-        this.rowStatus = new int[n]; //default all are 0
-        this.colStatus = new int[n];
+        this.rows = new int[n]; //default all are 0
+        this.cols = new int[n]; //default all are 0
+        this.diagon = 0;
+        this.antiDiagon = 0;
     }
 
     /** Player {player} makes a move at ({row}, {col}).
@@ -82,26 +80,29 @@ public class TicTacToe {
      1: Player 1 wins.
      2: Player 2 wins. */
     public int move(int row, int col, int player) {
-        if(row < 0 || row >= n || col < 0 || col >= n || visited[row][col] || (player != 1 && player != 2)){
+        if(row < 0 || row >= n || col < n || col >= n || (player != 1 && player != 2)){
             return 0;
         }
 
-        visited[row][col] = true;
+        int diff = (player == 1? 1 : -1);
 
-        int diff = (player == 1? 1 : -1 ); // when player == 1
+        //check the row, horizontal
+        rows[row] += diff;
 
-        rowStatus[row] += diff;
-        colStatus[col] += diff;
+        //check the col, vertical
+        cols[col] += diff;
 
+        //check diagonal
         if(row == col){
-            diagonStatus += diff;
+            diagon += diff;
         }
 
         if(row + col == n - 1){
-            antiDiagonStatus += diff;
+            antiDiagon += diff;
         }
 
-        if(Math.abs(rowStatus[row]) == n || Math.abs(colStatus[col]) == n || Math.abs(diagonStatus) == n || Math.abs(antiDiagonStatus) == n){
+        int target = (player == 1? n : -n);
+        if(rows[row] == target || cols[col] == target || diagon == target || antiDiagon == target){
             return player;
         }
 

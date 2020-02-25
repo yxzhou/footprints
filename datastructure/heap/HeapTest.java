@@ -29,6 +29,11 @@ public class HeapTest {
 
 
 	    PriorityQueue<Pair<Integer, Integer>> minHeap_2 = new PriorityQueue<>((p1, p2) -> Integer.compare(p1.getValue(), p2.getValue()));
+
+
+		List<Iterator<int[]>> its = new LinkedList();
+		PriorityQueue<int[]> maxHeap_3 = new PriorityQueue<>((a1, a2) -> Integer.compare(a2[1], a1[1]) );
+
 	}
 
 }

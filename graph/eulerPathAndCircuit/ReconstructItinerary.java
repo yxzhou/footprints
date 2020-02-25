@@ -1,16 +1,9 @@
 package fgafa.graph.eulerPathAndCircuit;
 
 import fgafa.util.Misc;
+import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 
 /**
@@ -117,7 +110,7 @@ public class ReconstructItinerary {
         Stack<String> stack = new Stack<>();
         java.util.LinkedList<String> res = new java.util.LinkedList<>();
 
-        //dfs
+        //bfs
         for(int i = 0; i < tickets.length; i++) {
             while (!map.containsKey(cur) || map.get(cur).isEmpty()) {
                 stack.push(cur);
@@ -146,7 +139,7 @@ public class ReconstructItinerary {
             flightsSet.add(ticket[0] + " " + ticket[1]);
         }
 
-        List<String> result = findItinerary_2(tickets, startPoint);
+        List<String> result = findItinerary_x(tickets, startPoint);
 
         if(result.size() == flightsSet.size() + 1){
             Iterator iterator = result.iterator();
@@ -172,7 +165,7 @@ public class ReconstructItinerary {
      *  This is only ok when it assure there is a valid itinerary.
      *  Not work at case such as {A->B, B->C, start from B }
      */
-    public List<String> findItinerary_2(String[][] tickets, String startPoint) {
+    public List<String> findItinerary_x(String[][] tickets, String startPoint) {
         Map<String, PriorityQueue<String>> map = new HashMap<>();
         for (String[] ticket : tickets) {
             map.computeIfAbsent(ticket[0], k -> new PriorityQueue<>()).add(ticket[1]);
@@ -193,12 +186,37 @@ public class ReconstructItinerary {
         return res;
     }
 
-    public static void main(String[] args){
+    public List<String> findItinerary_dfs(List<List<String>> tickets, String startPoint) {
+        List<String> itinerary = new ArrayList<String>();
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+
+        for (List<String> ticket : tickets) {
+            graph.computeIfAbsent(ticket.get(0), k -> new PriorityQueue<>()).offer(ticket.get(1));
+        }
+
+        dfs(graph, itinerary, startPoint);
+
+        Collections.reverse(itinerary);
+        return itinerary;
+    }
+
+    private void dfs(Map<String, PriorityQueue<String>> graph, List<String> itinerary, String origin) {
+        PriorityQueue<String> destinations = graph.get(origin);
+        if (destinations != null) {
+            while (!destinations.isEmpty()) {
+                dfs(graph, itinerary, destinations.poll());
+            }
+        }
+        itinerary.add(origin);
+    }
+
+    @Test public void test(){
 
         String[][][][] cases = {
                 { { { "SFO", "HKO" }, { "YYZ", "SFO" }, { "YUL", "YYZ" }, { "HKO", "ORD" } }, { { "YUL" } } },
                 { { { "SFO", "COM" }, { "COM", "YYZ" } }, { { "COM" } } },
                 { { { "JFK", "SFO" }, { "JFK", "ATL" }, { "SFO", "ATL" }, { "ATL", "JFK" }, { "ATL", "SFO" } }, { { "JFK" } } },
+                { { { "JFK", "SFO" }, { "JFK", "ATL" }, { "SFO", "ATL" }, { "SFO", "JFK" }, { "ATL", "SFO" } }, { { "JFK" } } },
                 { { { "A", "B" }, { "A", "C" }, { "B", "C" }, { "C", "A" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "C" }, { "C", "D" } }, { { "A" } } },
                 { { { "A", "B" }, { "B", "C" }, { "B", "D" } }, { { "A" } } },
@@ -218,6 +236,7 @@ public class ReconstructItinerary {
                 "YUL, YYZ, SFO, HKO, ORD",
                 "null",
                 "JFK, ATL, JFK, SFO, ATL, SFO",
+                "JFK, ATL, SFO, JFK, SFO, ATL",
                 "A, B, C, A, C",
                 "A, B, C, D",
                 "null",
@@ -239,8 +258,11 @@ public class ReconstructItinerary {
             //List<String> result = sv.itineraryPath(cases[i][0], cases[i][1][0][0]);
             //List<String> result = sv.itineraryPath_2(cases[i][0], cases[i][1][0][0]);
 
-            List<String> result = sv.findItinerary(cases[i][0], cases[i][1][0][0]);
-            //List<String> result = sv.findItinerary_2(cases[i][0], cases[i][1][0][0]);
+            //List<String> result = sv.findItinerary(cases[i][0], cases[i][1][0][0]);
+            //List<String> result = sv.findItinerary_x(cases[i][0], cases[i][1][0][0]);
+
+
+            List<String> result = sv.findItinerary_dfs(Misc.convert(cases[i][0]), cases[i][1][0][0]);
 
             boolean isMatch = expects[i].equals(Misc.array2String(result).toString());
 
@@ -255,4 +277,5 @@ public class ReconstructItinerary {
         boolean flag = true;
         flag = !flag;
     }
+
 }

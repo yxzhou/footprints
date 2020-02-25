@@ -1,8 +1,11 @@
 package fgafa.design.systemdesign.SearchAutocomplete;
 
+import org.junit.Assert;
+
 import java.util.*;
 
 /**
+ * Leetcode #642
  *
  * Design a search autocomplete system for a search engine.
  * Users may input a sentence (at least one word and end with a special character '#'). For each character they type
@@ -70,29 +73,35 @@ import java.util.*;
  */
 
 public class AutocompleteSystem {
-    Map<String, Integer> map;
-
     class TrieNode {
         TrieNode[] nexts = new TrieNode[256]; // ' ' is 32, and 'z' is 122
         TreeSet<String> treeSet = new TreeSet<>((s1, s2) -> (map.get(s1) == map.get(s2)? s1.compareTo(s2) : map.get(s2) - map.get(s1)) );
     }
 
     TrieNode root;
+    Map<String, Integer> map;
+
+    //for state
     TrieNode curr;
     StringBuilder sb;
 
     public AutocompleteSystem(String[] sentences, int[] times) {
         root = new TrieNode();
-        curr = root;
-        sb = new StringBuilder();
-
         map = new HashMap<>();
 
         for(int i = 0; i < sentences.length; i++){
-            map.put(sentences[i], times[i]);
+            //map.put(sentences[i], times[i]);
 
-            add(sentences[i], 0);
+            add(sentences[i], times[i]);
         }
+
+        init();
+
+    }
+
+    private void init(){
+        curr = root;
+        sb = new StringBuilder();
     }
 
     public List<String> input(char c) {
@@ -101,31 +110,24 @@ public class AutocompleteSystem {
         if(c == '#'){
             add(sb.toString(), 1);
 
-            curr = root;
-            sb = new StringBuilder();
+            init();
         }else {
             sb.append(c);
 
-            if(curr != null){
-                curr = curr.nexts[c];
-
-                if(curr != null){
-                    for(String s : curr.treeSet){
-                        result.add(s);
-                    }
-                }
+            if(curr.nexts[c] == null){
+                curr.nexts[c] = new TrieNode();
             }
+            curr = curr.nexts[c];
+
+            result.addAll(curr.treeSet);
         }
 
         return result;
     }
 
 
-    private void add(String s, int count){
-        if(map.containsKey(s)){
-            count += map.get(s);
-        }
-        map.put(s, count);
+    private void add(String s, int times){
+        map.put(s, map.getOrDefault(s, 0) + times);
 
         TrieNode curr = root;
         for(char c : s.toCharArray()){
@@ -134,15 +136,14 @@ public class AutocompleteSystem {
             }
             curr = curr.nexts[c];
 
-            TreeSet<String> treeSet = curr.treeSet;
+            //TODO  fix bug
+            //if(curr.treeSet.contains(s)){
+                curr.treeSet.remove(s);
+            //}
+            curr.treeSet.add(s);
 
-            if(treeSet.contains(s)){
-                treeSet.remove(s);
-            }
-            treeSet.add(s);
-
-            if(treeSet.size() > 3){
-                treeSet.pollLast();
+            if(curr.treeSet.size() > 3){
+                curr.treeSet.pollLast();
             }
         }
 
@@ -152,12 +153,17 @@ public class AutocompleteSystem {
     public static void main(String[] args){
 //        TreeSet<String> treeSet = new TreeSet<>();
 //
+//
 //        treeSet.add("i love you");
 //        treeSet.add("island");
 //        treeSet.add("ironman");
 //        treeSet.add("i love leetcode");
 //
 //        System.out.println(treeSet.size());
+//
+//        treeSet.add("i love you");
+//        System.out.println(treeSet.size());
+//        System.out.println(treeSet.toString());
 //
 //        List<String> list = new ArrayList<>();
 //        for(String s : treeSet){
@@ -176,14 +182,10 @@ public class AutocompleteSystem {
         System.out.println(sv.input('#')); //
 
         System.out.println(sv.input('i')); //["i love you", "island","i love leetcode"]
-        System.out.println(sv.input(' ')); //["i love you","i love leetcode"]
+        System.out.println(sv.input(' ')); //["i love you","i love leetcode", "i a"]
         System.out.println(sv.input('a')); //["i a"]
-        System.out.println(sv.input('#')); //
+        System.out.println(sv.input('#')); //[]
 
-
-
-//        ["AutocompleteSystem","input","input","input","input","input","input","input","input","input","input","input","input","input","input"]
-//        [[["abc","abbc","a"],[3,3,3]],["b"],["c"],["#"],["b"],["c"],["#"],["a"],["b"],["c"],["#"],["a"],["b"],["c"],["#"]]
 
         sv = new AutocompleteSystem(new String[]{"abc","abbc","a"}, new int[]{3,3,3});
         System.out.println(sv.input('b')); //[]
@@ -192,17 +194,42 @@ public class AutocompleteSystem {
 
         System.out.println(sv.input('b')); //["bc"]
         System.out.println(sv.input('c')); //["bc"]
-        System.out.println(sv.input('#')); //["bc"]
+        System.out.println(sv.input('#')); //[]
 
         System.out.println(sv.input('a')); //["abc","abbc","a"]
         System.out.println(sv.input('b')); //["abc","abbc"]
-        System.out.println(sv.input('c')); //["abc","abbc"]
-        System.out.println(sv.input('#')); //["abc","abbc"]
+        System.out.println(sv.input('c')); //["abc"]
+        System.out.println(sv.input('#')); //[]
 
         System.out.println(sv.input('a')); //["abc","abbc","a"]
         System.out.println(sv.input('b')); //["abc","abbc"]
-        System.out.println(sv.input('c')); //["abc","abbc"]
-        System.out.println(sv.input('#')); //["abc","abbc"]
+        System.out.println(sv.input('c')); //["abc"]
+        System.out.println(sv.input('#')); //[]
+
+
+
+
+        String[] sentences = {"ccc","cc ccccc c ccccc","c ccc ccc cc","c cc cc cc","ccc c","c ccccc ccc ccccc","cccc cccc","ccccc","cc cc cc","c ccc cccc","c cccc ccccc ccccc","ccc ccccc ccccc","c ccc","cc","ccc cc ccccc","ccccc ccccc cc ccc","cccc","ccc cc cccc","cc c ccccc cc","cccc cc","c ccc ccc","ccccc ccc ccccc ccc","ccccc ccc","c ccccc c","ccccc cccc ccc","cccc c ccc","cc ccccc ccccc","ccc ccc cccc c","ccccc ccccc","c ccccc cccc","ccc c c","cc ccc ccc","ccc ccccc ccc","ccccc ccc c","ccc cc c","cccc cccc c c","ccccc cccc ccccc","c cc ccc","cccc ccc c","cc cc c cccc","cc ccccc ccc cccc","cc ccccc","cccc c ccccc","ccc cc cc","c cc c ccccc"};
+        int[] times = {1,3,1,5,3,2,2,3,1,5,2,4,2,3,3,2,1,2,5,2,1,1,3,2,5,5,3,2,2,2,3,1,3,2,5,1,3,2,4,4,3,5,3,1,5};
+
+        sv = new AutocompleteSystem(sentences, times);
+
+        String[] cmds = {"input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input","input"};
+        String[][] inputs = {{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"#"},{"c"},{"c"},{"#"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{" "},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{" "},{"c"},{" "},{"c"},{"c"},{" "},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{" "},{"c"},{"c"},{"#"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{" "},{"c"},{"#"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{"c"},{"#"},{"c"},{" "},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"c"},{"c"},{" "},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{"c"},{"c"},{"#"},{"c"},{"c"},{"c"},{" "},{"c"},{"#"}};
+
+        String[][] output =  {{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccccc","ccc c"},{"ccc cc c","ccc ccccc ccccc","ccc c"},{"ccc cc c","ccc ccccc ccccc","ccc cc ccccc"},{"ccc ccccc ccccc","ccc ccccc ccc","ccc ccc cccc c"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccc cccc c"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc ccccc","cc cc c cccc","cc ccccc c ccccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{},{},{},{},{},{},{},{},{},{},{},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc","ccccc ccccc"},{"ccccc ccccc","ccccc ccccc cc ccc"},{"ccccc ccccc cc ccc"},{"ccccc ccccc cc ccc"},{"ccccc ccccc cc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"cccc c ccc","cccc ccc c","cccc c ccccc"},{"cccc c ccc","cccc ccc c","cccc c ccccc"},{"cccc c ccc","cccc c ccccc"},{"cccc c ccc","cccc c ccccc"},{"cccc c ccc","cccc c ccccc"},{},{},{},{},{},{},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc c c"},{"ccc c c"},{},{},{},{},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccc cccc c"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc","ccccc ccccc"},{"ccccc ccccc","ccccc ccccc cc ccc","ccccc ccccc cc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc ccccc","cc cc c cccc","cc ccccc c ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc ccccc","cc cc c cccc","cc ccccc c ccccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc c ccccc","cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc c ccccc","cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc ccc cccc"},{"cc ccccc ccc cccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccc cccc c"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc"},{},{},{},{},{},{},{},{"cc","c cc c ccccc","c cc cc cc"},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"c ccc cccc","c ccc","c cccc ccccc ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc","ccccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{}};
+        String[][] expects = {{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccccc","ccc c"},{"ccc cc c","ccc ccccc ccccc","ccc c"},{"ccc cc c","ccc ccccc ccccc","ccc cc ccccc"},{"ccc ccccc ccccc","ccc ccccc ccc","ccc ccc cccc c"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{"ccc ccccc ccccc","ccc ccccc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccc cccc c"},{"ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc ccccc","cc cc c cccc","cc ccccc c ccccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{},{},{},{},{},{},{},{},{},{},{},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc c ccccc cc","cc ccccc","ccc cc c"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc","ccccc ccccc"},{"ccccc ccccc","ccccc ccccc cc ccc"},{"ccccc ccccc cc ccc"},{"ccccc ccccc cc ccc"},{"ccccc ccccc cc ccc"},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"cccc c ccc","cccc ccc c","cccc c ccccc"},{"cccc c ccc","cccc ccc c","cccc c ccccc"},{"cccc c ccc","cccc c ccccc"},{"cccc c ccc","cccc c ccccc"},{"cccc c ccc","cccc c ccccc"},{},{},{},{},{},{},{},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"cc","cc c ccccc cc","cc ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc c c"},{"ccc c c"},{},{},{},{},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccc cccc c"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc c"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc c"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc","ccccc ccccc"},{"ccccc ccccc","ccccc ccccc cc ccc","ccccc ccccc cc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc ccccc","cc cc c cccc","cc ccccc c ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc c ccccc cc","cc ccccc","cc cc c cccc"},{"cc ccccc","cc cc c cccc","cc ccccc c ccccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc","cc ccccc c ccccc","cc ccccc ccc cccc"},{"cc ccccc c ccccc","cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc c ccccc","cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc ccc cccc","cc ccccc ccccc"},{"cc ccccc ccc cccc"},{"cc ccccc ccc cccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccc cccc c"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc c"},{"ccc ccccc ccc","ccc ccccc ccccc","ccc ccccc c"},{"ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccc","ccc ccccc ccccc"},{"ccc ccccc ccccc"},{},{},{},{},{},{},{},{"cc","c cc c ccccc","c cc cc cc"},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"c cc c ccccc","c cc cc cc","c ccc cccc"},{"c ccc cccc","c ccc","c cccc ccccc ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc","ccccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc"},{"ccccc cccc ccc","ccccc cccc ccccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"cccc c ccc","ccccc cccc ccc","cccc ccc c"},{"ccccc cccc ccc","ccccc","ccccc ccc"},{},{"cc","c cc c ccccc","c cc cc cc"},{"cc","cc c ccccc cc","cc ccccc"},{"ccc cc c","cccc c ccc","ccccc cccc ccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{"ccc cc c","ccc ccccc ccc","ccc ccccc ccccc"},{}};
+
+        for(int i = 0, end = cmds.length; i < end; i++){
+            List<String> result = sv.input(inputs[i][0].toCharArray()[0]);
+
+            System.out.println("--"+i);
+            System.out.println(Arrays.toString(expects[i]));
+            System.out.println(result.toString());
+
+            Assert.assertEquals(Arrays.toString(expects[i]), result.toString());
+
+        }
     }
 }
 

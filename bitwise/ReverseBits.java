@@ -20,36 +20,7 @@ package fgafa.bitwise;
 
 public class ReverseBits {
 
-	// you need treat n as an unsigned value
-	public int reverseBits(int n) {
-		String binaryString = Integer.toUnsignedString(n, 2);
-		StringBuilder sb = new StringBuilder().append(binaryString);
-		sb.reverse();
-		
-		for(int i = sb.length(); i<32; i++){
-			sb.append('0');
-		}
-				
-		int output = Integer.parseUnsignedInt(sb.toString(), 2);
-		return output;
-	}
 
-	public int reverseBits_bitshift(int n) {
-		//System.out.println( Integer.toUnsignedString(n, 2) );
-		n = ((n & 0xFFFF0000) >>> 16 ) | ((n & 0x0000FFFF) << 16);
-		//System.out.println( Integer.toUnsignedString(n, 2) );
-		n = ((n & 0xFF00FF00) >>> 8 ) | ((n & 0x00FF00FF) << 8);
-		//System.out.println( Integer.toUnsignedString(n, 2) );
-		n = ((n & 0xF0F0F0F0) >>> 4 ) | ((n & 0x0F0F0F0F) << 4);
-		//System.out.println( Integer.toUnsignedString(n, 2) );
-		n = ((n & 0xCCCCCCCC) >>> 2 ) | ((n & 0x33333333) << 2);
-		//System.out.println( Integer.toUnsignedString(n, 2) );
-		n = ((n & 0xAAAAAAAA) >>> 1 ) | ((n & 0x55555555) << 1);
-		//System.out.println( Integer.toUnsignedString(n, 2) );
-		
-		return n;
-	}
-	
 	/**       */
 	public void reverseBits_searchDB(int n) {
 		//search DB
@@ -63,19 +34,21 @@ public class ReverseBits {
 	   * 
 	   * eg.
 	   * 0110 1011 => 1110 1010 => 1110 1010 => 1100 1110 => 1101 0110
-	   * (87654321 => 17654328  => 12654378  => 12354678  => 12345678)
 	   * 
 	   * Time O(the size of bits)
 	   */
 	  public static int reverse_swap(int bits){
-	    if(bits < 0 || bits > Integer.MAX_VALUE ) // bits > Integer.MAX_VALUE is useless
-	      return -1;   // it's an unsigned 
+	    if(bits < 0 ) {
+			return -1;   // it's an unsigned
+		}
 	    
 	    int length = 30;  // a Java int is 32 bits in all JVMs and on all platforms
-	    while((bits & (1 << length )) == 0 ) 
-	      length --;
-	    for(int i=0; i<length/2; i++ ){
-	      bits = swapBits(bits, i, length-i-1);  
+	    while((bits & (1 << length )) == 0 ) {
+			length--;
+		}
+
+	    for(int i=0, j = length; i < j; i++, j--){
+	      bits = swapBits(bits, i, j);
 	    }
 	    
 	    return bits;
@@ -84,11 +57,11 @@ public class ReverseBits {
 	  private static int swapBits(int n, int i, int j){
 	    //System.out.println("swapBits between "+i+" with "+j + " in " + Integer.toBinaryString(n));
 	    
-	    boolean iB = getBit(n, i);
-	    boolean jB = getBit(n, j);
+	    boolean b1 = getBit(n, i);
+	    boolean b2 = getBit(n, j);
 	    
-	    n = setBit(n, i, jB);
-	    n = setBit(n, j, iB);
+	    n = setBit(n, i, b2);
+	    n = setBit(n, j, b1);
 	    
 	    return n;
 	  }
@@ -119,6 +92,16 @@ public class ReverseBits {
 	    
 	  }
 
+	public static int reverseBits_x(int n) {
+		int reverse = 0;
+
+		for( int i = 31; i >= 0; i--){
+			reverse |= (n & 1) << i ;
+			n >>= 1;
+		}
+
+		return reverse;
+	}
 	  
 	  /**
 	   * 
@@ -144,6 +127,18 @@ public class ReverseBits {
 	   * 
 	   * eg.
 	   * 0110 1011  => 1001 0111  => 0110 1101  => 1101 0110
+	   *
+	   *
+	   * 0b1111111111111111111111111111101;
+	   *
+	   * 0111 1111 1111 1111 1111 1111 1111 1101  (1)
+	   * 1011 1111 1111 1111 1111 1111 1111 1110  (2)
+	   * 1110 1111 1111 1111 1111 1111 1111 1011  (4)
+	   * 1111 1110 1111 1111 1111 1111 1011 1111  (8)
+	   * 1111 1111 1111 1110 1011 1111 1111 1111  (16)
+	   * 1011 1111 1111 1111 1111 1111 1111 1110
+	   *
+	   *
 	   * 
 	   * @param bits
 	   * @return
@@ -151,43 +146,96 @@ public class ReverseBits {
 	  
 	  public static int reverseMask(int bits){
 	    
-	    bits = ((bits & 0x55555555) << 1) | ((bits & 0xAAAAAAAA) >> 1);    //swap all odd and even bits,  1 and 1
-	    bits = ((bits & 0x33333333) << 2) | ((bits & 0xCCCCCCCC) >> 2);    //swap                      ,  2 and 2
-	    bits = ((bits & 0x0F0F0F0F) << 4) | ((bits & 0xF0F0F0F0) >> 4);    //swap                      ,  4 and 4
-	    bits = ((bits & 0x00FF00FF) << 8) | ((bits & 0xFF00FF00) >> 8);    //swap                      ,  8 and 8
-	    bits = ((bits & 0x0000FFFF) << 16) | ((bits & 0xFFFF0000) >> 16);  //swap                      , 16 and 16
+	    bits = ((bits & 0x55555555) << 1) | ((bits & 0xAAAAAAAA) >>> 1);    //swap all odd and even bits,  1 and 1
+	    bits = ((bits & 0x33333333) << 2) | ((bits & 0xCCCCCCCC) >>> 2);    //swap                      ,  2 and 2
+	    bits = ((bits & 0x0F0F0F0F) << 4) | ((bits & 0xF0F0F0F0) >>> 4);    //swap                      ,  4 and 4
+	    bits = ((bits & 0x00FF00FF) << 8) | ((bits & 0xFF00FF00) >>> 8);    //swap                      ,  8 and 8
+	    bits = ((bits & 0x0000FFFF) << 16) | ((bits & 0xFFFF0000) >>> 16);  //swap                      , 16 and 16
 	    
 	    return bits;
 	  }
-	
+
+	/**
+	 *
+	 *
+	 */
+
+	public static int reverseBits_bitshift(int n) {
+		//System.out.println( Integer.toUnsignedString(n, 2) );
+		n = ((n & 0xFFFF0000) >>> 16 ) | ((n & 0x0000FFFF) << 16);
+		//System.out.println( Integer.toUnsignedString(n, 2) );
+		n = ((n & 0xFF00FF00) >>> 8 ) | ((n & 0x00FF00FF) << 8);
+		//System.out.println( Integer.toUnsignedString(n, 2) );
+		n = ((n & 0xF0F0F0F0) >>> 4 ) | ((n & 0x0F0F0F0F) << 4);
+		//System.out.println( Integer.toUnsignedString(n, 2) );
+		n = ((n & 0xCCCCCCCC) >>> 2 ) | ((n & 0x33333333) << 2);
+		//System.out.println( Integer.toUnsignedString(n, 2) );
+		n = ((n & 0xAAAAAAAA) >>> 1 ) | ((n & 0x55555555) << 1);
+		//System.out.println( Integer.toUnsignedString(n, 2) );
+
+		return n;
+	}
+
 	public static void main(String[] args) {
 		ReverseBits sv = new ReverseBits();
-		
-		int[] input = {43261596};
-		int[] expect = {964176192};
-		
-		for(int i=0; i<input.length; i++){
-			System.out.println(" \n input: "+ input[i] + " => "+ expect[i] +" => "+ sv.reverseBits(input[i]) 
-					+ "=>" + sv.reverseBits_bitshift(input[i]));
-			
-		}
-		
+
+
 	    /* test bit reverse  */
-	    int[] n = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 313, 1881};
-	    
-	    int rev;
-	    for(int i=0; i<n.length; i++){
-	      rev = reverseMask(n[i]);
-	      System.out.println("Reverse "+ n[i] + " to " + rev);
-	      rev = reverse_swap(n[i]);
-	      System.out.println("Reverse "+ n[i] + " to " + rev);
-	      System.out.println("Reverse "+ Integer.toBinaryString(n[i]) + " to " + Integer.toBinaryString(rev));
-	      System.out.println("Reverse "+ Integer.toBinaryString(n[i]) + " to " + new StringBuilder(Integer.toBinaryString(rev)).reverse());
-	      
+	    int[] bits = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 313, 1881,
+				43261596,
+				964176192,
+				0b1111111111111111111111111111101,
+				0b11111111111111111111111111111101 // this is not an unsign int
+	    };
+
+
+	    for(int i=0; i<bits.length; i++){
+			System.out.println("Reverse \t\t\t"+ Integer.toBinaryString(bits[i]) + " to " + new StringBuilder(Integer.toBinaryString(bits[i])).reverse());
+
+			int rev2 = reverse_swap(bits[i]);
+			System.out.println("reverse_swap: \t\t"+ Integer.toBinaryString(bits[i]) + " to " + Integer.toBinaryString(rev2));
+
+			int rev0 = reverseBits_x(bits[i]);
+			System.out.println("reverseBits_x: \t\t"+ Integer.toBinaryString(bits[i]) + " to " + Integer.toBinaryString(rev0));
+
+			int rev1 = reverseMask(bits[i]);
+			System.out.println("reverseMask: \t\t"+ Integer.toBinaryString(bits[i]) + " to " + Integer.toBinaryString(rev1));
+
+
+			int rev3 = reverseBits_bitshift(bits[i]);
+			System.out.println("reverse_bitshift \t"+ Integer.toBinaryString(bits[i]) + " to " + Integer.toBinaryString(rev3));
+
+			System.out.println();
+
 	    }
-		
+
 	    int x = 43261596;
 	    System.out.println("\n" + ( x & 0xaaaaaaaa )  + "\t"+ (x & 0xAAAAAAAA));
+
+
+		int n = 0b111111111111111111111111111101; //111 1111 1111 1111 1111 1111 1111 1101
+//		         11111111111111111111111111111101
+		System.out.println(Integer.toBinaryString(n));
+
+//	    y = ((y & 0x55555555) << 1) | ((y & 0xAAAAAAAA) >>> 1);
+//		System.out.println(Integer.toBinaryString(y));
+
+		n = ((n & 0xFFFF0000) >>> 16) | ((n & 0x0000FFFF) << 16);
+		System.out.println(Integer.toBinaryString(n));
+
+		n = ((n & 0xFF00FF00) >>> 8 ) | ((n & 0x00FF00FF) << 8);
+		System.out.println(Integer.toBinaryString(n));
+
+		n = ((n & 0xF0F0F0F0) >>> 4 ) | ((n & 0x0F0F0F0F) << 4);
+		System.out.println(Integer.toBinaryString(n));
+
+		n = ((n & 0xCCCCCCCC) >>> 2 ) | ((n & 0x33333333) << 2);
+		System.out.println(Integer.toBinaryString(n));
+
+		n = ((n & 0xAAAAAAAA) >>> 1 ) | ((n & 0x55555555) << 1);
+		System.out.println(Integer.toBinaryString(n));
+
+		
 	}
 
 }

@@ -1,7 +1,11 @@
 package fgafa.datastructure.trie;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
- * 
+ *  Leetcode #211
+ *
  * Design a data structure that supports the following two operations: addWord(word) and search(word)
 
 	search(word) can search a literal word or a regular expression string containing only letters a-z or ..
@@ -21,10 +25,10 @@ package fgafa.datastructure.trie;
  *
  */
 
-//Your WordDictionary object will be instantiated and called as such:
-//WordDictionary wordDictionary = new WordDictionary();
-//wordDictionary.addWord("word");
-//wordDictionary.search("pattern");
+/**
+ *
+ * Trie + dfs
+ */
 
 public class WordDictionary {
 	TrieNode root = new TrieNode();
@@ -83,6 +87,30 @@ public class WordDictionary {
     	TrieNode[] children = new TrieNode[26]; //default all are null
     	boolean isWord = false;
     }
+
+	/***   ***/
+	@Test
+	public void test(){
+
+		WordDictionary sv = new WordDictionary();
+
+		sv.addWord("bad");
+		sv.addWord("dad");
+		sv.addWord("mad");
+
+		Assert.assertFalse(sv.search("pad"));
+		Assert.assertTrue(sv.search("bad"));
+		Assert.assertTrue(sv.search(".ad"));
+
+		Assert.assertTrue(sv.search("b.."));
+
+		Assert.assertTrue(sv.search("..."));
+		Assert.assertFalse(sv.search(".."));
+
+		//["WordDictionary","addWord","addWord","addWord","addWord","addWord","addWord","addWord","addWord","search","search","search","search","search","search","search","search","search","search"]
+		//[[],["ran"],["rune"],["runner"],["runs"],["add"],["adds"],["adder"],["addee"],["r.n"],["ru.n.e"],["add"],["add."],["adde."],[".an."],["...s"],["....e."],["......."],["..n.r"]]
+	}
+
 }
 
 

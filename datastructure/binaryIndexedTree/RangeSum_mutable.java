@@ -1,7 +1,5 @@
 package fgafa.datastructure.binaryIndexedTree;
 
-import java.util.Random;
-
 /**
  *
  * Given an integer array in the construct method, implement two methods checkIn(start, end) and modify(index, value):
@@ -27,7 +25,7 @@ import java.util.Random;
  */
 
 public class RangeSum_mutable {
-    final int length;
+    final int n;  //length
     int[] nums; // the original array, start from 1
     int[] sums; // the BinaryIndexedTree array, start from 1
 
@@ -36,36 +34,30 @@ public class RangeSum_mutable {
             throw new IllegalArgumentException("The input Integer array should not be null or empty. ");
         }
 
-        length = origin.length;
-        nums = new int[length +1];
-        System.arraycopy(origin, 0, nums, 1, length);
+        n = origin.length;
+
+        nums = new int[n + 1];  //default all are 0
+        //System.arraycopy(origin, 0, nums, 1, length);
 
         /*init the sums array*/
-        sums = new int[length + 1]; //default all are 0
-        for(int i = 0; i < length; i++){
-            update(i, origin[i] + origin[i]);
+        sums = new int[n + 1]; //default all are 0
+        for(int i = 0; i < n; i++){
+            update(i, origin[i]);
         }
     }
 
-    /**
-     *  Getting sum from original array with range [0, pos]
-     *  It's equal to getting sum from nums with range [1, pos+1]
-     *
-     */
-    public int rangeSum(int pos){
+
+    /** update original[pos] to the new value, it's equal to update nums[pos+1]  */
+    public void update(int pos, int val){
         pos++;
-        if(pos < 1 || pos > length ){
-            throw new IllegalArgumentException("The valid checkIn range is [1, length] ");
-        }
+        int diff = val - this.nums[pos];
+        this.nums[pos] = val;  //update in the origin
 
-        int result = 0;
-        for(int i = pos; i > 0; i -= lowbit(i)){
-            //System.out.println(Integer.toBinaryString(i));
-            result += sums[i];
+        //update in the BI tree
+        for(int i = pos; i <= n; i += lowbit(i)){
+            sums[i] += diff;
         }
-        return result;
     }
-
 
     /**
      *  Getting sum from original array with range [start, end]
@@ -73,19 +65,23 @@ public class RangeSum_mutable {
      *
      */
     public int rangeSum(int start, int end){
+        //assert start >= 0 && end < n
+
         return rangeSum(end + 1) - rangeSum(start);
     }
 
 
-    /** update original[pos] to the new value, it's equal to update nums[pos+1]  */
-    public void update(int pos, int newValue){
-        pos++;
-        int diff = newValue - nums[pos];
+    private int rangeSum(int pos){
+        int result = 0;
 
-        for(int i = pos; i <= length; i += lowbit(i)){
-            sums[i] += diff;
+        for(int i = pos; i > 0; i -= lowbit(i)){
+            //System.out.println(Integer.toBinaryString(i));
+            result += sums[i];
         }
+
+        return result;
     }
+
 
     private int lowbit(int x) {
         return x & -x;

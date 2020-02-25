@@ -1,13 +1,9 @@
 package fgafa.graph.topological;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.*;
 
 
 /**
@@ -58,144 +54,68 @@ import java.util.Set;
  */
 
 public class AlienDictionary {
-    
-    public String alienOrder(String[] words) {
-        
-        //check
-        if(null == words || 1 >= words.length){
-            return "";
-        }
-        
-        //build the graph
-        Map<Character, List<Character>> graph = new HashMap<>();
-        Map<Character, Integer> inDegrees = new HashMap<>();
-        
-        buildGraph(graph, inDegrees, words);
-        
-        //topological sort
-        String result = topologicalsort( graph, inDegrees);
-        
-        return result;
-    }
-    
-    private void buildGraph(Map<Character, List<Character>> graph, Map<Character, Integer> inDegrees, String[] words){
-        
-        initInDegree(inDegrees, words[0]);
-        
-        for(int i = 1; i < words.length; i++){
-            initInDegree(inDegrees, words[i]);
-            
-            char[] edge = getEdge(words[i - 1], words[i]);
-            
-            if(0 == edge.length){
-                continue;
-            }
-            
-            List<Character> next = graph.get(edge[0]);
-            if(null == next){
-                next = new ArrayList<>();
-                graph.put(edge[0], next);
-            }
-            next.add(edge[1]);
-            
-            inDegrees.put(edge[1], inDegrees.get(edge[1]) + 1);
-        }
-    }
-    
-    private char[] getEdge(String word1, String word2){
-        int i = 0;
-        int min = Math.min(word1.length(), word2.length());
-        for( ; i < min && word1.charAt(i) == word2.charAt(i); i++);
-        
-        if(i == min){
-            return new char[0];
-        }else{
-            return new char[]{word1.charAt(i), word2.charAt(i)};
-        }
-    }
-    
-    private void initInDegree(Map<Character, Integer> inDegrees, String word){
-        for(char c : word.toCharArray()){
-            if(!inDegrees.containsKey(c)){
-                inDegrees.put(c, 0);
-            }
-        }
-    }
-    
-    private String topologicalsort(Map<Character, List<Character>> graph, Map<Character, Integer> inDegrees){
-        
-        Queue<Character> queue = new LinkedList<>();
-        
-        for(Map.Entry<Character, Integer> entry : inDegrees.entrySet()){
-            if(0 == entry.getValue()){
-                queue.add(entry.getKey());
-            }
-        }
-        
-        StringBuilder result = new StringBuilder();
-        Character curr;
-        while(!queue.isEmpty()){
-            curr = queue.poll();
-            result.append(curr);
-            
-            if(graph.containsKey(curr)){
-                for(Character neighbor : graph.get(curr)){
-                    if(1 == inDegrees.get(neighbor)){
-                        queue.add(neighbor);
-                    }
-                    
-                    inDegrees.put(neighbor, inDegrees.get(neighbor) - 1);
-                }
-            }
-        }
-        
-        //check if there is loop
-        for(Map.Entry<Character, Integer> entry : inDegrees.entrySet()){
-            if(0 != entry.getValue()){
-                return "";
-            }
-        }
-        
-        return result.toString();
-    }
+    @Test public void test(){
+//        Assert.assertEquals("wertf", alienOrder_n(new String[]{"wrt", "wrf", "er", "ett", "rftt"}));
+//
+//        Assert.assertEquals("zx", alienOrder_n(new String[]{"z", "x"}));
+//
+//        Assert.assertEquals("", alienOrder_n(new String[]{"z", "x", "z"}));
+//
+//        Assert.assertEquals("abcd", alienOrder_n(new String[]{"ab","adc"}));
 
+        Assert.assertEquals("abcgilmnrstuvwyzxhqjdfo", alienOrder_n(new String[]{"ri","xz","qxf","jhsguaw","dztqrbwbm","dhdqfb","jdv","fcgfsilnb","ooby"}));
+
+
+    }
 
 
     public String alienOrder_n(String[] words) {
-        if (null == words || 1 >= words.length) {
+        if (null == words || words.length < 2) {
             return "";
         }
 
         Map<Character, Set<Character>> edges = new HashMap<>();
         Map<Character, Integer> inDegrees = new HashMap<>();
+        Set<Character> set = new HashSet<>();
 
-        for(int i = 1; i < words.length; i++){
+        char cl;
+        char cr;
+        for(int i = 1, n = words.length; i < n; i++){
             String pre = words[i - 1];
             String curr = words[i];
-            for(int j = 0; j < Math.min(pre.length(), curr.length()); j++){
-                if(pre.charAt(j) != curr.charAt(j)){
-                    if(!edges.containsKey(pre.charAt(j))){
-                        edges.put(pre.charAt(j), new HashSet<>());
-                    }
 
-                    if( edges.get(pre.charAt(j)).add(curr.charAt(j))){
-                        inDegrees.put(curr.charAt(j), inDegrees.containsKey(curr.charAt(j)) ? inDegrees.get(curr.charAt(j)) + 1 : 1);
-                    }
+            fill(set, pre);
+            fill(set, curr);
+
+            for(int j = 0, m = Math.min(pre.length(), curr.length()); j < m; j++){
+                cl = pre.charAt(j);
+                cr = curr.charAt(j);
+
+                if(cl != cr){
+                    edges.computeIfAbsent(cl, x -> new HashSet<>()).add(cr);
+                    inDegrees.put(cr, inDegrees.getOrDefault(cr, 0) + 1);
+
+                    break;
                 }
             }
         }
 
         Queue<Character> queue = new LinkedList<>();
-        for(char key : edges.keySet()){
+        for(char key : set){
             if(!inDegrees.containsKey(key)){
                 queue.add(key);
             }
         }
 
         StringBuilder result = new StringBuilder();
+        char from;
         while(!queue.isEmpty()){
-            char from = queue.poll();
+            from = queue.poll();
             result.append(from);
+
+            if(!edges.containsKey(from)){
+                continue;
+            }
 
             for(char to : edges.get(from)){
                 if(inDegrees.get(to) == 1){
@@ -205,10 +125,20 @@ public class AlienDictionary {
                 }
             }
 
-            edges.remove(from);
+        }
+
+        Map<Character, Set<Integer>> c2p = new HashMap<>();
+        for(int i = 0; i < 5; i++){
+            c2p.computeIfAbsent('a', x -> new HashSet<>()).add(i);
         }
 
         //is loop?
-        return edges.isEmpty()? result.toString() : "";
+        return set.size() == result.length()? result.toString() : "";
+    }
+
+    private void fill(Set<Character> set, String s ){
+        for(char c : s.toCharArray()){
+            set.add(c);
+        }
     }
 }
