@@ -125,6 +125,8 @@ public class HouseRobber {
            
         Maximum amount of money the thief can rob = 5 + (2 + 3)  = 10.  the 
 	 */
+
+
     public int rob_native(TreeNode root) {
         if(null == root){
             return 0;
@@ -141,8 +143,11 @@ public class HouseRobber {
         return Math.max(max, rob_native(root.left) + rob_native(root.right));
 
     }
-    
-    public int rob_dp(TreeNode root) {
+
+	/**
+	 * Time O(n)
+	 */
+	public int rob_dp(TreeNode root) {
         if(null == root){
             return 0;
         }

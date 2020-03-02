@@ -1,10 +1,11 @@
 package fgafa.tree;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 /**
+ * LeetCode #96, number of unique BST;  #95 generate unique BST
+ *
  * Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
  * 
  * For example,
@@ -30,34 +31,27 @@ public class BSTUnique
    *  Catalan number ,  similar to UniquePaths.java
    */
   public int numTrees(int n) {
-      if(n < 0){
-          return 0;
-      }else if( n < 2){
-          return 1;
+      if(n < 3){
+          return n;
       }
-      
-      int[] result = new int[n+1]; // default all are 0
-      result[0] = 1;
-      result[1] = 1;
+
+      int[] f = new int[n + 1];
+      f[0] = 1;
+      f[1] = 1;
 
       int mid;
-      for(int i = 2; i <=n; i++){
-          mid = i >> 1;
-
-          for(int j = 0, k = i - 1; j < mid; j++, k--){
-              result[i] += result[j] * result[k];
-          }
-          result[i] <<= 1;
-          
-          if( (i & 1) == 1 ){
-              result[i] += result[mid] * result[mid];
+      for(int i = 2; i <= n; i++){
+          mid = i / 2;
+          f[i] = ( (i & 1) == 1 ? f[mid] * f[mid] : 0 );
+          for(int k = 0; k < mid; k++){
+              f[i] += f[k]*f[i - k - 1]*2;
           }
       }
 
-      return result[n];
+      return f[n];
   }
   
-  /*
+  /**
    * Given n, generate all structurally unique BST's (binary search trees) that store values 1...n.
    * 
    */
@@ -89,135 +83,82 @@ public class BSTUnique
       }
       return result;
   }
-  
-    public List<TreeNode> generateTrees(int n) {
-        List<List<TreeNode>> structures = new ArrayList<List<TreeNode>>();
-        List<TreeNode> ret = new ArrayList<TreeNode>();
-        // check
-        if (n < 0)
-            return ret; //
 
-        ret.add(null);
-        if (n == 0)
-            return ret;
-        structures.add(0, ret); // save structure(0) in index 0
+    /**
+     *  recursive + memorize
+     *
+     */
 
-        ret = new ArrayList<TreeNode>();
-        ret.add(new TreeNode(1));
-        if (n == 1)
-            return ret;
-        structures.add(1, ret); // save structure(1) in index 1
+    public List<TreeNode> generateTrees_x(int n) {
+        if(n < 1){
+            return Collections.EMPTY_LIST;
+        }
 
-        for (int i = 2; i <= n; i++) {
-            ret = new ArrayList<TreeNode>();
-            for (int j = 1; j <= i; j++) {
+        Map<Integer, Map<Integer, List<TreeNode>>> cache = new HashMap<>();
+        cache.computeIfAbsent(0, x -> new HashMap<>()).computeIfAbsent(0, x -> new LinkedList<>()).add(null);
+        cache.computeIfAbsent(1, x -> new HashMap<>()).computeIfAbsent(1, x -> new LinkedList<>()).add(new TreeNode(1));
 
-                List<TreeNode> leftTrees = null;
-                if (j - 1 > 0) {
-                    leftTrees = structures.get(j - 1);
-                    // makeUp(leftTree, buildMapping(0, j-1) );
+        List<TreeNode> list;
+        TreeNode root;
+        for(int i = 2; i <= n; i++){
+            list = new LinkedList<>();
+            for(int j = 1; j <= i; j++){
+                List<TreeNode> lefts = generateTrees(j - 1, 1, cache);
+                List<TreeNode> rights = generateTrees(i - j, j + 1, cache);
+
+                for(TreeNode l : lefts){
+                    for(TreeNode r : rights){
+                        root = new TreeNode(j);
+                        root.left = l;
+                        root.right = r;
+
+                        list.add(root);
+                    }
                 }
-
-                List<TreeNode> rightTrees = null;
-                if (j < i) {
-                    rightTrees = structures.get(i - j);
-                    rightTrees = cloneTrees(rightTrees, j);
-                }
-
-                ret.addAll(buildTrees(leftTrees, rightTrees, new TreeNode(j)));
             }
 
-            structures.add(i, ret);
+            cache.computeIfAbsent(i, x -> new HashMap<>()).put(1, list);
         }
 
-        return ret;
+        return cache.get(n).get(1);
     }
 
-    private List<TreeNode> buildTrees(List<TreeNode> left,
-                                      List<TreeNode> right,
-                                      TreeNode parent) {
-        ArrayList<TreeNode> ret = new ArrayList<TreeNode>();
+    private List<TreeNode> generateTrees(int n, int start, Map<Integer, Map<Integer, List<TreeNode>>> cache){
+        Map<Integer, List<TreeNode>> map = cache.get(n);
 
-        /* no left, no right */
-        if (left == null && right == null)
-            return ret;
+        start = (n == 0)? 0 : start;
 
-        List<TreeNode> leftTrees = null;
-        if (left != null)
-            leftTrees = cloneTrees(left, 0);
-        List<TreeNode> rightTrees = null;
-        if (right != null)
-            rightTrees = cloneTrees(right, 0);
-
-        TreeNode curr = null;
-
-        /* only has right trees */
-        if (leftTrees == null) {
-
-            for (int j = 0; j < rightTrees.size(); j++) {
-                curr = new TreeNode(parent.val);
-                curr.right = rightTrees.get(j);
-
-                ret.add(curr);
-            }
-            return ret;
+        if(map.containsKey(start)){
+            return map.get(start);
         }
 
-        /* only has left trees */
-        if (rightTrees == null) {
-            for (int i = 0; i < leftTrees.size(); i++) {
-                curr = new TreeNode(parent.val);
-                curr.left = leftTrees.get(i);
+        map.put(start, clone(map.get(1), start - 1));
 
-                ret.add(curr);
+        return map.get(start);
+    }
 
-            }
-            return ret;
+    private List<TreeNode> clone(List<TreeNode> list, int diff){
+        List<TreeNode> result = new LinkedList<>();
+
+        for(TreeNode root : list){
+            result.add(clone(root, diff));
         }
 
-        /* have both right and left trees */
-        TreeNode leftT = null;
-        for (int i = 0; i < leftTrees.size(); i++) {
-            leftT = leftTrees.get(i);
-            for (int j = 0; j < rightTrees.size(); j++) {
-                curr = new TreeNode(parent.val);
-                curr.left = leftT;
-                curr.right = rightTrees.get(j);
+        return result;
+    }
 
-                ret.add(curr);
-            }
+    private TreeNode clone(TreeNode root, int diff){
+        if(root == null){
+            return root;
         }
 
-        return ret;
-    }
-  
-  private List<TreeNode> cloneTrees( List<TreeNode> ret, int offset ){
+        TreeNode result = new TreeNode(root.val + diff);
 
-    if(ret == null)
-      return null;
+        result.left = clone(root.left, diff);
+        result.right = clone(root.right, diff);
 
-    ArrayList<TreeNode> result = new  ArrayList<TreeNode>();;
-    
-    for(int i=0; i< ret.size(); i++){
-      result.add(cloneTree(ret.get(i),offset));
+        return result;
     }
-    
-    return result;
-  }
-  
-  /*
-   * recursive
-   */
-  private TreeNode cloneTree(TreeNode node, int offset){
-    TreeNode curr = null;
-    if(node != null){
-      curr = new TreeNode(node.val + offset);
-    
-      curr.left = cloneTree(node.left, offset) ;
-      curr.right = cloneTree(node.right, offset) ;    
-    }
-    return curr;
-  }
   
 //  
 //  private int[] buildMapping(int start, int end){
@@ -251,7 +192,7 @@ public class BSTUnique
 		}
 
 		for (int i = 0; i < 6; i++) {
-			System.out.println(sv.generateTrees(i).size());
+			System.out.println(sv.generateTrees_x(i).size());
 		}
     
   }

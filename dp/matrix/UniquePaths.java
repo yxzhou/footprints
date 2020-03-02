@@ -89,152 +89,151 @@ public class UniquePaths
     
     return (int)result;
   }
-  
+
   public double uniquePaths22(int m, int n) {
-    if( m<2 || n< 2)
+    if (m < 2 || n < 2)
       return 0;
-    
-    if(m > n)
+
+    if (m > n){
       return uniquePaths2(n, m);
+    }
 
     final int N = 200;
     Factor fsv = new Factor(N);
     HashMap<Integer, HashMap<Integer, Integer>> factors = fsv.getFactors(); // example  <2,<2, 1>>, <3,<3, 1>>, <4,<2, 2>>, <5,<5, 1>>, <6,<<2, 1>, <3, 1>>>
-    
-    HashMap<Integer, Integer> result = new HashMap<Integer, Integer> ();    
-    for(int i=m+n-2; i > n-1; i--){
-      if(!factors.containsKey(i)){
-          System.out.println("=="+i);
+
+    HashMap<Integer, Integer> result = new HashMap<Integer, Integer>();
+    for (int i = m + n - 2; i > n - 1; i--) {
+      if (!factors.containsKey(i)) {
+        System.out.println("==" + i);
       }
       fsv.mergeFactor(result, factors.get(i));
     }
-      
-    for(int i=m-1; i > 1; i--){
+
+    for (int i = m - 1; i > 1; i--) {
       fsv.quitFactor(result, factors.get(i));
     }
-    
+
     double returnvalue = 1;
-    for(Integer key : result.keySet()){
+    for (Integer key : result.keySet()) {
       returnvalue *= Math.pow(key, result.get(key));
     }
-    
+
     return returnvalue;
   }
-  
 
-  
-  class Factor{
+
+  class Factor {
     int n;
     List<Integer> primes = new ArrayList<Integer>();
-    
-    public Factor(int n){
-      this.n = n;     
+
+    public Factor(int n) {
+      this.n = n;
     }
-    
-    public HashMap<Integer, HashMap<Integer, Integer>> getFactors(){
+
+    public HashMap<Integer, HashMap<Integer, Integer>> getFactors() {
       HashMap<Integer, HashMap<Integer, Integer>> factors = new HashMap<Integer, HashMap<Integer, Integer>>();
-      
-      int limit = (int)Math.sqrt(n);
+
+      int limit = (int) Math.sqrt(n);
       HashMap<Integer, Integer> factor;
       for (int i = 2; i <= limit; i++) {
         if (!factors.containsKey(i)) {
-          for (int j = i * i; j <= n; j += i){
-            if(factors.containsKey(j))
+          for (int j = i * i; j <= n; j += i) {
+            if (factors.containsKey(j))
               factor = factors.get(j);
-            else{
+            else {
               factor = new HashMap<Integer, Integer>();
               factors.put(j, factor);
-            }  
+            }
             factor.put(i, 1);
-          }  
+          }
         }
       }
-      
+
       //add the prime 
-      for(int i=2; i<=n; i++){
-        if(!factors.containsKey(i)){
+      for (int i = 2; i <= n; i++) {
+        if (!factors.containsKey(i)) {
           primes.add(i);
-          
+
           factor = new HashMap<Integer, Integer>();
           factors.put(i, factor);
           factor.put(i, 1);
-        }  
+        }
       }
-      
+
       //get the factors for factorial
       int mul;
-      for(int i=2; i<=n; i++){
+      for (int i = 2; i <= n; i++) {
         factor = factors.get(i);
-        
+
         mul = 1;
-        for(Integer it : factor.keySet())
+        for (Integer it : factor.keySet())
           mul *= it;
-          
+
         mul = i / mul;
-        
-        if(mul > 1)
-          mergeFactor(factor, factors.get(mul));   
+
+        if (mul > 1)
+          mergeFactor(factor, factors.get(mul));
       }
-      
+
       return factors;
     }
-    
-    public void mergeFactor(HashMap<Integer, Integer> f1, HashMap<Integer, Integer> f2){
-      for(Integer it : f2.keySet()){
-        if(f1.containsKey(it))
+
+    public void mergeFactor(HashMap<Integer, Integer> f1, HashMap<Integer, Integer> f2) {
+      for (Integer it : f2.keySet()) {
+        if (f1.containsKey(it))
           f1.put(it, f1.get(it) + f2.get(it));
         else
           f1.put(it, f2.get(it));
       }
     }
-    
-    public void quitFactor(HashMap<Integer, Integer> f1, HashMap<Integer, Integer> f2){
-      for(Integer it : f2.keySet())
-          f1.put(it, f1.get(it) - f2.get(it));
+
+    public void quitFactor(HashMap<Integer, Integer> f1, HashMap<Integer, Integer> f2) {
+      for (Integer it : f2.keySet())
+        f1.put(it, f1.get(it) - f2.get(it));
 
     }
   }
-  
-  
-  
+
+
   /**
    * @param args
    */
   public static void main(String[] args) {
-    UniquePaths sv =new UniquePaths();
+    UniquePaths sv = new UniquePaths();
     //int m = 6, n=4;
     int N = 100;
-    
+
     long start1 = System.currentTimeMillis();
-    
-    for(int m=2; m<N; m++){
-      for(int n=m; n<N; n++){
-        System.out.println(m + "--" +n + ": "+ sv.uniquePaths(m, n) + "\t" + sv.uniquePaths2(m, n) + "\t" + sv.uniquePaths22(m, n));
+
+    for (int m = 2; m < N; m++) {
+      for (int n = m; n < N; n++) {
+        System.out.println(m + "--" + n + ": " + sv.uniquePaths(m, n) + "\t" + sv.uniquePaths2(m, n) + "\t" + sv.uniquePaths22(m, n));
         sv.uniquePaths(m, n);
       }
     }
 
 
     long start2 = System.currentTimeMillis();
-    
-    for(int m=2; m<N; m++){
-      for(int n=m; n<N; n++){
+
+    for (int m = 2; m < N; m++) {
+      for (int n = m; n < N; n++) {
         //System.out.println(m + "--" +n + ": "+ sv.uniquePaths(m, n) + "\t" + sv.uniquePaths2(m, n));
         sv.uniquePaths2(m, n);
       }
     }
-    
+
     long start3 = System.currentTimeMillis();
-    
-    for(int m=2; m<N; m++){
-      for(int n=m; n<N; n++){
+
+    for (int m = 2; m < N; m++) {
+      for (int n = m; n < N; n++) {
         //System.out.println(m + "--" +n + ": "+ sv.uniquePaths(m, n) + "\t" + sv.uniquePaths2(m, n));
         sv.uniquePaths2(m, n);
       }
     }
-    
-    System.out.println((start2 - start1)  + " " + (start3 - start2)  + " " + (System.currentTimeMillis() - start3));
-    
+
+    System.out.println((start2 - start1) + " " + (start3 - start2) + " " + (System.currentTimeMillis() - start3));
+
   }
 
 }

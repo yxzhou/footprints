@@ -58,6 +58,28 @@ public class LargestSubProduct {
     	
     	return max;
     }
+
+	public int maxProduct_x(int[] nums) {
+		int result = Integer.MIN_VALUE;
+		int max = 1;
+		int min = 1;
+		int tmp;
+
+		for(int x : nums){
+			if(x > 0){
+				max = Math.max(x, max * x);
+				min = Math.min(x, min * x);
+			}else{
+				tmp = max * x;
+				max = Math.max(x, min * x);
+				min = Math.min(x, tmp);
+			}
+
+			result = Math.max(result, max);
+		}
+
+		return result;
+	}
 	
 	/*wrong*/
 	public int maxProduct_wrong(int[] A) {
@@ -117,7 +139,15 @@ public class LargestSubProduct {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		int[][] inputs = {{-4, -3, -2}};
+
+
+		LargestSubProduct sv = new LargestSubProduct();
+
+		for(int i = 0; i < inputs.length; i++){
+			sv.maxProduct_x(inputs[i]);
+		}
+
 
 	}
 

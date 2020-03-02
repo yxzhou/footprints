@@ -3,8 +3,8 @@ package fgafa.game.sudoku;
 import fgafa.Constants;
 import algs4.stdlib.In;
 
-/*
- * For leetcode
+/**
+ * For Leetcode #37
  * 
  * Write a program to solve a Sudoku puzzle by filling the empty cells.
  * 

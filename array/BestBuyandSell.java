@@ -5,14 +5,16 @@ import fgafa.util.Misc;
 public class BestBuyandSell
 {
 
-  /*
+  /**
+   * Leetcode #121
+   *
    * Say you have an array for which the ith element is the price of a given stock on day i.
    * If you were only permitted to complete at most on transaction (ie, buy one and sell one share of the stock),
    * design an algorithm to find the maximum profit.
    * 
    * Time O(n)   Space O(1)
    */
-  public int maxProfitI(int[] prices) {
+  public int maxProfit_oneTransaction(int[] prices) {
       if(null == prices || prices.length < 2){
           return 0;
       }
@@ -30,14 +32,16 @@ public class BestBuyandSell
       return result;
   }
   
-  /*
+  /**
+   * Leetcode #122
+   *
    * Say you have an array for which the ith element is the price of a given stock on day i.
    * Design an algorithm to find the maximum profit.
    * You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times).
    * However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
    */
 
-  public int maxProfitII(int[] prices) {
+  public int maxProfit_multipleTransaction(int[] prices) {
       if(null == prices || prices.length < 2){
           return 0;
       }
@@ -64,7 +68,7 @@ public class BestBuyandSell
    * Then check from right to left to find the maximum profit between the i-th day to the end.
    * Add two arrays and find the maximum profit.
    */
-  public int maxProfitIII(int[] prices) {
+  public int maxProfit_twoTransaction(int[] prices) {
       if (prices == null || prices.length < 2)
           return 0;
 
@@ -104,7 +108,7 @@ public class BestBuyandSell
       return maxProfit;
   }
 
-  public int maxProfitIII_n(int[] prices) {
+  public int maxProfit_twoTransaction_n(int[] prices) {
       if(null == prices || prices.length < 2){
           return 0;
       }
@@ -149,7 +153,7 @@ public class BestBuyandSell
      *  define dp[k][i] as the max profit that buy and sell at most k transactions in array(0, i)
      *  define p[i][j] as the max profit that buy and sell 1 transactions in array(i, j)
      *
-     *  if k > n - 1, it equals maxProfitII
+     *  if k > n - 1, it equals maxProfit_multipleTransaction
      *
      *  dp[0][0] = 0
      *  dp[k][k] = dp[k - 1][k - 1] + Math.max(0, prices[k] - prices[k - 1]);
@@ -160,7 +164,7 @@ public class BestBuyandSell
   /**
    * Time O( k * n * n * n),   Space O(n * k)
    */
-  public int maxProfit(int k, int[] prices) {
+  public int maxProfit_kTransaction(int k, int[] prices) {
       //check
       if(null == prices || 0 == prices.length || k < 1){
           return 0;
@@ -170,7 +174,7 @@ public class BestBuyandSell
 
       if(days - 1 < k){
           //return maxProfit(days - 2, prices);
-          return maxProfitII(prices);
+          return maxProfit_multipleTransaction(prices);
       }
       
       //define p[i][j] as the max profit from 0 to j - 1 with at most i transactions
@@ -209,7 +213,7 @@ public class BestBuyandSell
     /**
      * Time O( k * n * n ),   Space O(n * n)
      */
-    public int maxProfit_k(int k, int[] prices) {
+    public int maxProfit_kTransaction_n(int k, int[] prices) {
         //check
         if (null == prices || 0 == prices.length || k < 1) {
             return 0;
@@ -218,7 +222,7 @@ public class BestBuyandSell
         int n = prices.length;
 
         if(n - 1 < k){
-            return maxProfitII(prices);
+            return maxProfit_multipleTransaction(prices);
         }
 
         //define p[i][j] as the max profit that buy and sell 1 transactions in array(i, j)
@@ -269,7 +273,7 @@ public class BestBuyandSell
    *
    * Time O(k * n)  Space O(n * n)
    */
-	public int maxProfit_n(int k, int[] prices) {
+	public int maxProfit_kTransaction_x(int k, int[] prices) {
 	    //check
 	    if(null == prices || prices.length < 2|| k < 1 ){
 	        return 0;
@@ -277,7 +281,7 @@ public class BestBuyandSell
 	    
 	    int days = prices.length;
 	    if(days <= k){
-	        return maxProfitII(prices);
+	        return maxProfit_multipleTransaction(prices);
 	    }
 
         int[][] local = new int[days][k + 1];
@@ -299,7 +303,7 @@ public class BestBuyandSell
      * Time O(k * n)  Space O(n)
      */
 	
-  public int maxProfit_n2(int k, int[] prices) {
+  public int maxProfit_kTransaction_x2(int k, int[] prices) {
       //check
       if(null == prices || prices.length < 2|| k < 1 ){
           return 0;
@@ -307,7 +311,7 @@ public class BestBuyandSell
       
       int days = prices.length;
       if(days <= k){
-          return maxProfitII(prices);
+          return maxProfit_multipleTransaction(prices);
       }
 
       int[] local = new int[k + 1];
@@ -330,6 +334,8 @@ public class BestBuyandSell
   }
   
   /**
+   * Leetcode #309
+   *
    * Say you have an array for which the ith element is the price of a given stock on day i.
 
     Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times) with the following restrictions:
@@ -341,9 +347,7 @@ public class BestBuyandSell
     prices = [1, 2, 3, 0, 2]
     maxProfit = 3
     transactions = [buy, sell, cooldown, buy, sell]
-   */
-  
-  /*
+   *
    * 0 Analyze:
    * The possible behavior on the case [1, 2, 3, 0, 2] would be
    *
@@ -354,7 +358,7 @@ public class BestBuyandSell
     
     To clarify:
     Till index i, the buy / sell action must happen and must be the last action. 
-    It may not happen at index i. It may happen at i - 1, i - 2, ... 0.
+    It may not happen at index i. It may happen at 0, ... i - 2, i - 1.
 
     In the end n - 1, return sell[n - 1]. Apparently we cannot finally end up with a buy. 
     In that case, we would rather take a rest at n - 1.
@@ -364,6 +368,7 @@ public class BestBuyandSell
     2. Define Recursion
     buy[i]: To make a decision whether to buy at i, we either take a rest, by just using the old decision at i - 1, 
     or sell at/before i - 2, then buy at i, We cannot sell at i - 1, then buy at i, because of cooldown.
+
     sell[i]: To make a decision whether to sell at i, we either take a rest, by just using the old decision at i - 1, 
     or buy at/before i - 1, then sell at i.
     
@@ -385,7 +390,7 @@ public class BestBuyandSell
     We can buy. The max profit at i = 0 ending with a buy is -prices[0].
     We cannot sell. The max profit at i = 0 ending with a sell is 0.
    */
-    public int maxProfitIV(int[] prices) {
+    public int maxProfit_cooldown(int[] prices) {
         if(null == prices || prices.length < 2){
             return 0;
         }
@@ -395,13 +400,16 @@ public class BestBuyandSell
         int sell = 0; //define 'sell' as the max profit that the last action is sell
         int cooldown = 0; //define 'cooldown' as the max profit that the last action is cooldown
 
+        int tmp;
         for (int i = 1; i < prices.length; i++) {
+            tmp = buy;
+
             buy = Math.max(buy, cooldown - prices[i]);
 
             //cooldown = Math.max(cooldown, sell);
             cooldown = sell;
 
-            sell = Math.max(sell, buy + prices[i]);
+            sell = Math.max(sell, tmp + prices[i]);
         }
 
         return sell;
@@ -419,7 +427,7 @@ public class BestBuyandSell
      maxProfit = 8
      transactions = [buy, rest, rest, sell, buy, sell]
      */
-    public int maxProfitV(int[] prices, int fee){
+    public int maxProfit_withFee(int[] prices, int fee){
         if(null == prices || prices.length < 2){
             return 0;
         }
@@ -442,12 +450,12 @@ public class BestBuyandSell
   public static void main(String[] args) {
     BestBuyandSell sv = new BestBuyandSell();
 
-    System.out.println("\n--maxProfitII, buy and sell multiple times--");
+    System.out.println("\n--maxProfit_multipleTransaction, buy and sell multiple times--");
     int[][] prices = { {6,1,3,2,4,7}, {2,1,4,5,2,9,7}};
     
     for(int i=0; i< prices.length; i++){
       System.out.println("Input : "+ Misc.array2String(prices[i]));
-      System.out.println("Output: "+ sv.maxProfitII(prices[i]));
+      System.out.println("Output: "+ sv.maxProfit_multipleTransaction(prices[i]));
       
     }
     
@@ -458,11 +466,11 @@ public class BestBuyandSell
     
     for(int i=0; i< prices_2.length; i++){
         System.out.println(String.format("Input : k = %d, Prices = %s ", k[i], Misc.array2String(prices_2[i])));
-        System.out.println("Output: "+ sv.maxProfit_k(k[i], prices_2[i]) + " - " + sv.maxProfit_n2(k[i], prices_2[i]));
+        System.out.println("Output: "+ sv.maxProfit_kTransaction_n(k[i], prices_2[i]) + " - " + sv.maxProfit_kTransaction_x2(k[i], prices_2[i]));
         
     }
     
-    System.out.println("\n--maxProfitIV--, buy and sell multiple times with cooldown");
+    System.out.println("\n--maxProfit_cooldown--, buy and sell multiple times with cooldown");
     
     int[][] prices_3 = {
                 {1, 2, 3, 0, 2},
@@ -471,11 +479,11 @@ public class BestBuyandSell
     
     for(int i=0; i< prices_3.length; i++){
         System.out.println(String.format("Input : Prices = %s ",  Misc.array2String(prices_3[i])));
-        System.out.println("Output: "+ sv.maxProfitIV(prices_3[i]) );
+        System.out.println("Output: "+ sv.maxProfit_cooldown(prices_3[i]) );
         
     }
 
-      System.out.println("\n--maxProfitV--, buy and sell multiple times with a fee");
+      System.out.println("\n--maxProfit_withFee--, buy and sell multiple times with a fee");
 
       int[][] prices_4 = {
               {1, 3, 2, 8, 4, 9}
@@ -486,7 +494,7 @@ public class BestBuyandSell
 
       for(int i=0; i< prices_4.length; i++){
           System.out.println(String.format("Input : Prices = %s, fee=%d",  Misc.array2String(prices_4[i]), fees[i]));
-          System.out.println("Output: "+ sv.maxProfitV(prices_4[i], fees[i]) );
+          System.out.println("Output: "+ sv.maxProfit_withFee(prices_4[i], fees[i]) );
 
       }
   }

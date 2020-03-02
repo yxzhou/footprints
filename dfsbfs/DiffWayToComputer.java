@@ -1,12 +1,14 @@
 package fgafa.dfsbfs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fgafa.util.Misc;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
- * 
+ * Leetcode #241
+ *
  * Given a string of numbers and operators, return all possible results from
  * computing all the different possible ways to group numbers and operators. The
  * valid operators are +, - and *.
@@ -30,6 +32,60 @@ import fgafa.util.Misc;
  *
  */
 public class DiffWayToComputer {
+
+	public List<Integer> diffWaysToCompute_n(String input) {
+		final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
+		String[] tokens = input.split(String.format(WITH_DELIMITER, "\\+") + "|" + String.format(WITH_DELIMITER, "-") + "|" + String.format(WITH_DELIMITER, "\\*"));
+
+		int n = tokens.length;
+		List<Integer>[][] cache = new ArrayList[n][n + 1];
+
+		List<Integer> result = dfs(tokens, 0, n, cache);
+
+		Collections.sort(result);
+
+		return result;
+	}
+
+	private List<Integer> dfs(String[] tokens, int s, int e, List<Integer>[][] cache){
+		if(cache[s][e] != null){
+			return cache[s][e];
+		}
+
+		cache[s][e] = new ArrayList<>();
+
+		if(s + 1 == e){
+			cache[s][e].add(Integer.valueOf(tokens[s]));
+			return cache[s][e];
+		}
+
+		for(int i = s + 1; i < e; i += 2){
+			List<Integer> left = dfs(tokens, s, i, cache);
+			List<Integer> right = dfs(tokens, i + 1, e, cache);
+
+			for(int l : left){
+				for(int r : right){
+					cache[s][e].add(calculate(l, tokens[i], r));
+				}
+			}
+		}
+
+		return cache[s][e];
+	}
+
+	private int calculate(int a, String sign, int b){
+		switch(sign){
+			case "+":
+				return a + b;
+			case "-":
+				return a - b;
+			default: //case "*":
+				return a * b;
+		}
+	}
+
+
+	/**         **/
 
     public List<Integer> diffWaysToCompute(String input) {
         //check ignore, 
@@ -77,21 +133,32 @@ public class DiffWayToComputer {
     }
     
 	public static void main(String[] args) {
-	       String[] input = {
+	       String[] inputs = {
                    "2", //
                    "3+2*2", // 
                    "2-1-1", // 
                    "2*3 - 4*5" //
                    
        };
-       
+
+
+
        DiffWayToComputer sv = new DiffWayToComputer();
        
-       for(String s : input){
+       for(String s : inputs){
            System.out.println(String.format(" %s ", s ));
+
+		   //System.out.println(Arrays.toString(split(s)));
+
            Misc.printArrayList_Integer(sv.diffWaysToCompute(s));
        }
 
+	}
+
+	private static String[] split(String input){
+		final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
+
+		return input.split(String.format(WITH_DELIMITER, "\\+") + "|" + String.format(WITH_DELIMITER, "-") + "|" + String.format(WITH_DELIMITER, "\\*"));
 	}
 
 }

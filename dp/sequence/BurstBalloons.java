@@ -23,9 +23,43 @@ import fgafa.util.Misc;
         nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
        coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
  *
+ *
+ * Thoughts:
+ * Given [a0, a1, a2], define f[1, a0, a1, a2, 1] as the max coins from [a0, a1, a2]
+ *
+ *   f[1, a0, a1, a2, 1]
+ * If the last step is [1, a0, 1], it's 1*a0*1 + f[a0, a1, a2, 1]
+ * If the last step is [1, a1, 1], it's 1*a1*1 + f[1, a0, a1] + f[a1, a2, 1]
+ * If the last step is [1, a2, 1], it's 1*a2*1 + f[1, a0, a1, a2]
+ *
+ * Summary:
+ *  to f[1, a0, a1, a2, 1], if the idea is to pick a1,  it's a0*a1*a2 + f[1, a0, a2] + f[a0, a2, 1], the states are variable.
+ *
  */
 
 public class BurstBalloons {
+
+    public int maxCoins_dp(int[] nums) {
+        int len = nums.length;
+
+        int n = len + 2;
+        int[] v = new int[n];
+        v[0] = 1;
+        v[n - 1] = 1;
+        System.arraycopy(nums, 0, v, 1, len);
+
+        int[][] dp = new int[n][n]; //default all are 0
+
+        for(int gap = 2; gap < n; gap++){
+            for(int left = 0, right = gap; right < n; left++, right++){
+                for(int i = left + 1; i < right; i++){
+                    dp[left][right] = Math.max(dp[left][right], dp[left][i] + v[left]*v[i]*v[right] + dp[i][right]);
+                }
+            }
+        }
+
+        return dp[0][n - 1];
+    }
 
     public int maxCoins(int[] nums) {
         //check
