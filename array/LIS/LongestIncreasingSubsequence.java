@@ -1,8 +1,9 @@
 package fgafa.array.LIS;
 
-import java.util.Arrays;
-
 import fgafa.util.Misc;
+import org.junit.Test;
+
+import java.util.Arrays;
 
 /**
  * 
@@ -47,310 +48,210 @@ import fgafa.util.Misc;
 public class LongestIncreasingSubsequence
 {
 
-  /*
-   * fetch the Longest increasing subsequence (LIS) with DP on a array 
-   * 
-   * 设A[i]表示序列中的第i个数， dp[i]表示从1到i这一段中以i结尾的最长上升子序列的长度，
-   * 初始时设F[i] = 0(i = 1, 2, ..., len(A))。
-   * 则有动态规划方程： dp[i] = max{1, dp[j] + 1}    (j = 1, 2, ..., i - 1, A[j] < A[i])。
-   * 
-   * e.g. 
-   * List: [4, 0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]
-   * dp[]: [1, 1, 2, 2, 3,  2,  3, 3,  4, 2, 4, 3,  5, 3,  5, 4,  6]
-   * The result is: 6
-   * 
-   * time is O(n^2)
-   */
-  public int calLIS_DP(int[] seq) {
-    int n = seq.length;
-    int[] dp = new int[n]; // dp[i] is the LIS of seq[0--i], default value all are 0
-    int max = 0;
-    
-    //dp[0] = 1;  //it's useless, because the LIS doesn't have to start from seq[0]
-    for (int i = 1; i < n; i++) {
-      //dp[i] = 1;    //at least, it contain itself. 
-      for (int j = 0; j < i; j++) {
-        if (seq[j] < seq[i] && dp[i] < dp[j] + 1) {
-          //dp[i] = (dp[i] < dp[j] + 1)? dp[j] + 1: dp[i];     
-          dp[i] = dp[j] + 1;
-        }
-      }
-      
-      max = Math.max(max, dp[i]);
-    }
-
-    System.out.println("    _DP:   "+Misc.array2String(dp));
-    
-    
-    return max + 1;
-  }
-  
-  
-  /**
-   * fetch the Longest Increasing Subsequence with GREEDY on a array 
-   *  
-   * 贪心+二分查找： O(nlogn)   Space O(n)
-   * 
-   * 开辟一个栈。 遍历数组， 二分法比较栈中元素和seq[i]，如果seq[i]大于栈顶元素， 则加入栈； 否则替换栈中元素。 最后序列长度为栈的长度。
-   * 这也是很好理解的，对x和y，如果x<y且E[y]<E[x],用E[x]替换 E[y], 此时的最长序列长度没有改变但序列Q的''潜力''增大。 
-   * 
-   * 举例：原序列为{1，5，8，3，6，7}, 栈为{1，5，8}，此时读到3，则用3替换5，得到栈中元素为{1，3，8}; 
-   * 再读6，用6替换8，得到{1，3，6}，再读7，得到最终栈为1，3，6，7，最长递增子序列为长度4。
-   * 
-   */
-  
-    public int calLIS_Greedy(int[] seq) {
-        if (null == seq || 0 == seq.length) {
-            return 0;
-        }
-
-        int top = 0;
-        int n = seq.length;
-        int[] stack = new int[n];
-
-        stack[top] = seq[0];
-        for (int i = 1; i < n; i++) {
-            // binary search, if seqN is biggest, insert; else replace.
-            top = LIS_insert(stack, top, seq[i]);
-        }
-
-        // this is not the real Largest increasing Subsequence string
-        return top + 1;
-    }
-  
-
-  /**
-   * binary search, if seqN is biggest, insert; else replace.
-   *
-   * @param lis, a int array in ascent order 
-   * @param top, the index of the biggest element of lis
-   * @param seqN, the new element. 
-   * @return the "new" biggest element in lis
-   */
-  private int LIS_insert(int[] lis, int top, int seqN){
-    int low = 0, high = top;
-    while (low <= high) {
-      int mid =  low + ((high - low)  >> 1);    //(low + high) / 2; 
-      if (lis[mid] < seqN)
-        low = mid + 1;
-      else
-        high = mid - 1;
-    }
-    
-    lis[low] = seqN;
-    
-    return low > top ? top + 1 : top;
-  }
-  
-  /*ONLY work when there is no duplicate in the input array*/
-  public int calLIS_BST(int[] seq) {
-      if (null == seq || 0 == seq.length) {
+    /**
+    * fetch the Longest increasing subsequence (LIS) with DP on a array
+    *
+    * 设A[i]表示序列中的第i个数， dp[i]表示从1到i这一段中以i结尾的最长上升子序列的长度，
+    * 初始时设F[i] = 0(i = 1, 2, ..., len(A))。
+    * 则有动态规划方程： dp[i] = max{1, dp[j] + 1}    (j = 1, 2, ..., i - 1, A[j] < A[i])。
+    *
+    * e.g.
+    * List: [4, 0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]
+    * dp[]: [1, 1, 2, 2, 3,  2,  3, 3,  4, 2, 4, 3,  5, 3,  5, 4,  6]
+    * The result is: 6
+    *
+    * time is O(n^2)
+    */
+    public int lengthOfLIS(int[] nums) {
+      if (nums == null || 0 == nums.length) {
           return 0;
       }
 
-      int n = seq.length;
-      
-      int[] sortedArray = new int[n];
-      System.arraycopy(seq, 0, sortedArray, 0, n);
-      Arrays.sort(sortedArray);
-      Node root = buildBST(sortedArray, 0, n - 1);
+      int n = nums.length;
+      int[] result = new int[n];
+      int end = 0;
+      result[end++] = nums[0];
 
-      int max = 1;
-      for (int i = 1; i < n; i++) {
-          max = Math.max(max, getNumberOfSmaller(root, seq[i]) + 1);
+      for (int x : nums) {
+          end = fill(nums, end, x);
       }
 
-      return max + 1;
-  }
-  
-  private int getNumberOfSmaller(Node root, int target){
-      int result = 0;
-      
-      while(root.value != target){
-          if(root.value > target){
-              root.numberOfSmaller++;
-              
-              root = root.left;
-          }else{
-              result += root.numberOfSmaller;
-              
-              root = root.right;
+      return end;
+    }
+
+    private int fill(int[] nums, int len, int target){
+
+        if(nums[len - 1] < target){
+            nums[len++] = target;
+            return len;
+        }
+
+        int i = len - 2;
+        while(i >= 0 && nums[i] >= target){
+            i--;
+        }
+
+        nums[i + 1] = target;
+        return len;
+    }
+
+
+    public int lengthOfLIS_binarySearch(int[] nums) {
+        if(nums == null || 0 == nums.length){
+            return 0;
+        }
+
+        int n = nums.length;
+        int[] result = new int[n];
+        int end = 0;
+
+        for(int x : nums){
+            int i = Arrays.binarySearch(result, 0, end, x);
+
+            if(i < 0){
+                i = -(i + 1);
+            }
+
+            result[i] = x;
+
+            end += (i == end? 1: 0);
+        }
+
+        return end;
+    }
+
+    @Test public void test(){
+        int[] list = {};
+
+        System.out.println(Arrays.binarySearch(list, 0, 0, 1));
+        //System.out.println(Arrays.binarySearch(list, 0, 1, 1));  //ArrayIndexOutOfBoundsException
+
+        list = new int[]{1, 3};
+        System.out.println(Arrays.binarySearch(list, 0, 2, 0));
+        System.out.println(Arrays.binarySearch(list, 0, 2, 1));
+        System.out.println(Arrays.binarySearch(list, 0, 2, 2));
+        System.out.println(Arrays.binarySearch(list, 0, 2, 3));
+        System.out.println(Arrays.binarySearch(list, 0, 2, 4));
+    }
+
+    /**
+    *
+    * fetch the Longest Increasing Subsequence with GREEDY on two array
+    * It's refer to calLis_Greedy and calLCS_DP
+    *
+    * input arr1={a1, a2, ---, am},  arr2={b1, b2, ---, bn}  where m>=n
+    *
+    * opt[i][j] = 0                              if i = M or j = N
+    *           = opt[i+1][j+1] + 1              if arr1[i] = arr2[j]
+    *           = max(opt[i][j+1], opt[i+1][j])  otherwise
+    *
+    * pure DP, Time O(n*m*m) (m>n) and Space O(n*m)
+    *          Time O(n*m*logn) (m>n) and Space O(n)
+    *
+    * e.g: on two arrays
+    *  input {12, 3, 4, 4, 3, 4, 4, 12, 5, 12, 3, 4}
+    *        {4, 4, 3, 12, 3, 3, 12, 3, 4}
+    * output 3,  {4, 4, 4) or (3, 3, 4}
+    *
+    * @return
+    */
+    public int calLIS_DP(int[] arr1, int[] arr2) {
+
+      int M = arr1.length;
+      int N = arr2.length;
+
+      if (M < N) {
+          calLIS_DP(arr2, arr1);
+      }
+
+      //main program (M> N)
+      int top = 0;
+
+      // opt[i][j] = length of LCS of x[0..i] and y[0..j]
+      int[][] opt = new int[N + 1][M + 1];
+
+      // compute length of LCS and all subproblems via dynamic programming
+      for (int i = 0; i < N; i++) {
+          for (int j = 0; j < M; j++) {
+              if (arr1[j] == arr2[i]) {
+                  for (int k = 0; k < j; k++) {
+                      if (arr1[k] < arr1[j] && opt[i + 1][j + 1] < opt[i + 1][k + 1] + 1) {
+                          opt[i + 1][j + 1] = opt[i + 1][k + 1] + 1;
+                      }
+                  }
+
+                  top = Math.max(top, opt[i + 1][j + 1]);
+              } else {
+                  opt[i + 1][j + 1] = Math.max(opt[i + 1][j], opt[i][j + 1]);
+              }
           }
       }
-      
-      return result + root.numberOfSmaller;
-  }
-  
-  private Node buildBST(int[] sortedArray, int low, int high){
-      if( low > high ){
-          return null;
-      } else if(low == high){
-          return new Node(sortedArray[low]);
-      }
-      
-      int mid = low + (high - low) / 2;
-      Node curr = new Node(sortedArray[mid]);
-      
-      curr.left = buildBST(sortedArray, low, mid - 1);
-      curr.right = buildBST(sortedArray, mid + 1, high);
-      
-      return curr;
-  }
-  
-  class Node{
-      int value;
-      int numberOfSmaller = 0;
-      
-      Node left = null;
-      Node right = null;
-      
-      Node(int value){
-          this.value = value;
-      }
-  }
-  
-  /**
-   * 
-   * fetch the Longest Increasing Subsequence with GREEDY on two array 
-   * It's refer to calLis_Greedy and calLCS_DP
-   * 
-   * input arr1={a1, a2, ---, am},  arr2={b1, b2, ---, bn}  where m>=n 
-   * 
-   * opt[i][j] = 0                              if i = M or j = N
-   *           = opt[i+1][j+1] + 1              if arr1[i] = arr2[j]
-   *           = max(opt[i][j+1], opt[i+1][j])  otherwise
-   *           
-   * pure DP, Time O(n*m*m) (m>n) and Space O(n*m)            
-   * Time O(n*m*logn) (m>n) and Space O(n) 
-   * 
-   * e.g: on two arrays 
-   *  input {12, 3, 4, 4, 3, 4, 4, 12, 5, 12, 3, 4}
-   *        {4, 4, 3, 12, 3, 3, 12, 3, 4}
-   * output 3,  {4, 4, 4) or (3, 3, 4} 
-   * 
-   * @return
-   */
-  public int calLIS_DP(int[] arr1, int[] arr2) {
 
-    int M = arr1.length;
-    int N = arr2.length;
-    
-    if(M < N)
-      calLIS_DP(arr2, arr1);  
-        
-    //main program (M> N)
-    int top = 0;
-    
-    // opt[i][j] = length of LCS of x[0..i] and y[0..j]
-    int[][] opt = new int[N+1][M+1];
-    // compute length of LCS and all subproblems via dynamic programming
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < M; j++) {
-            if (arr1[j] == arr2[i]){             
-              for (int k = 0; k < j; k++) {
-                if (arr1[k] < arr1[j] && opt[i+1][j+1] < opt[i+1][k+1] + 1) {
-                  opt[i+1][j+1] = opt[i+1][k+1] + 1;
+      // recover LCS itself and print it to standard output
+      //System.out.println("The LIS(opt) is: " + Misc.array2String(opt));
+
+      return top;  // note, it's top instead of top+1
+    }
+
+
+    public int calLIS_Greedy(int[] arr1, int[] arr2) {
+
+        int M = arr1.length;
+        int N = arr2.length;
+
+        if (M > N) {
+            calLIS_Greedy(arr2, arr1);
+        }
+
+        //init
+
+
+        //main program (M> N)
+        int top = 0;
+        int[] stack = new int[M];
+
+        stack[top] = Integer.MAX_VALUE;
+
+        //StringBuffer sb2 = new StringBuffer();
+        int tmpTop;
+        // compute length of LCS and all subproblems via dynamic programming
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (arr1[j] == arr2[i]) {
+                    tmpTop = LIS_insert(stack, top, arr2[i]);
+                    top = Math.max(tmpTop, top);
                 }
-              }
-              
-              top = Math.max(top, opt[i+1][j+1]);
             }
-            else 
-              opt[i+1][j+1] = Math.max(opt[i+1][j], opt[i][j+1]);
         }
-    }
-    
-    // recover LCS itself and print it to standard output   
-    System.out.println("The LIS(opt) is: " + Misc.array2String(opt));
-       
-    return top;  // note, it's top instead of top+1
-  }
-  
-  
-  public int calLIS_Greedy(int[] arr1, int[] arr2) {
 
-    int M = arr1.length;
-    int N = arr2.length;
-    
-    if(M > N)
-      calLIS_Greedy(arr2, arr1);
-    
-    //init
-    
-    
-    //main program (M> N)
-    int top = 0;
-    int[] stack = new int[M];
-    
-    stack[top] = Integer.MAX_VALUE;
-    
-    //StringBuffer sb2 = new StringBuffer();
-    int tmpTop;  
-    // compute length of LCS and all subproblems via dynamic programming
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < M; j++) {
-            if (arr1[j] == arr2[i]){
-              tmpTop = LIS_insert(stack, top, arr2[i]);
-              top = Math.max(tmpTop, top);
-            }
-        }
+        System.out.println("The LIS(stack) is: " + Misc.array2String(stack));
+
+        return top + 1;
     }
-     
-    System.out.println("The LIS(stack) is: " + Misc.array2String(stack));
-       
-    return top + 1;
-  }
-  
-  /**
-   * 
-    Given an unsorted array return whether an increasing subsequence of length 3 exists or not in the array.
-    
-    Formally the function should:
-    Return true if there exists i, j, k 
-    such that arr[i] < arr[j] < arr[k] given 0 ≤ i < j < k ≤ n-1 else return false.
-    Your algorithm should run in O(n) time complexity and O(1) space complexity.
-    
-    Examples:
-    Given [1, 2, 3, 4, 5],
-    return true.
-    
-    Given [5, 4, 3, 2, 1],
-    return false.
-   */
-  
-  public boolean increasingTriplet(int[] nums) {
-      //check
-      if(null == nums || nums.length < 3){
-          return false;
-      }
-      
-      int[] sequence = new int[2];
-      sequence[0] = nums[0];
-      int j = 1;
-      for( ; j < nums.length; j++){
-          if(sequence[0] < nums[j]){
-              sequence[1] = nums[j];
-              break;
-          }else if(sequence[0] > nums[j]){
-              sequence[0] = nums[j];
-          }                    
-      }
-      
-      for( ; j < nums.length; j++){
-          if(sequence[1] < nums[j]){
-              return true;
-          }else if(sequence[1] > nums[j]){
-              if(sequence[0] >= nums[j]){
-                  sequence[0] = nums[j];
-              }else{
-                  sequence[1] = nums[j];
-              }
-          }
-      }
-      
-      return false;
-  }
-  
+
+    /**
+     * binary search, if seqN is biggest, insert; else replace.
+     *
+     * @param lis, a int array in ascent order
+     * @param top, the index of the biggest element of lis
+     * @param seqN, the new element.
+     * @return the "new" biggest element in lis
+     */
+    private int LIS_insert(int[] lis, int top, int seqN){
+        int low = 0, high = top;
+        while (low <= high) {
+            int mid =  low + ((high - low)  >> 1);    //(low + high) / 2;
+            if (lis[mid] < seqN)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+
+        lis[low] = seqN;
+
+        return low > top ? top + 1 : top;
+    }
+
   /**
    * @param args
    */
@@ -362,11 +263,9 @@ public class LongestIncreasingSubsequence
     System.out.println("Input " + Misc.array2String(testdata));
     
     
-    int ret = s.calLIS_DP(testdata);
+    int ret = s.lengthOfLIS(testdata);
     System.out.println("The result of List_DP is: " + ret);
-    ret = s.calLIS_Greedy(testdata);
-    System.out.println("The result of List_Greedy is: " + ret);
-    ret = s.calLIS_BST(testdata);
+    ret = s.lengthOfLIS_binarySearch(testdata);
     System.out.println("The result of List_BST is: " + ret);
     
     // int[] a1 = {12, 3, 4, 4, 3, 4, 4, 12, 5, 12, 3, 4};

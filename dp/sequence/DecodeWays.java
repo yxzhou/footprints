@@ -2,7 +2,8 @@ package fgafa.dp.sequence;
 
 
 /**
- * 
+ * Leetcode #91
+ *
  * A message containing letters from A-Z is being encoded to numbers using the following mapping:
  * 
  * 'A' -> 1
@@ -103,46 +104,105 @@ public class DecodeWays
     return dp[n];
   }
   
-  public int decodeWays_n(String s){
+  public int numDecodings_n(String s){
       if(null == s  || 0 == s.length()){
           return 0;
       }
+
+      final int ZERO = '0';
       
-      if(!isValid(s.charAt(0))){
+      int f1 = 1; // f[i - 1], the decode way by i - 1
+      int f2 = 1; // f[i], the decode way by i
+
+      int p = s.charAt(0) - ZERO;
+      int c;
+
+      if(!isValid(p)){
           return 0;
       }
-      
-      int i = 1;
-      int j = 1;
-      
+
       for(int k = 1; k < s.length(); k++){
-          if(!isValid(s.charAt(k)) && !isValid(s.charAt(k - 1), s.charAt(k))){
+          c = s.charAt(k) - ZERO;
+
+          if(!isValid(c) && !isValid(p, c)){
               return 0;
           }
           
           int tmp = 0;
-          if(isValid(s.charAt(k))){
-              tmp = j;
+          if(isValid(c)){
+              tmp += f2;
           }
           
-          if(isValid(s.charAt(k - 1), s.charAt(k))){
-             tmp += i; 
+          if(isValid(p, c)){
+             tmp += f1;
           }
           
-          i = j;
-          j = tmp;
+          f1 = f2;
+          f2 = tmp;
+
+          p = c;
       }
       
-      return j;
+      return f2;
   }
   
-  private boolean isValid(char digit){
-      return digit >= '1' && digit <= '9';
+  private boolean isValid(int digit){
+      return digit >= 1 && digit <= 9;
   }
   
-  private boolean isValid(char digit1, char digit2){
-      return (digit1 == '1'  && (digit2 >= '0' && digit2 <= '9')) || (digit1 == '2' && (digit2 >= '0' && digit2 <= '6'));
+  private boolean isValid(int digit1, int digit2){
+      return (digit1 == 1  && (digit2 >= 0 && digit2 <= 9)) || (digit1 == 2 && (digit2 >= 0 && digit2 <= 6));
   }
+
+    /**
+     *  case1,  "0"
+     *  case2,  "100"
+     *
+     *
+     */
+
+    public int numDecodings(String s) {
+        if(s == null || s.length() == 0 || s.charAt(0) == '0'){
+            return 0;
+        }
+
+        final int zero = '0';
+
+        int one = 1;
+        int two = 0;
+        int tmp;
+
+        int pre= s.charAt(0) - zero;
+        int curr;
+        for(int i = 1, end = s.length(); i < end; i++){
+            curr = s.charAt(i) - zero;
+
+            if(curr == 0 && (pre == 0 || pre > 2)){
+                return 0;
+            }
+
+            pre = pre * 10 + curr;
+
+            if(pre > 26){
+                one += two;
+                two = 0;
+            }else if(curr == 0){ // pre == 10 or 20
+                two = one;
+                one = 0;
+            }else if(pre > 10 && pre < 27){
+                tmp = two;
+                two = one;
+                one += tmp;
+            }else{ //pre < 10
+                one = two;
+                two = 0;
+            }
+
+            pre = curr;
+        }
+
+        return one + two;
+    }
   
   
   public static void main(String[] args) {
@@ -173,7 +233,7 @@ public class DecodeWays
       
       System.out.println("Result:\t" + sv.decodeWays_recur(str[i]) );
       System.out.println("Result:\t" + sv.decodeWays_dp(str[i]) );
-      System.out.println("Result:\t" + sv.decodeWays_n(str[i]) );
+      System.out.println("Result:\t" + sv.numDecodings_n(str[i]) );
       
       
       System.out.println("Expect:\t" + n[i] );

@@ -1,12 +1,10 @@
-package fgafa.todo.m;
+package fgafa.dp;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * _https://www.jiuzhang.com/article/sQOWpf/
+ * Leetcode #464
  *
  * Problem: Give two positive numbers, maxChoosableInteger and desiredTotal.
  * Two persons play a game, pick a number between 1 to maxChoosableInteger, turn by turn, it can't pick the number that already picked before.
@@ -34,8 +32,7 @@ public class CanIWin {
             return true;
         }
 
-        int totalSum = (maxChoosableInteger + 1) * maxChoosableInteger / 2;
-        if(totalSum < desiredTotal){
+        if(maxChoosableInteger < 1 || maxChoosableInteger * (maxChoosableInteger + 1) < desiredTotal * 2){
             return false;
         }
 
@@ -67,6 +64,45 @@ public class CanIWin {
         return false;
     }
 
+    public boolean canIWin_n(int maxChoosableInteger, int desiredTotal) {
+        if(maxChoosableInteger >= desiredTotal){
+            return true;
+        }
+
+        if(maxChoosableInteger < 1 || maxChoosableInteger * (maxChoosableInteger + 1) < desiredTotal * 2){
+            return false;
+        }
+
+        return canIWin(maxChoosableInteger, 0, desiredTotal, new int[1 << maxChoosableInteger]);
+    }
+
+    private boolean canIWin(int n, int state, int target, int[] dp){
+        if(dp[state] != 0){
+            return dp[state] == 1;
+        }
+
+        if(target <= 0){
+            //dp[state] = 1;
+            return false;
+        }
+
+        boolean result = false;
+
+        for(int i = n, x = (1 << (n - 1)); i > 0; i--, x >>= 1 ){
+            if( (state & x) == 0 ){
+                if(!canIWin(n, state | x, target - i, dp)){
+                    result = true;
+
+                    break;
+                }
+//                result = result || !canIWin(n, state | x, target - x, dp);
+            }
+        }
+
+        dp[state] = result? 1 : -1;
+        return result;
+    }
+
 
     public static void main(String[] args){
         int[][] input = {
@@ -88,11 +124,11 @@ public class CanIWin {
 
         };
 
-        CanIWin service = new CanIWin();
+        CanIWin sv = new CanIWin();
 
         for(int[] pair : input){
 
-            System.out.println(String.format("Input: %d, %d, --Output: %b ", pair[0], pair[1], service.canIWin(pair[0], pair[1])));
+            System.out.println(String.format("Input: %d, %d, --Output: %b %b", pair[0], pair[1], sv.canIWin(pair[0], pair[1]), sv.canIWin_n(pair[0], pair[1])));
         }
     }
 

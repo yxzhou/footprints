@@ -3,6 +3,8 @@ package fgafa.game.palindrome;
 //import fgafa.util.Misc;
 
 /**
+ *  Leetcode #5
+ *
  *  Q: Given a string S, find the longest palindromic substring in S.
  *
  *  Palindrome: 
@@ -29,7 +31,6 @@ package fgafa.game.palindrome;
  *      1. Transform the input string, e.g.  "abaaba" -> "#a#b#a#a#b#a#"
  *      2. Define p[i] equals to the length of the palindrome centers at s[i]
  *
- * @author yxzhou
  *
  */
 

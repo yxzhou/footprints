@@ -36,6 +36,13 @@ import java.util.Arrays;
  * the number of coins is less than 500
  * the answer is guaranteed to fit into signed 32-bit integer
  *
+ * Thoughts:
+ *
+ *    define dp[i] as the combination number.
+ *    example: dp[5] = dp[4] + dp[3] + dp[0] ??  wrong! because dp[4] and dp[3] there is duplicate, 1 + (2 + 2) vs 2 + ( 1 + 2)
+ *
+ *
+ *
  */
 
 public class CoinChangeII {

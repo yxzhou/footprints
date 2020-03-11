@@ -28,12 +28,14 @@ import fgafa.util.Misc;
  * Given [a0, a1, a2], define f[1, a0, a1, a2, 1] as the max coins from [a0, a1, a2]
  *
  *   f[1, a0, a1, a2, 1]
- * If the last step is [1, a0, 1], it's 1*a0*1 + f[a0, a1, a2, 1]
- * If the last step is [1, a1, 1], it's 1*a1*1 + f[1, a0, a1] + f[a1, a2, 1]
- * If the last step is [1, a2, 1], it's 1*a2*1 + f[1, a0, a1, a2]
+ * If the last step is [1, a0, 1], it's f[a0, a1, a2, 1] + 1*a0*1
+ * If the last step is [1, a1, 1], it's f[1, a0, a1] + f[a1, a2, 1] + 1*a1*1
+ * If the last step is [1, a2, 1], it's f[1, a0, a1, a2] + 1*a2*1
  *
  * Summary:
- *  to f[1, a0, a1, a2, 1], if the idea is to pick a1,  it's a0*a1*a2 + f[1, a0, a2] + f[a0, a2, 1], the states are variable.
+ *   To f[1, a0, a1, a2, 1],
+ *   If the idea is to burn a1 at first,  it's a0*a1*a2 + f[1, a0, a2 , 1], the states are variable.
+ *   If the idea is to burn a1 at last,  it's f[1, a0, a1] + f[a1, a2, 1] + 1 * a1 * 1.
  *
  */
 
@@ -41,8 +43,8 @@ public class BurstBalloons {
 
     public int maxCoins_dp(int[] nums) {
         int len = nums.length;
-
         int n = len + 2;
+
         int[] v = new int[n];
         v[0] = 1;
         v[n - 1] = 1;
@@ -62,7 +64,6 @@ public class BurstBalloons {
     }
 
     public int maxCoins(int[] nums) {
-        //check
         if(null == nums || 0 == nums.length){
             return 0;
         }

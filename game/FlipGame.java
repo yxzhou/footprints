@@ -1,13 +1,13 @@
 package fgafa.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fgafa.util.Misc;
+
+import java.util.*;
 
 
 /**
- * 
+ *
+ *
  * You are playing the following Flip Game with your friend: 
  * Given a string that contains only these two characters: + and -, 
  * you and your friend take turns to flip two consecutive "++" into "--".
@@ -22,7 +22,8 @@ import fgafa.util.Misc;
     ]
     If there is no valid move, return an empty list [].
  * 
- * Q2, Write a function to determine if the starting player can guarantee a win.
+ * Q2,  Leetcode #294
+ *  Write a function to determine if the starting player can guarantee a win.
     For example, given s = "++++", return true. The starting player can guarantee a win by flipping the middle "++" to become "+--+".
     
     Follow up:
@@ -101,6 +102,43 @@ public class FlipGame {
         
         return false;
     }
+    public boolean canWin_x(String s) {
+        if(null == s || s.length() < 2){
+            return false;
+        }
+
+        return canWinHelper(s.toCharArray(), new BitSet(s.length()), new HashMap<>());
+    }
+
+    private boolean canWinHelper(char[] s, BitSet state, Map<BitSet, Boolean> dp){
+        if(dp.containsKey(state)){
+            return dp.get(state);
+        }
+
+        boolean result = false;
+        BitSet next;
+        for(int i = 1; i < s.length; i++){
+            if(s[i - 1] == '+' && s[i] == '+'){
+                s[i - 1] = s[i] = '-';
+
+                next = (BitSet)state.clone();
+                next.set(i - 1, i + 1);
+
+                result = result || !canWinHelper(s, next, dp);
+
+                s[i - 1] = s[i] = '+';
+
+                if(result){
+                    break;
+                }
+            }
+        }
+
+        dp.put(state, result);
+        return result;
+    }
+
+
     
     public static void main(String[] args){
         FlipGame sv = new FlipGame();
@@ -124,7 +162,7 @@ public class FlipGame {
             System.out.println(" generatePossibleNextMoves: " );
             Misc.printArrayList(sv.generatePossibleNextMoves(s));
             
-            System.out.println(" canWin: " + sv.canWin(s) + " " + sv.canWin_n(s) );
+            System.out.println(" canWin: " + sv.canWin(s) + " " + sv.canWin_n(s) + " " + sv.canWin_x(s));
         }
         
     }

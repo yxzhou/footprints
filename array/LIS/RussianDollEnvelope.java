@@ -1,13 +1,8 @@
 package fgafa.array.LIS;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-
 import fgafa.util.Misc;
+
+import java.util.*;
 
 /**
  * 
@@ -20,6 +15,17 @@ import fgafa.util.Misc;
     Example:
     Given envelopes = [[5,4],[6,4],[6,7],[2,3]], 
     the maximum number of envelopes you can Russian doll is 3 ([2,3] => [5,4] => [6,7]).
+ *
+ *
+ * Thoughts:
+ * when input, [[w1, h1], [w2, h2]]
+ *
+ * If it's: [w1, h1] -> [w2, h2],  it need: w1 < w2 and h1 < h2
+ *    It can be sorted by w or h, ( in fact pick which one, no difference logically )
+ *
+ *    Let's sort by w, it get: [[1,1], [2, 3], [2, 2], [2, 4]]
+ *    for the further selection, the best choice is [2,2], intead of [2, 3] and [2, 4]
+ *
  *
  */
 
@@ -35,154 +41,20 @@ public class RussianDollEnvelope {
         return -1;
         
     }
-    
-    
-    
-    /*Time Complexity O(n^2) Space O(n)*/
-    public int maxEnvelopes_dp(int[][] envelopes) {
-        if(null == envelopes || 0 == envelopes.length){
-            return 0;
-        }
-        
-        List<Envelope> all = new ArrayList<>();
-        
-        for(int[] pair : envelopes){
-            all.add( new Envelope(pair[0], pair[1]) );
-        }
-        
-        Collections.sort(all);
 
-        int max = 1;
-        int[] dp = new int[all.size()]; //default all are 0
-        for(int i = 0; i < all.size(); i++){
-            dp[i] = 1;
-        }
-        
-        for(int i = 0; i < all.size(); i++){
-            Envelope curr = all.get(i);
-            
-            for(int j = 0; j < i; j++){
-                if(all.get(j).width < curr.width && all.get(j).height < curr.height){
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-            
-            max = Math.max(max, dp[i]);
-        }
-        
-        return max;
-    }
-    
+
     /*Time Complexity O(nlogn) Space O(n)*/
     public int maxEnvelopes_Greedy(int[][] envelopes) {
-        if(null == envelopes || 0 == envelopes.length){
-            return 0;
-        }
-        
-        List<Envelope> all = new ArrayList<>();
-        
-        for(int[] pair : envelopes){
-            all.add( new Envelope(pair[0], pair[1]) );
-        }
-        
-        Collections.sort(all);
-        
-        //Misc.printList(all);
-     
-        int max = 1;
-        Envelope[] heights = new Envelope[envelopes.length];
-        heights[0] = all.get(0);
-        int top = 0;
-        
-        for(int i = 1; i < all.size(); i++){
-            Envelope entry = all.get(i);
-            
-            //if(entry.width > heights[top].width){
-                top = binarySearhAndUpdate(heights, top, entry);
-                
-                //System.out.println(Misc.array2String(heights));
-            //}
-            
-            max = Math.max(max, top + 1);
-        }
-        
-        return max;
-    }
-    
-    private int binarySearhAndUpdate(Envelope[] lis, int top, Envelope target){
-        
-        int low = 0, high = top;
-        
-        while (low <= high) {
-          int mid =  low + ((high - low)  >> 1);    //(low + high) / 2; 
-          
-          if (lis[mid].height == target.height){
-              return mid;
-          } else if (lis[mid].height < target.height){
-              low = mid + 1;
-          }else{
-              high = mid - 1;
-          }
-        }
-        
-        //if(low > top){
-            lis[low] = target;
-//        }else{ // lis[low].height < target.height
-//            lis[low].height = target.height;
-//        }
-        
-        return low > top ? top + 1 : top;
-    }
-    
-    class Envelope implements Comparable<Envelope>{
-        int width;
-        int height;
-        
-        int index = 0;
-        
-        Envelope(int width, int length){
-            this.width = width;
-            this.height = length;
-        }
-
-        @Override
-        public int compareTo(Envelope other) {
-            if(this.width == other.width){
-                return Integer.compare(other.height, this.height); // key point
-               // return this.height - other.height;             
-            }else{
-                return Integer.compare(this.width, other.width);
-                //return this.width - other.width;                
-            }
-        }
-        
-//        @Override
-//        public String toString(){
-//            return this.width + "-" + this.height + " ";
-//        }
-    }
-
-    /*Time Complexity O(nlogn) Space O(n)*/
-    public int maxEnvelopes_Greedy_x(int[][] envelopes) {
         if (null == envelopes || 0 == envelopes.length) {
             return 0;
         }
 
-        Arrays.sort(envelopes, new Comparator<int[]>(){
-            @Override
-            public int compare(int[] pair1,
-                               int[] pair2) {
-                if(pair1[0] == pair2[0]){
-                    return pair2[1] - pair1[1];  // key point
-                }else{
-                    return pair1[0] - pair2[0];
-                }
-            }
-        });
+        Arrays.sort(envelopes, (p1, p2) -> (p1[0] == p2[0]? p2[1] - p1[1] : p1[0] - p2[0]));
 
         int max = 0;
         int[] dp = new int[envelopes.length];
         int end = 0;
+
         for(int[] pair : envelopes){
             int top = Arrays.binarySearch(dp, 0, end, pair[1]);
             if(top < 0){
@@ -205,7 +77,7 @@ public class RussianDollEnvelope {
         //int[][] input = {{5,4},{6,4},{6,7},{2,3}};
         int[][][] input = {
                     {},
-                    {{1, 1}},
+                    {{1,1}},
                     {{5,4},{5,9},{5,7},{2,3}},
                     {{5,4},{6,4},{6,7},{2,3}},
                     {{4,5},{4,6},{6,7},{2,3},{1,1}},
@@ -218,7 +90,7 @@ public class RussianDollEnvelope {
         
         for(int[][] envelopes : input ){
             System.out.println(String.format("Input: %s", Misc.array2String(envelopes)));
-            System.out.println(String.format("Output: %d, %d, %d", sv.maxEnvelopes_dp(envelopes), sv.maxEnvelopes_Greedy(envelopes), sv.maxEnvelopes_Greedy_x(envelopes)));
+            System.out.println(String.format("Output: %d, %d, %d", sv.maxEnvelopes_Greedy(envelopes)));
         }
     }
 

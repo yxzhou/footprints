@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.datastructure.trie;
+package fgafa.datastructure.trie;
 
 import fgafa.util.Misc;
 import org.junit.Test;

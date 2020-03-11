@@ -1,6 +1,7 @@
 package fgafa.game.nimGames;
 
 /**
+ * Similar with Leetcode #486
  *
  * There are n coins in a line. (Assume n is even).
  * Two players take turns to take a coin from one of the ends of the line until there are no more coins left.
@@ -9,10 +10,8 @@ package fgafa.game.nimGames;
  * Would you rather go first or second? Does it matter?
  * Assume that you go first, describe an algorithm to compute the maximum amount of money you can win.
  *
- * Similar with Leetcode #486
  *
  * Thoughts:
- *
  * From top to bottom:
  *
  * to arr(0, n - 1), when player1 to pick, he want to get max(arr, 0, n)
@@ -33,7 +32,7 @@ package fgafa.game.nimGames;
  * The decision tree is
  *                    (arr, 0, n - 1)
  *                    /             \
- *             (0, n - 1)        (0, n - 1)
+ *             (1, n - 1)        (0, n - 2)
  *        - - -                 - - -
  *    (0, 1)   (1, 2) - - -              (n - 2, n - 1)
  *
@@ -54,6 +53,7 @@ package fgafa.game.nimGames;
  *   }
  *
  *   Optimize:
+ *     If the total number of stones is odd, the player who go first will win. ( see StoneGame.class )
  *
  */
 

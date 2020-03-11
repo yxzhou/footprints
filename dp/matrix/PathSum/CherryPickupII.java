@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 /**
  *
+ * Leetcode #741
+ *
  * In a N x N grid representing a field of cherries, each cell is one of three possible integers.
  0 means the cell is empty, so you can pass through;
  1 means the cell contains a cherry, that you can pick up and pass through;
@@ -74,23 +76,38 @@ public class CherryPickupII {
      *
      * Time O(n^3), Space O(n^2)
      *
+     *
+     * Thought:
+     *   Suppose there are 2 persons pick the cherry from the (0, 0) to (N-1, N-1).
+     *   At 1st move, these 2 person can be moved to
+     *     {(0, 1), (0,1)}
+     *     {(0, 1), (1,0)}
+     *     {(1, 0), (0,1)}
+     *     {(1, 0), (1,0)}
+     *
+     *   From top-left to bottom-right, total it need move  N * 2 - 2 times.
+     *
+     *
      */
-    public int cherryPickup_wrong(int[][] grid) {
+    public int cherryPickup_n(int[][] grid) {
         int N = grid.length;
         int[][] f = new int[N][N]; //default all are 0
         for(int[] row : f){
             Arrays.fill(row, -1);
         }
-        f[0][0] = 0;
 
-        for(int t = 1, end = N * 2; t < end; t++){
+        //f
+        for(int t = 1, end = N * 2 - 1; t < end; t++){
             int[][] fn = new int[N][N]; //default all are 0
             for(int[] row : fn){
                 Arrays.fill(row, -1);
             }
 
-            for(int x = Math.max(0, t - N + 1), y = t - x; x < N && y > 0; x++, y--){
-                for(int p = Math.max(0, t - N + 1), q = t - p; p < N & q > 0; p++, q--){
+            //to person1, the position (x, y),  x + y == t and x < N and y > 0
+            for(int x = Math.max(0, t - N + 1), y = t - x; x < N && y >= 0; x++, y--){
+                // same to the person2, (p, q)
+                for(int p = Math.max(0, t - N + 1), q = t - p; p < N & q >= 0; p++, q--){
+
                     if(grid[x][y] == -1 || grid[p][q] == -1){
                         continue;
                     }
@@ -99,14 +116,14 @@ public class CherryPickupII {
                     int max = -1;
                     for(int px = x - 1; px <= x; px++){
                         for(int pp = p - 1; pp <= p; pp++ ){
-                            if(px >= 0 && pp >= 0) {
+                            if(px >= 0 && pp >= 0){
                                 max = Math.max(max, f[px][pp]);
                             }
                         }
                     }
 
                     if(max > -1){
-                        fn[x][p] = grid[x][y] + ( x == p ? 0 : grid[p][q]);
+                        fn[x][p] = max + grid[x][y] + ( x == p ? 0 : grid[p][q]);
                     }
                 }
             }
