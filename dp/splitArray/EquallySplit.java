@@ -1,4 +1,7 @@
-package fgafa.dailyCoding;
+package fgafa.dp.splitArray;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *
@@ -9,7 +12,7 @@ package fgafa.dailyCoding;
  Given the multiset {15, 5, 20, 10, 35}, it would return false, since we can't split it up into two subsets that add up to the same sum.
  *
  *
- * tags: facebood
+ * tags: facebook
  */
 
 public class EquallySplit {
@@ -30,21 +33,26 @@ public class EquallySplit {
         }
 
         sum >>= 1;
-        boolean[] existed = new boolean[sum + 1]; //default all are 0
-        existed[0] = true;
+
+        boolean[] reachable = new boolean[sum + 1]; //default all are 0
+        reachable[0] = true;
 
         for(int num : nums){
-            int v = sum - num;
-//            if(existed[v]){
-//                return true;
-//            }
-
-            for( ; v >= 0; v--){
-                existed[v + num] = existed[v];
+            for(int i = sum - num; i >= 0; i-- ){
+                reachable[i + num] = reachable[i];
             }
         }
 
-        return existed[sum];
+        return reachable[sum];
+    }
+
+
+    @Test public void test(){
+
+        Assert.assertTrue(canEquallySplit(new int[]{15, 5, 20, 10, 35, 15, 10}));
+
+        Assert.assertFalse(canEquallySplit(new int[]{15, 5, 20, 10, 35}));
+
     }
 
 }

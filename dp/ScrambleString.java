@@ -1,7 +1,8 @@
-package fgafa.leetcode;
+package fgafa.dp;
 
 
 /**
+ * Leetcode #87
  * 
  * Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.
  *
@@ -36,35 +37,28 @@ package fgafa.leetcode;
  *r   g  ta  e
  *      / \
  *      t   a
- *We say that "rgtae" is a scrambled string of "great".
+ * We say that "rgtae" is a scrambled string of "great".
  *
- *Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.
+ * Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.
  *
- */
-/**
+ * Thoughts:
+ *
+ * If string s1 and s2 are scramble strings, there must be a point that breaks s1 to two parts s11, s12,
+ * and a point that breaks s2 to two parts, s21, s22, and isScramble(s11, s21) && isScramble(s12, s22) is true,
+ * or isScramble(s11,  s22) && isScramble(s12, s21) is true.
  * 
- * If string s1 and s2 are scramble strings, there must be a point that breaks
- * s1 to two parts s11, s12, and a point that breaks s2 to two parts, s21, s22,
- * and isScramble(s11, s21) && isScramble(s12, s22) is true, or isScramble(s11,
- * s22) && isScramble(s12, s21) is true.
+ * So we can make it recursively. We just break s1 at different position to check if there exists one position satisfies the requirement.
  * 
- * So we can make it recursively. We just break s1 at different position to
- * check if there exists one position satisfies the requirement.
+ * Some checks are needed otherwise it will time out. For example, if the lengths of two strings are different, they can’t be scramble.
+ * And if the  characters in two strings are different, they can’t be scramble either.
  * 
- * Some checks are needed otherwise it will time out. For example, if the
- * lengths of two strings are different, they can’t be scramble. And if the
- * characters in two strings are different, they can’t be scramble either.
- * 
- * Another way is to use DP. I use a three dimension array scramble[][][] to
- * save the states. What scramble[k][i][j] means is that two substrings of
- * length k, one starts from i of string s1, another one starts from j of string
- * s2, are scramble. We are trying to find scramble[L][0][0]. For every length
- * k, we try to divide the string to two parts differently, checking if there is
- * a way that can make it true.
+ * Another way is to use DP. I use a three dimension array scramble[][][] to  save the states.
+ * What scramble[k][i][j] means is that two substrings of  length k,
+ * one starts from i of string s1, another one starts from j of string s2, are scramble. We are trying to find scramble[L][0][0].
+ * For every length k, we try to divide the string to two parts differently, checking if there is a way that can make it true.
  *
  */
-public class ScrambleString
-{
+public class ScrambleString {
 
   /**
    * ("abab", "bbaa") ==> true
@@ -74,72 +68,57 @@ public class ScrambleString
    * @param s2
    * @return
    */
-  public boolean isScramble_wrong(String s1, String s2) {
-    // check
-    if (s1.length() != s2.length())
-      return false;
-    if (s1.equals(s2))
-      return true;
 
-    char c = s1.charAt(0);
-    int i = s2.indexOf(c);
-    int len = s1.length();
-    
-    if (i == -1)
-      return false;
-    else if (i == 0)
-      return isScramble_wrong(s1.substring(i + 1), s2.substring(i + 1));
-    else if (i == s1.length() - 1)
-      return isScramble_wrong(s1.substring(1), s2.substring(0, i));
-    else
-      return (isScramble_wrong(s1.substring(0, i + 1), s2.substring(0, i+1))
-          && isScramble_wrong(s1.substring(i + 1), s2.substring(i + 1))) 
-          ||(isScramble_wrong(s1.substring(0, len -i), s2.substring(i))
-              && isScramble_wrong(s1.substring(len -i), s2.substring(0, i))) ;
+    public boolean isScramble_recursive(String s1, String s2) {
+        //check null, return true if both are null; return false if only one is null.
+        if(null == s1 || null == s2) {
+            return s1 == s2;
+        }
+        //if both are not null, check lengths. return false if the length is not same
+        if (s1.length() != s2.length()) {
+            return false;
+        }
 
-  }
+        int n = s1.length();
+        return isScramble(s1.toCharArray(), 0, s2.toCharArray(), 0, n, new int[n + 1][n][n]) == 1;
+    }
 
+    private int isScramble(char[] s1, int i, char[] s2, int p, int len, int[][][] cache) {
+        if(cache[len][i][p] > 0){
+            return cache[len][i][p];
+        }
 
-  public boolean isScramble_recursive_n(String s1, String s2) {
-	  //check null, return true if both are null; return false if only one is null.
-	  if(null == s1 || null == s2)
-		  return s1 == s2;
-      //check lengths. return false if both lengths are not same
-      if (s1.length() != s2.length())
-          return false;
-      
-      int length = s1.length();
-      return isScramble_recursive(s1.toCharArray(), 0, length, s2.toCharArray(), 0, length);
-  }
+        if(len == 1){
+            cache[len][i][p] = ( s1[i] == s2[p] ? 1 : 2);
+        }
+
+        if(isSame(s1, i, s2, p, len)){
+            cache[len][i][p] = 1;
+        }
+
+        if(!includeSameCharacters(s1, i, s2, p, len)){
+            cache[len][i][p] = 2;
+        }
+
+        if(cache[len][i][p] > 0){
+            return cache[len][i][p];
+        }
+
+        cache[len][i][p] = 2;
+
+        for(int k = 1 ; k < len; k++){
+            if( (isScramble(s1, i, s2, p, k, cache) == 1 && isScramble(s1, i + k, s2, p + k, len - k, cache) == 1)
+                    || (isScramble(s1, i, s2, p + len - k, k, cache) == 1 && isScramble(s1, i + k, s2, p, len - k, cache) == 1) ){
+                cache[len][i][p] = 1;
+                break;
+            }
+        }
+
+        return cache[len][i][p];
+    }
   
-  private boolean isScramble_recursive(char[] str1, int s1, int e1, char[] str2, int s2, int e2) {
-
-	  //bypass check, e1 > s1 && e1 - s1 == e2 - s2
-	 
-      //check characters.
-	  if(isSame(str1, s1, e1, str2, s2, e2)){
-		  return true;
-	  }
-	  if(!includeSameCharacters(str1, s1, e1, str2, s2, e2)){
-	      return false;
-	  }
-
-      //More letters
-      for (int i = 1; i < e1 - s1; i++) {
-          if (isScramble_recursive(str1, s1, s1 + i, str2, s2, s2 + i) && isScramble_recursive(str1, s1 + i, e1, str2, s2 + i, e2)){
-              return true;
-          }
-
-          if (isScramble_recursive(str1, s1, s1 + i, str2, e2 - i, e2) && isScramble_recursive(str1, s1 + i, e1, str2, s2, e2 - i)){
-              return true;
-          }
-      }
-      return false;
-  }
-  
-  private boolean isSame(char[] str1, int s1, int e1, char[] str2, int s2, int e2){
-
-	  for(int i = s1, j = s2; i < e1; i++){
+  private boolean isSame(char[] str1, int s1, char[] str2, int s2, int length){
+	  for(int i = s1, j = s2, end = s1 + length; i < end; i++, j++){
 		  if(str1[i] != str2[j]){
 			  return false;
 		  }
@@ -148,10 +127,9 @@ public class ScrambleString
 	  return true;
   }
   
-  private boolean includeSameCharacters(char[] str1, int s1, int e1, char[] str2, int s2, int e2){
-
+  private boolean includeSameCharacters(char[] str1, int s1, char[] str2, int s2, int length){
         int[] chars = new int[26]; // ?? all are lower-case characters ??
-        for (int i = s1, j = s2; i < e1; i++, j++) {
+        for (int i = s1, j = s2, end = s1 + length; i < end; i++, j++) {
             chars[str1[i] - 'a']++;
             chars[str2[j] - 'a']--;
         }
@@ -188,10 +166,10 @@ public class ScrambleString
       int length = s1.length();
       
       //check characters.
-      if(isSame(s1.toCharArray(), 0, length, s2.toCharArray(), 0, length)){
+      if(isSame(s1.toCharArray(), 0, s2.toCharArray(), 0, length)){
           return true;
       }
-      if(!includeSameCharacters(s1.toCharArray(), 0, length, s2.toCharArray(), 0, length)){
+      if(!includeSameCharacters(s1.toCharArray(), 0, s2.toCharArray(), 0, length)){
           return false;
       }
 
