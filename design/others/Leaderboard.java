@@ -57,75 +57,60 @@ public class Leaderboard {
      *                    or update ??
      *
      * ( 1 <= score <= 100), define m as the number of distinct score
-     * HashMap + HashMap:     O(1)                 O(1)                  O(m log m)
-     * TreeMap                O(log m)             O(log m)              O(K)
+     * HashMap + HashMap:     O(1)                 O(1)                  O(m*logm )
+     * HashMap + TreeMap      O(logm )             O(logm )              O(K)
+     * HashMap + int array    O(logn )             O(logn)               O(K)             --best
      *
      */
 
-    Map<Integer, Integer> map; // <playerId, score>
-    Map<Integer, Integer> buckets;  // <score, count>
+    /**  HashMap + int array */
+
+    Map<Integer, Integer> map = new HashMap<>(); //Map<playerid, score>
+    int[] scores = new int[10000]; //1 <= playerId, K <= 10000
+
+    int end = 0;
 
     public Leaderboard() {
-        map = new HashMap<>();
-        buckets = new HashMap<>(); // 1 <= score <= 100 ??
+
     }
 
-    /**  O(1) */
     public void addScore(int playerId, int score) {
-        Integer preScore = map.get(playerId);
-        Integer newScore = (preScore == null ? score : score + preScore);
+        int p = 0;
+        if(map.containsKey(playerId)){
+            p = Arrays.binarySearch(scores, 0, end, map.get(playerId));
+            System.arraycopy(scores, p + 1, scores, p, end - p - 1);
+            end--;
 
-        map.put(playerId, newScore);
-
-        if(preScore != null){
-            buckets.put(preScore, buckets.get(preScore) - 1);
-            if(buckets.get(preScore) == 0){
-                buckets.remove(preScore);
-            }
+            score += map.get(playerId);
         }
 
-        buckets.put(newScore, buckets.getOrDefault(newScore, 0) + 1);
+        map.put(playerId, score);
+
+        p = Arrays.binarySearch(scores, 0, end, score);
+        if(p < 0){
+            p = -(p + 1);
+        }
+
+        System.arraycopy(scores, p, scores, p + 1, end - p);
+        scores[p] = score;
+        end++;
     }
 
-    /**  O(m*logm) */
     public int top(int K) {
         int sum = 0;
 
-        List<Integer> scores = new ArrayList<>(buckets.keySet());
-        Collections.sort(scores);
-
-        int score;
-        int count;
-        for(int i = scores.size() - 1; i >= 0 && K > 0; i-- ){
-            score = scores.get(i);
-            count = buckets.get(score);
-
-            if(K < count){
-                sum += K * score;
-                K = 0;
-            }else{
-                sum += count * score;
-                K -= count;
-            }
+        for(int i = end - K; i < end; i++){
+            sum += scores[i];
         }
 
         return sum;
     }
 
-    /**  O(1) */
     public void reset(int playerId) {
-        if(!map.containsKey(playerId)) {
-            return;
-        }
-
-        Integer score = map.get(playerId);
-
-        buckets.put(score, buckets.get(score) - 1);
-        if(buckets.get(score) == 0){
-            buckets.remove(score);
-        }
-
-        map.remove(playerId);
+        int score = map.remove(playerId);
+        int p = Arrays.binarySearch(scores, 0, end, score);
+        System.arraycopy(scores, p + 1, scores, p, end - p - 1);
+        end--;
     }
 
 

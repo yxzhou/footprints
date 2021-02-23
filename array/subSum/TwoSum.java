@@ -48,71 +48,71 @@ public class TwoSum{
    * Time O(nlogn+n)  Space O(1)
    */
   public List<List<Integer>> twoSums(int[] numbers, int target) {
-	  List<List<Integer>> ret = new ArrayList<List<Integer>>();
-    //check
-    if(numbers == null || numbers.length == 0)
+      List<List<Integer>> ret = new ArrayList<List<Integer>>();
+      //check
+      if (numbers == null || numbers.length == 0)
+          return ret;
+
+      //sorted
+      Arrays.sort(numbers);
+
+      //
+      int left = 0;
+      int right = numbers.length - 1;
+      int sum;
+      while (left < right) {
+          sum = numbers[left] + numbers[right];
+          if (sum == target) {
+              List<Integer> pair = new ArrayList<Integer>();
+              ret.add(pair);
+              pair.add(numbers[left]);
+              pair.add(numbers[right]);
+
+              while (left < right && numbers[left] == numbers[++left]) ;
+              while (left < right && numbers[right] == numbers[--right]) ;
+          } else if (sum < target)
+              left++;
+          else //sumTmp > target
+              right--;
+      }
+
       return ret;
-    
-    //sorted
-    Arrays.sort(numbers);
-    
-    //
-    int left = 0;
-    int right = numbers.length - 1;
-    int sum;
-    while(left < right){
-      sum = numbers[left] + numbers[right]; 
-      if( sum == target){
-    	List<Integer> pair = new ArrayList<Integer>();
-        ret.add(pair);
-        pair.add(numbers[left]);
-        pair.add(numbers[right]);
-        
-        while(left < right && numbers[left] == numbers[++left]);
-        while(left < right && numbers[right] == numbers[--right]);
-      }else if ( sum < target )
-        left ++;
-      else //sumTmp > target
-        right --;
+  }
+
+
+    /*
+     * @return all pairs of integers (a and b) in S such that a + b = target, no duplicate pairs.
+     *
+     * Time O(n)  Space O(n)
+     */
+    public Set<List<Integer>> twoSums_Hash(int[] numbers, int target) {
+        //init
+        Set<List<Integer>> ret = new HashSet<List<Integer>>();
+        //check
+        if (null == numbers || 0 == numbers.length) {
+            return ret;
+        }
+
+        Hashtable<Integer/*number*/, Integer/*count*/> ht = new Hashtable<>();
+        for (int num : numbers) {
+            ht.put(num, ht.containsKey(num) ? ht.get(num) + 1 : 1);
+        }
+
+        int halfTarget = (target >> 1);
+        if (target != (halfTarget << 1)) {
+            halfTarget = Integer.MIN_VALUE;
+        }
+
+        for (int num : ht.keySet()) {
+            if (num == halfTarget && ht.get(num) > 1) {
+                ret.add(build(num, num));
+            } else if (ht.containsKey(target - num)) {
+                ret.add(build(num, target - num));
+            }
+        }
+
+        return ret;
     }
-    
-    return ret;
-  }
-  
-  
-  /*
-   * @return all pairs of integers (a and b) in S such that a + b = target, no duplicate pairs.
-   * 
-   * Time O(n)  Space O(n)
-   */
-  public Set<List<Integer>> twoSums_Hash(int[] numbers, int target) {
-      //init
-      Set<List<Integer>> ret = new HashSet<List<Integer>>();      
-	  //check
-      if(null == numbers || 0 == numbers.length){
-    	  return ret;
-      }
-    	  
-      Hashtable<Integer/*number*/, Integer/*count*/> ht = new Hashtable<>();
-      for(int num : numbers){
-    	  ht.put(num, ht.containsKey(num)? ht.get(num) + 1 : 1 );
-      }  	  
-      
-      int halfTarget = (target >> 1);
-      if(target != (halfTarget << 1)){
-    	  halfTarget = Integer.MIN_VALUE;
-      }
-      
-      for(int num : ht.keySet()){
-    	  if( num == halfTarget && ht.get(num) > 1 ){
-    		  ret.add(build(num, num));
-    	  }else if ( ht.containsKey(target - num) ){
-    		  ret.add(build(num, target - num));
-    	  }
-      }
-      
-      return ret;
-  }
 
     public Set<List<Integer>> twoSums_Hash_2(int[] numbers, int target) {
         Set<List<Integer>> result = new HashSet<List<Integer>>();
@@ -121,11 +121,11 @@ public class TwoSum{
         }
 
         Set<Integer> map = new HashSet<>();
-        for(int number : numbers){
+        for (int number : numbers) {
             int diff = target - number;
-            if(map.contains(diff)){
+            if (map.contains(diff)) {
                 result.add(build(diff, number));
-            }else{
+            } else {
                 map.add(number);
             }
         }
@@ -133,83 +133,85 @@ public class TwoSum{
         return result;
     }
 
-  private List<Integer> build(int i, int j){
-	  List<Integer> pair = new ArrayList<>();
-	  pair.add(i);
-	  pair.add(j);
-	  return pair;
-  }
-  
-/**
- * 
- * Given an array of integers, find two numbers such that they add up to a
- * specific target number.
- * 
- * The function twoSum should return indices of the two numbers such that
- * they add up to the target, where index1 must be less than index2. Please
- * note that your returned answers (both index1 and index2) are not
- * zero-based.
- * 
- * You may assume that each input would have exactly one solution.
- * 
- * Input: numbers={2, 7, 11, 15}, target=9 Output: index1=1, index2=2
- */
-  /* Time O(n)  Space O(n)*/
-  public int[] twoSum_hash(int[] numbers, int target) {
-      //check input,  bypass, I can assume that each input would have exactly one solution
-      
-      //put all in a hashtable, map<value, position>
-      Map<Integer, Integer> map = new HashMap<>(); //<value, index>
-      for(int i=0; i<numbers.length; i++){
-          if(map.containsKey(target - numbers[i])){ 
-              return new int[]{map.get(numbers[i]), i+1};
-          }else{
-              map.put(numbers[i], i+1);
-          }
-      }
-      
-      //return, for case: not found
-      return new int[2];
-  }
-  
-  /*Time O(nlogn)  Space O(1)*/
-  public int[] twoSum_sorted(int[] numbers, int target) {
-      int[] result = new int[2];
-      
-      if (numbers == null || numbers.length < 2) {
-          return result;
-      }
-       
-      //sorted
-      Arrays.sort(numbers);
-      
-      int left = 0;
-      int right = numbers.length - 1;
-       
-      int sum;
-      while (left < right) {
-          sum = numbers[left] + numbers[right];
-                      
-          if ( sum == target) {
-              result[0] = left + 1;
-              result[1] = right + 1;
-              return result;
-          } else if (sum > target) {
-              right--;
-          } else {
-              left++;
-          }
-      }
-       
-      return result;
-  }
-  
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    // TODO Auto-generated method stub
+    private List<Integer> build(int i, int j) {
+        List<Integer> pair = new ArrayList<>();
+        pair.add(i);
+        pair.add(j);
+        return pair;
+    }
 
-  }
+    /**
+     * Given an array of integers, find two numbers such that they add up to a
+     * specific target number.
+     * <p>
+     * The function twoSum should return indices of the two numbers such that
+     * they add up to the target, where index1 must be less than index2. Please
+     * note that your returned answers (both index1 and index2) are not
+     * zero-based.
+     * <p>
+     * You may assume that each input would have exactly one solution.
+     * <p>
+     * Input: numbers={2, 7, 11, 15}, target=9
+     * Output: index1 = 0, index2 = 1
+     */
+    /* Time O(n)  Space O(n)*/
+    public int[] twoSum_hash(int[] numbers, int target) {
+        //check input,  bypass, I can assume that each input would have exactly one solution
+
+        Map<Integer, Integer> map = new HashMap<>(); //<value, index>
+
+        for (int i = 0; i < numbers.length; i++) {
+            int pre = target - numbers[i];
+
+            if (map.containsKey(pre)) {
+                return new int[]{map.get(pre), i};
+            }
+
+            map.put(numbers[i], i);
+        }
+
+        //return, for case: not found
+        return new int[2];
+    }
+
+    /*Time O(nlogn)  Space O(1)*/
+    public int[] twoSum_sorted(int[] numbers, int target) {
+        int[] result = new int[2];
+
+        if (numbers == null || numbers.length < 2) {
+            return result;
+        }
+
+        //sorted
+        Arrays.sort(numbers);
+
+        int left = 0;
+        int right = numbers.length - 1;
+
+        int sum;
+        while (left < right) {
+            sum = numbers[left] + numbers[right];
+
+            if (sum == target) {
+                result[0] = left + 1;
+                result[1] = right + 1;
+                return result;
+            } else if (sum > target) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

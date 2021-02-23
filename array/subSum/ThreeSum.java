@@ -1,9 +1,6 @@
 package fgafa.array.subSum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -96,6 +93,43 @@ public class ThreeSum
         return triplets;
     }
 
+    public List<List<Integer>> threeSum(int[] numbers) {
+        if(numbers == null || numbers.length < 3){
+            return Collections.emptyList();
+        }
+
+        Arrays.sort(numbers);
+
+        List<List<Integer>> result = new LinkedList<>();
+        int target;
+        int sum;
+        for(int l = 0, n = numbers.length; l < n; l++){
+            if(l > 0 && l < n && numbers[l] == numbers[l - 1]){
+                continue;
+            }
+
+            target = 0 - numbers[l];
+
+            for(int m = l + 1, r = n - 1; m < r; ){
+                sum = numbers[m] + numbers[r];
+                if(sum < target){
+                    m++;
+                }else if(sum > target){
+                    r--;
+                }else{
+                    result.add( Arrays.asList(numbers[l], numbers[m], numbers[r]) );
+                    m++;
+                    r--;
+                }
+
+                while(m > l + 1 && m < r && numbers[m] == numbers[m - 1]){
+                    m++;
+                }
+            }
+        }
+
+        return result;
+    }
 	  
   /**
    * 

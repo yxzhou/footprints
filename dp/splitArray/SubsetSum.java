@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package fgafa.dp.splitArray;
 
 import fgafa.util.Misc;
 

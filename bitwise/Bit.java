@@ -180,6 +180,14 @@ public class Bit {
 		System.out.println(Integer.toBinaryString(1 << 31));
 		System.out.println(Integer.toBinaryString(largestPower(Integer.MAX_VALUE)));
 
+		/** */
+
+		System.out.println(Integer.toBinaryString(Integer.MIN_VALUE));
+		System.out.println(Integer.toBinaryString(Integer.MIN_VALUE - 1));
+
+		int x = Integer.MIN_VALUE;
+		System.out.println(x & (x - 1));
+
 	}
 
 	/**
@@ -190,7 +198,7 @@ public class Bit {
 
 	public static void main(String[] args) {
 
-
+		System.out.println(0b11111111111111111111111111111101);
 
 		System.out.println(Integer.toBinaryString(~(1 << 3)));
 		System.out.println(Integer.toBinaryString(~0b00111100));
@@ -204,6 +212,7 @@ public class Bit {
 
 			System.out.println();
 		}
+
 
 
 

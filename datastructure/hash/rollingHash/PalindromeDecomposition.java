@@ -143,8 +143,9 @@ public class PalindromeDecomposition {
                  ltmp <<= 1;
                  ltmp %= SIZE;
             }
-            rhash = (ltmp + rhash) % SIZE;
+            //rhash = (ltmp + rhash) % SIZE;
 
+            //rhash = ((rc << i) % SIZE + rhash ) % SIZE; //wrong
         }
 
         System.out.println(lhash);

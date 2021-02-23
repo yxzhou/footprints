@@ -45,6 +45,7 @@ public class ReverseBits3 {
         for(int i = 0; i < input.length; i++){
             int n = input[i];
             int r = bitsReverse(n);
+
             System.out.println(Integer.toBinaryString(n));
             System.out.println(Integer.toBinaryString(r));
             System.out.println(Integer.toBinaryString(~n));

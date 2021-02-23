@@ -18,6 +18,21 @@ import java.util.*;
 
 public class MeetingRoom {
 
+    public class Interval {
+        int start;
+        int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        Interval(int s, int e) {
+            start = s;
+            end = e;
+        }
+    }
+
     public boolean canAttendMeetings(Interval[] intervals) {
         //check
         if(null == intervals || 0 == intervals.length){
@@ -42,69 +57,36 @@ public class MeetingRoom {
         return true;
     }
 
-    /**
-     *
-     * @param intervals
-     * @return the interval that need maximum meeting room
-     */
-    public Interval minMeetingRooms(Interval[] intervals) {
+
+    public int minMeetingRooms(Interval[] intervals) {
         if(null == intervals || 0 == intervals.length){
-            return null;
+            return 0;
         }
 
-        //get 2 arrays, the startTimes and endTimes
-        int size = intervals.length;
-        int[] starts = new int[size];
-        int[] ends = new int[size];
-        int i = 0;
-        for(Interval it : intervals){
-            starts[i] = it.start;
-            ends[i] = it.end;
-            i++;
-        }
+        Arrays.sort(intervals, (a, b) -> a.start - b.start);
 
-        Arrays.sort(starts);
-        Arrays.sort(ends);
+        PriorityQueue<Interval> minHeap = new PriorityQueue<>((a, b) -> a.end - b.end);
+        minHeap.add(intervals[0]);
 
-        int max = 0;
-        int count = 0;
-        Interval result = null;
-        i = 0;
-        for( int j = 0; i < size && j < size;  ){
-            if(starts[i] < ends[i]){
-                count++;
-                i++;
+        Interval curr;
+        Interval top;
+        for( int i = 1; i < intervals.length ; i++ ){
+            curr = intervals[i];
+            top = minHeap.poll();
 
-                if(max < count){
-                    max = count;
-                    result = new Interval(starts[i], ends[j]);
-                }
-            }else if(starts[i] > ends[i]){ // 
-                count--;
-                j++;
-            }else{ // ==
-                i++;
-                j++;
+            if(top.end <= curr.start){
+                top.end = curr.end;
+            }else{
+                minHeap.add(curr);
             }
+
+            minHeap.add(top);
         }
 
-        return result;
+        return minHeap.size();
     }
 
-    public class Interval {
-        int start;
-        int end;
 
-        Interval() {
-            start = 0;
-            end = 0;
-        }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
-    }
     
     
     public int minMeetingRooms_n(Interval[] intervals) {
@@ -119,7 +101,7 @@ public class MeetingRoom {
         }
         
         Collections.sort(list, (p1, p2) -> (p1.getKey() == p2.getKey() ? p1.getValue() - p2.getValue() : p1.getKey() - p2.getKey()) );
-        
+
         int result = 0;
         int count = 0;
         for(Pair p : list){

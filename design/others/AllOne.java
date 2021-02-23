@@ -18,7 +18,7 @@ import java.util.Set;
  *
  */
 
-public class AllO1 {
+public class AllOne {
 
     Map<String, Integer> keys;
     Map<Integer, Set<String>> counts;
@@ -26,7 +26,7 @@ public class AllO1 {
     int min;
 
     /** Initialize your data structure here. */
-    public AllO1() {
+    public AllOne() {
         keys = new HashMap<>();
         counts = new HashMap<>();
 

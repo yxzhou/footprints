@@ -1,6 +1,5 @@
 package fgafa.design.others;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
@@ -49,7 +48,7 @@ import java.util.*;
  *
  */
 
-public class Leaderboard2 {
+public class Leaderboard3 {
 
     /**
      *
@@ -63,17 +62,17 @@ public class Leaderboard2 {
      *
      */
 
-    /**  HashMap + TreeMap */
+    /**  HashMap + HashMap */
 
     Map<Integer, Integer> map; // <playerId, score>
-    TreeMap<Integer, Integer> buckets;  // <score, count>
+    Map<Integer, Integer> buckets;  // <score, count>
 
-    public Leaderboard2() {
+    public Leaderboard3() {
         map = new HashMap<>();
-        buckets = new TreeMap<>(Collections.reverseOrder()); // 1 <= score <= 100 ??
+        buckets = new HashMap<>(); // 1 <= score <= 100 ??
     }
 
-    /**  O(logm) */
+    /**  O(1) */
     public void addScore(int playerId, int score) {
         Integer preScore = map.get(playerId);
         Integer newScore = (preScore == null ? score : score + preScore);
@@ -87,21 +86,20 @@ public class Leaderboard2 {
             }
         }
 
-
-
         buckets.put(newScore, buckets.getOrDefault(newScore, 0) + 1);
     }
 
-    /**  O(K) */
+    /**  O(m*logm) */
     public int top(int K) {
         int sum = 0;
 
-        Iterator<Integer> it = buckets.keySet().iterator();
+        List<Integer> scores = new ArrayList<>(buckets.keySet());
+        Collections.sort(scores);
 
         int score;
         int count;
-        while( K > 0 && it.hasNext() ){
-            score = it.next();
+        for(int i = scores.size() - 1; i >= 0 && K > 0; i-- ){
+            score = scores.get(i);
             count = buckets.get(score);
 
             if(K < count){
@@ -116,7 +114,7 @@ public class Leaderboard2 {
         return sum;
     }
 
-    /**  O(logm) */
+    /**  O(1) */
     public void reset(int playerId) {
         if(!map.containsKey(playerId)) {
             return;
@@ -133,13 +131,17 @@ public class Leaderboard2 {
     }
 
 
-    @Test
-    public void test(){
+    @Test public void test(){
+
+        for(int i = 3; i < 21; i++){
+            System.out.println((int)Math.log10(i));
+        }
+
 
 //        ["Leaderboard","addScore","addScore","addScore","addScore","addScore","top","reset","reset","addScore","top"]
 //[[],[1,73],[2,56],[3,39],[4,51],[5,4],[1],[1],[2],[2,51],[3]]
 
-        Leaderboard2 sv = new Leaderboard2();
+        Leaderboard3 sv = new Leaderboard3();
 
         sv.addScore(1, 73);
         sv.addScore(2, 56);
@@ -147,14 +149,14 @@ public class Leaderboard2 {
         sv.addScore(4, 51);
         sv.addScore(5, 4);
 
-        Assert.assertEquals(73, sv.top(1));
+        System.out.println(sv.top(1));
 
         sv.reset(1);
         sv.reset(2);
 
         sv.addScore(2, 51);
 
-        Assert.assertEquals(141, sv.top(3));
+        System.out.println(sv.top(3));
 
     }
 

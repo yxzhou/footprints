@@ -20,7 +20,7 @@ import java.util.Map;
  *    LFU, HashMap + Heap,
  *
  *    HashMap stores the (key, value) for get()
- *    Heap stores the frequent count.
+ *    Heap stores the freq count.
  *
  *    Every get(key): find the node with key and increase the node's count
  *    Every put(key, value):

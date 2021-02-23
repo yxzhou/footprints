@@ -3,15 +3,14 @@ package fgafa.basic;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
-import java.util.StringJoiner;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -82,7 +81,15 @@ public class StreamTest {
                 .get();
     }
 
-    
+    @Test
+    public void testToArray(){
+        List<Integer> numList = new ArrayList<>();
+        numList.add(1);
+
+        //Integer [] numArray = numList.stream().toArray( n -> new Integer[n]);
+        int[] numArray = numList.stream().mapToInt(Integer::intValue).toArray();
+    }
+
     @Test
     public void testMap() throws Throwable{
         List<Integer> numbers = Arrays.asList(1,2,3,4,5,6);
@@ -113,7 +120,6 @@ public class StreamTest {
     }
 
     private Integer find1_withStream(List<Integer> numbers) {
-
         return numbers.stream()
                 .filter(x -> (x & 1) == 0 ) // is Even
                 .map(x -> x * 2)   // double it

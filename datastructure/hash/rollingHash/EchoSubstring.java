@@ -3,6 +3,7 @@ package fgafa.datastructure.hash.rollingHash;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +36,23 @@ public class EchoSubstring {
 
     @Test public void test(){
 
+        String text = "abcabcabc";
+        int len = text.length();
+        char[] arr = text.toCharArray();
+
+        long[] hc = new long[len + 1]; //hashcode
+
+        for(int i = 0; i < len; i++){
+            hc[i + 1] = ((hc[i] << 1) % MOD + arr[i]) % MOD;
+        }
+
+        System.out.println("===" + cal(0, 3, hc));
+        System.out.println("===" + cal(3, 6, hc));
+        System.out.println("===" + cal(6, 9, hc));
+
+        Assert.assertEquals(cal(0, 3, hc), cal(3, 6, hc) );
+
+
 //        Assert.assertEquals(1, distinctEchoSubstrings("aa"));
 //        Assert.assertEquals(1, distinctEchoSubstrings("aaa"));
 //        Assert.assertEquals(1, distinctEchoSubstrings("abab"));
@@ -43,20 +61,31 @@ public class EchoSubstring {
         Assert.assertEquals(2, distinctEchoSubstrings("leetcodeleetcode"));
     }
 
+    private long cal(int l, int r, long[] hc){
+//        return (hc[r] - (hc[l] << (r-l)) % MOD + MOD) % MOD;  //wrong
+
+
+        long tmp = hc[l];
+        for(int k = 0; k < (r - l); k++){
+            tmp <<= 1;
+            tmp %= MOD;
+        }
+        return (hc[r] - tmp + MOD) % MOD;
+
+    }
+
     /******  ******  *****/
 
     public int distinctEchoSubstrings_bruteforce(String text) {
+        int len = text.length();
+        char[] arr = text.toCharArray();
+
         Set<String> set = new HashSet<>();
 
-        String first;
-        String second;
-        for(int i = 0, end = text.length(); i < end; i++ ){
-            for(int w = 1; i + w + w <= end; w += 1){
-                first = text.substring(i, i + w);
-                second = text.substring(i + w, i + w + w);
-
-                if(first.equals(second)){
-                    set.add(first);
+        for(int w = len/ 2; w > 0; w--){
+            for(int l = 0, r = w; r + w <= len; l++, r++){
+                if(Arrays.equals(arr, l, r, arr, r, r+w)){
+                    set.add(text.substring(l, r));
                 }
             }
         }

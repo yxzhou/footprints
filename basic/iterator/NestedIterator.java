@@ -42,49 +42,39 @@ public class NestedIterator implements Iterator<Integer> {
      }
 
 
-    Stack<Iterator<NestedInteger>> stack;
+    Stack<Iterator<NestedInteger>> iterators;
     NestedInteger top = null;
 
     public NestedIterator(List<NestedInteger> nestedList) {
-        stack = new Stack<>();
-        stack.add(nestedList.iterator());
+        iterators = new Stack<>();
+        iterators.add(nestedList.iterator());
     }
 
     @Override
     public Integer next() {
-
-        if(hasNext()){
-            Integer result = top.getInteger();
-            top = null;
-            return result;
-        }
-
-        return null;
+        int res = top.getInteger();
+        top = null;
+        return res;
     }
 
     @Override
     public boolean hasNext() {
+        while(!iterators.isEmpty() && this.top == null){
+            Iterator<NestedInteger> t = iterators.peek();
+            if(t.hasNext()){
+                NestedInteger curr = t.next();
 
-        if(top != null){
-            return true;
-        }
-
-        while(!stack.isEmpty()){
-            if(stack.peek().hasNext()){
-                top = stack.peek().next();
-
-                if(top.isInteger()){
-                    return true;
-                }else { //
-                    stack.add(top.getList().iterator());
+                if(curr.isInteger()){
+                    this.top = curr;
+                }else{
+                    iterators.add(curr.getList().iterator());
                 }
-
             }else{
-                stack.pop();
+                iterators.pop();
             }
         }
 
-        return false;
+        return this.top != null;
     }
 
     public static void main(String[] args) {

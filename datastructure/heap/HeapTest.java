@@ -13,6 +13,7 @@ public class HeapTest {
 		PriorityQueue<Integer> minHeap=new PriorityQueue<Integer>();
 		minHeap.poll();
 		minHeap.isEmpty();
+		minHeap.clear();
 
 		
 		int size = 10;
@@ -24,7 +25,7 @@ public class HeapTest {
 		    }
 		});
 		
-	    PriorityQueue<Integer> maxHeap_2 = 
+	    PriorityQueue<Integer> maxHeap2 =
 	                    new PriorityQueue<Integer>(Collections.reverseOrder());
 
 
@@ -32,8 +33,10 @@ public class HeapTest {
 
 
 		List<Iterator<int[]>> its = new LinkedList();
-		PriorityQueue<int[]> maxHeap_3 = new PriorityQueue<>((a1, a2) -> Integer.compare(a2[1], a1[1]) );
+		PriorityQueue<int[]> maxHeap3 = new PriorityQueue<>((a1, a2) -> Integer.compare(a2[1], a1[1]) );
 
+		Map<String, Integer> times = new HashMap<>();
+		PriorityQueue<String> minHeap4 = new PriorityQueue<>(3, (s1, s2) -> (times.get(s1).equals(times.get(s2)) ? s1.compareTo(s2) : Integer.compare(times.get(s1), times.get(s2))) );
 	}
 
 }
