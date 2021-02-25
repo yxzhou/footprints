@@ -68,12 +68,11 @@ public class ExcelColumn {
     
 
 	public String convertToTitle2(int n) {
-	    
-	    
+	    final int base = 'A';
 		StringBuffer sb = new StringBuffer();
 		while (n > 0) {
 			--n;
-			sb.append((char) (n % 26 + 'A'));
+			sb.append((char) (n % 26 + base));
 			n /= 26;
 		}
 		return sb.reverse().toString();

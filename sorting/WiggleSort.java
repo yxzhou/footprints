@@ -15,7 +15,7 @@ import fgafa.util.Misc;
  *  2, find the min and max, quick sort until that a midValue split the array to two part, 
  *     the first part includs n/2 + 1 and smaller than midValue, the second part alll are not smaller than the midValue
  *     time O(n), space O(1)
- *  3, greedy
+ *  3, greedy  -- wrong !!
  *     time O(n), space O(1)
  */
 
@@ -56,7 +56,7 @@ public class WiggleSort {
         return true;
     }
     
-    /*greedy*/
+    /*greedy  WRONG !!*/
     public void wiggleSort(int[] nums) {
         if(null == nums || nums.length < 2){
             return;

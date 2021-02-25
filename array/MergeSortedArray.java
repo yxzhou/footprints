@@ -15,78 +15,28 @@ public class MergeSortedArray
 	 * 
 	 *
 	 */
-    public void merge_X(int A[], int m, int B[], int n) {
-        if(null == B || 0 >= n)
-        	return; // needn't merge
-        
-        if(0 >= m){ //copy B to A
-        	for(int i=0; i<n; i++){
-        		A[i] = B[i];
-        	}
+    public void mergeSortedArray_n(int A[], int m, int B[], int n) {
+        if(A == null || B == null || n <= 0){
+            return;
         }
         
         //iterator check, from right to left
-        int j=n-1;
-        int k=m+n-1;
-        for(int i=m-1; i>=0 && j>=0; k--){
-        	if(A[i] >= B[j]){
-        		A[k] = A[i--];
-        	}else{
-        		A[k] = B[j--];
-        	}
+        int a = m - 1;
+        int b = n - 1;
+        for( int c = m + n - 1; a >= 0 && b >= 0; c-- ){
+            if(A[a] <= B[b] ){
+                A[c] = B[b];
+                b--;
+            }else{
+                A[c] = A[a];
+                a--;
+            }
         }
-        
-        while(j>=0){
-    		A[k--] = B[j--];
-        }
-    }
-	
-  public void merge(int A[], int m, int B[], int n) {
-    if(B == null || B.length == 0 || n > B.length)
-      return ;
-    
-    if( m == 0){
-        for(int j=0; j<n; j++){
-            A[j] = B[j];
+
+        if(b >= 0){
+            System.arraycopy(B, 0, A, 0, b + 1);
         }
     }
-      
-    
-    int index = m+n-1;  // for the merged result
-    int i=m-1;  // for A
-    int j=n-1;  // for B
-    while(i>=0 && j>=0){
-      if(A[i] >= B[j] )
-        A[index -- ] = A[i--];
-      else
-        A[index -- ] = B[j--];
-    }
-    
-    if(i < 0){
-      while(index >= 0 && j>=0)
-        A[index -- ] = B[j--];
-    }
-  }
-  
-  public void mergeSortedArray_n(int[] A, int m, int[] B, int n) {
-      // 
-      
-      int j = n - 1;
-      for(int i = m -1, k = m + n - 1; j >= 0 && i >= 0; k--){
-          if(A[i] > B[j]){
-              A[k] = A[i];
-              i--;
-          }else{
-              A[k] = B[j];
-              j--;
-          }
-      }
-      
-      while(j >= 0){
-          A[j] = B[j];
-          j--;
-      }
-  }
   
 	/**
 	 * Merge two given sorted integer array A and B into a new sorted integer
@@ -146,7 +96,7 @@ public class MergeSortedArray
     int[][] B = {{2}};
         
     MergeSortedArray sv = new MergeSortedArray();
-    sv.merge(A[0], 1, B[0], 1);
+    sv.mergeSortedArray_n(A[0], 1, B[0], 1);
   }
 
 }
