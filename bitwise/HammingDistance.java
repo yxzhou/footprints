@@ -16,8 +16,7 @@ public class HammingDistance {
      * @param b, a binary number
      * @return the hamming distance between two binary numbers
      */
-    public static int hammingDistance(int a,
-                                      int b) {
+    public static int hammingDistance(int a, int b) {
         int xor = a ^ b;
         int distance = 0;
         while (xor != 0) { //note, it's not xor > 0

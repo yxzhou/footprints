@@ -46,6 +46,39 @@ public class LongestParenthese
         return max;
     }
 
+    public int longestValidParentheses_stack2(String s) {
+        if(s == null || s.length() < 2){
+            return 0;
+        }
+
+        int max = 0;
+
+        int[] lengths = new int[s.length()];
+
+        Stack<Integer> stack = new Stack<>(); //<index>
+
+        char c;
+        int pre;
+        for(int i = 0, n = s.length(); i < n; i++){
+            c = s.charAt(i);
+            if(c == '('){
+                stack.add(i);
+            }else{
+                if(!stack.isEmpty() && s.charAt(stack.peek()) == '('){
+                    pre = stack.pop();
+
+                    lengths[i] = i - pre + 1 + (pre > 0 ? lengths[pre - 1] : 0);
+
+                    max = Math.max(max, lengths[i]);
+                }else{
+                    stack.add(i);
+                }
+            }
+        }
+
+        return max;
+    }
+
   
   /*
    * DP
@@ -135,12 +168,12 @@ public class LongestParenthese
   public static void main(String[] args) {
     LongestParenthese sv = new LongestParenthese();
     
-    String[] s = {"()","((",")(","(()","(((","())",")()())", ")(()))"};
+    String[] s = {"()","((",")(","))",")))","))()",")))()","(()","(((","())",")()())", ")(()))"};
 
     for(int i=0; i< s.length; i++){
       
       System.out.println("Input:" + s[i]);
-      System.out.println(sv.longestValidParentheses_stack(s[i]) + "\t" + sv.longestValidParentheses_dp(s[i]) + "\t" + sv.longestValidParentheses_twoScans(s[i]));
+      System.out.println(sv.longestValidParentheses_stack(s[i]) + "\t" + sv.longestValidParentheses_stack2(s[i]) + "\t" + sv.longestValidParentheses_dp(s[i]) + "\t" + sv.longestValidParentheses_twoScans(s[i]));
       
     }
     

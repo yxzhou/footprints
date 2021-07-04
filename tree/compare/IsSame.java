@@ -9,19 +9,21 @@ package fgafa.tree;
  * similar to SymmetricTree
  */
 
-public class IsSame
-{
+public class IsSame {
 
   public boolean isSameTree(TreeNode p, TreeNode q) {
-    //check
-    if(p == null || q == null)
+    if (p == null || q == null) {
       return p == q;
-    
-    if(p.val != q.val)
+    }
+
+
+    if (p.val != q.val) {
       return false;
-    
+    }
+
+
     return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-    
+
   }
   
   /**

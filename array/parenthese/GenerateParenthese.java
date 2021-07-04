@@ -1,8 +1,9 @@
 package fgafa.array.parenthese;
 
-import java.util.ArrayList;
-
 import fgafa.util.Misc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Given n pairs of parentheses, write a function to generate all combinations
@@ -52,39 +53,44 @@ public class GenerateParenthese {
      * idea:
      *    to every position, put the "(" or ")",
      */
-    public ArrayList<String> generateParenthesis_recursive(int n) {
-        ArrayList<String> result = new ArrayList<String>();
+    public List<String> generateParenthesis_recursive(int n) {
+        List<String> result = new ArrayList<>();
 
-        if (n > 0) {
+        if (n < 1) {
             return result;
         }
 
-        generateParenthesis_recursive(new StringBuilder(), 0, 0, n, result);
+        generateParenthesis_recursive(new char[n * 2], 0, 0, n, result);
 
         return result;
     }
 
-    private void generateParenthesis_recursive(StringBuilder s, int open, int close, int n, ArrayList<String> result) {
-
-        if (open == n) {
-            for (int k = close; k < n; k++) {
-                s.append(")");
+    /**
+     *
+     * @param s,  char array
+     * @param i
+     * @param diff,  open - close
+     * @param remain,  n - open
+     * @param result
+     */
+    private void generateParenthesis_recursive(char[] s, int i, int diff, int remain, List<String> result) {
+        if (remain == 0) {
+            while (i < s.length) {
+                s[i++] = ')';
             }
 
-            result.add(s.toString());
-
-            s.delete(n + close, n << 1);
+            result.add(new String(s));
             return;
         }
 
-        if (open < n) {
-            generateParenthesis_recursive(s.append("("), open + 1, close, n, result);
-            s.deleteCharAt(s.length() - 1);
-        }
+        //remain > 0
+        s[i] = '(';
+        generateParenthesis_recursive(s, i + 1, diff + 1, remain - 1, result);
 
-        if (close < open) {
-            generateParenthesis_recursive(s.append(")"), open, close + 1, n, result);
-            s.deleteCharAt(s.length() - 1);
+
+        if (diff > 0) {
+            s[i] = ')';
+            generateParenthesis_recursive(s, i + 1, diff - 1, remain, result);
         }
     }
 

@@ -1,9 +1,6 @@
 package fgafa.datastructure.interval;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * 
@@ -104,6 +101,36 @@ public class AirplaneNumber {
 		for(int[] event : events){
 			counter += event[1];
 			max = Math.max(max, counter);
+		}
+
+		return max;
+	}
+
+	/**
+	 *  special better for there are lots of same landing and flying
+	 *
+	 * @param airplanes
+	 * @return
+	 */
+	public int countOfAirplanes_x2(List<Interval> airplanes) {
+		if(airplanes == null){
+			return 0;
+		}
+
+		HashMap<Integer, Integer> map = new HashMap<>();//<time, count>
+		for(Interval it : airplanes){
+			map.put(it.start, map.getOrDefault(it.start, 0) + 1);
+			map.put(it.end, map.getOrDefault(it.end, 0) - 1);
+		}
+
+		List<Integer> times = new ArrayList<>(map.keySet());
+		Collections.sort(times);
+
+		int max = 0;
+		int count = 0;
+		for(Integer time : times){
+			count += map.get(time);
+			max = Math.max(max, count);
 		}
 
 		return max;

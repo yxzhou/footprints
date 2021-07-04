@@ -106,7 +106,7 @@ public class CountAndSay
       }
       
       StringBuilder curr = new StringBuilder("1");
-      StringBuilder next = new StringBuilder();
+      StringBuilder next ;
       int count;
       for( ; n > 1; n--){
           next = new StringBuilder(); 
@@ -132,21 +132,22 @@ public class CountAndSay
       if(n < 1){
           return "";
       }
-      
+
       StringBuilder curr = new StringBuilder("1");
-      StringBuilder next = new StringBuilder();
-      int j;
-      for( ; n > 1; n--){
-          next = new StringBuilder(); 
-          
-          for(int i = 0, end = curr.length(); i < end; i = j){
-              
-              for(j = i + 1; j < end && curr.charAt(i) == curr.charAt(j); j++);
-              
-              next.append(j - i);
-              next.append(curr.charAt(i));
+      StringBuilder next;
+
+      while(n-- > 1){
+          curr.append('a'); //'a' is special for the end
+          next = new StringBuilder();
+          for(int l = 0, r = 1, m = curr.length(); r < m; r++){
+              if(curr.charAt(l) != curr.charAt(r)){
+                  next.append(r - l);
+                  next.append(curr.charAt(l));
+
+                  l = r;
+              }
           }
-          
+
           curr = next;
       }
       

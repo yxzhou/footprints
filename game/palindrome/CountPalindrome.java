@@ -1,6 +1,9 @@
 package fgafa.game.palindrome;
 
 /**
+ * _https://www.lintcode.com/problem/837/description?_from=ladder&fromId=29
+ * _https://leetcode.com/problems/palindromic-substrings/
+ *
  * Given a string, your task is to count how many palindromic substrings in this string.
  *
  * The substrings with different start indexes or end indexes are counted as different substrings even they consist of same characters.
@@ -26,15 +29,14 @@ package fgafa.game.palindrome;
 public class CountPalindrome {
 
     public int countSubstrings(String s) {
-        if(null == s || 0 == s.length()){
+        if(null == s ){
             return 0;
         }
 
-        int length = s.length();
+
         char[] chars = s.toCharArray();
-
+        int length = chars.length;
         int count = length;
-
         for(int p = 1; p < length; p++){
             for(int i = p - 1, j = p + 1; i >= 0 && j < length && chars[i] == chars[j]; i--, j++){
                 count++;
@@ -49,7 +51,7 @@ public class CountPalindrome {
     }
 
     public int countSubstrings_n(String s) {
-        if(null == s || 0 == s.length()){
+        if(null == s ){
             return 0;
         }
 

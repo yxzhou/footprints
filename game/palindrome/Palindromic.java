@@ -1,16 +1,56 @@
 package fgafa.game.palindrome;
 
-/*
+/**
  *  Palindrome:
  *  A palindrome is a word, phrase, number, or other sequence of units that may be read the same way in either direction.
  *  example "abcba" , "1234321",
  *
- * Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+ *  Problem #1:
+ *    Given a string, determine if it is a palindrome
+ *    Examples:
+ *    Input "abcba"  Output True
+ *    Input "ab"     Output False
  *
- * For example,
+ *    Furthermore:
+ *    Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+ *    For example,
+ *    "A man, a plan, a canal: Panama" is a palindrome.
+ *    "race a car" is not a palindrome.
  *
- * "A man, a plan, a canal: Panama" is a palindrome.
- * "race a car" is not a palindrome.
+ *  Problem #2,
+ *    Given a positive number, Check if it is a palindrome or not.
+ *    _https://www.lintcode.com/problem/491/?_from=ladder&fromId=190
+ *
+ *    Example 1:
+ *    Input:11   Output:true
+ *
+ *    Example 2:
+ *    Input:1232  Output:false
+ *    Explanation:  1232!=2321
+ *
+ *    Notes:
+ *    It's guaranteed the input number is a 32-bit integer, but after reversion, the number may exceed the 32-bit integer.
+ *
+ *  Problem #3,
+ *    Give a a non-negative integer n, determines whether a binary representation of n is a palindrome
+ *
+ *    Example1
+ *    Input: n = 0  Output: True
+ *    Explanation:  The binary representation of 0 is: 0
+ *
+ *    Example2
+ *    Input: n = 3  Output: True
+ *    Explanation:  The binary representation of 3 is: 11
+ *
+ *    Example3
+ *    Input: n = 4  Output: False
+ *    Explanation:  The binary representation of 4 is: 100
+ *
+ *    Example4
+ *    Input: n = 6  Output: False
+ *    Explanation:  The binary representation of 6 is: 110
+ *
+ *
  *
  */
 
@@ -24,85 +64,62 @@ public class Palindromic {
 
         String[] s1 = {"abcbd", "aba", "aa", "abeba"};
         for (int i = 0; i < s1.length; i++) {
-            System.out.println(s1[i] + " is a palindormic number: " + isPalindrome(s1[i]));
+            System.out.println(s1[i] + " is a palindromic string: " + isPalindrome(s1[i]));
         }
 
         System.out.println();
 
         String[] s2 = {"A man, a plan, a canal: Panama", "race a ca"};
         for (int i = 0; i < s2.length; i++) {
-            System.out.println(s2[i] + " is a palindormic number: " + sv.isPalindrome_x(s2[i]));
+            System.out.println(s2[i] + " is a palindromic string: " + sv.isPalindrome_II(s2[i]));
         }
 
         System.out.println();
-        /* fundmental test */
-        int[] x = {-1, 10, -10};
-        for (int i = 0; i < x.length; i++) {
-            System.out.println((new StringBuilder().append(x[i])).reverse().toString());
+
+        int[] n = {-1, 10, -10, 1, 2, 3, 4, 5, 11, 12};
+        for (int i = 0; i < n.length; i++) {
+            //System.out.println((new StringBuilder().append(x[i])).reverse().toString());
+            System.out.println(n[i] + " is a palindromic number: " + isPalindrome(n[i]));
         }
 
     }
 
 
     /**
-     * check if s1 is a palindrome <br>
-     * A palindrome is a word, phrase, number, or other sequence of units that
-     * may be read the same way in either direction.
+     * Problem #1, determine whether a string is a palindrome.
      */
-
-    public static boolean isPalindrome(String s1) {
-        return s1.equals((new StringBuilder().append(s1)).reverse().toString());
-    
-    /*
-    int i, l;
-    char ch;
-    String s2 = "";
-    
-    l = s1.length();
-
-    for (i = 0; i < l; i++) {
-      ch = s1.charAt(i);
-      s2 = ch + s2;
+    public static boolean isPalindrome(String s) {
+        return s.equals((new StringBuilder().append(s)).reverse().toString());
     }
-    
-    if (s1.equals(s2))
-      return true;
-    else
-      return false;
-      */
+
+    public static boolean isPalindrome_2(String s){
+        int n = s.length();
+        for (int  i = 0, j = n - 1; i < j; i++, j--) {
+            if(s.charAt(i) != s.charAt(j)){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
-     * Determine whether an integer is a palindrome. Do this without extra space.
+     * Problem #1, Furthermore,
+     * Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
      *
-     * @param x
-     * @return
      */
-    public boolean isPalindrome(int x) {
-        return String.valueOf(x).equals((new StringBuilder().append(x)).reverse().toString());
-
-        /* the following is not good because overflow (when x is Integer.MAX_VALUE, Integer.MIN_VALUE) */
-        //return x == Integer.valueOf((new StringBuilder().append(x)).reverse().toString());
-
-    }
-
-    /**
-     * check if s1 is a palindrome <br>
-     * Given a string, determine
-     * if it is a palindrome, considering only alphanumeric characters and
-     * ignoring cases.
-     * <p>
-     * For example, "A man, a plan, a canal: Panama" is a palindrome.
-     * "race a car" is not a palindrome.
-     */
-    public boolean isPalindrome_x(String s) {
+    public boolean isPalindrome_II(String s) {
         if (null == s || 0 == s.length()) {
             return true;
         }
 
         for (int i = 0, j = s.length() - 1; i < j; i++, j--) {
-            while (i < j && !isAlphanumeric(s.charAt(i))) i++;
-            while (i < j && !isAlphanumeric(s.charAt(j))) j--;
+            while (i < j && !isAlphanumeric(s.charAt(i))) {
+                i++;
+            }
+            while (i < j && !isAlphanumeric(s.charAt(j))) {
+                j--;
+            }
 
             int diff = s.charAt(i) - s.charAt(j);
             if (0 != diff && 32 != Math.abs(diff)) {
@@ -113,20 +130,30 @@ public class Palindromic {
         return true;
     }
 
-    public boolean isPalindrome_x2(String s) {
-        if (null == s || 0 == s.length()) {
-            return true;
-        }
+    /**
+     * Problem #2, determine whether an integer is a palindrome. Do this without extra space.
+     *
+     */
+    public static boolean isPalindrome(int x) {
+        return String.valueOf(x).equals((new StringBuilder().append(x)).reverse().toString());
 
-        for (int i = 0, j = s.length() - 1; i < j; i++, j--) {
-            while (i < j && !Character.isLetterOrDigit(s.charAt(i))) {
-                i++;
-            }
-            while (i < j && !Character.isLetterOrDigit(s.charAt(j))) {
-                j--;
-            }
+        /* the following is not good because overflow (when x is Integer.MAX_VALUE, Integer.MIN_VALUE) */
+        //return x == Integer.valueOf((new StringBuilder().append(x)).reverse().toString());
+    }
 
-            if (i < j && Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(j))) {
+    /**
+     * Problem #3, determines whether a binary representation of a non-negative n is a palindrome.
+     *
+     */
+    public boolean isPalindrome_p3(int n) {
+        String s = Integer.toBinaryString(n);
+        return new StringBuilder(s).reverse().toString().equals(s);
+    }
+    public boolean isPalindrome_p3_2(int n) {
+        String s = Integer.toBinaryString(n);
+
+        for(int i = 0, j = s.length() - 1; i < j; i++, j--){
+            if(s.charAt(i) != s.charAt(j)){
                 return false;
             }
         }
@@ -134,6 +161,7 @@ public class Palindromic {
         return true;
     }
 
+    /** fundermental test */
     private boolean isNumeric(char c) {
         return (c >= 0x30 && c <= 0x39);
     }
@@ -144,8 +172,8 @@ public class Palindromic {
 
     private boolean isAlphanumeric(char c) {
         //return (c >= '0' && c <= '9') || ((c >= 'A') && c <= 'Z') || (c >= 'a' && c <= 'z');
-        return (c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a);
-        //return (c > 47 and c < 58) || (c > 64 && c < 91) || (c >= 96 && c <= 123);
+        //return (c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a);
+        return (c > 47 && c < 58) || (c > 64 && c < 91) || (c >= 96 && c <= 123);                       //best
     }
 
     private boolean isAlphanumber_n(char c) {
