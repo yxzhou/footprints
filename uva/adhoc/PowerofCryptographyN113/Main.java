@@ -1,4 +1,4 @@
-package fgafa.uva.adhoc.PowerofCryptographyN113;
+package uva.adhoc.PowerofCryptographyN113;
 
 import java.io.*;
 import java.util.*;

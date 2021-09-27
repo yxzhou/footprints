@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.tree;
+package dailyCoding.tree;
 
 import org.junit.Test;
 

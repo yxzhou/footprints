@@ -1,9 +1,9 @@
-package fgafa.sorting;
+package sorting;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class SortLettersAndNumbers {
 

@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
 import java.util.ArrayList;
 import java.util.HashSet;

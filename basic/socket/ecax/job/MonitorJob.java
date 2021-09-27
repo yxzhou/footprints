@@ -4,12 +4,12 @@
  * @date May. 26, 2004 Copyright (c) 2004 TeleVigation, Inc
  * modified by kye on 2005-08-30 for StatusChecking
  */
-package fgafa.basic.socket.ecax.job;
+package basic.socket.ecax.job;
 
 import com.televigation.log.TVCategory;
 import com.televigation.statuschecking.ClientWrapper;
-import fgafa.basic.socket.ecax.EcaMsg;
-import fgafa.basic.socket.ecax.EcaString;
+import basic.socket.ecax.EcaMsg;
+import basic.socket.ecax.EcaString;
 import com.televigation.telenavpro.filter.DateTimeHelper;
 import com.televigation.telenavpro.servlet.ResourceStrings;
 

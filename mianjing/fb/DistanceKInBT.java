@@ -1,4 +1,4 @@
-package fgafa.mianjing.fb;
+package mianjing.fb;
 
 /**
  *  Lintcode #1506,

@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.SearchAutocomplete;
+package design.systemdesign.SearchAutocomplete;
 
 import org.junit.Assert;
 

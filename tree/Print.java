@@ -1,4 +1,6 @@
-package fgafa.tree;
+package tree;
+
+import tree.path.Height;
 
 import java.util.Hashtable;
 import java.util.LinkedList;

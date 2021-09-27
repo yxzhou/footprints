@@ -1,4 +1,4 @@
-package fgafa.dp.twosequence;
+package dp.twosequence;
 
 /**
  * 
@@ -24,6 +24,9 @@ package fgafa.dp.twosequence;
  */
 public class EditDistance {
 
+    /**
+     * Q2, find the minimum edit distance
+     */
     public int minDistance_recur(String word1, String word2) {
         if (word1 == null && word2 == null) {
             return 0;
@@ -197,7 +200,7 @@ public class EditDistance {
     }
   
   /**
-   * Given two strings S and T, determine if they are both one edit distance apart.
+   * Q1: Given two strings S and T, determine if they are both one edit distance apart.
    */
   
   public boolean isOneEditDistance(String s, String t) {
@@ -219,78 +222,38 @@ public class EditDistance {
   }
   
   private boolean isOneReplace(String s, String t){
-      boolean hasOnlyOne = false; // it's 0 at beginning.
+      boolean once = false; // it's 0 at beginning.
       
       for(int i = 0; i < s.length(); i++){
           if(s.charAt(i) != t.charAt(i)){
-              if(hasOnlyOne){ // if it has 1 now, return false
+              if(once){ // if it has 1 now, return false
                   return false;
               }
               
-              hasOnlyOne = true; //
+              once = true; //
           }
       }
-      
-      //return true;
-      return hasOnlyOne;
-  }
-  
-  private boolean isOneReplace_2(String s, String t){
 
-      for(int i = 0; i < s.length(); i++){
-          if(s.charAt(i) != t.charAt(i)){
-              return s.substring(i + 1).equals(t.substring(i + 1));
-          }
-      }
-      
-      return true;
+      return once; // if s.equals(t), once will be false here.
   }
+
   
-  private boolean isOneAdd(String longer, String shorter){      
-      for(int i = 0; i < shorter.length(); i++){
+  private boolean isOneAdd(String longer, String shorter){
+      boolean once = false;
+      for(int i = 0, j = 0; i < shorter.length(); i++, j++){
           if(longer.charAt(i) != shorter.charAt(i)){
-              return longer.substring(i + 1).equals(shorter.substring(i));
+              if(once){
+                  return false;
+              }
+
+              once = true;
+              i--;
           }
       }
       
       return true;
   }
-  
-  public boolean isOneEditDistance_n(String s, String t){
-      if(null == s || null == t){
-          return false;
-      }
-      
-      int diff = s.length() - t.length();
-      
-      if(diff > 1 || diff < -1){
-          return false;
-      }
-      
-      if(1 == diff){
-          return isOneEditDistance(t, s);
-      }
-      
-      int i = 0;
-      while(i < s.length() && s.charAt(i) == t.charAt(i)){
-          i++;
-      }
-      
-      if(i == s.length()){
-          return diff == -1;
-      }
-      
-      if(0 == diff){
-          i++;
-      }
-      
-      while(i < s.length() && s.charAt(i) == t.charAt(i - diff)){
-          i++;
-      }
-      
-      return i == s.length();
-      
-  }
+
   
   /**
    * @param args

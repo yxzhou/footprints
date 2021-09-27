@@ -1,4 +1,4 @@
-package fgafa.basic.cryptopal;
+package basic.cryptopal;
 
 import org.junit.Assert;
 import org.junit.Test;

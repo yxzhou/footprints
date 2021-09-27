@@ -1,4 +1,4 @@
-package fgafa.array.parenthese;
+package array.parenthese;
 
 
 public class ValidParentheses

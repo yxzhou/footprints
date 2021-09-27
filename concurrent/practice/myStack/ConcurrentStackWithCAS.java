@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.myStack;
+package concurrent.practice.myStack;
 
 public class ConcurrentStackWithCAS {
     class StackNode {

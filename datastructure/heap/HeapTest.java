@@ -1,6 +1,6 @@
-package fgafa.datastructure.heap;
+package datastructure.heap;
 
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 

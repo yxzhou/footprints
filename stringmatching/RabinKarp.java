@@ -1,4 +1,4 @@
-package fgafa.stringmatching;
+package stringmatching;
 
 /***************************************************************
  *  Compilation:  javac RabinKarp.java

@@ -1,4 +1,4 @@
-package fgafa.design.OOD.parkingLots;
+package design.OOD.parkingLots;
 
 public class Car extends Vehicle {
     public Car(String plate){

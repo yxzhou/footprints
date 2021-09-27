@@ -3,12 +3,12 @@
  * @author Zhou Yuanxi
  * @date Feb. 16, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax;
+package basic.socket.ecax;
 
 import java.util.*;
 
 import com.televigation.log.TVCategory;
-import fgafa.basic.socket.ecax.job.MonitorJob;
+import basic.socket.ecax.job.MonitorJob;
 import com.televigation.telenavpro.filter.DateTimeHelper;
 import com.televigation.db.telenavpro.EcaxWorkDayManager;
 import com.televigation.telenavpro.filter.TimeZoneTypeDef;

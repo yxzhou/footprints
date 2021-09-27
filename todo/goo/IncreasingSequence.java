@@ -1,6 +1,6 @@
-package fgafa.todo.goo;
+package todo.goo;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Given a array of integer, check if it's a increasing sequence after one change

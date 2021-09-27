@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.datastructure;
+package dailyCoding.datastructure;
 
 import java.util.EmptyStackException;
 import java.util.Stack;

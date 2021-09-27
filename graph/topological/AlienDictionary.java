@@ -1,4 +1,4 @@
-package fgafa.graph.topological;
+package graph.topological;
 
 import org.junit.Assert;
 import org.junit.Test;

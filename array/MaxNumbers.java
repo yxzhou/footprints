@@ -1,4 +1,4 @@
-package fgafa.array;
+package array;
 
 public class MaxNumbers {
     

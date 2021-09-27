@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree.rankScore;
+package datastructure.segmentTree.rankScore;
 
 /**
  *

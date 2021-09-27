@@ -1,4 +1,4 @@
-package fgafa.uva.geometry.MouseClicksN142;
+package uva.geometry.MouseClicksN142;
 
 import java.io.*;
 import java.util.*;

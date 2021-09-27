@@ -1,4 +1,4 @@
-package fgafa.datastructure.queue;
+package datastructure.queue;
 
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package fgafa.dp.arithmetic;
+package dp.arithmetic;
 
 import org.junit.Assert;
 import org.junit.Test;

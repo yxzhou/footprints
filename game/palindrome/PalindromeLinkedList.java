@@ -1,6 +1,6 @@
-package fgafa.game.palindrome;
+package game.palindrome;
 
-import fgafa.linkedlist.ListNode;
+import linkedlist.ListNode;
 
 /**
  * 

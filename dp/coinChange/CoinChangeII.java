@@ -1,4 +1,4 @@
-package fgafa.dp.coinChange;
+package dp.coinChange;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,10 +6,17 @@ import org.junit.Test;
 import java.util.Arrays;
 
 /**
- *
+ * _https://www.lintcode.com/problem/740
+ * 
  * You are given coins of different denominations and a total amount of money.
  * Write a function to compute the number of combinations that make up that amount.
  * You may assume that you have infinite number of each kind of coin.
+ * 
+ * Notes: You can assume below:
+ *   0 <= amount <= 5000
+ *   1 <= coin <= 5000
+ *   the number of coins is less than 500
+ *   the answer is guaranteed to fit into signed 32-bit integer
  *
  * Example 1:
  * Input: amount = 5, coins = [1, 2, 5]
@@ -29,12 +36,6 @@ import java.util.Arrays;
  * Input: amount = 10, coins = [10]
  * Output: 1
  *
- * Note:
- * You can assume that
- * 0 <= amount <= 5000
- * 1 <= coin <= 5000
- * the number of coins is less than 500
- * the answer is guaranteed to fit into signed 32-bit integer
  *
  * Thoughts:
  *
@@ -48,18 +49,18 @@ import java.util.Arrays;
 public class CoinChangeII {
 
     public int change(int amount, int[] coins) {
-        if(amount < 1 || amount < coins[0]){
+        if(amount == 0){
             return 0;
         }
 
-        Arrays.sort(coins);
-
-        int[] dp = new int[amount + 1]; //default all are 0
+        int[] dp = new int[amount + 1]; //dp[i] is the number of combinations that make up to i
         dp[0] = 1;
 
-        for(int c : coins){
-            for(int x = c; x <= amount; x++){
-                dp[x] += dp[x - c];
+        for(int x : coins){
+            for(int y = 0, end = amount - x; y <= end; y++){
+                if(dp[y] > 0){
+                    dp[y + x] += dp[y]; 
+                }
             }
         }
 

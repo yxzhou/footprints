@@ -1,4 +1,4 @@
-package fgafa.datastructure.LRU;
+package datastructure.LRU;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Design and implement a data structure for Least Recently Used (LRU) cache. It

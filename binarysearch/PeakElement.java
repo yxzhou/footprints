@@ -1,4 +1,4 @@
-package fgafa.binarysearch;
+package binarysearch;
 
 /**
  * A peak element is an element that is greater than its neighbors.

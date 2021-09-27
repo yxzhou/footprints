@@ -1,4 +1,4 @@
-package fgafa.dp.sequence;
+package dp.sequence;
 
 /**
  *  Leetcode #639
@@ -19,6 +19,7 @@ package fgafa.dp.sequence;
  * Input: "*"
  * Output: 9
  * Explanation: The encoded message can be decoded to the string: "A", "B", "C", "D", "E", "F", "G", "H", "I".
+ * 
  * Example 2:
  * Input: "1*"
  * Output: 9 + 9 = 18
@@ -38,57 +39,42 @@ public class DecodeWaysII {
      */
 
     public int numDecodings(String s) {
-        if(null == s  || 0 == s.length()){
+         if(s == null || s.isEmpty()){
             return 0;
         }
 
-        final int MOD = 1_000_000_007;
-        final int ZERO = '0';
-        final int STAR = '*' - ZERO;
+        final long MOD = 1_000_000_007;
 
-        int p = s.charAt(0) - ZERO;
-        int c;
+        long f1 = 0;
+        long f2 = 1;
+        long tmp;
 
-        // if(p == star){
-        //     return 9;
-        // }
-        if(p == 0 || (p != STAR && !isValid(p))){
-            return 0;
-        }
+        char pre = '0';
 
-        long f1 = 1; // f[i - 1], the decode way by i - 1
-        long f2 = 1; // f[i], the decode way by i
-
-        if(p == STAR){
-            f2 = 9;
-        }
-
-        for(int k = 1; k < s.length(); k++){
-            c = s.charAt(k) - ZERO;
-
-            if(c != STAR && c != 0 && !isValid(c) && !isValid(p, c)){
+        for(char c : s.toCharArray()){
+            if(c != '*' && (c < '0' || c > '9' || (c == '0' && ( pre == '0' || (pre != '*' && pre > '2'))) )){
                 return 0;
             }
 
-            long tmp = 0;
-            if(c == STAR){
-                tmp = f2 * 9;
-
-                if(p == 1){
-                    tmp += f1 * 9;
-                }else if(p == 2){
-                    tmp += f1 * 6;
-                }else if(p == STAR){
-                    tmp += f1 * 15;
+            if(c == '*'){
+                tmp = 9 * f2;
+                if(pre == '*'){
+                    tmp += 15 * f1; 
+                }else if(pre == '1'){
+                    tmp += 9 * f1; 
+                }else if(pre == '2'){
+                    tmp += 6 * f1; 
+                }
+            }else if(c == '0'){
+                tmp = f1;
+                if(pre == '*'){
+                    tmp += f1;
                 }
             }else{
-                if(isValid(c)){
-                    tmp = f2;
-                }
-
-                if(p == STAR){
-                    tmp += f1 + (c <= 6 ? f1 : 0);
-                }else if(isValid(p, c)){
+                tmp = f2;
+                if(pre == '*'){
+                    tmp += f1 = (c < '7'? f1 : 0);
+                }else if(pre == '1' || (pre == '2' && c < '7') ){
                     tmp += f1;
                 }
             }
@@ -96,20 +82,11 @@ public class DecodeWaysII {
             f1 = f2;
             f2 = tmp % MOD;
 
-            p = c;
+            pre = c;
         }
 
         return (int)f2;
     }
-
-    private boolean isValid(int digit){
-        return digit >= 1 && digit <= 9;
-    }
-
-    private boolean isValid(int digit1, int digit2){
-        return (digit1 == 1  && (digit2 >= 0 && digit2 <= 9)) || (digit1 == 2 && (digit2 >= 0 && digit2 <= 6));
-    }
-
 
     public static void main(String[] args) {
 

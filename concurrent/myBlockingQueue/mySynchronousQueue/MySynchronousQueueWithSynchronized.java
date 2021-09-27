@@ -1,4 +1,4 @@
-package fgafa.concurrent.myBlockingQueue.mySynchronousQueue;
+package concurrent.myBlockingQueue.mySynchronousQueue;
 
 public class MySynchronousQueueWithSynchronized<E> implements MySynchronousQueue<E>, java.io.Serializable {
 

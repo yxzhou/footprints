@@ -1,8 +1,8 @@
-package fgafa.basic;
+package basic;
 
 import static org.junit.Assert.*;
 
-import fgafa.MyObject;
+import util.MyObject;
 import org.junit.Test;
 
 import java.util.Arrays;

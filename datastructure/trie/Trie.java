@@ -1,4 +1,4 @@
-package fgafa.datastructure.trie;
+package datastructure.trie;
 
 /**
  * 

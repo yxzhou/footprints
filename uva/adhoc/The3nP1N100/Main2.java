@@ -1,4 +1,4 @@
-package fgafa.uva.adhoc.The3nP1N100;
+package uva.adhoc.The3nP1N100;
 
 import java.io.*;
 import java.util.*;

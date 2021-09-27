@@ -1,4 +1,4 @@
-package fgafa.design.others.myCircluarDeque;
+package design.others.myCircluarDeque;
 
 
 /**

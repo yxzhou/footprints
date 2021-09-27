@@ -1,4 +1,4 @@
-package fgafa.uva.prime.FactorsAndFactorialsN160;
+package uva.prime.FactorsAndFactorialsN160;
 
 import java.io.*;
 import java.util.*;

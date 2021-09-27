@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.threadInteraction;
+package concurrent.practice.threadInteraction;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;

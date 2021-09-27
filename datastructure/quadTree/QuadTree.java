@@ -1,4 +1,4 @@
-package fgafa.datastructure.quadTree;
+package datastructure.quadTree;
 
 import java.awt.Point;
 

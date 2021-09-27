@@ -1,6 +1,6 @@
-package fgafa.stringmatching;
+package stringmatching;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /*
  * KMP - Knuth-Morris-Pratt

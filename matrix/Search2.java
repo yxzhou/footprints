@@ -1,10 +1,10 @@
-package fgafa.matrix;
+package matrix;
 
 import algs4.stdlib.In;
 
-import fgafa.Constants;
-import fgafa.util.Misc;
-import fgafa.util.TimeCost;
+import Constants;
+import util.Misc;
+import util.TimeCost;
 
 /**
  * 

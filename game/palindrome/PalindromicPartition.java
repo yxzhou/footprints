@@ -1,4 +1,4 @@
-package fgafa.game.palindrome;
+package game.palindrome;
 
 import java.util.ArrayList;
 import java.util.List;

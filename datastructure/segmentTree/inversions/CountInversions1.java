@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree.inversions;
+package datastructure.segmentTree.inversions;
 
 /**
  * Q: Input an array, leftChildrenCount the inversions.

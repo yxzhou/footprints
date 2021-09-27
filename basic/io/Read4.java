@@ -1,4 +1,4 @@
-package fgafa.basic.io;
+package basic.io;
 
 /**
  * Read N Characters Given Read4

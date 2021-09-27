@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fgafa.basic;
+package basic;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

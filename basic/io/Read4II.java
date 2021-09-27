@@ -1,4 +1,4 @@
-package fgafa.basic.io;
+package basic.io;
 
 /**
  * 

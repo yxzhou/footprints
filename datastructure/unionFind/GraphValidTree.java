@@ -1,4 +1,4 @@
-package fgafa.datastructure.unionFind;
+package datastructure.unionFind;
 
 import org.junit.Assert;
 import org.junit.Test;

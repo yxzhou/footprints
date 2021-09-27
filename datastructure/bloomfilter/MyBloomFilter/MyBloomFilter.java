@@ -1,4 +1,4 @@
-package fgafa.datastructure.bloomfilter.MyBloomFilter;
+package datastructure.bloomfilter.MyBloomFilter;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;

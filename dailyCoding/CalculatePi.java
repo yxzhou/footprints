@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

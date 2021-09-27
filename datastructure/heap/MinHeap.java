@@ -1,4 +1,4 @@
-package fgafa.datastructure.heap;
+package datastructure.heap;
 
 import java.lang.Comparable;
 

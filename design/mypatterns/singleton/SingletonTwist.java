@@ -1,4 +1,4 @@
-package fgafa.design.mypatterns.singleton;
+package design.mypatterns.singleton;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

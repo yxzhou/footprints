@@ -1,4 +1,4 @@
-package fgafa.uva.datastructure.SearchingQuicklyN123;
+package uva.datastructure.SearchingQuicklyN123;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package fgafa.sorting.median;
+package sorting.median;
 
 /**
  * 

@@ -1,6 +1,6 @@
-package fgafa.graph;
+package graph;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package fgafa.design.OOD.parkingLots2;
+package design.OOD.parkingLots2;
 
 public class Bus extends Vehicle {
 

@@ -1,4 +1,4 @@
-package fgafa.basic.test;
+package basic.test;
 
 public class Test2
 {
@@ -41,7 +41,7 @@ public class Test2
 
 
 
-  public static void main(String[] args) {
+  public static void main(StringTest[] args) {
     Test2 sv = new Test2();
     subclass t = sv.new subclass();
     t.f();

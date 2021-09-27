@@ -1,6 +1,6 @@
-package fgafa.basic;
+package basic;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class ByValueOrRef
 {

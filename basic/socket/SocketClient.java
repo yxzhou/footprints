@@ -1,4 +1,4 @@
-package fgafa.basic.socket;
+package basic.socket;
 
 import java.io.*;
 import java.net.*;

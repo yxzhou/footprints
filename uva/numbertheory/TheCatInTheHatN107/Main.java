@@ -1,4 +1,4 @@
-package fgafa.uva.numbertheory.TheCatInTheHatN107;
+package uva.numbertheory.TheCatInTheHatN107;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

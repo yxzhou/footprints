@@ -1,6 +1,6 @@
-package fgafa.leetcode.airbnb;
+package leetcode.airbnb;
 
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -49,7 +49,7 @@ public class RoundNumbers {
             //totalFloor += result[i];
 
             diff = prices[i] - result[i];
-            diff2Index[i] = new Pair<>(diff, i);
+            diff2Index[i] = Pair.of(diff, i);
             totoalDiff += diff;
         }
 

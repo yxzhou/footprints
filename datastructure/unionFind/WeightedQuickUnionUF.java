@@ -1,4 +1,4 @@
-package fgafa.datastructure.unionFind;
+package datastructure.unionFind;
 
 /**
  * 

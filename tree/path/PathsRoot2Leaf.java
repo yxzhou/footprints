@@ -1,4 +1,4 @@
-package fgafa.tree;
+package tree.path;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

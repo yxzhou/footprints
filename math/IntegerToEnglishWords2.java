@@ -1,4 +1,4 @@
-package fgafa.math;
+package math;
 
 import org.junit.Assert;
 import org.junit.Test;

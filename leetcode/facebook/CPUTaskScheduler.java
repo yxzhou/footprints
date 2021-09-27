@@ -1,4 +1,4 @@
-package fgafa.leetcode.facebook;
+package leetcode.facebook;
 
 import java.util.*;
 
@@ -64,19 +64,23 @@ public class CPUTaskScheduler {
     }
 
     public int leastInterval_math(char[] tasks, int n) {
-        int[] c = new int[26]; //default all are 0
+        int[] counts = new int[26];
         for(char t : tasks){
-            c[t - 'A']++;
+            counts[t - 'A']++;
         }
 
-        Arrays.sort(c);
-
-        int i = 1;
-        for(int j = 24; j >=0 && c[j] == c[25]; j--){
-            i++;
+        int max = 0;
+        int maxCount = 0;
+        for(int i = 0; i < counts.length; i++){
+            if(max < counts[i]){
+                max = counts[i];
+                maxCount = 1;
+            }else if(max == counts[i]){
+                maxCount++;
+            } // else, max > counts[i], do nothing
         }
 
-        return Math.max(tasks.length, (c[25] - 1) * (n + 1) + i);
+        return Math.max( (max - 1) * (n + 1) + maxCount, tasks.length );
     }
 
 

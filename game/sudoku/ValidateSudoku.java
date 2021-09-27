@@ -1,4 +1,4 @@
-package fgafa.game.sudoku;
+package game.sudoku;
 
 /**
  * The <code>Sudoku</code> class povides a static <code>main</code>

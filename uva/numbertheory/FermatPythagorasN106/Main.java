@@ -1,4 +1,4 @@
-package fgafa.uva.numbertheory.FermatPythagorasN106;
+package uva.numbertheory.FermatPythagorasN106;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

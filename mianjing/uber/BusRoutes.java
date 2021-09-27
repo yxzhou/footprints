@@ -1,4 +1,4 @@
-package fgafa.mianjing.uber;
+package mianjing.uber;
 
 import org.junit.Assert;
 import org.junit.Test;

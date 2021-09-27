@@ -1,9 +1,9 @@
-package fgafa.tree;
+package tree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.basic.serialize.BinaryTreeSerialize;
+import basic.serialize.BinaryTreeSerialize;
 
 public class BinaryTree {
 

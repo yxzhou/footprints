@@ -1,4 +1,4 @@
-package fgafa.array;
+package array;
 
 import algs4.stdlib.In;
 

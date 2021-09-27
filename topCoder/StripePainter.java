@@ -1,4 +1,4 @@
-package fgafa.topCoder;
+package topCoder;
 
 /**
  * Problem Statement http://community.topcoder.com/stat?c=problem_statement&pm=1215&rd=4555

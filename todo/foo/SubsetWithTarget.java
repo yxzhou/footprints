@@ -1,4 +1,4 @@
-package fgafa.todo.foo;
+package todo.foo;
 
 import java.util.Arrays;
 

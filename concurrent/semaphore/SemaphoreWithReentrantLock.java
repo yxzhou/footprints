@@ -1,4 +1,4 @@
-package fgafa.concurrent.semaphore;
+package concurrent.semaphore;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

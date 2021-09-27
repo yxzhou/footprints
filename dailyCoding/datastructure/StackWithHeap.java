@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.datastructure;
+package dailyCoding.datastructure;
 
 import java.util.Comparator;
 import java.util.HashMap;

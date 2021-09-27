@@ -1,4 +1,4 @@
-package fgafa.todo.goo;
+package todo.goo;
 
 /**
  *  Given a postive number n, how many numbers in [0, n] whose binary string doesn't include "11"

@@ -1,4 +1,4 @@
-package fgafa.uva.permutationAndCombination.AnagramN195;
+package uva.permutationAndCombination.AnagramN195;
 
 import java.io.*;
 import java.util.*;

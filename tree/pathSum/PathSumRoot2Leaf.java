@@ -1,6 +1,6 @@
-package fgafa.tree.pathSum;
+package tree.pathSum;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 /*
  * Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.

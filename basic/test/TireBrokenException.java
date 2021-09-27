@@ -1,4 +1,4 @@
-package fgafa.basic.test;
+package basic.test;
 
 public class TireBrokenException extends RuntimeException
 {

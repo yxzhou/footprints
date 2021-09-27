@@ -1,6 +1,6 @@
-package fgafa.tree.pathSum;
+package tree.pathSum;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 /*
  * 

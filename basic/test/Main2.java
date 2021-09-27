@@ -1,4 +1,4 @@
-package fgafa.basic.test;
+package basic.test;
 
 
 interface Drivable1
@@ -47,7 +47,7 @@ class Car1 extends Vehicle1 implements Drivable1 {
 public class Main2  //only this can be public 
 {
 
-    public static void main(String[] args) {
+    public static void main(StringTest[] args) {
       
       //  Vehicle v = new Car();
       //  v.run();

@@ -1,4 +1,4 @@
-package fgafa.tree;
+package tree.compare;
 
 /*
  * 
@@ -8,6 +8,8 @@ package fgafa.tree;
  * 
  * similar to SymmetricTree
  */
+
+import tree.TreeNode;
 
 public class IsSame {
 

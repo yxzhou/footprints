@@ -1,4 +1,4 @@
-package fgafa.topCoder;
+package topCoder;
 
 import java.util.Arrays;
 import java.util.HashMap;

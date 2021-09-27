@@ -1,4 +1,4 @@
-package fgafa.topCoder.graph;
+package topCoder.graph;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import fgafa.graph.traversal.TraversalLevalOrder;
+import graph.traversal.TraversalLevalOrder;
 
 /**
  *

@@ -1,4 +1,4 @@
-package fgafa.uva.dp.UnidirectionalTSPN116;
+package uva.dp.UnidirectionalTSPN116;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package fgafa.graph.traversal;
+package graph.traversal;
 
 public class TraversalUndirectedGraph {
 }

@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice;
+package concurrent.practice;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;

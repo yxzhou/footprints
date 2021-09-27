@@ -1,4 +1,4 @@
-package fgafa.todo;
+package todo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

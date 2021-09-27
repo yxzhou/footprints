@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.HitCounter;
+package design.systemdesign.HitCounter;
 
 /**
  * Design a hit counter which counts the number of hits received in the past 5 minutes.

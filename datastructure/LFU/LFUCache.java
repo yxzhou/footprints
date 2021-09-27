@@ -1,4 +1,4 @@
-package fgafa.datastructure.LFU;
+package datastructure.LFU;
 
 public interface LFUCache<K, V> {
 

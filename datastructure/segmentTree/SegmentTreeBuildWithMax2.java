@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree;
+package datastructure.segmentTree;
 
 /**
  *

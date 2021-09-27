@@ -1,4 +1,4 @@
-package fgafa.graph.topological;
+package graph.topological;
 
 import java.util.ArrayList;
 import java.util.List;

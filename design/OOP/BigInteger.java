@@ -1,4 +1,4 @@
-package fgafa.design.OOP;
+package design.OOP;
 
 public class BigInteger {
     private String value;

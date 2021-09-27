@@ -1,8 +1,8 @@
-package fgafa.sorting.median;
+package sorting.median;
 
 import java.util.PriorityQueue;
 
-import fgafa.sorting.median.KthSmallestOfSortedMatrix.Node;
+import sorting.median.KthSmallestOfSortedMatrix.Node;
 
 /**
  * 

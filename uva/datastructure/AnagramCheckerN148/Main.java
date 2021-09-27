@@ -1,4 +1,4 @@
-package fgafa.uva.datastructure.AnagramCheckerN148;
+package uva.datastructure.AnagramCheckerN148;
 
 import java.io.*;
 import java.util.*;

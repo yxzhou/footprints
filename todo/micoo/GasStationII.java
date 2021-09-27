@@ -1,4 +1,4 @@
-package fgafa.todo.micoo;
+package todo.micoo;
 
 import java.util.Collections;
 import java.util.PriorityQueue;

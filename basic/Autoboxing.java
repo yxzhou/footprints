@@ -1,4 +1,4 @@
-package fgafa.basic;
+package basic;
 
 /*
  Autoboxing. Type parameters have to be instantiated as reference types, 

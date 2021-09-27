@@ -1,6 +1,6 @@
-package fgafa.datastructure.segmentTree.rangeSumCount;
+package datastructure.segmentTree.rangeSumCount;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.Arrays;
 import java.util.TreeMap;

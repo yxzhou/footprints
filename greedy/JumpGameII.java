@@ -1,6 +1,6 @@
-package fgafa.greedy;
+package greedy;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /*
  * 

@@ -1,4 +1,4 @@
-package fgafa.basic.iterator;
+package basic.iterator;
 
 /**
  * Given an Iterator class interface with methods: next() and hasNext(),

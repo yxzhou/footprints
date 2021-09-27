@@ -1,4 +1,4 @@
-package fgafa.matrix;
+package matrix;
 
 import java.util.ArrayList;
 import java.util.Collections;

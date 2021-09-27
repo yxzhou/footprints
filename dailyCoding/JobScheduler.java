@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
 import java.io.Closeable;
 import java.io.IOException;

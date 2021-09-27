@@ -1,4 +1,4 @@
-package fgafa.tree;
+package tree;
 
 import java.util.Stack;
 import java.util.StringTokenizer;

@@ -1,4 +1,4 @@
-package fgafa.basic.interfaceAndAbstractClass;
+package basic.interfaceAndAbstractClass;
 
 public interface Sortable
 {

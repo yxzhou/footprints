@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.grid2D;
+package dailyCoding.grid2D;
 
 /**
  *

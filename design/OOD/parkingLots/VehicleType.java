@@ -1,4 +1,4 @@
-package fgafa.design.OOD.parkingLots;
+package design.OOD.parkingLots;
 
 public enum VehicleType {
     MOTOCYCLE(1), CAR(2), BUS(3);

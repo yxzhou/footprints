@@ -1,11 +1,11 @@
-package fgafa.geometry;
+package geometry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class Points2DII {
 

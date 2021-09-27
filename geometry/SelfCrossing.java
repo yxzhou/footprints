@@ -1,4 +1,4 @@
-package fgafa.geometry;
+package geometry;
 
 /**
  * 

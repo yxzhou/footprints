@@ -1,4 +1,4 @@
-package fgafa.dfsbfs;
+package dfsbfs;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

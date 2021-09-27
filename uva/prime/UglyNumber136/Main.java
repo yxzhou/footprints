@@ -1,4 +1,4 @@
-package fgafa.uva.prime.UglyNumber136;
+package uva.prime.UglyNumber136;
 
 import java.util.LinkedList;
 

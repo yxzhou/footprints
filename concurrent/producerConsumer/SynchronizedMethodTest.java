@@ -1,4 +1,4 @@
-package fgafa.concurrent.producerConsumer;
+package concurrent.producerConsumer;
 
 /**
  * Created by joeyz on 2/21/17.

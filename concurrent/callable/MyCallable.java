@@ -1,4 +1,4 @@
-package fgafa.concurrent.callable;
+package concurrent.callable;
 
 
 import java.util.concurrent.Callable;

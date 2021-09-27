@@ -1,4 +1,4 @@
-package fgafa.uva.graph.FollowingOrderN124;
+package uva.graph.FollowingOrderN124;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;

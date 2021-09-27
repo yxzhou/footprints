@@ -1,6 +1,6 @@
-package fgafa.matrix;
+package matrix;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /* 
  * 

@@ -3,14 +3,14 @@
  * @author Zhou Yuanxi
  * @date Feb. 16, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax;
+package basic.socket.ecax;
 
 import java.io.*;
 import java.net.*;
 
 import com.televigation.log.TVCategory;
 //import com.televigation.telenavpro.ecax.job.BaseJob;
-import fgafa.basic.socket.ecax.job.MonitorJob;
+import basic.socket.ecax.job.MonitorJob;
 
 public class EcaSocketServer implements Runnable {
     protected static TVCategory logger = (TVCategory) TVCategory

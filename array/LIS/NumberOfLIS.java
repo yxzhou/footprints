@@ -1,4 +1,4 @@
-package fgafa.array.LIS;
+package array.LIS;
 
 import java.util.Arrays;
 

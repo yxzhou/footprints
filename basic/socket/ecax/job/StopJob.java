@@ -3,7 +3,7 @@
  * @author Zhou Yuanxi
  * @date Nov. 29, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax.job;
+package basic.socket.ecax.job;
 
 //import java.sql.SQLException;
 import java.sql.Connection;
@@ -22,7 +22,7 @@ import com.televigation.db.telenavpro.datatypes.TnpAlertRule;
 //import com.televigation.db.telenavpro.datatypes.TnpEcax;
 import com.televigation.db.telenavpro.datatypes.TnpTrackable;
 import com.televigation.log.TVCategory;
-import fgafa.basic.socket.ecax.EcaMsg;
+import basic.socket.ecax.EcaMsg;
 //import com.televigation.telenavpro.filter.DateTimeHelper;
 //import com.televigation.telenavpro.servlet.ResourceStrings;
 import com.televigation.telenavpro.servlet.TeleNavProStrings;

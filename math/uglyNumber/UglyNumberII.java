@@ -1,4 +1,4 @@
-package fgafa.math.uglyNumber;
+package math.uglyNumber;
 
 import java.util.PriorityQueue;
 

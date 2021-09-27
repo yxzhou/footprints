@@ -1,4 +1,4 @@
-package fgafa.todo.baidu;
+package todo.baidu;
 /**
  * 
  * Given some ants that in a line, they can only move one the line, they will turn back if 2 ants meet up with. 

@@ -36,7 +36,7 @@
  * 9
  */
     
-package fgafa.datastructure.segmentTree.rankScore;
+package datastructure.segmentTree.rankScore;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package fgafa.concurrent.threadpools;
+package concurrent.threadpools;
 
 /**
  * Created by joeyz on 3/14/17.

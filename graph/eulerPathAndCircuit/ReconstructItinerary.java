@@ -1,6 +1,6 @@
-package fgafa.graph.eulerPathAndCircuit;
+package graph.eulerPathAndCircuit;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 import java.util.*;

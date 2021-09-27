@@ -1,29 +1,44 @@
-package fgafa.tree.pathSum;
+package tree.pathSum;
+
+import tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.tree.TreeNode;
+/**
+ *
+ * Given a binary tree and a sum, determine if the tree has a root-to-leaf path
+ * such that adding up all the values along the path equals the given sum.
+ *
+ * For example:<br>
+ * Given the below binary tree and sum = 22, <br>
+ *               5            <br>
+ *              / \           <br>
+ *             4   8          <br>
+ *            /   / \         <br>
+ *           11  13  4        <br>
+ *          /  \    /  \       <br>
+ *         7    2  5   1      <br>
+ *
+ * Problem #1
+ * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22. <br>
+ *
+ * Problem #2
+ * return     <br>
+ * [
+ *    [5,4,11,2],
+ *    [5,8,4,5]
+ * ]
+ *
+ */
 
 public class PathSumRoot2LeafII {
-    /*
-     * 
-     * Given a binary tree and a sum, determine if the tree has a root-to-leaf path 
-     * such that adding up all the values along the path equals the given sum.
-     * 
-     * For example:<br>
-     * Given the below binary tree and sum = 22, <br>
-     *               5            <br>
-     *              / \           <br>
-     *             4   8          <br>
-     *            /   / \         <br>
-     *           11  13  4        <br>
-     *          /  \      \       <br>
-     *         7    2      1      <br>
-     * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22. <br>
-     * 
+
+
+    /**
+     * for P1, find if there is a root-to leaf path which equals the given sum.
+     *
      */
-    
       public boolean hasPathSum(TreeNode root, int sum) {
 
           if (root == null)
@@ -37,28 +52,12 @@ public class PathSumRoot2LeafII {
       }
 
 
-    /*
-     * 
-     * Given a binary tree and a sum, find all root-to-leaf paths where each 
-     * path's sum equals the given sum.<br>
-     * <br>
-     * For example:<br>
-     * Given the below binary tree and sum = 22,<br>
-     *               5            <br>
-     *              / \           <br>
-     *             4   8          <br>
-     *            /   / \         <br>
-     *           11  13  4        <br>
-     *          /  \    / \       <br>
-     *         7    2  5   1      <br>
-     * return     <br>
-     * [
-     *    [5,4,11,2],
-     *    [5,8,4,5]
-     * ]
-     * 
+
+    /**
+     *  for P2, find all root-to-leaf paths where each path's sum equals the given sum
+     *
+     *
      */
-    
     public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
       ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
       

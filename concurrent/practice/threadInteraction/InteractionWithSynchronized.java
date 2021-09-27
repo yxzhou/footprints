@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.threadInteraction;
+package concurrent.practice.threadInteraction;
 
 /**
  *

@@ -1,4 +1,4 @@
-package fgafa.datastructure.interval;
+package datastructure.interval;
 
 import java.util.*;
 

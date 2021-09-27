@@ -1,4 +1,4 @@
-package fgafa.dp.arithmetic;
+package dp.arithmetic;
 
 import java.util.HashMap;
 import java.util.Map;

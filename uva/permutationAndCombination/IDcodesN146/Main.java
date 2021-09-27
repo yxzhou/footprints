@@ -1,4 +1,4 @@
-package fgafa.uva.permutationAndCombination.IDcodesN146;
+package uva.permutationAndCombination.IDcodesN146;
 
 import java.io.*;
 import java.util.*;

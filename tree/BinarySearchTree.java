@@ -1,11 +1,11 @@
-package fgafa.tree;
+package tree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 
 /**

@@ -1,4 +1,4 @@
-package fgafa.concurrent.countDownLatchExample;
+package concurrent.countDownLatchExample;
 
 import java.util.concurrent.CountDownLatch;
 

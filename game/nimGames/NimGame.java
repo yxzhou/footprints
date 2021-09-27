@@ -1,4 +1,4 @@
-package fgafa.game.nimGames;
+package game.nimGames;
 
 /**
  * You are playing the following Nim Game with your friend: There is a heap of stones on the table, 

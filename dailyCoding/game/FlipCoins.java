@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.game;
+package dailyCoding.game;
 
 import java.util.Random;
 

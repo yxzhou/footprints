@@ -1,4 +1,4 @@
-package fgafa.array.subSum;
+package array.subSum;
 
 import junit.framework.Assert;
 import org.junit.Test;

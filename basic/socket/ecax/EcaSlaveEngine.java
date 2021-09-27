@@ -3,14 +3,14 @@
  * @author Zhou Yuanxi
  * @date Feb. 16, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax;
+package basic.socket.ecax;
 
 import java.sql.SQLException;
 import java.util.Vector;
 
 import com.televigation.db.telenavpro.EcaxEngineManager;
 import com.televigation.log.TVCategory;
-import fgafa.basic.socket.ecax.job.*;
+import basic.socket.ecax.job.*;
 
 public class EcaSlaveEngine {
     static private EcaServer ecaServer = null;

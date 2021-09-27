@@ -1,6 +1,6 @@
-package fgafa.dfsbfs.permutationAndCombination;
+package dfsbfs.permutationAndCombination;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

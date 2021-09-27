@@ -1,4 +1,4 @@
-package fgafa.concurrent.synchronizedMethodAndStatement;
+package concurrent.synchronizedMethodAndStatement;
 
 
 public class MyThread1 extends Thread {

@@ -1,4 +1,4 @@
-package fgafa.backtracking;
+package backtracking;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package fgafa.graph.topological;
+package graph.topological;
 
 import java.util.HashMap;
 import java.util.HashSet;

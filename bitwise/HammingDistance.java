@@ -1,4 +1,4 @@
-package fgafa.bitwise;
+package bitwise;
 
 /**
  * Hamming distance is a metric for comparing two binary data strings.
@@ -57,6 +57,7 @@ public class HammingDistance {
         int sum = 0;
         boolean[] digits = new boolean[10]; // from 0 to 9
 
+        //todo
         return sum;
     }
     

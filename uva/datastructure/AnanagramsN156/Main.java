@@ -1,4 +1,4 @@
-package fgafa.uva.datastructure.AnanagramsN156;
+package uva.datastructure.AnanagramsN156;
 
 import java.io.*;
 import java.util.*;

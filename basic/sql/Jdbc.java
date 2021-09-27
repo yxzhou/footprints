@@ -1,4 +1,4 @@
-package fgafa.basic.sql;
+package basic.sql;
 
 import java.sql.*;
 

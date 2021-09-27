@@ -1,4 +1,4 @@
-package fgafa.sorting;
+package sorting;
 
 public class PartitionArray {
 

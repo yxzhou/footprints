@@ -1,8 +1,8 @@
-package fgafa.tree.lowerCommonAncestor;
+package tree.lowerCommonAncestor;
 
-import fgafa.tree.BinarySearchTree;
-import fgafa.tree.Print;
-import fgafa.tree.TreeNode;
+import tree.BinarySearchTree;
+import tree.Print;
+import tree.TreeNode;
 
 public class LCAinBST {
 

@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.airbnb;
+package dailyCoding2.airbnb;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import fgafa.math.Fibonacci;
+import math.Fibonacci;
 
 /**
  *

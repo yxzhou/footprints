@@ -1,4 +1,4 @@
-package fgafa.uva.datastructure.DoleQueueN133;
+package uva.datastructure.DoleQueueN133;
 
 import java.io.*;
 import java.util.*;

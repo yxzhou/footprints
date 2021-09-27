@@ -1,4 +1,4 @@
-package fgafa.math.expression;
+package math.expression;
 
 /**
  * Solve a given equation and return the value of x in the form of string "x=#value".

@@ -1,4 +1,4 @@
-package fgafa.concurrent.cyclicBarrierExample;
+package concurrent.cyclicBarrierExample;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;

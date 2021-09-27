@@ -1,4 +1,4 @@
-package fgafa.array.strobogrammatic;
+package array.strobogrammatic;
 
 /**
  * 

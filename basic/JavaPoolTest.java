@@ -1,4 +1,4 @@
-package fgafa.basic;
+package basic;
 
 public class JavaPoolTest {
 	public static void main(String args[]) {

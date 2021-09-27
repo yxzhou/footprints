@@ -1,4 +1,4 @@
-package fgafa.tree;
+package tree;
 
 
 /*Definition for binary tree*/

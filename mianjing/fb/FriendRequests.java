@@ -1,4 +1,4 @@
-package fgafa.mianjing.fb;
+package mianjing.fb;
 
 
 /**

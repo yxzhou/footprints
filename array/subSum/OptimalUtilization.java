@@ -1,4 +1,4 @@
-package fgafa.array.subSum;
+package array.subSum;
 
 import java.util.Map;
 import java.util.TreeMap;

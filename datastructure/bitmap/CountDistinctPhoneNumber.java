@@ -1,4 +1,4 @@
-package fgafa.datastructure.bitmap;
+package datastructure.bitmap;
 
 import java.util.BitSet;
 

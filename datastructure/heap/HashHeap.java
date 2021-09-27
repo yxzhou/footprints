@@ -1,4 +1,4 @@
-package fgafa.datastructure.heap;
+package datastructure.heap;
 
 import java.util.ArrayList;
 import java.util.HashMap;

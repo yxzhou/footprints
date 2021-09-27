@@ -1,4 +1,4 @@
-package fgafa.basic.callFlow;
+package basic.callFlow;
 
 /*
  * It's a exampel to understand Inheritance and Polymorphism and Override and call flow.

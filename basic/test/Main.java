@@ -1,22 +1,10 @@
-package fgafa.basic.test;
+package basic.test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Vector;
-
-import fgafa.basic.test.Car;
-import fgafa.basic.test.Drivable;
 
 public class Main {
-   public static final void main(String[] args) {
+   public static final void main(StringTest[] args) {
     
     System.out.println(Float.MAX_VALUE);    //3.4028235E38 , 2128 - 1
     System.out.println(Float.MIN_VALUE);    //1.4E-45,       2-149

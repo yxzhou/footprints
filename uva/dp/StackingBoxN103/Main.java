@@ -1,4 +1,4 @@
-package fgafa.uva.dp.StackingBoxN103;
+package uva.dp.StackingBoxN103;
 
 import java.io.BufferedInputStream;
 import java.util.*;

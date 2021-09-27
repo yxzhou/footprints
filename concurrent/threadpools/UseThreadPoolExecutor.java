@@ -1,4 +1,4 @@
-package fgafa.concurrent.threadpools;
+package concurrent.threadpools;
 
 
 import java.util.concurrent.*;

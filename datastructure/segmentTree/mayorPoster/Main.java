@@ -61,7 +61,7 @@ Sample Output
  *   count the distinct poster,  Time O(n)
  * so it's O(nlogn)
  */
-package fgafa.datastructure.segmentTree.mayorPoster;
+package datastructure.segmentTree.mayorPoster;
 
 import java.io.BufferedInputStream;
 import java.util.Arrays;

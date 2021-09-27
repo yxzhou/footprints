@@ -1,4 +1,4 @@
-package fgafa.tree;
+package tree;
 
 
 public class PopulatingNextRight

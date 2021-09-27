@@ -1,4 +1,4 @@
-package fgafa.matrix;
+package matrix;
 
 //LongestIncreasingSequenceInMetrix
 public class LISInMetrix {

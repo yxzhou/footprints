@@ -1,4 +1,4 @@
-package fgafa.datastructure.LFU;
+package datastructure.LFU;
 
 
 import org.junit.*;

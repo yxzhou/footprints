@@ -1,4 +1,4 @@
-package fgafa.concurrent.guardedblocks;
+package concurrent.guardedblocks;
 
 import java.util.Random;
 

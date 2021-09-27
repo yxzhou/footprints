@@ -1,6 +1,6 @@
-package fgafa.graph.traversal;
+package graph.traversal;
 
-import fgafa.util.Misc;
+import util.Misc;
 import junit.framework.Assert;
 import org.junit.Test;
 

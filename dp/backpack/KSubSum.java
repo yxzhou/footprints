@@ -1,9 +1,9 @@
-package fgafa.dp.backpack;
+package dp.backpack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

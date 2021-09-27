@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.HitCounter;
+package design.systemdesign.HitCounter;
 
 import org.junit.Assert;
 import org.junit.Test;

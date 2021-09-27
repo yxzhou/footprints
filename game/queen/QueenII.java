@@ -1,9 +1,9 @@
-package fgafa.game.queen;
+package game.queen;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /*
  * the basic method

@@ -1,8 +1,8 @@
-package fgafa.todo;
+package todo;
 
 import java.util.Arrays;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

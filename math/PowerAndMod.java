@@ -1,16 +1,20 @@
-package fgafa.math;
+package math;
 
 /**
- * 
+ *
+ * Fast Power   _https://www.lintcode.com/problem/140
  * Calculate the a^n % b where a, b and n are all 32bit integers.
-
-	Example
-	For 231 % 3 = 2
-	
-	For 1001000 % 1000 = 0
-	
-	Challenge
-	O(logn)
+ *
+ * a, b and n are all 32-bit non-negative integers
+ *
+ *	Example
+ *	For 2^31 % 3 = 2
+ *	For 100^1000 % 1000 = 0
+ *  For 3^5 % 7 = 5
+ *  For 3^0 % 1 = 0
+ *
+ *	Challenge
+ *	O(logn) time complexity
  *
  */
 
@@ -21,35 +25,19 @@ public class PowerAndMod {
      * @return: An integer
      */
     public int fastPower(int a, int b, int n) {
-        //check
-        if(n < 0 || b <= 0){
-            return -1; //error code
-        }
-        if(1 == b){ //fastPower(31, 1, 0) is 0 instead of 1
-            return 0;
-        }
-        if(0 == n){
-            return 1;
-        }
-        
-        if(0 == a || 1 == a){
-            return a;
-        }
-    
-        long result = 1;
-        long factor = a > b ? a % b : a; 
-        for( ; n > 0 ; n >>= 1 ){
-            if( 1 == (n & 1)  ){
-                result *= factor;
-                result %= b;
+        int r = 1;
+        long c = a % b;
+
+        while(n > 0){
+            if((n & 1) == 1){
+                r = (int)((c * r) % b);
             }
-            
-            factor *= factor;
-            factor %= b;
+
+            c = (c * c) % b;
+            n >>>= 1;
         }
 
-        //return (int)(result & 0x7fffffff) % b;
-        return (int)result;
+        return r % b;
     }
-	
+
 }

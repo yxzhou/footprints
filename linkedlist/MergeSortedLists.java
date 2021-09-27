@@ -1,4 +1,4 @@
-package fgafa.linkedlist;
+package linkedlist;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,7 +20,7 @@ public class MergeSortedLists
 	/**
 	 * 
 	 * Merge two sorted linked lists and return it as a new list. The new list
-	 * should be made by splicing together the nodes of the first two lists.
+	 * should be made by splicing together the noØdes of the first two lists.
 	 * 
 	 * Time O(2n)
 	 */

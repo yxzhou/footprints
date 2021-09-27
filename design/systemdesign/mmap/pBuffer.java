@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.mmap;
+package design.systemdesign.mmap;
 
 /*
 Question Description: You are to write an abstraction layer for a persistent

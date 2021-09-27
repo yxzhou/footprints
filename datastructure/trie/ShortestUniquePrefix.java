@@ -1,6 +1,6 @@
-package fgafa.datastructure.trie;
+package datastructure.trie;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 /**

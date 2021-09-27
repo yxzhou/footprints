@@ -1,4 +1,4 @@
-package fgafa.topCoder;
+package topCoder;
 
 /**
  *

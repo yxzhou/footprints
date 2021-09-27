@@ -1,9 +1,9 @@
-package fgafa.dp.twosequence;
+package dp.twosequence;
 
 import java.util.Hashtable;
 import java.util.TreeSet;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * <pre>

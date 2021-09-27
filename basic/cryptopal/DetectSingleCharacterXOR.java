@@ -1,4 +1,4 @@
-package fgafa.basic.cryptopal;
+package basic.cryptopal;
 
 /**
  *  * From https://cryptopals.com/sets/1/challenges/4

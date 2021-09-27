@@ -1,7 +1,7 @@
-package fgafa.math.expression;
+package math.expression;
 
-import fgafa.math.expression.ExpressionTreeBuild.ExpressionTreeNode;
-import fgafa.util.Misc;
+import math.expression.ExpressionTreeBuild.ExpressionTreeNode;
+import util.Misc;
 
 import java.util.ArrayList;
 import java.util.Stack;

@@ -1,4 +1,4 @@
-package fgafa.game.TicTacToe;
+package game.TicTacToe;
 
 /**
  * 

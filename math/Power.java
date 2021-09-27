@@ -1,14 +1,17 @@
-package fgafa.math;
+package math;
 
 /**
  *
  * Implement integer exponentiation. That is, implement the pow(x, y) function, where x and y are integers and returns x^y.
 
- Do this faster than the naive method of repeated multiplication.
+ * Do this faster than the naive method of repeated multiplication.
 
- For example, pow(2, 10) should return 1024.
+ * For example, pow(2, 10) should return 1024.
  *
  * tags:  google
+ *
+ * Solution:
+ *
  *
  */
 

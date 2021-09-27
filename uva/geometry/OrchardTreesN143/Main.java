@@ -1,4 +1,4 @@
-package fgafa.uva.geometry.OrchardTreesN143;
+package uva.geometry.OrchardTreesN143;
 
 import java.io.*;
 import java.util.*;

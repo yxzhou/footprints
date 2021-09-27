@@ -1,4 +1,4 @@
-package fgafa.concurrent.callable;
+package concurrent.callable;
 
 import java.util.concurrent.ExecutorService;
 
@@ -18,7 +18,7 @@ public class CallableFutures
     ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
     List<Future<Long>> list = new ArrayList<Future<Long>>();
     for (int i = 0; i < 20000; i++) {
-      Callable<Long> worker = new fgafa.concurrent.callable.MyCallable();
+      Callable<Long> worker = new concurrent.callable.MyCallable();
       Future<Long> submit = executor.submit(worker);
       list.add(submit);
     }

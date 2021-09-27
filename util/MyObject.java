@@ -1,4 +1,6 @@
-package fgafa;
+package util;
+
+//package fgafa;
 
 public class MyObject
 {

@@ -1,7 +1,7 @@
-package fgafa.util.random;
+package util.random;
 
-import fgafa.math.IntegerHelper;
-import fgafa.util.Misc;
+import math.IntegerHelper;
+import util.Misc;
 import org.junit.Test;
 
 /**

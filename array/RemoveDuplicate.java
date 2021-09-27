@@ -1,6 +1,6 @@
-package fgafa.array;
+package array;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.HashSet;
 import java.util.Set;

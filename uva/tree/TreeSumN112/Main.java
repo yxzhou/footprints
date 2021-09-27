@@ -1,4 +1,4 @@
-package fgafa.uva.tree.TreeSumN112;
+package uva.tree.TreeSumN112;
 
 import java.io.*;
 import java.util.*;

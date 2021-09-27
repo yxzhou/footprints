@@ -1,4 +1,4 @@
-package fgafa.game.nimGames;
+package game.nimGames;
 
 /*
  * There are n coins in a circle. (Assume n is even). Two players take turns to take a coin, 

@@ -1,4 +1,4 @@
-package fgafa.todo.foo;
+package todo.foo;
 
 /**
  * Q1 _https://www.jiuzhang.com/solution/maximum-average-subarray/

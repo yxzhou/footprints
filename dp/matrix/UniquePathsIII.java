@@ -1,4 +1,4 @@
-package fgafa.dp.matrix;
+package dp.matrix;
 
 import org.junit.Assert;
 import org.junit.Test;

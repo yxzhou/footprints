@@ -1,6 +1,6 @@
-package fgafa.datastructure.heap;
+package datastructure.heap;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.*;
 

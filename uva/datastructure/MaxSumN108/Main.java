@@ -1,4 +1,4 @@
-package fgafa.uva.datastructure.MaxSumN108;
+package uva.datastructure.MaxSumN108;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

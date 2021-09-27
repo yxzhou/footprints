@@ -1,4 +1,4 @@
-package fgafa.bitwise;
+package bitwise;
 
 
 /**

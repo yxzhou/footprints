@@ -1,9 +1,9 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 /**

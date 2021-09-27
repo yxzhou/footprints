@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.LogStorage;
+package design.systemdesign.LogStorage;
 
 import org.junit.Test;
 

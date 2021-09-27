@@ -1,10 +1,10 @@
-package fgafa.sorting.slidingwindow;
+package sorting.slidingwindow;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class MedianSlideWindow {
 

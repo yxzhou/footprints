@@ -1,6 +1,6 @@
-package fgafa.game.sudoku;
+package game.sudoku;
 
-import fgafa.Constants;
+import Constants;
 import algs4.stdlib.In;
 
 /**

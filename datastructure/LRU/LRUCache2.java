@@ -1,6 +1,6 @@
-package fgafa.datastructure.LRU;
+package datastructure.LRU;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

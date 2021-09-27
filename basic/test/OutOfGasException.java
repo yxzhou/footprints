@@ -1,4 +1,4 @@
-package fgafa.basic.test;
+package basic.test;
 
 class OutOfGasException extends Exception {
 }

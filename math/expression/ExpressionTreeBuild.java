@@ -1,4 +1,4 @@
-package fgafa.math.expression;
+package math.expression;
 
 import java.util.Stack;
 

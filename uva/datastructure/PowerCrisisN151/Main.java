@@ -1,4 +1,4 @@
-package fgafa.uva.datastructure.PowerCrisisN151;
+package uva.datastructure.PowerCrisisN151;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package fgafa.concurrent;
+package concurrent;
 
 public class SimpleThreads
 {

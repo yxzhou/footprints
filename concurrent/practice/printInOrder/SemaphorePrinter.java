@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.printInOrder;
+package concurrent.practice.printInOrder;
 
 
 import java.util.concurrent.Semaphore;

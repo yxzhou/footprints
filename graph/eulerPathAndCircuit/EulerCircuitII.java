@@ -1,6 +1,6 @@
-package fgafa.graph.eulerPathAndCircuit;
+package graph.eulerPathAndCircuit;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.HashMap;
 import java.util.Map;

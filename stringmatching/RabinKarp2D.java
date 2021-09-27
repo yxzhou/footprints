@@ -1,4 +1,4 @@
-package fgafa.stringmatching;
+package stringmatching;
 
 public class RabinKarp2D {
     public static void main(String[] args) {

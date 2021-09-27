@@ -1,7 +1,7 @@
-package fgafa.linkedlist;
+package linkedlist;
 
-import fgafa.tree.TreeNode;
-import fgafa.util.Misc;
+import tree.TreeNode;
+import util.Misc;
 
 /**
  * Given a node from a cyclic linked list which has been sorted, 

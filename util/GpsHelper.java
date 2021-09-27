@@ -1,9 +1,9 @@
-package fgafa.util;
+package util;
 
 
 import java.util.Comparator;
 
-import fgafa.util.GpsMeasurement;
+import util.GpsMeasurement;
 
 
 

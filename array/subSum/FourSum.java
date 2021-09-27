@@ -1,4 +1,4 @@
-package fgafa.array.subSum;
+package array.subSum;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target?

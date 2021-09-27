@@ -1,4 +1,4 @@
-package fgafa.greedy;
+package greedy;
 
 /*
  * A pile of nuts is in an oasis, across a desert from a town. 

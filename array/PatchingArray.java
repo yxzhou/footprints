@@ -1,8 +1,8 @@
-package fgafa.array;
+package array;
 
 import java.util.Arrays;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

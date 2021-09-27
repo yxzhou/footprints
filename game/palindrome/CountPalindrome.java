@@ -1,4 +1,4 @@
-package fgafa.game.palindrome;
+package game.palindrome;
 
 /**
  * _https://www.lintcode.com/problem/837/description?_from=ladder&fromId=29

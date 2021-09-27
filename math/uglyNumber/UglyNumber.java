@@ -1,4 +1,4 @@
-package fgafa.math.uglyNumber;
+package math.uglyNumber;
 
 /**
  * Leetcode #263

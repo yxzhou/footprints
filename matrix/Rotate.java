@@ -1,6 +1,6 @@
-package fgafa.matrix;
+package matrix;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /*
  * Given an image represented by a matrix, where each pixel in the image is 4 bytes, write

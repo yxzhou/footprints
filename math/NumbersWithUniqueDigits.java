@@ -1,4 +1,4 @@
-package fgafa.math;
+package math;
 
 /**
  * Leetcode #357

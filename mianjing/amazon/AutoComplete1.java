@@ -1,4 +1,4 @@
-package fgafa.mianjing.amazon;
+package mianjing.amazon;
 
 
 import java.util.ArrayList;

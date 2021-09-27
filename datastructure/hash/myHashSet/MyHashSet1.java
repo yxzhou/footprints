@@ -1,4 +1,4 @@
-package fgafa.datastructure.hash.myHashSet;
+package datastructure.hash.myHashSet;
 
 import org.junit.Assert;
 import org.junit.Test;

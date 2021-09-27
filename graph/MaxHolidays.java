@@ -1,4 +1,4 @@
-package fgafa.graph;
+package graph;
 
 import junit.framework.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree.mayorPoster;
+package datastructure.segmentTree.mayorPoster;
 
 import java.util.*;
 

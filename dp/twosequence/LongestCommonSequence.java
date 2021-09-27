@@ -1,8 +1,8 @@
-package fgafa.dp.twosequence;
+package dp.twosequence;
 
 
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /*
  * 

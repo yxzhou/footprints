@@ -1,4 +1,4 @@
-package fgafa.game.rubik2D;
+package game.rubik2D;
 
 
 import java.util.Collections;

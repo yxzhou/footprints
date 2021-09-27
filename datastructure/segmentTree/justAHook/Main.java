@@ -63,7 +63,7 @@ Case 4: The total value of the hook is 113.
  *   
  * AND: check as the order of request.   
  */
-package fgafa.datastructure.segmentTree.justAHook;
+package datastructure.segmentTree.justAHook;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

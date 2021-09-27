@@ -3,7 +3,7 @@
  * @author Zhou Yuanxi
  * @date Feb. 16, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax.job;
+package basic.socket.ecax.job;
 
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -15,8 +15,8 @@ import com.televigation.db.telenavpro.TnpBaseManager;
 import com.televigation.db.telenavpro.TrackableManager;
 import com.televigation.db.telenavpro.datatypes.TnpTrackable;
 import com.televigation.log.TVCategory;
-import fgafa.basic.socket.ecax.EcaMsg;
-import fgafa.basic.socket.ecax.EcaString;
+import basic.socket.ecax.EcaMsg;
+import basic.socket.ecax.EcaString;
 import com.televigation.telenavpro.servlet.TeleNavProStrings;
 import com.televigation.util.Configurable;
 

@@ -1,4 +1,4 @@
-package fgafa.dfsbfs.permutationAndCombination;
+package dfsbfs.permutationAndCombination;
 
 /*
  * 
@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class Permutation
 {

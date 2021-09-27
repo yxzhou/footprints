@@ -1,6 +1,6 @@
-package fgafa.dp.sequence;
+package dp.sequence;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * There are N children standing in a line. Each child is assigned a rating value.

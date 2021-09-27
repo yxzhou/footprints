@@ -1,4 +1,4 @@
-package fgafa.dp.twosequence;
+package dp.twosequence;
 
 /**
  * <pre>

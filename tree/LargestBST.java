@@ -1,10 +1,10 @@
-package fgafa.tree;
+package tree;
 
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import fgafa.tree.traversal.Main;
-import fgafa.tree.traversal.RecursiveTraversal;
+import tree.traversal.Main;
+import tree.traversal.RecursiveTraversal;
 
 
 /**

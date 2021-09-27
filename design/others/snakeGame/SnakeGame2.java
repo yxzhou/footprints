@@ -1,6 +1,6 @@
-package fgafa.design.others.snakeGame;
+package design.others.snakeGame;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.Deque;
 import java.util.HashSet;

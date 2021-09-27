@@ -1,6 +1,6 @@
-package fgafa.array.parenthese;
+package array.parenthese;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.ArrayList;
 import java.util.List;

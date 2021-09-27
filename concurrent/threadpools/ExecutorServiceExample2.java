@@ -1,6 +1,6 @@
-package fgafa.concurrent.threadpools;
+package concurrent.threadpools;
 
-import fgafa.concurrent.threadpools.MyThread;
+import concurrent.threadpools.MyThread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

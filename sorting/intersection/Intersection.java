@@ -1,4 +1,4 @@
-package fgafa.sorting.intersection;
+package sorting.intersection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Intersection of 2 array. 

@@ -1,4 +1,4 @@
-package fgafa.greedy;
+package greedy;
 
 import org.junit.Assert;
 import org.junit.Test;

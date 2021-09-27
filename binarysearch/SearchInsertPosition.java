@@ -1,7 +1,7 @@
-package fgafa.binarysearch;
+package binarysearch;
 
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class SearchInsertPosition
 {

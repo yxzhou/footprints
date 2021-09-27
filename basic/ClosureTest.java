@@ -1,4 +1,4 @@
-package fgafa.basic;
+package basic;
 
 /**
  * What Closure is?

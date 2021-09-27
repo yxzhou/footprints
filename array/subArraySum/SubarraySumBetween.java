@@ -1,8 +1,8 @@
-package fgafa.array.subArraySum;
+package array.subArraySum;
 
 import java.util.Arrays;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class SubarraySumBetween {
 

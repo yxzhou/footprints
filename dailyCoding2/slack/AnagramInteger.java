@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.slack;
+package dailyCoding2.slack;
 
 import static junit.framework.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package fgafa.array.anagram;
+package array.anagram;
 
 import java.util.Arrays;
 import java.util.HashMap;

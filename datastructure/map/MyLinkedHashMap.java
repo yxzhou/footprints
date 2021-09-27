@@ -1,4 +1,4 @@
-package fgafa.datastructure.map;
+package datastructure.map;
 
 public class MyLinkedHashMap {
 }

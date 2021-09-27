@@ -1,6 +1,6 @@
-package fgafa.game.waterTrap;
+package game.waterTrap;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

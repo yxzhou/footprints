@@ -1,4 +1,4 @@
-package fgafa;
+package util;
 
 public class Constants
 {

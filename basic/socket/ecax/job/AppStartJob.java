@@ -3,9 +3,9 @@
  * @author Zhou Yuanxi
  * @date Feb. 16, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax.job;
+package basic.socket.ecax.job;
 
-import fgafa.basic.socket.ecax.EcaMsg;
+import basic.socket.ecax.EcaMsg;
 import com.televigation.log.TVCategory;
 
 public class AppStartJob extends BaseJob implements EcaJob

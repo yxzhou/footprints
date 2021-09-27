@@ -1,4 +1,4 @@
-package fgafa.concurrent.forkAndJoin;
+package concurrent.forkAndJoin;
 
 import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;

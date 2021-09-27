@@ -1,6 +1,6 @@
-package fgafa.design.others;
+package design.others;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 import java.util.*;

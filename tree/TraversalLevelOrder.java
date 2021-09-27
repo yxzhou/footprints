@@ -1,4 +1,4 @@
-package fgafa.tree;
+package tree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 
 public class TraversalLevelOrder {

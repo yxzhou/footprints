@@ -1,6 +1,6 @@
-package fgafa.todo.goo;
+package todo.goo;
 
-import fgafa.linkedlist.ListNode;
+import linkedlist.ListNode;
 
 /**
  *  Google onsite

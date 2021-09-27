@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.election;
+package concurrent.practice.election;
 
 import java.util.Collections;
 import java.util.List;

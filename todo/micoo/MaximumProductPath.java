@@ -1,4 +1,4 @@
-package fgafa.todo.micoo;
+package todo.micoo;
 
 import java.util.ArrayList;
 import java.util.List;

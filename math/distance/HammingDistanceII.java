@@ -1,4 +1,4 @@
-package fgafa.math.distance;
+package math.distance;
 
 import java.lang.Math;
 

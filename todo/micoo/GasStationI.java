@@ -1,4 +1,4 @@
-package fgafa.todo.micoo;
+package todo.micoo;
 
 /**
  *

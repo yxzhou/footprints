@@ -1,4 +1,4 @@
-package fgafa.basic.cache;
+package basic.cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package fgafa.leetcode.airbnb;
+package leetcode.airbnb;
 
 import java.util.*;
 

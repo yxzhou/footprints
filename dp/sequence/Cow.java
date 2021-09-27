@@ -1,4 +1,4 @@
-package fgafa.dp.sequence;
+package dp.sequence;
 
 /**
  * 一只刚出生的小牛，4年后生一只小牛，以后每年生一只。 现有一只刚出生的小牛，问20年后共有牛多少只？

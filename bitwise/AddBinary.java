@@ -1,15 +1,43 @@
-package fgafa.bitwise;
+package bitwise;
 
-/*
- * 
+/**
+ * Problem #1
  * Given two binary strings, return their sum (also a binary string).
  * 
  * For example,
  * a = "11"
  * b = "1"
  * Return "100".
- * 
- * Time O(n), Space O(1)
+ *
+ * Constraints:
+ * 1 <= a.length, b.length <= 104
+ * a and b consist only of '0' or '1' characters.
+ * Each string does not contain leading zeros except for the zero itself.
+ *
+ *
+ * Solution #1
+ *
+ *
+ * Problem #2
+ * Give k, a, b, which means a and b are a k-ary number, and outputs the k-ary number of a + b.
+ *
+ * Example1
+ * Input: k = 3, a = "12", b = "1"
+ * Output: 20
+ * Explanation:
+ * 12 + 1 = 20 in 3 bases.
+ *
+ * Example2
+ * Input: k = 10, a = "12", b = "1"
+ * Output: 13
+ * Explanation:
+ * 12 + 1 = 13 in 10 bases.
+ *
+ * Constrains:
+ * 2 <= k <= 10
+ * a, b are strings, the length does not exceed 1000.
+ * There may be a leading zero.
+ *
  */
 
 public class AddBinary
@@ -129,6 +157,85 @@ public class AddBinary
 
         return result.reverse().toString();
     }
+
+    public String addBinary_xx(String a, String b) {
+        if(a == null || b == null){
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        boolean carry = false;
+        boolean ia;
+        boolean ib;
+
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        while( i >= 0 && j >= 0 ){
+            ia = isOne(a, i--);
+            ib = isOne(b, j--);
+
+            sb.append(carry ^ ia ^ ib ? '1' : '0');
+
+            carry = carry ? ia|ib : ia&ib;
+        }
+
+        while( i >= 0 ){
+            ia = isOne(a, i--);
+
+            sb.append(carry ^ ia ? '1' : '0');
+            carry = carry & ia;
+        }
+
+        while( j >= 0 ){
+            ib = isOne(b, j--);
+
+            sb.append(carry ^ ib ? '1' : '0');
+            carry = carry & ib;
+        }
+
+        if(carry){
+            sb.append('1');
+        }
+
+        return sb.reverse().toString();
+    }
+
+    public String addBinary_xx2(String a, String b) {
+        if(a == null || b == null){
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        boolean carry = false;
+        boolean ia;
+        boolean ib;
+
+        for( int i = a.length() - 1, j = b.length() - 1; i >= 0 || j >= 0;){
+            ia = isOne(a, i--);
+            ib = isOne(b, j--);
+
+            sb.append( (carry ^ ia ^ ib) ? '1' : '0');
+            carry = carry ? ia|ib : ia&ib;
+        }
+
+        if(carry){
+            sb.append('1');
+        }
+
+        return sb.reverse().toString();
+    }
+
+    private boolean isOne(String s, int i){
+        if(i >= 0 && i < s.length() ){
+            return s.charAt(i) == '1';
+        }
+
+        return false;
+    }
+
+
   /**
    * @param a a number
    * @param b a number
@@ -145,16 +252,16 @@ public class AddBinary
       
       return Integer.toBinaryString(sum);
   }
-  
+
   /*
    * param a: The first integer
    * param b: The second integer
    * return: The sum of a and b
    */
-  public static String aplusb(String x, String y) {
+  public static String addString(String x, String y) {
       int a = Integer.parseInt(x, 2);
-      int b = Integer.parseInt(y, 2);      
-      
+      int b = Integer.parseInt(y, 2);
+
       int carry;
       while (b != 0) {
           carry = a & b;
@@ -163,7 +270,43 @@ public class AddBinary
       }
       return Integer.toBinaryString(a);
   }
-  
+
+    public String addition(int k, String a, String b) {
+        StringBuilder sb = new StringBuilder();
+
+        int sum = 0;
+        for(int i = a.length() - 1, j = b.length() - 1; i >= 0 || j >= 0; ){
+            sum += digitAt(a, i--) + digitAt(b, j--);
+
+            sb.append(sum % k);
+            sum /= k;
+        }
+
+        while(sum > 0){
+            sb.append(sum % k);
+            sum /= k;
+        }
+
+        //remove the leading zero
+        for(int i = sb.length() - 1; i >= 0; i--){
+            if(sb.charAt(i) != '0'){
+                break;
+            }
+
+            sb.deleteCharAt(i);
+        }
+
+        return sb.reverse().toString();
+    }
+
+    private int digitAt(String s, int i){
+        if(i >= 0 && i < s.length()){
+            return s.charAt(i) - 48; // 48 is '0'
+        }
+
+        return 0;
+    }
+
   /**
    * @param args
    */
@@ -189,7 +332,7 @@ public class AddBinary
       System.out.println("Output : "+ sv.addBinary_x(a[i], b[i]));
       System.out.println("Output : "+ sv.addBinary_x2(a[i], b[i]));
       
-      System.out.println("Output : "+ aplusb(a[i], b[i]));
+      System.out.println("Output : "+ addString(a[i], b[i]));
     }
 
   }

@@ -1,4 +1,4 @@
-package fgafa.game.waterTrap;
+package game.waterTrap;
 
 import java.util.*;
 

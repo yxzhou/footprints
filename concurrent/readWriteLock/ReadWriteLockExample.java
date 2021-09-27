@@ -1,4 +1,4 @@
-package fgafa.concurrent.readWriteLock;
+package concurrent.readWriteLock;
 
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

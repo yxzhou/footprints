@@ -1,4 +1,4 @@
-package fgafa.datastructure.binaryIndexedTree;
+package datastructure.binaryIndexedTree;
 
 /**
  *

@@ -1,4 +1,4 @@
-package fgafa.concurrent.basicConcept;
+package concurrent.basicConcept;
 
 import java.util.LinkedList;
 import java.util.List;

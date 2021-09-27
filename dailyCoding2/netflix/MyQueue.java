@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.netflix;
+package dailyCoding2.netflix;
 
 
 /**

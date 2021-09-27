@@ -45,7 +45,7 @@ Sample Output
  *   4) the total number of "room" in the interval
  *   
  */
-package fgafa.datastructure.segmentTree.hotel;
+package datastructure.segmentTree.hotel;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

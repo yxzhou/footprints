@@ -1,4 +1,4 @@
-package fgafa.game.sudoku;
+package game.sudoku;
 
 import algs4.stdlib.In;
 

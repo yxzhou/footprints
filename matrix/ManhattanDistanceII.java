@@ -1,4 +1,4 @@
-package fgafa.matrix;
+package matrix;
 
 import java.util.LinkedList;
 import java.util.Queue;

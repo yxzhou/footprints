@@ -1,6 +1,8 @@
-package fgafa.math.prime;
+package math.prime;
 
-import java.lang.Math;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /*
  * Output all prime numbers up to a specified integer n.
@@ -64,6 +66,32 @@ public class Prime
         
         return result;
     }
+
+    public List<Integer> prime(int n) {
+        if(n < 2){
+            return Collections.EMPTY_LIST;
+        }
+
+        boolean[] v = new boolean[n + 1]; //default all are false
+        List<Integer> result = new LinkedList<>();
+
+        result.add(2);
+        for(int j = 2; j <= n; j += 2){
+            v[j] = true;
+        }
+
+        for(int i = 3; i <= n; i += 2){
+            if(!v[i]){
+                result.add(i);
+
+                for(int j = (i << 1); j <= n; j += i){
+                    v[j] = true;
+                }
+            }
+        }
+
+        return result;
+    }
   
   /*
    * 
@@ -77,16 +105,11 @@ public class Prime
 	  
 	  //init, 
 	  boolean[] isPrime = new boolean[n];
-	  isPrime[0] = false;
-	  isPrime[1] = false;
-	  for(int i=2; i<n; i++){
-		  isPrime[i] = true;
-	  }
 	 
 	  //using The Sieve of Erantosthenes
 	  int limit = (int) Math.sqrt(n);
 	  for(int i=2; i<= limit; i++){
-		  if(isPrime[i]){
+		  if(!isPrime[i]){
 			  for(int j= i*i; j<n; j+=i){ //start from i*i
 				  isPrime[j] = false;
 			  }

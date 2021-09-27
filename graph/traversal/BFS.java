@@ -1,4 +1,4 @@
-package fgafa.graph.traversal;
+package graph.traversal;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

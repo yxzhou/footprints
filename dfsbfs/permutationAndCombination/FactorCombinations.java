@@ -1,10 +1,10 @@
-package fgafa.dfsbfs.permutationAndCombination;
+package dfsbfs.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Numbers can be regarded as product of its factors. For example, 8 = 2 x 2 x 2; = 2 x 4. 

@@ -1,6 +1,6 @@
-package fgafa.tree.traversal;
+package tree.traversal;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

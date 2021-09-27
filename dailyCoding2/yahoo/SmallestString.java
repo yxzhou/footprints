@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.yahoo;
+package dailyCoding2.yahoo;
 
 /**
  * This problem was asked by Yahoo.

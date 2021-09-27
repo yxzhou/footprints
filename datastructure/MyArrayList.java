@@ -1,4 +1,4 @@
-package fgafa.datastructure;
+package datastructure;
 
 public class MyArrayList<E>
 {

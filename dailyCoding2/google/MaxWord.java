@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.google;
+package dailyCoding2.google;
 
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package fgafa.leetcode.facebook;
+package leetcode.facebook;
 
 
 import org.junit.Assert;

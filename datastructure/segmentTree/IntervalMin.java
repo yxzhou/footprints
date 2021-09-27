@@ -1,6 +1,6 @@
-package fgafa.datastructure.segmentTree;
+package datastructure.segmentTree;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.ArrayList;
 import java.util.Arrays;

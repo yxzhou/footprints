@@ -1,6 +1,6 @@
-package fgafa.datastructure.interval;
+package datastructure.interval;
 
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
@@ -96,8 +96,8 @@ public class MeetingRoom {
     
         List<Pair<Integer, Integer>> list = new ArrayList<>();
         for(Interval interval : intervals){
-            list.add(new Pair(interval.start, 1));
-            list.add(new Pair(interval.end, -1));
+            list.add(Pair.of(interval.start, 1));
+            list.add(Pair.of(interval.end, -1));
         }
         
         Collections.sort(list, (p1, p2) -> (p1.getKey() == p2.getKey() ? p1.getValue() - p2.getValue() : p1.getKey() - p2.getKey()) );
@@ -112,5 +112,31 @@ public class MeetingRoom {
         
         return result;
     }
+
+    public int minMeetingRooms_x(List<Interval> intervals) {
+        if(intervals == null){
+            return 0;
+        }
+
+        List<int[]> list = new LinkedList<>(); // int[]{time, 1 or -1}
+        for(Interval it : intervals){
+            list.add(new int[]{it.start, 1});
+            list.add(new int[]{it.end, -1});
+        }
+
+        Collections.sort(list, (p1, p2) -> p1[0] == p2[0]? Integer.compare(p1[1], p2[1]) : Integer.compare(p1[0], p2[0]) );
+
+        int count = 0;
+        int max = 0;
+        for(int[] pair : list){
+            count += pair[1];
+
+            max = Math.max(max, count);
+        }
+
+        return max;
+    }
+
+
 
 }

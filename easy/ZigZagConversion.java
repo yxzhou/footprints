@@ -1,4 +1,4 @@
-package fgafa.easy;
+package easy;
 
 /*
  * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: 

@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.twitter;
+package dailyCoding2.twitter;
 
 import java.util.Arrays;
 import java.util.Collection;

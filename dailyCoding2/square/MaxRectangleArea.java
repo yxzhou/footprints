@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.square;
+package dailyCoding2.square;
 
 import java.util.Arrays;
 

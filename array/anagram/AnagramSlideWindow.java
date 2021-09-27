@@ -1,4 +1,4 @@
-package fgafa.array.anagram;
+package array.anagram;
 
 import org.junit.Assert;
 import org.junit.Test;

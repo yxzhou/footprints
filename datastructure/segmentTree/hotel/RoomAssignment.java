@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree.hotel;
+package datastructure.segmentTree.hotel;
 
 /**
  *

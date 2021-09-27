@@ -1,10 +1,10 @@
-package fgafa.sorting.slidingwindow;
+package sorting.slidingwindow;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-import fgafa.sorting.TopKFrequent;
-import fgafa.util.Misc;
+import sorting.TopKFrequent;
+import util.Misc;
 
 /**
  * 

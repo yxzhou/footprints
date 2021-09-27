@@ -1,8 +1,8 @@
-package fgafa.stringmatching;
+package stringmatching;
 
 import java.util.ArrayList;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * @version

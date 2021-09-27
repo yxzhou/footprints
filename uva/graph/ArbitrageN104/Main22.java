@@ -1,11 +1,11 @@
-package fgafa.uva.graph.ArbitrageN104;
+package uva.graph.ArbitrageN104;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Scanner;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class Main22
 {

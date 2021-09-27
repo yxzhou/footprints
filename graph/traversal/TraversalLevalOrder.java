@@ -1,6 +1,6 @@
-package fgafa.graph.traversal;
+package graph.traversal;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  *  Given 1 or more directed graphs, get the sequence id.

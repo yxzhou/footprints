@@ -1,6 +1,6 @@
-package fgafa.linkedlist;
+package linkedlist;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 
 public class Reverse

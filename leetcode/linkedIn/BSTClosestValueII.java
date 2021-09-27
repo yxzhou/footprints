@@ -1,4 +1,4 @@
-package fgafa.leetcode.linkedIn;
+package leetcode.linkedIn;
 
 import java.util.ArrayList;
 import java.util.List;

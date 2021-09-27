@@ -1,7 +1,7 @@
-package fgafa.graph.shortestPath;
+package graph.shortestPath;
 
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 import java.util.*;

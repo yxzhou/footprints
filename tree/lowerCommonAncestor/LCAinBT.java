@@ -1,8 +1,8 @@
-package fgafa.tree.lowerCommonAncestor;
+package tree.lowerCommonAncestor;
 
-import fgafa.tree.BinaryTree;
-import fgafa.tree.Print;
-import fgafa.tree.TreeNode;
+import tree.BinaryTree;
+import tree.Print;
+import tree.TreeNode;
 
 /**
  * 

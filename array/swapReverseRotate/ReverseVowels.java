@@ -1,4 +1,4 @@
-package fgafa.array.swapReverseRotate;
+package array.swapReverseRotate;
 
 import java.util.HashSet;
 import java.util.Set;

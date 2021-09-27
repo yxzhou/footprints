@@ -1,4 +1,4 @@
-package fgafa.graph.shortestPath;
+package graph.shortestPath;
 
 import java.util.Arrays;
 

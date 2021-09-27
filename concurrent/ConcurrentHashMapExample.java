@@ -1,4 +1,4 @@
-package fgafa.concurrent;
+package concurrent;
 
 import java.util.HashMap;
 import java.util.HashSet;

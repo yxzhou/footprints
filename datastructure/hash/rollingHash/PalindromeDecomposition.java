@@ -1,4 +1,4 @@
-package fgafa.datastructure.hash.rollingHash;
+package datastructure.hash.rollingHash;
 
 import org.junit.Assert;
 import org.junit.Test;

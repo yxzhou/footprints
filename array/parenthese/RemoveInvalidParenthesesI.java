@@ -1,4 +1,4 @@
-package fgafa.array.parenthese;
+package array.parenthese;
 
 import java.util.ArrayList;
 import java.util.List;

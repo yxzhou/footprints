@@ -1,7 +1,7 @@
-package fgafa.sorting;
+package sorting;
 
 import java.util.Arrays;
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

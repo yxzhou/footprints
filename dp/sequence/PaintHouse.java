@@ -1,4 +1,4 @@
-package fgafa.dp.sequence;
+package dp.sequence;
 
 import java.util.Arrays;
 

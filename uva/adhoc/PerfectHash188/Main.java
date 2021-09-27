@@ -1,4 +1,4 @@
-package fgafa.uva.adhoc.PerfectHash188;
+package uva.adhoc.PerfectHash188;
 
 import java.io.*;
 import java.util.*;

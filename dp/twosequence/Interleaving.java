@@ -1,4 +1,4 @@
-package fgafa.dp.twosequence;
+package dp.twosequence;
 
 import java.util.LinkedList;
 import java.util.Queue;

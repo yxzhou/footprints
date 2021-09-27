@@ -38,7 +38,7 @@
  * Solution #2: define a interval tree to store the width[h], so Time ( n * log h).    ( 2*10^5 * log(10^9) = 2 * 10^5 * 30 )    
  * 
  */
-package fgafa.datastructure.segmentTree.billBoard;
+package datastructure.segmentTree.billBoard;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

@@ -1,9 +1,9 @@
-package fgafa.easy;
+package easy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Given an array A, output another array B such that B[k]=product  of all elements in A but A[k]. 

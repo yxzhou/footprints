@@ -1,4 +1,4 @@
-package fgafa.easy;
+package easy;
 
 /*
  * In an Excel sheet, the column title is A, B, ---, Z, AA, AB, --- 

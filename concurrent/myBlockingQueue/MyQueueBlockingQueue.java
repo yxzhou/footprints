@@ -1,4 +1,4 @@
-package fgafa.concurrent.myBlockingQueue;
+package concurrent.myBlockingQueue;
 
 import java.util.LinkedList;
 import java.util.Queue;

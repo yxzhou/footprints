@@ -1,4 +1,4 @@
-package fgafa.basic.callFlow;
+package basic.callFlow;
 
 public class BaseClass
 {

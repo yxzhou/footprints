@@ -1,6 +1,6 @@
-package fgafa.tree;
+package tree;
 
-import fgafa.linkedlist.ListNode;
+import linkedlist.ListNode;
 
 public class LinkedList2BST {
     

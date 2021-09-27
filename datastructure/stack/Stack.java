@@ -1,4 +1,4 @@
-package fgafa.datastructure.stack;
+package datastructure.stack;
 
 import java.util.EmptyStackException;
 

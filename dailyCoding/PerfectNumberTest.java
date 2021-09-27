@@ -1,6 +1,6 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
-import fgafa.datastructure.LFU.LFUCacheImpl;
+import datastructure.LFU.LFUCacheImpl;
 import org.junit.Assert;
 import org.junit.Test;
 

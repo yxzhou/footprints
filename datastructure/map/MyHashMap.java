@@ -1,4 +1,4 @@
-package fgafa.datastructure.map;
+package datastructure.map;
 
 import java.util.Iterator;
 import java.util.LinkedList;

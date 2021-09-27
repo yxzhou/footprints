@@ -1,4 +1,4 @@
-package fgafa.todo.goo;
+package todo.goo;
 
 /**
  * _http://www.jiuzhang.com/solution/single-number-iv

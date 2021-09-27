@@ -1,4 +1,4 @@
-package fgafa.datastructure.skiplist;
+package datastructure.skiplist;
 
 public class SkipListImpl implements SkipList {
     @Override

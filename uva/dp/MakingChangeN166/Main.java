@@ -1,4 +1,4 @@
-package fgafa.uva.dp.MakingChangeN166;
+package uva.dp.MakingChangeN166;
 
 import java.io.*;
 import java.util.*;

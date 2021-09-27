@@ -1,4 +1,4 @@
-package fgafa.graph.circle;
+package graph.circle;
 
 import java.util.LinkedList;
 import java.util.List;

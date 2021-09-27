@@ -1,9 +1,9 @@
-package fgafa.test;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class SpiralMatrix {
 

@@ -1,4 +1,4 @@
-package fgafa.dp.matrix.PathSum;
+package dp.matrix.PathSum;
 
 import junit.framework.Assert;
 import org.junit.Test;

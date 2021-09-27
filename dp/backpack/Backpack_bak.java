@@ -1,4 +1,4 @@
-package fgafa.dp.backpack;
+package dp.backpack;
 
 /**
  * 
@@ -16,6 +16,6 @@ package fgafa.dp.backpack;
  * 
  * 
  */
-public class Backpack00 {
+public class Backpack_bak {
 
 }

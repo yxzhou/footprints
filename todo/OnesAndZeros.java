@@ -1,4 +1,4 @@
-package fgafa.todo;
+package todo;
 
 /**
  * 

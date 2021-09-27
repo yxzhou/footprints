@@ -1,4 +1,4 @@
-package fgafa.graph.eulerPathAndCircuit;
+package graph.eulerPathAndCircuit;
 
 /**
  *

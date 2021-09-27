@@ -1,6 +1,6 @@
-package fgafa.array;
+package array;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class BestBuyandSell
 {

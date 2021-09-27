@@ -1,4 +1,4 @@
-package fgafa.array.subSum;
+package array.subSum;
 
 import java.util.*;
 
@@ -44,92 +44,39 @@ public class ThreeSum
    * Note:
    * Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
    * The solution set must not contain duplicate triplets.
+   *
+   * Time O(nlogn) + O(n^2), Space O(1)
    */
-    /**
-     * Time O(nlogn) + O(n^2), Space O(1)
-     */
-    public List<Integer[]> sumOf3(int[] arr) {
-        List<Integer[]> triplets = new ArrayList<>();
-        if (null == arr || arr.length < 3) {
-            return triplets;
-        }
-
-        Arrays.sort(arr);
-
-        Integer[] triplet;
-        for (int i = 0; i < arr.length - 2; i++) {
-            //avoid duplicate solutions
-            if (arr[i] == arr[i - 1]){
-                continue;
-            }
-            
-            int target = 0 - arr[i];
-            for (int j = i + 1, k = arr.length - 1; j < k;) {
-                int sum = arr[j] + arr[k];
-
-                if (sum < target) {
-                    j++;
-                } else if (sum > target) {
-                    k--;
-                } else {
-                    triplet = new Integer[3];
-
-                    triplet[0] = arr[i];
-                    triplet[1] = arr[j];
-                    triplet[2] = arr[k];
-
-                    triplets.add(triplet);
-
-                    // avoid duplicate solutions
-                    while (i < k && arr[k] == arr[k + 1]) {
-                        k--;
-                    }
-                    while (i < k && arr[i] == arr[i - 1]) {
-                        i++;
-                    }
-                }
-            }
-        }
-        return triplets;
-    }
-
-    public List<List<Integer>> threeSum(int[] numbers) {
+    public List<List<Integer>> sumOf3(int[] numbers) {
         if(numbers == null || numbers.length < 3){
-            return Collections.emptyList();
+            return Collections.EMPTY_LIST;
         }
 
         Arrays.sort(numbers);
 
-        List<List<Integer>> result = new LinkedList<>();
-        int target;
+        List<List<Integer>> r = new LinkedList<>();
+        int target; //remain
         int sum;
-        for(int l = 0, n = numbers.length; l < n; l++){
-            if(l > 0 && l < n && numbers[l] == numbers[l - 1]){
-                continue;
-            }
-
-            target = 0 - numbers[l];
-
-            for(int m = l + 1, r = n - 1; m < r; ){
-                sum = numbers[m] + numbers[r];
-                if(sum < target){
-                    m++;
-                }else if(sum > target){
-                    r--;
+        for(int i = 0, end = numbers.length - 2; i < end;  ){
+            target = 0 - numbers[i];
+            for(int j = i + 1, k = numbers.length - 1; j < k; ){
+                sum = numbers[j] + numbers[k];
+                if( sum == target ){
+                    r.add(Arrays.asList(new Integer[]{ numbers[i],numbers[j],numbers[k] }));
+                    for( j++; j < k && numbers[j] == numbers[j - 1]; j++);
+                }else if( sum < target ){
+                    j++;
                 }else{
-                    result.add( Arrays.asList(numbers[l], numbers[m], numbers[r]) );
-                    m++;
-                    r--;
-                }
-
-                while(m > l + 1 && m < r && numbers[m] == numbers[m - 1]){
-                    m++;
+                    k--;
                 }
             }
+
+            for( i++; i < end && numbers[i] == numbers[i - 1]; i++);
         }
 
-        return result;
+        return r;
     }
+
 	  
   /**
    * 

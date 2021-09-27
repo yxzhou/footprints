@@ -1,4 +1,4 @@
-package fgafa.basic.regrex;
+package basic.regrex;
 
 import java.io.File;
 

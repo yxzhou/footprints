@@ -1,4 +1,4 @@
-package fgafa.mianjing.uber;
+package mianjing.uber;
 
 import java.util.List;
 

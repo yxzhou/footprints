@@ -1,4 +1,4 @@
-package fgafa.design.others.phoneDirectory;
+package design.others.phoneDirectory;
 
 import java.util.HashSet;
 import java.util.Set;

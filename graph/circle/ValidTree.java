@@ -1,4 +1,4 @@
-package fgafa.graph.circle;
+package graph.circle;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,6 +1,6 @@
-package fgafa.topCoder;
+package topCoder;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Problem

@@ -1,4 +1,4 @@
-package fgafa.binarysearch;
+package binarysearch;
 
 /*
  * From lintcode:

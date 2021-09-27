@@ -1,4 +1,4 @@
-package fgafa.basic.iterator;
+package basic.iterator;
 
 import java.util.Iterator;
 import java.util.LinkedList;

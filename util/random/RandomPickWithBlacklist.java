@@ -1,4 +1,4 @@
-package fgafa.util.random;
+package util.random;
 
 import org.junit.Test;
 

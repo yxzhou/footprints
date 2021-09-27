@@ -1,8 +1,8 @@
-package fgafa.datastructure.interval;
+package datastructure.interval;
 
 import java.util.*;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 /**

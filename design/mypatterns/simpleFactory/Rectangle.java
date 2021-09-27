@@ -1,4 +1,4 @@
-package fgafa.design.mypatterns.simpleFactory;
+package design.mypatterns.simpleFactory;
 
 public class Rectangle extends Shape {
 

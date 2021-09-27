@@ -1,4 +1,4 @@
-package fgafa.design.OOD.parkingLots2;
+package design.OOD.parkingLots2;
 
 import java.util.ArrayList;
 

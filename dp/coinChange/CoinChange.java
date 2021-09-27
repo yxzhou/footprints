@@ -1,28 +1,31 @@
-package fgafa.dp.coinChange;
+package dp.coinChange;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Leetcode $322
+ * Leetcode 322
+ * Lintcode 669
  *
  * Given a total amount of money amount, and coins of different denominations, 
  * compute the fewest number of coins that you need to "make up" that amount. 
  * If that amount of money cannot be made up by any combination of the coins, return -1.
-
-    Example 1:
-    coins = [1, 2, 5], amount = 11
-    return 3 (11 = 5 + 5 + 1)
-    
-    Example 2:
-    coins = [2], amount = 3
-    return -1.
-    
-    Note:
-    You may assume that you have an infinite number of each kind of coin.
+ * 
+ * Notes:
+ * You may assume that you have an infinite number of each kind of coin
+ * 
+ *
+ * Example 1:
+ *  coins = [1, 2, 5], amount = 11
+ *  return 3 (11 = 5 + 5 + 1)
+ * 
+ *  Example 2:
+ *  coins = [2], amount = 3
+ *  return -1.
+ *  
  *
  */
 
@@ -87,7 +90,7 @@ public class CoinChange {
 
             //check if it can be divided by the candidate one by one 
             for (int kind = 0; kind < candidates.length; kind++) {               
-                  
+ 
                 if (candidates[kind] <= cents) {  
                     int temp = coinsUsed[cents - candidates[kind]] + 1;  
                     if (temp < minCoins) {  
@@ -101,7 +104,15 @@ public class CoinChange {
         
         return coinsUsed[target] == target ? -1 : coinsUsed[target];
     }
-
+    /**
+     * this is worst than coinChange_dp_n, because:
+     * For example: input coins = {1, 2, 3, 5}, amount = 5
+     *  when to calculate dp[5]  
+     *     when x = 2, it's dp[3] + 1, because 3 + 2 = 5
+     *     when x = 3, it's dp[2] + 1, because 2 + 3 = 5
+     *  Here it's not efficient.  
+     * 
+     */
     public int coinChange_dp(int[] coins, int amount) {
         if(coins == null || coins.length == 0 || amount < 1){
             return -1;
@@ -123,6 +134,28 @@ public class CoinChange {
                 }
 
                 dp[i] = Math.min(dp[i], dp[i - x] + 1);
+            }
+        }
+
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+    }
+
+    /** fastest */
+    public int coinChange_dp_n(int[] coins, int amount) {
+        if(coins == null || coins.length == 0 || amount < 1){
+            return 0; // or -1
+        }
+
+        int[] dp = new int[amount + 1]; //dp[i] is the fewest number of coins that to make up i
+        Arrays.fill(dp, 1, dp.length, Integer.MAX_VALUE); //coins[0] is 0 
+
+        int z;
+        for(int x : coins){
+            for(int y = 0, end = amount - x; y <= end; y++){
+                if(dp[y] != Integer.MAX_VALUE){
+                    z = y + x;
+                    dp[z] = Math.min(dp[z], dp[y] + 1);
+                }
             }
         }
 

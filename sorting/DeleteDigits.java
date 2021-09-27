@@ -1,4 +1,4 @@
-package fgafa.sorting;
+package sorting;
 
 import java.util.Random;
 

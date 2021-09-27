@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.linkedin;
+package dailyCoding2.linkedin;
 
 import org.junit.Assert;
 import org.junit.Test;

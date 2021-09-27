@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.airbnb;
+package dailyCoding2.airbnb;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

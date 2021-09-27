@@ -1,4 +1,4 @@
-package fgafa.basic;
+package basic;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;

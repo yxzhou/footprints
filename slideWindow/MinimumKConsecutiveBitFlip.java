@@ -1,4 +1,4 @@
-package fgafa.slideWindow;
+package slideWindow;
 
 /**
  * Leetcode #995

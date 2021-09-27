@@ -1,8 +1,8 @@
-package fgafa.dailyCoding.graph;
+package dailyCoding.graph;
 
 import java.util.*;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 /**

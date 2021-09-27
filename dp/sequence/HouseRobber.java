@@ -1,6 +1,6 @@
-package fgafa.dp.sequence;
+package dp.sequence;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 public class HouseRobber {
 

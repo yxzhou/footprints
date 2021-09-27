@@ -1,4 +1,4 @@
-package fgafa.graph.maze;
+package graph.maze;
 
 import java.awt.Color;
 

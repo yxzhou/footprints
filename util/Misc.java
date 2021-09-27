@@ -1,4 +1,4 @@
-package fgafa.util;
+package util;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

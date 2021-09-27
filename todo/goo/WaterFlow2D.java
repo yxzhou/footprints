@@ -1,4 +1,4 @@
-package fgafa.todo.goo;
+package todo.goo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

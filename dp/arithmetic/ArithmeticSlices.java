@@ -1,4 +1,4 @@
-package fgafa.dp.arithmetic;
+package dp.arithmetic;
 
 /**
  * Leetcode #413

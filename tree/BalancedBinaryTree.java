@@ -1,6 +1,6 @@
-package fgafa.tree;
+package tree;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 
 public class BalancedBinaryTree

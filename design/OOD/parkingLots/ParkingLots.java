@@ -1,4 +1,4 @@
-package fgafa.design.OOD.parkingLots;
+package design.OOD.parkingLots;
 
 import java.util.List;
 import java.util.Map;

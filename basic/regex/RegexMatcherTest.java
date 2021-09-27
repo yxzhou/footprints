@@ -1,4 +1,4 @@
-package fgafa.basic.regex;
+package basic.regex;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package fgafa.datastructure.hash;
+package datastructure.hash;
 
 import java.io.Serializable;
 import java.util.Collection;

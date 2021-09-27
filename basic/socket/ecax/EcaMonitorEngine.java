@@ -3,12 +3,12 @@
  * @author Zhou Yuanxi
  * @date May. 26, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax;
+package basic.socket.ecax;
 
 import java.util.*;
 
 import com.televigation.log.TVCategory;
-import fgafa.basic.socket.ecax.job.MonitorJob;
+import basic.socket.ecax.job.MonitorJob;
 
 public class EcaMonitorEngine extends TimerTask {
     static private EcaMonitorEngine instance;

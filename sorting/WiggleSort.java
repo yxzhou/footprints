@@ -1,6 +1,6 @@
-package fgafa.sorting;
+package sorting;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

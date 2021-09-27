@@ -3,7 +3,7 @@
  * This implementation using the Java MD5, SHA-1 and SHA-256 hashing algorithm to determine which bits to flip in the filter.
  */
 
-package fgafa.datastructure.bloomfilter;
+package datastructure.bloomfilter;
 
 import java.io.Serializable;
 import java.math.BigInteger;

@@ -1,4 +1,4 @@
-package fgafa.design.OOD;
+package design.OOD;
 
 import java.util.List;
 

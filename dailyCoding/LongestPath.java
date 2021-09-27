@@ -1,9 +1,9 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  *

@@ -1,4 +1,4 @@
-package fgafa.uva.geometry.Circle3Pointsn190;
+package uva.geometry.Circle3Pointsn190;
 
 import java.io.*;
 import java.util.*;

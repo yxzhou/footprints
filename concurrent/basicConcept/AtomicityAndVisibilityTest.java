@@ -1,4 +1,4 @@
-package fgafa.concurrent.basicConcept;
+package concurrent.basicConcept;
 
 import java.util.Arrays;
 import java.util.List;

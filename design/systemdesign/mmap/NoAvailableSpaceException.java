@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.mmap;
+package design.systemdesign.mmap;
 
 public class NoAvailableSpaceException extends Exception {
 

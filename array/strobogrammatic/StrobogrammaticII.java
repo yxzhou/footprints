@@ -1,9 +1,9 @@
-package fgafa.array.strobogrammatic;
+package array.strobogrammatic;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package fgafa.uva.adhoc.ErrantPhiscistN126;
+package uva.adhoc.ErrantPhiscistN126;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
-package fgafa.sorting.median;
+package sorting.median;
 
 import java.util.Hashtable;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * There are 2 sorted array.  (same sorted way), find the median, ith. 

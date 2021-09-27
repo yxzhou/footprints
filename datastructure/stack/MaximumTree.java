@@ -1,8 +1,8 @@
-package fgafa.datastructure.stack;
+package datastructure.stack;
 
 import java.util.Stack;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 /**
  * http://www.lintcode.com/en/problem/ 

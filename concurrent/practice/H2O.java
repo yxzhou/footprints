@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice;
+package concurrent.practice;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

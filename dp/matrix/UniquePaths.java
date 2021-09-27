@@ -1,4 +1,4 @@
-package fgafa.dp.matrix;
+package dp.matrix;
 
 import java.util.ArrayList;
 import java.util.HashMap;

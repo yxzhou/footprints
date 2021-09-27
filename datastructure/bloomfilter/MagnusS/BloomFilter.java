@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fgafa.datastructure.bloomfilter.MagnusS;
+package datastructure.bloomfilter.MagnusS;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;

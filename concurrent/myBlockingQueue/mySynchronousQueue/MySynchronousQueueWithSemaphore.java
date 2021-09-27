@@ -1,4 +1,4 @@
-package fgafa.concurrent.myBlockingQueue.mySynchronousQueue;
+package concurrent.myBlockingQueue.mySynchronousQueue;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;

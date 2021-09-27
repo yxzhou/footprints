@@ -1,9 +1,9 @@
-package fgafa.easy;
+package easy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * The gray code is a binary numeral system where two successive values differ in only one bit.<br>

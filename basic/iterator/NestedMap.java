@@ -1,4 +1,4 @@
-package fgafa.basic.iterator;
+package basic.iterator;
 
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;

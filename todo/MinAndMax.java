@@ -1,6 +1,6 @@
-package fgafa.todo;
+package todo;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Created by joeyz on 12/21/16.

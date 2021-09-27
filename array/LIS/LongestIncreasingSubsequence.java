@@ -1,6 +1,6 @@
-package fgafa.array.LIS;
+package array.LIS;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 import java.util.Arrays;

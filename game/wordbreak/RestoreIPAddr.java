@@ -1,4 +1,4 @@
-package fgafa.game.wordbreak;
+package game.wordbreak;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 
 /**

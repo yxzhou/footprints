@@ -1,4 +1,4 @@
-package fgafa.design.others;
+package design.others;
 
 /**
  *

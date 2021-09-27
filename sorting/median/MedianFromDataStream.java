@@ -1,9 +1,9 @@
-package fgafa.sorting.median;
+package sorting.median;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

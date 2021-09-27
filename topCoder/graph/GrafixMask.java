@@ -1,4 +1,4 @@
-package fgafa.topCoder.graph;
+package topCoder.graph;
 
 import java.util.*;
 

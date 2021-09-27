@@ -1,4 +1,4 @@
-package fgafa.todo.others;
+package todo.others;
 
 /**
  *

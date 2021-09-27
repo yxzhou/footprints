@@ -1,4 +1,4 @@
-package fgafa.leetcode.uber;
+package leetcode.uber;
 
 import junit.framework.Assert;
 import org.junit.Test;

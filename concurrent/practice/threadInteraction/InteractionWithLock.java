@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.threadInteraction;
+package concurrent.practice.threadInteraction;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

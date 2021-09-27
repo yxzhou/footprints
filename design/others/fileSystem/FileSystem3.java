@@ -1,4 +1,4 @@
-package fgafa.design.others.fileSystem;
+package design.others.fileSystem;
 
 
 import org.junit.Test;

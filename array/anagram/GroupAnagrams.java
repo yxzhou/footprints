@@ -1,4 +1,4 @@
-package fgafa.array.anagram;
+package array.anagram;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 /**

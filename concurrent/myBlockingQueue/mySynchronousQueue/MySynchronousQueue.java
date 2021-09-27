@@ -1,4 +1,4 @@
-package fgafa.concurrent.myBlockingQueue.mySynchronousQueue;
+package concurrent.myBlockingQueue.mySynchronousQueue;
 
 public interface MySynchronousQueue<E> {
 

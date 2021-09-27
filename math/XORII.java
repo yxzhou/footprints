@@ -1,6 +1,6 @@
-package fgafa.math;
+package math;
 
-import fgafa.bitwise.ReverseBits3;
+import bitwise.ReverseBits3;
 import org.junit.Test;
 
 /**

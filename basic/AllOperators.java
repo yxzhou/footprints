@@ -1,4 +1,4 @@
-package fgafa.basic;
+package basic;
 
 // : operators/AllOps.java from Thinking in Java
 // Tests all the operators on all the primitive data types

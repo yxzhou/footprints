@@ -1,4 +1,4 @@
-package fgafa.game;
+package game;
 
 /**
  * refer to http://www.leetcode.com/2011/01/ctrla-ctrlc-ctrlv.html

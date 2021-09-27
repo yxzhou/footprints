@@ -1,4 +1,4 @@
-package fgafa.datastructure.quadTree;
+package datastructure.quadTree;
 
 /**
  * design a data structure, implement the following method

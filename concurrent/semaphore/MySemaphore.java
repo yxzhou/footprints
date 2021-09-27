@@ -1,4 +1,4 @@
-package fgafa.concurrent.semaphore;
+package concurrent.semaphore;
 
 /**
  * Created by joeyz on 3/1/17.

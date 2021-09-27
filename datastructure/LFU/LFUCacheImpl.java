@@ -1,4 +1,4 @@
-package fgafa.datastructure.LFU;
+package datastructure.LFU;
 
 import java.util.HashMap;
 import java.util.PriorityQueue;

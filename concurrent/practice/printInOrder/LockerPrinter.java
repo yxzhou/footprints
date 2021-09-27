@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.printInOrder;
+package concurrent.practice.printInOrder;
 
 public class LockerPrinter implements Printer{
 

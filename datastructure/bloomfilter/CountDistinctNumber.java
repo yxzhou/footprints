@@ -1,4 +1,4 @@
-package fgafa.datastructure.bloomfilter;
+package datastructure.bloomfilter;
 
 
 /**

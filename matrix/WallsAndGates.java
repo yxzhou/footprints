@@ -1,9 +1,9 @@
-package fgafa.matrix;
+package matrix;
+
+import util.Misc;
 
 import java.util.LinkedList;
 import java.util.Queue;
-
-import fgafa.util.Misc;
 
 /**
  * 
@@ -28,37 +28,31 @@ import fgafa.util.Misc;
 
 public class WallsAndGates {
 
-    public void wallsAndGates_dfs(int[][] rooms) {
-        if(null == rooms || 0 == rooms.length || 0 == rooms[0].length){
+    public void dfs(int[][] rooms) {
+        if(null == rooms){
             return;
         }
-        
-        int m = rooms.length;
-        int n = rooms[0].length;
-        for(int rowNum = 0; rowNum < m; rowNum++){
-            for(int colNum = 0; colNum < n; colNum++){
-                if(0 == rooms[rowNum][colNum]){
-                    wallsAndGates_dfs(rooms, rowNum, colNum, 0);
+
+        for(int r = 0; r < rooms.length; r++){
+            for(int c = 0; c < rooms[0].length; c++){
+                if(0 == rooms[r][c]){
+                    dfs(rooms, r, c, 0);
                 }
             }
         }
     }
     
-    private void wallsAndGates_dfs(int[][] rooms, int rowNum, int colNum, int distance) {
-        if(rowNum < 0 || rowNum >= rooms.length || colNum < 0 || colNum >= rooms[0].length){
+    private void dfs(int[][] rooms, int r, int c, int d) {
+        if(r < 0 || r >= rooms.length || c < 0 || c >= rooms[0].length || rooms[r][c] < d || (d != 0 && rooms[r][c] == d)){
             return;
         }
         
-        if(rooms[rowNum][colNum] < distance || (distance != 0 && rooms[rowNum][colNum] == distance)){
-            return;
-        }
+        rooms[r][c] = d++;
         
-        rooms[rowNum][colNum] = distance;
-        
-        wallsAndGates_dfs(rooms, rowNum + 1, colNum, distance + 1);
-        wallsAndGates_dfs(rooms, rowNum - 1, colNum, distance + 1);
-        wallsAndGates_dfs(rooms, rowNum, colNum + 1, distance + 1);
-        wallsAndGates_dfs(rooms, rowNum, colNum - 1, distance + 1);
+        dfs(rooms, r + 1, c, d);
+        dfs(rooms, r - 1, c, d);
+        dfs(rooms, r, c + 1, d);
+        dfs(rooms, r, c - 1, d);
     }
     
     public void wallsAndGates_n(int[][] rooms) {
@@ -119,7 +113,7 @@ public class WallsAndGates {
         System.out.println(" Input:  ");
         System.out.println(Misc.array2String(input));
         
-        //sv.wallsAndGates_dfs(input);
+        //sv.dfs(input);
         sv.wallsAndGates_n(input);
         
         System.out.println("Output:  ");

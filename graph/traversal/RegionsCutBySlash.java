@@ -1,4 +1,4 @@
-package fgafa.graph.traversal;
+package graph.traversal;
 
 import org.junit.Assert;
 import org.junit.Test;

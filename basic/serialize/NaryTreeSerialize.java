@@ -1,4 +1,4 @@
-package fgafa.basic.serialize;
+package basic.serialize;
 
 import java.util.ArrayList;
 import java.util.List;

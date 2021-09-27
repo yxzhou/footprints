@@ -1,4 +1,4 @@
-package fgafa.binarysearch;
+package binarysearch;
 
 import org.junit.Assert;
 import org.junit.Test;

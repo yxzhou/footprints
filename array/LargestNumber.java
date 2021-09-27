@@ -1,11 +1,11 @@
-package fgafa.array;
+package array;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

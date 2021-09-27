@@ -1,4 +1,4 @@
-package fgafa.design.others;
+package design.others;
 
 import java.util.HashMap;
 import java.util.HashSet;

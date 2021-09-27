@@ -1,4 +1,4 @@
-package fgafa.basic.time;
+package basic.time;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

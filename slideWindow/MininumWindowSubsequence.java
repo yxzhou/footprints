@@ -1,4 +1,4 @@
-package fgafa.slideWindow;
+package slideWindow;
 
 import junit.framework.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package fgafa.datastructure.LFU;
+package datastructure.LFU;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;

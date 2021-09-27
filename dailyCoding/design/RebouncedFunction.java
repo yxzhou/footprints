@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.design;
+package dailyCoding.design;
 
 import java.util.concurrent.atomic.AtomicLong;
 

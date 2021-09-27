@@ -1,4 +1,4 @@
-package fgafa.util;
+package util;
 
 
 /**

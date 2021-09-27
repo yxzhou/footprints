@@ -1,9 +1,9 @@
-package fgafa.todo;
+package todo;
 
 import java.util.*;
 import java.util.Map.Entry;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Given a integer array (every element value >= 0 ) and a target value t,

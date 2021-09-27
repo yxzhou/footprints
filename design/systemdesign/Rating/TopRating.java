@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.Rating;
+package design.systemdesign.Rating;
 
 import java.util.*;
 import java.util.stream.Collectors;

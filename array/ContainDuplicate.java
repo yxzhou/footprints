@@ -1,4 +1,4 @@
-package fgafa.array;
+package array;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class ContainDuplicate {
 

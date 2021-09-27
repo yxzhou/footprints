@@ -1,4 +1,4 @@
-package fgafa.dp.sequence;
+package dp.sequence;
 
 /**
  * There is a fence with n posts, each post can be painted with one of the k

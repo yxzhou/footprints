@@ -1,8 +1,8 @@
-package fgafa.dailyCoding.datastructure.lastNLogIds;
+package dailyCoding.datastructure.lastNLogIds;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * You run an e-commerce website and want to record the last N order ids in a log. Implement a data structure to accomplish this, with the following API:

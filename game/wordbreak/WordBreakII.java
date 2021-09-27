@@ -1,4 +1,4 @@
-package fgafa.game.wordbreak;
+package game.wordbreak;
 
 import java.util.ArrayList;
 import java.util.Collections;

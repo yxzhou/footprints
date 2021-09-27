@@ -1,8 +1,8 @@
-package fgafa.math;
+package math;
 
 import java.math.BigDecimal;
 
-import fgafa.util.TimeCost;
+import util.TimeCost;
 
 /**
  * 

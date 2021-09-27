@@ -1,4 +1,4 @@
-package fgafa.uva.geometry.SkylineN105;
+package uva.geometry.SkylineN105;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree.billBoard;
+package datastructure.segmentTree.billBoard;
 
 /**
  *

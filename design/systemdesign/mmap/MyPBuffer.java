@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.mmap;
+package design.systemdesign.mmap;
 
 /**
  * mmap is great if you have multiple processes accessing data in a read only fashion from the same file, which is common in the kind of server systems I write. mmap allows all those processes to share the same physical memory pages, saving a lot of memory.

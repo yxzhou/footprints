@@ -1,4 +1,4 @@
-package fgafa.concurrent.synchronizedMethodAndStatement;
+package concurrent.synchronizedMethodAndStatement;
 
 public class MyClass2 extends MyClass
 {

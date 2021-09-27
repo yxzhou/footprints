@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.graph;
+package dailyCoding.graph;
 
 import java.util.ArrayList;
 

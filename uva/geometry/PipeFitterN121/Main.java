@@ -1,4 +1,4 @@
-package fgafa.uva.geometry.PipeFitterN121;
+package uva.geometry.PipeFitterN121;
 
 import java.io.*;
 import java.util.*;

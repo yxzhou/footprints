@@ -1,4 +1,4 @@
-package fgafa.datastructure.unionFind;
+package datastructure.unionFind;
 
 /**
  * Today is Ignatius' birthday. He invites a lot of friends. Now it's dinner time. Ignatius wants to know how many tables he needs at least.

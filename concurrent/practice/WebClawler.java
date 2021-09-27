@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice;
+package concurrent.practice;
 
 import org.junit.Test;
 

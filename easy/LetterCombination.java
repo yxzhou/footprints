@@ -1,11 +1,11 @@
-package fgafa.easy;
+package easy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Given a digit string, return all possible letter combinations that the number

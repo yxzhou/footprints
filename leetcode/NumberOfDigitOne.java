@@ -1,4 +1,4 @@
-package fgafa.leetcode;
+package leetcode;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package fgafa.datastructure.practice;
+package datastructure.practice;
 
 import java.util.ArrayList;
 import java.util.HashMap;

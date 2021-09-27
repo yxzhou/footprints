@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.election;
+package concurrent.practice.election;
 
 import java.util.ArrayList;
 import java.util.HashMap;

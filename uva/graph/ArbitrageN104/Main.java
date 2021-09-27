@@ -1,4 +1,4 @@
-package fgafa.uva.graph.ArbitrageN104;
+package uva.graph.ArbitrageN104;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 class Main
 {

@@ -1,4 +1,4 @@
-package fgafa.basic.memory;
+package basic.memory;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;

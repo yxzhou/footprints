@@ -1,4 +1,4 @@
-package fgafa.game.queen;
+package game.queen;
 
 public class Queen5 {
     private static int n = 15;

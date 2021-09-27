@@ -1,6 +1,6 @@
-package fgafa.bitwise;
+package bitwise;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 public class SingleNumber {

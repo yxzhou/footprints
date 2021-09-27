@@ -1,9 +1,9 @@
-package fgafa.uva.dp.StringComputerN164;
+package uva.dp.StringComputerN164;
 
 import java.io.*;
 import java.util.*;
 
-//import fgafa.util.Misc;
+//import util.Misc;
 
 class Main
 {

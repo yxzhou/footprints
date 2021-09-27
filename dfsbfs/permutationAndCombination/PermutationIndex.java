@@ -1,10 +1,10 @@
-package fgafa.dfsbfs.permutationAndCombination;
+package dfsbfs.permutationAndCombination;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

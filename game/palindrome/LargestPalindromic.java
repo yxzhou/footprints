@@ -1,6 +1,6 @@
-package fgafa.game.palindrome;
+package game.palindrome;
 
-//import fgafa.util.Misc;
+//import util.Misc;
 
 /**
  *  Leetcode #5
@@ -43,44 +43,32 @@ public class LargestPalindromic {
      *
      * Time O(n^2)  Space O(1)
      */
-    public static String largetPalindrome_21(String word) {
-        //check if str is null or str.length < 2, return itself
-        if (word == null) {
-            return "";
-        }
-    
-    /*check the (2n-1) center, get the largest palindrome to every center, 
-    the max of them is what we want */
-        String largetP = "";
-        String currMaxP = "";
-        for (int pivot = 0; pivot < word.length(); pivot++) {
 
-            currMaxP = largetPalindrome(word, pivot, pivot);
-            if (currMaxP.length() > largetP.length()) {
-                largetP = currMaxP;
+    public static String longestPalindrome(String s) {
+        int maxLeft = 0;
+        int maxLength = 1;
+
+        int l;
+        int r;
+        int diff;
+        for(int p = 0, n = s.length(); p < n; p++){
+            for( l = p - 1, r = p + 1; l >= 0 && r < n && s.charAt(l) == s.charAt(r); l--, r++ );
+            diff = r - l - 1; // (r - 1) - (l + 1) + 1
+            if(maxLength < diff){
+                maxLength = diff;
+                maxLeft = l + 1;
             }
 
-            currMaxP = largetPalindrome(word, pivot, pivot + 1);
-            if (currMaxP.length() > largetP.length()) {
-                largetP = currMaxP;
+            for( l = p, r = p + 1;l >= 0 && r < n && s.charAt(l) == s.charAt(r); l--, r++ );
+            diff = r - l - 1; // (r - 1) - (l + 1) + 1
+            if(maxLength < diff){
+                maxLength = diff;
+                maxLeft = l + 1;
             }
 
         }
 
-        return largetP;
-    }
-
-    private static String largetPalindrome(String word, int left, int right) {
-        if (left > right) {
-            throw new IllegalArgumentException("The left should not be greater than the right");
-        }
-
-        while (left > -1 && right < word.length() && word.charAt(left) == word.charAt(right)) {
-            left--;
-            right++;
-        }
-
-        return word.substring(left + 1, right);
+        return s.substring(maxLeft, maxLeft + maxLength);
     }
 
     /**
@@ -169,7 +157,7 @@ public class LargestPalindromic {
             System.out.println("\n " + i + "input: " + ss[i]);
             System.out.println(
                     " the longest palindormic substring of " + ss[i] + " is: " + largetPalindrome_Manacher(ss[i]));
-            System.out.println(" the longest palindormic substring of " + ss[i] + " is: " + largetPalindrome_21(ss[i]));
+            System.out.println(" the longest palindormic substring of " + ss[i] + " is: " + longestPalindrome(ss[i]));
         }
 
     }

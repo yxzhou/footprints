@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.bfsdfs;
+package dailyCoding.bfsdfs;
 
 
 import org.junit.Assert;

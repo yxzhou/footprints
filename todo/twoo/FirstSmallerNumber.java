@@ -1,4 +1,4 @@
-package fgafa.todo.twoo;
+package todo.twoo;
 
 /**
  *  _https://www.jiuzhang.com/solution/the-previous-number/

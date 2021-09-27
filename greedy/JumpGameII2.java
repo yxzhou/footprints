@@ -1,8 +1,8 @@
-package fgafa.greedy;
+package greedy;
 
 import java.util.Arrays;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Assert;
 import org.junit.Test;
 

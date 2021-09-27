@@ -1,4 +1,4 @@
-package fgafa.graph.minimumSpanningTree;
+package graph.minimumSpanningTree;
 
 import org.junit.Assert;
 import org.junit.Test;

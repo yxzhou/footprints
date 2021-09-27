@@ -1,4 +1,4 @@
-package fgafa.sorting.median;
+package sorting.median;
 
 /**
  * 
@@ -29,7 +29,7 @@ You may assume k is always valid, ie: 1 ≤ k ≤ input array's size for non-emp
  * 
  */
 
-import fgafa.datastructure.heap.HashHeap;
+import datastructure.heap.HashHeap;
 
 public class MedianOfSlideWindow2 {
 

@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.datastructure.lastNLogIds;
+package dailyCoding.datastructure.lastNLogIds;
 
 
 import java.util.Random;

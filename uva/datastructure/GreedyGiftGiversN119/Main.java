@@ -1,4 +1,4 @@
-package fgafa.uva.datastructure.GreedyGiftGiversN119;
+package uva.datastructure.GreedyGiftGiversN119;
 
 import java.io.*;
 import java.util.*;

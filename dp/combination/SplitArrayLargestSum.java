@@ -1,4 +1,4 @@
-package fgafa.dp.splitArray;
+package dp.combination;
 
 import org.junit.Assert;
 import org.junit.Test;

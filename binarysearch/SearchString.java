@@ -1,4 +1,4 @@
-package fgafa.binarysearch;
+package binarysearch;
 
 public class SearchString {
 

@@ -1,4 +1,4 @@
-package fgafa.tree.lowerCommonAncestor;
+package tree.lowerCommonAncestor;
 
 
 public class LCAinBTWithParentRef {

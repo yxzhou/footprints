@@ -1,8 +1,8 @@
-package fgafa.tree.traversal;
+package tree.traversal;
 
-import fgafa.tree.BinaryTree;
-import fgafa.tree.Print;
-import fgafa.tree.TreeNode;
+import tree.BinaryTree;
+import tree.Print;
+import tree.TreeNode;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package fgafa.backtracking;
+package backtracking;
 
 /**
  * 

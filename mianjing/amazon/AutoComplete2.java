@@ -1,4 +1,4 @@
-package fgafa.mianjing.amazon;
+package mianjing.amazon;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  *   Implement a AutoComplete class, which supports:
@@ -67,7 +67,7 @@ public class AutoComplete2 {
                 minHeap.poll();
             }
 
-            minHeap.add(new Pair<>(weight, trieNode.keyWord));
+            minHeap.add(Pair.of(weight, trieNode.keyWord));
         }
 
         for(int i = 0; i < 26; i++){

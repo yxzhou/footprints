@@ -1,8 +1,8 @@
-package fgafa.tree.lowerCommonAncestor;
+package tree.lowerCommonAncestor;
 
 import java.util.Set;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 /**
  * further more on LCAinBT,  

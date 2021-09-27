@@ -1,6 +1,6 @@
-package fgafa.dp.matrix;
+package dp.matrix;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * Leetcode #174

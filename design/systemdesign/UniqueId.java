@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign;
+package design.systemdesign;
 
 import java.util.UUID;
 import java.util.concurrent.ArrayBlockingQueue;

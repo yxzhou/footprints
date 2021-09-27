@@ -3,7 +3,7 @@
  * @author Zhou Yuanxi
  * @date Feb. 16, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax.job;
+package basic.socket.ecax.job;
 
 //import com.televigation.telenavpro.ecax.EcaMsg;
 

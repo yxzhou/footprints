@@ -1,4 +1,4 @@
-package fgafa.basic.inner;
+package basic.inner;
 
 import java.util.Iterator;
 

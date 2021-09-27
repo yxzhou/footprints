@@ -1,4 +1,4 @@
-package fgafa.util.random;
+package util.random;
 
 /*
  * Q1 Given a function Random5() that returns integers from 1 to 5 with equal probability,

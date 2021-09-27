@@ -1,4 +1,4 @@
-package fgafa.dailyCoding2.pinterest;
+package dailyCoding2.pinterest;
 
 import java.util.Random;
 

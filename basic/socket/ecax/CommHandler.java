@@ -3,7 +3,7 @@
  * @author Zhou Yuanxi
  * @date Feb. 16, 2004 Copyright (c) 2004 TeleVigation, Inc
  */
-package fgafa.basic.socket.ecax;
+package basic.socket.ecax;
 
 public interface CommHandler {
 

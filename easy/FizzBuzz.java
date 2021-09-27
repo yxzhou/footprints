@@ -1,6 +1,7 @@
-package fgafa.easy;
+package easy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,6 +21,10 @@ import java.util.List;
 
 public class FizzBuzz {
 
+    String fizz = "fizz";
+    String buzz = "buzz";
+    String fb = "fizz buzz";
+
     /**
      * param n: As description.
      * return: A list of strings.
@@ -28,16 +33,39 @@ public class FizzBuzz {
         List<String> results = new ArrayList<String>();
         for (int i = 1; i <= n; i++) {
             if (i % 15 == 0) {
-                results.add("fizz buzz");
+                results.add(fb);
             } else if (i % 5 == 0) {
-                results.add("buzz");
+                results.add(buzz);
             } else if (i % 3 == 0) {
-                results.add("fizz");
+                results.add(fizz);
             } else {
                 results.add(String.valueOf(i));
             }
         }
         return results;
     }
-	
+
+
+
+    public List<String> fizzBuzz_2(int n) {
+        if(n < 1){
+            return Collections.EMPTY_LIST;
+        }
+
+        List<String> result = new ArrayList<>(n);
+        for(int i = 1; i <= n; i++){
+            result.add(String.valueOf(i));
+        }
+        for(int i = 3; i <= n; i += 3){
+            result.set(i - 1, fizz);
+        }
+        for(int i = 5; i <= n; i += 5){
+            result.set(i - 1, buzz);
+        }
+        for(int i = 15; i <= n; i += 15){
+            result.set(i -1, fb);
+        }
+
+        return result;
+    }
 }

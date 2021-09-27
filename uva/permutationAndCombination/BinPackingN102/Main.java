@@ -1,4 +1,4 @@
-package fgafa.uva.permutationAndCombination.BinPackingN102;
+package uva.permutationAndCombination.BinPackingN102;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

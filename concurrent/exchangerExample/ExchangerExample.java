@@ -1,4 +1,4 @@
-package fgafa.concurrent.exchangerExample;
+package concurrent.exchangerExample;
 
 import java.util.concurrent.Exchanger;
 

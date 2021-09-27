@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.miniTwitter;
+package design.systemdesign.miniTwitter;
 
 import java.util.ArrayList;
 import java.util.Comparator;

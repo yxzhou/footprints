@@ -1,4 +1,4 @@
-package fgafa.math;
+package math;
 
 /**
  *
@@ -19,69 +19,81 @@ package fgafa.math;
  *
  * Note:
  * -100.0 < x < 100.0
- * n is a 32-bit signed integer, within the range [−231, 231 − 1]
+ * n is a 32-bit signed integer, within the range [−2^31, 2^31 − 1]
+ *
+ * Solution:
+ *   when n = 5,  5 = 0x101
+ *       1      0       1
+ *       x      x^2     x^4
+ *
+ *       x^5 = x * x^4
+ *
+ *   when n = 6, 6 = 0x110
+ *       0      1       1
+ *       x      x^2     x^4
+ *
+ *       x^6 = x^2 * x^4
+ *
+ * Special cases:
+ *    case 1: 0^0, 2^0
+ *    case 2: 0^-1
+ *    case 3: 0^2
+ *    case 4: 2^Integer.MIN_VALUE
  *
  */
 
 public class PowerII {
 
-    final static double EXP = 0.000_000_000_000_1d;
 
     public double myPow(double x, int n) {
-        if(n == 1){
-            return x;
-        }else if(n == 0){
-            //0^0 ?
-            return 1d;
-            //return 1.0;
+        long m = n;
+        if(n < 0){
+            x = 1/x;
+            m = 0l - n;
         }
 
-        if( Math.abs(x - 0) < EXP ){
-            if(n < 0){
-                return Double.MAX_VALUE;
-            }else{ //n > 1
-                return 0d;
-            }
-        }
-
-        boolean sign = false;
-        if(x < 0 && ( (n & 1) == 1 )){
-            sign = true;
-        }
-
-        boolean flag = (n < 0) ? true : false;
-
-        x = Math.abs(x);
-        long m = Math.abs((long)n); // avoid overflow when n is Integer.MIN_VALUE
-
-        double factor = x;
-        double base = 1;
-
+        double y = 1d;
         while(m > 0){
             if( (m & 1) == 1 ){
-                base *= factor;
+                y *= x;
             }
-
-            factor *= factor;
-
-            m >>= 1;
+            x *= x;
+            m >>>= 1;
         }
 
-        if(flag){
-            if(Double.isInfinite(base)){
-                base = 0;
-            }else{
-                base = 1 / base;
-            }
-        }
-
-        if(sign){
-            base = -base;
-        }
-
-        return base;
+        return y;
     }
 
+
+    public double myPow_n(double x, int n) {
+        if(n == 0){ // case: 0^0 or 2^0
+            return 1d;
+        }
+
+        final double THRESHOLD = .0000001d;
+        long m = n;
+        if(n < 0){
+            if(Math.abs(x - 0) < THRESHOLD){ ///case: 0^-1
+                return Double.MAX_VALUE;
+            }
+
+            x = 1 / x;
+            m = -(long)n;
+        }
+
+        double y = 1d;
+
+        while(m > 0){
+            if((m & 1) == 1){
+                y *= x;
+            }
+
+            x *= x;
+            m >>>= 1;
+        }
+
+        return y;
+    }
 
     public static void main(String[] args){
 
@@ -89,6 +101,7 @@ public class PowerII {
 
         double[][] cases = {
                 {0d, 0},
+                {2d, 0},
                 {0d, -2},
                 {0d, -1},
                 {0d, 1},
@@ -106,7 +119,8 @@ public class PowerII {
         };
 
         for(int i = 0; i < cases.length; i++){
-            System.out.println(String.format("pow(%f, %d) = %.3f", cases[i][0], (int)cases[i][1], sv.myPow(cases[i][0], (int)cases[i][1])));
+            System.out.println(String.format("\npow(%f, %d) = %.3f", cases[i][0], (int)cases[i][1], sv.myPow(cases[i][0], (int)cases[i][1])));
+            System.out.println(String.format("pow(%f, %d) = %.3f", cases[i][0], (int)cases[i][1], sv.myPow_n(cases[i][0], (int)cases[i][1])));
         }
         //for(int x = 2, y = 1; y < 11; y++){
         //    System.out.println(String.format("pow(%d, %d) = %d", x, y, sv.myPow(x, y)));

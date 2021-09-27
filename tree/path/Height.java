@@ -1,4 +1,8 @@
-package fgafa.tree;
+package tree.path;
+
+import tree.BinaryTree;
+import tree.Print;
+import tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

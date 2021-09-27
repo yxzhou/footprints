@@ -1,4 +1,4 @@
-package fgafa.todo.goo;
+package todo.goo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  *  Google phone interview

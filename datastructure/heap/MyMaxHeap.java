@@ -1,4 +1,4 @@
-package fgafa.datastructure.heap;
+package datastructure.heap;
 
 public class MyMaxHeap< E extends Comparable<? super E>> implements java.io.Serializable{
 

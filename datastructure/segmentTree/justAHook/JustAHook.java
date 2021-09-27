@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree.justAHook;
+package datastructure.segmentTree.justAHook;
 
 public class JustAHook {
 

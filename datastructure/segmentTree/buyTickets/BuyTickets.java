@@ -1,4 +1,4 @@
-package fgafa.datastructure.segmentTree.buyTickets;
+package datastructure.segmentTree.buyTickets;
 
 import java.util.Arrays;
 

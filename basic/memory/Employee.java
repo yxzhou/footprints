@@ -1,4 +1,4 @@
-package fgafa.basic.memory;
+package basic.memory;
 
 public class Employee
 {

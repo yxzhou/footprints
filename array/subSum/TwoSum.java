@@ -1,4 +1,4 @@
-package fgafa.array.subSum;
+package array.subSum;
 
 import java.util.ArrayList;
 import java.util.Arrays;

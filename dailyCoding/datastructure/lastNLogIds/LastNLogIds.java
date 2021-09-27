@@ -1,9 +1,9 @@
-package fgafa.dailyCoding.datastructure.lastNLogIds;
+package dailyCoding.datastructure.lastNLogIds;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantLock;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  *

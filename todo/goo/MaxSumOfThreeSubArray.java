@@ -1,4 +1,4 @@
-package fgafa.todo.goo;
+package todo.goo;
 
 public class MaxSumOfThreeSubArray {
 

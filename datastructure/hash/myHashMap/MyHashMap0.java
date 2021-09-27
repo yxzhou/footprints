@@ -1,4 +1,4 @@
-package fgafa.datastructure.hash.myHashMap;
+package datastructure.hash.myHashMap;
 
 import java.util.Arrays;
 

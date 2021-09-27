@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.tinyUrl;
+package design.systemdesign.tinyUrl;
 
 public class TinyURLHash {
 

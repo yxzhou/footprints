@@ -1,4 +1,4 @@
-package fgafa.game.queen;
+package game.queen;
 
 /*
  * the very fast method

@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.LinkedList;
+package dailyCoding.LinkedList;
 
 /**
  *

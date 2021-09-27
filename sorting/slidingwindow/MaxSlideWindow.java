@@ -1,6 +1,6 @@
-package fgafa.sorting.slidingwindow;
+package sorting.slidingwindow;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.Deque;
 import java.util.LinkedList;

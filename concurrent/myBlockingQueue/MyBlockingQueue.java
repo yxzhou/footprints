@@ -1,4 +1,4 @@
-package fgafa.concurrent.myBlockingQueue;
+package concurrent.myBlockingQueue;
 
 
 

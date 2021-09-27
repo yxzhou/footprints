@@ -1,6 +1,6 @@
-package fgafa.easy;
+package easy;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.ArrayList;
 import java.util.List;

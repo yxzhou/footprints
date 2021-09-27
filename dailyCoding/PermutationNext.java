@@ -1,6 +1,6 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Assert;
 import org.junit.Test;
 

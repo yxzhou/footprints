@@ -1,4 +1,4 @@
-package fgafa.dp.matrix;
+package dp.matrix;
 /*
  * Follow up for "Unique AvoidRoads":
  * 

@@ -1,4 +1,4 @@
-package fgafa.bitwise;
+package bitwise;
 
 /**
  * Write a function that takes an unsigned integer and returns the number of ’1'

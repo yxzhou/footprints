@@ -1,4 +1,4 @@
-package fgafa.array.subArraySum;
+package array.subArraySum;
 
 import java.util.HashMap;
 import java.util.Map;

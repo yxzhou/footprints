@@ -1,4 +1,4 @@
-package fgafa.basic;
+package basic;
 
 public class TryCatchSub extends TryCatch
 {

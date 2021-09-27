@@ -1,4 +1,4 @@
-package fgafa.uva.dp.LetMeCountTheWayN357;
+package uva.dp.LetMeCountTheWayN357;
 
 import java.io.*;
 import java.util.*;

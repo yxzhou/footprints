@@ -1,4 +1,4 @@
-package fgafa.datastructure.map.treeMap;
+package datastructure.map.treeMap;
 
 import junit.framework.Assert;
 import org.junit.Test;

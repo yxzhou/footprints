@@ -1,4 +1,4 @@
-package fgafa.basic;
+package basic;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;

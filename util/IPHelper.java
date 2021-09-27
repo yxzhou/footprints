@@ -1,4 +1,4 @@
-package fgafa.util;
+package util;
 
 import java.io.File;
 import java.net.Inet4Address;

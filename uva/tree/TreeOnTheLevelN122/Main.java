@@ -1,4 +1,4 @@
-package fgafa.uva.tree.TreeOnTheLevelN122;
+package uva.tree.TreeOnTheLevelN122;
 
 import java.io.*;
 import java.util.*;

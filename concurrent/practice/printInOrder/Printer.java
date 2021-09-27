@@ -1,4 +1,4 @@
-package fgafa.concurrent.practice.printInOrder;
+package concurrent.practice.printInOrder;
 
 public interface Printer {
     void first(Runnable r) throws InterruptedException;

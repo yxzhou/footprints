@@ -1,4 +1,4 @@
-package fgafa.dfsbfs.wordSearch;
+package dfsbfs.wordSearch;
 
 import java.util.ArrayList;
 import java.util.List;

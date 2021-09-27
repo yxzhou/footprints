@@ -2,7 +2,7 @@
 /* GpsMeasurement - Decompiled by JODE
  * Visit http://jode.sourceforge.net/
  */
-package fgafa.util;
+package util;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package fgafa.dfsbfs.permutationAndCombination;
+package dfsbfs.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.HashSet;

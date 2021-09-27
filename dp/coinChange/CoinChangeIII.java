@@ -1,6 +1,6 @@
-package fgafa.dp.coinChange;
+package dp.coinChange;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.ArrayList;
 import java.util.List;

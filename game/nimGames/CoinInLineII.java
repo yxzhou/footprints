@@ -1,4 +1,4 @@
-package fgafa.game.nimGames;
+package game.nimGames;
 
 /**
  * Similar with Leetcode #486

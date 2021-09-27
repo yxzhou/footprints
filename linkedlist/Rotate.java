@@ -1,4 +1,4 @@
-package fgafa.linkedlist;
+package linkedlist;
 
 public class Rotate
 {

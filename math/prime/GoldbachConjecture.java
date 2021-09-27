@@ -1,9 +1,9 @@
-package fgafa.math.prime;
+package math.prime;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 /**

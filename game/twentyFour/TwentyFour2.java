@@ -1,4 +1,4 @@
-package fgafa.game.twentyFour;
+package game.twentyFour;
 
 import java.util.Arrays;
 

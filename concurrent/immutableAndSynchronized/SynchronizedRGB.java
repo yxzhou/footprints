@@ -1,4 +1,4 @@
-package fgafa.concurrent.immutableAndSynchronized;
+package concurrent.immutableAndSynchronized;
 
 public class SynchronizedRGB
 {

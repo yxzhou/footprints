@@ -1,4 +1,4 @@
-package fgafa.slideWindow;
+package slideWindow;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package fgafa.todo.twoo;
+package todo.twoo;
 
 /**
  *  Q: There are W white beans and R red beans in one bag.

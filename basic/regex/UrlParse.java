@@ -1,6 +1,6 @@
-package fgafa.basic.regex;
+package basic.regex;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.ArrayList;
 import java.util.List;

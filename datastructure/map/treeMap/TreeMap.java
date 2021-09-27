@@ -1,4 +1,4 @@
-package fgafa.datastructure.map.treeMap;
+package datastructure.map.treeMap;
 
 public class TreeMap {
 }

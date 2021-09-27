@@ -1,11 +1,8 @@
-package fgafa.dfsbfs.permutationAndCombination;
+package dfsbfs.permutationAndCombination;
 
-import fgafa.util.Misc;
+import util.Misc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Subsets
 {
@@ -43,28 +40,25 @@ public class Subsets
 	 * 
 	 */
   public List<List<Integer>> subsets_insert(int[] nums) {
-      List<List<Integer>> ret = new LinkedList<>();
-      
-      //check
       if(null == nums || 0 == nums.length){
-          return ret;
+          return Collections.EMPTY_LIST;
       }
-      
-      //main
+
       Arrays.sort(nums);
-      
+
+	  List<List<Integer>> result = new ArrayList<>();
       List<Integer> subset = new LinkedList<Integer>();
-      ret.add(subset);
+	  result.add(subset);
 
       for(Integer num : nums){
-          for(int i = ret.size() - 1; i >= 0; i--){
-              subset = new LinkedList<>(ret.get(i)); //deep clone
+          for(int i = result.size() - 1; i >= 0; i--){
+              subset = new LinkedList<>(result.get(i)); //deep clone
               subset.add(num);
-              ret.add(subset);
+			  result.add(subset);
           }
       }
       
-      return ret;
+      return result;
   }
 
 	/**
@@ -73,13 +67,13 @@ public class Subsets
 	 * 
 	 */
   public List<List<Integer>> subsets_recursive(int[] nums) {
-	  List<List<Integer>> result = new ArrayList<>();
-      if(null == nums || 0 == nums.length){
-    	  return result;
+      if(null == nums ){
+    	  return Collections.EMPTY_LIST;
       }
       
       Arrays.sort(nums);
-      
+
+	  List<List<Integer>> result = new ArrayList<>();
       dfs(nums, 0, new LinkedList<>(), result);
       
       return result;
@@ -107,13 +101,14 @@ public class Subsets
 	 * 111 - {x, y, z}
 	 */
 	public List<List<Integer>> subsets_binary(int[] nums) {
-		List<List<Integer>> result = new ArrayList<>();
-		if (null == nums || 0 == nums.length) {
-			return result;
+
+		if (null == nums) {
+			return Collections.EMPTY_LIST;
 		}
 		
 		Arrays.sort(nums);
-		
+
+		List<List<Integer>> result = new ArrayList<>();
 		List<Integer> subset;
 		for(int n = (2 << nums.length) - 1 ; n >= 0; n-- ){
 			subset = new ArrayList<>();
@@ -151,44 +146,40 @@ public class Subsets
    * 
    */
   public List<List<Integer>> subsetsWithDup_insert(int[] nums) {
-      List<List<Integer>> ret = new ArrayList<>();
-      
-      //check
-      if(null == nums || 0 == nums.length){
-          return ret;
+      if(null == nums){
+          return Collections.EMPTY_LIST;
       }
       
       Arrays.sort(nums);
-      
+
+	  List<List<Integer>> result = new ArrayList<>();
       ArrayList<Integer> subset = new ArrayList<>();
-      ret.add(subset);
-      
-      int size = 0;
+      result.add(subset);
+
       int start = 0;
       for(int i = 0; i < nums.length; i++){
           if(i == 0 || nums[i] != (nums[i - 1])){
               start = 0;
           }
-          
-          size = ret.size();
-          for( ; start < size; start++){
-              subset = new ArrayList<>(ret.get(start));
+
+          for(int end = result.size(); start < end; start++){
+              subset = new ArrayList<>(result.get(start));
               subset.add(nums[i]);
-              ret.add(subset);
+              result.add(subset);
           }
       }
       
-      return ret;
+      return result;
   }
   
   public List<List<Integer>> subsetsWithDup_recursive(int[] nums) {
-	  List<List<Integer>> result = new ArrayList<>();
-      if(null == nums || 0 == nums.length){
-    	  return result;
+      if(null == nums){
+		  return Collections.EMPTY_LIST;
       }
       
       Arrays.sort(nums);
-      
+
+	  List<List<Integer>> result = new ArrayList<>();
       dfsWithDup(nums, 0, new ArrayList<>(), result);
       
       return result;
@@ -196,6 +187,7 @@ public class Subsets
 
   private void dfsWithDup(int[] nums, int i, List<Integer> subset, List<List<Integer>> result){	  
 	  result.add(new ArrayList<>(subset));
+
 	  for( int j=i ; j< nums.length; j++){
 		  if(j>i && nums[j] == nums[j-1]){
 			  continue;

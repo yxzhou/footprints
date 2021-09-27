@@ -1,6 +1,6 @@
-package fgafa.todo.foo;
+package todo.foo;
 
-import fgafa.tree.TreeNode;
+import tree.TreeNode;
 
 /**
  * Q: _https://www.jiuzhang.com/solution/subtree-with-maximum-average/

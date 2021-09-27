@@ -1,9 +1,9 @@
-package fgafa.dailyCoding.datastructure.lastNLogIds;
+package dailyCoding.datastructure.lastNLogIds;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 public class LastNLogIds_21 {
     final int N;

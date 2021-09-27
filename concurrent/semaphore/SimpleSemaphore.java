@@ -1,4 +1,4 @@
-package fgafa.concurrent.semaphore;
+package concurrent.semaphore;
 
 /**
  * implements a semaphore with Lock and Condition

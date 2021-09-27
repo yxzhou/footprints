@@ -1,4 +1,4 @@
-package fgafa.concurrent.myBlockingQueue.mySynchronousQueue;
+package concurrent.myBlockingQueue.mySynchronousQueue;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

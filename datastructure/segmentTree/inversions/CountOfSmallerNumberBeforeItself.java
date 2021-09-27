@@ -1,6 +1,6 @@
-package fgafa.datastructure.segmentTree.inversions;
+package datastructure.segmentTree.inversions;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 import java.util.ArrayList;
 import java.util.Collections;

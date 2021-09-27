@@ -1,9 +1,9 @@
-package fgafa.sorting;
+package sorting;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-import fgafa.datastructure.heap.HeapTest;
+import datastructure.heap.HeapTest;
 import org.junit.Assert;
 import org.junit.Test;
 

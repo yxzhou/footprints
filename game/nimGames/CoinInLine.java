@@ -1,4 +1,4 @@
-package fgafa.game.nimGames;
+package game.nimGames;
 
 /**
  * There are n coins with different value in a line. Two players take turns

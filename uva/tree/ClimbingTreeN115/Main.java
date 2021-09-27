@@ -1,4 +1,4 @@
-package fgafa.uva.tree.ClimbingTreeN115;
+package uva.tree.ClimbingTreeN115;
 
 import java.io.*;
 import java.util.*;

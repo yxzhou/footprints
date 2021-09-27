@@ -3,7 +3,7 @@
  * nondecreasing order
  * 
  */
-package fgafa.sorting;
+package sorting;
 
 import java.util.Comparator;
 import java.util.Random;

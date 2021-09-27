@@ -1,4 +1,4 @@
-package fgafa.design.systemdesign.tinyUrl;
+package design.systemdesign.tinyUrl;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;

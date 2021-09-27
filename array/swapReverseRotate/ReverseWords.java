@@ -1,11 +1,22 @@
-package fgafa.array.swapReverseRotate;
+package array.swapReverseRotate;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  *
- * Given a string of words delimited by spaces, reverse the words in string. For example, given "hello world here", return "here world hello"
+ * Given a string of words delimited by spaces, reverse the words in string.
+ *
+ * For example, given "hello world here", return "here world hello"
+ *
+ *
+ * What constitutes a word?
+ * A sequence of non-space characters constitutes a word and some words have punctuation at the end.
+ * Could the input string contain leading or trailing spaces?
+ * Yes. However, your reversed string should not contain leading or trailing spaces.
+ * How about multiple spaces between two words?
+ * Reduce them to a single space in the reversed string.
+ *
  * Follow-up: given a mutable string representation, can you perform this operation in-place?
  *
  *  Tags: google

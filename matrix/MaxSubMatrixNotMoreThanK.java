@@ -1,8 +1,8 @@
-package fgafa.matrix;
+package matrix;
 
 import java.util.TreeSet;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /**
  * 

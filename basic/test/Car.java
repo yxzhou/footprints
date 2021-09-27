@@ -1,7 +1,7 @@
-package fgafa.basic.test;
+package basic.test;
 
-import fgafa.basic.test.Drivable;
-import fgafa.basic.test.OutOfGasException;
+import basic.test.Drivable;
+import basic.test.OutOfGasException;
 
 public class Car extends Vehicle implements Drivable {
   private boolean hasGas = true;

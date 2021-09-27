@@ -1,4 +1,7 @@
-package fgafa.game.palindrome;
+package game.palindrome;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *  Palindrome:
@@ -128,6 +131,34 @@ public class Palindromic {
         }
 
         return true;
+    }
+
+    public boolean isPalindrome_II2(String s) {
+        if(s == null){
+            return true;
+        }
+
+        char[] chars = s.toCharArray();
+        for(int l = 0, r = chars.length - 1; l < r; l++, r--){
+            while(l < r && !Character.isLetterOrDigit(chars[l]) ){
+                l++;
+            }
+            while(l < r && !Character.isLetterOrDigit(chars[r]) ){
+                r--;
+            }
+
+            if(l < r && Character.toLowerCase(chars[l]) != Character.toLowerCase(chars[r]) ){
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    @Test
+    public void test(){
+        Assert.assertTrue(isPalindrome_II2("1a2"));
     }
 
     /**

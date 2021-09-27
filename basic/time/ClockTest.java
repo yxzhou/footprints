@@ -1,4 +1,4 @@
-package fgafa.basic.time;
+package basic.time;
 
 import org.junit.Test;
 

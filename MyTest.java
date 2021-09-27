@@ -1,6 +1,6 @@
 package fgafa;
 
-import fgafa.util.Misc;
+import util.Misc;
 import org.junit.Test;
 
 import java.util.*;

@@ -1,17 +1,21 @@
-package fgafa.math;
+package linkedlist;
 
-/*
- * 
- * You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
- *   
+/**
+ * _https://leetcode.com/problems/add-two-numbers/
+ *
+ * You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+ *
+ * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+ *
  * Example
  * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
  * Output: 7 -> 0 -> 8
  * 
- *  Given 7->1->6 + 5->9->2. That is, 617 + 295.
- *  Return 2->1->9. That is 912.
+ * Given 7->1->6 + 5->9->2. That is, 617 + 295.
+ * Return 2->1->9. That is 912.
  * 
- *  Given 3->1->5 and 5->9->2, return 8->0->8.
+ * Given 3->1->5 and 5->9->2, return 8->0->8.
+ *
  */
 /**
  * case 1: l1 and l2 both are null, return null;
@@ -91,19 +95,17 @@ public class Add2Number
 
   
   class ListNode{
-        ListNode(){
-            
-        }
+      int val;  // value
+      ListNode next;
+
+        ListNode(){ }
         ListNode(int x){
-      this(x, null);
-    }
+        this(x, null);
+        }
         ListNode(int x, ListNode node){
           val = x;
           next = node;
         }
-    
-        int val;  // value
-        ListNode next;
 
         public String toString(){
           return String.valueOf(this.val);

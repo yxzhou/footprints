@@ -1,12 +1,12 @@
-package fgafa.matrix;
+package matrix;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import algs4.stdlib.In;
 
-import fgafa.Constants;
-import fgafa.util.Misc;
+import Constants;
+import util.Misc;
 
 /*
  * Problem #1:

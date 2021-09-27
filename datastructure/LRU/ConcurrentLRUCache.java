@@ -1,4 +1,4 @@
-package fgafa.datastructure.LRU;
+package datastructure.LRU;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;

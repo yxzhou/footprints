@@ -1,4 +1,4 @@
-package fgafa.game.wordbreak;
+package game.wordbreak;
 
 import java.util.HashSet;
 import java.util.List;

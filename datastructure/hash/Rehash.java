@@ -1,4 +1,4 @@
-package fgafa.datastructure.hash;
+package datastructure.hash;
 
 /**
  * 

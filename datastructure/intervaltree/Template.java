@@ -1,4 +1,4 @@
-package fgafa.datastructure.intervaltree;
+package datastructure.intervaltree;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

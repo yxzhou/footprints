@@ -1,4 +1,4 @@
-package fgafa.dailyCoding.tree;
+package dailyCoding.tree;
 
 /**
  * Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree. Assume that each node in the tree also has a pointer to its parent.

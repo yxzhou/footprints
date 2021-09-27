@@ -1,4 +1,4 @@
-package fgafa.dailyCoding;
+package dailyCoding;
 
 import junit.framework.Assert;
 import org.junit.Test;

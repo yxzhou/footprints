@@ -1,4 +1,4 @@
-package fgafa.linkedlist;
+package linkedlist;
 
 import java.util.HashMap;
 import java.util.Map;

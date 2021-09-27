@@ -1,4 +1,4 @@
-package fgafa.uva.dp.DollarsN147;
+package uva.dp.DollarsN147;
 
 import java.io.*;
 import java.util.*;

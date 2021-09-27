@@ -1,9 +1,9 @@
-package fgafa.sorting;
+package sorting;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fgafa.util.Misc;
+import util.Misc;
 
 /*
  * Given an array,  all elements are in [1, 9]. Re-arrange the elements. 
