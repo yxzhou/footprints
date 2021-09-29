@@ -1,4 +1,4 @@
-package matrix;
+package geometry.distance;
 
 import java.util.LinkedList;
 import java.util.Queue;

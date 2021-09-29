@@ -1,4 +1,4 @@
-package matrix;
+package geometry.distance;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,6 +12,7 @@ import java.util.Queue;
  *
  * Returns the sum of the minimum distances from all houses to the post office.Return -1 if it is not possible.
  *
+ * Notes:
  * You cannot pass through wall and house, but can pass through empty.
  * You only build post office on an empty.
  *
@@ -34,8 +35,8 @@ public class PostOfficeII {
         int n = grid.length;
         int m = grid[0].length;
 
-        int[][] sums = new int[n][m]; //sum the distance to all the house
-        int[][] counts = new int[n][m]; //count how many house it can reach to
+        int[][] sums = new int[n][m]; //sum[r][c] is the sum of the distance from [r, c] to all the house
+        int[][] counts = new int[n][m]; //count[r][c] is how many house [r, c] can reach to
         boolean[][] visited = new boolean[n][m];;
         int houseNum = 0;
         Queue<Integer> queue = new LinkedList<>();

@@ -85,7 +85,6 @@ public class PaintHouse {
     }
     
     public int minCost_2(int[][] costs) {
-        //check input
         if(null == costs || 0 == costs.length){
             return 0;
         }
@@ -93,11 +92,11 @@ public class PaintHouse {
         int[][] dp = new int[2][3];
         int curr = 0;
         int next;
-        for(int i = 0; i < costs.length; i++){
+        for(int d = 0; d < costs.length; d++){
             next = curr ^ 1;
             
             for(int color = 0; color < 3; color++){
-                dp[next][color] = Math.min(dp[curr][(color + 1) % 3], dp[curr][(color + 2) % 3]) + costs[i][color];
+                dp[next][color] = Math.min(dp[curr][(color + 1) % 3], dp[curr][(color + 2) % 3]) + costs[d][color];
             }
 
             curr = next;

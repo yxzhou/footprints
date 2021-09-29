@@ -5,8 +5,6 @@
  */
 package dfsbfs.permutationAndCombination;
 
-import java.util.Arrays;
-
 /**
  * _https://www.lintcode.com/problem/564
  * 

@@ -1,15 +1,21 @@
-package matrix;
+package geometry.distance;
 
 import java.util.Stack;
 
+/**
+ * 
+ * Given a grid with 'o' and 'x'. Find minimum steps from top-left to bottom-right without touching 'x'.
+ * 
+ * Problem #1,  move right or down
+ *      a) You can only move right or move down. 
+ * 
+ * Problem #2,  move 4 directions, up or down or right or left
+ *         b) You can move in all 4 directions. (BFS)
+ * 
+ */
+
 public class DistanceInMetrix {
 
-    /**
-     * Given a grid with 'o' and 'x'. Find minimum steps from top-left to bottom-right without touching 'x'.
-           a) You can only move right or move down. 
-     * 
-     * 
-     */
     /**
      *  BFS or DP
      * @param metrix,  only includes 0 and 1, 1 means 'x', 
@@ -54,12 +60,6 @@ public class DistanceInMetrix {
     }
     
     
-    /**
-     * Given a grid with 'o' and 'x'. Find minimum steps from top-left to 
-        bottom-right without touching 'x'.
-           b) You can move in all 4 directions. (BFS)
-     * 
-     */
     /**
      *  BFS
      * @param metrix

@@ -43,64 +43,60 @@ public class ExcelColumn {
     }
     
 
-	public String convertToTitle(int n) {
-//		if(n < 1 ){
-//			return null;
-//		}
-		
-		StringBuilder ret = new StringBuilder();
-		int remain = 0;
+    public String convertToTitle(int n) {
+        StringBuilder ret = new StringBuilder();
+        int remain = 0;
 
-		while(n > 0){
-			remain = n % 26;
-			n = n / 26;
-			
-			if( 0 == remain){
-				remain = 26;
-				n--;
-			}
-			
-			ret.append((char)(remain + 64)); //'A' is 65
-		}
+        while(n > 0){
+                remain = n % 26;
+                n = n / 26;
 
-		return ret.reverse().toString();
-	}
+                if( 0 == remain){
+                        remain = 26;
+                        n--;
+                }
+
+                ret.append((char)(remain + 64)); //'A' is 65
+        }
+
+        return ret.reverse().toString();
+    }
     
 
-	public String convertToTitle2(int n) {
-	    final int base = 'A';
-		StringBuffer sb = new StringBuffer();
-		while (n > 0) {
-			--n;
-			sb.append((char) (n % 26 + base));
-			n /= 26;
-		}
-		return sb.reverse().toString();
-	}
+    public String convertToTitle2(int n) {
+        final int base = 'A';
+            StringBuffer sb = new StringBuffer();
+            while (n > 0) {
+                    --n;
+                    sb.append((char) (n % 26 + base));
+                    n /= 26;
+            }
+            return sb.reverse().toString();
+    }
 
-	public static void main(String[] args) {
-		ExcelColumn sv = new ExcelColumn();
-		
-		int[] input = {
-				0, //null,
-				1, //"A",
-				26, //"Z",
-				27, //"AA",
-				52, //"AZ",
-				53, //"BA",
-				78, //"BZ",
-				1405, //"BBA",
-				18278, //"ZZZ",
-				2147483647 //Integer.MAX_VALUE
-				
-		};
-		
-		for(int n : input){
-			String s = sv.convertToTitle2(n);
-			
-			System.out.println(String.format("input: %d \t numberToTitle: %s \t titleToNumber: %d", n, s, sv.titleToNumber(s)));
-		}
+    public static void main(String[] args) {
+            ExcelColumn sv = new ExcelColumn();
 
-	}
+            int[] input = {
+                            0, //null,
+                            1, //"A",
+                            26, //"Z",
+                            27, //"AA",
+                            52, //"AZ",
+                            53, //"BA",
+                            78, //"BZ",
+                            1405, //"BBA",
+                            18278, //"ZZZ",
+                            2147483647 //Integer.MAX_VALUE
+
+            };
+
+            for(int n : input){
+                    String s = sv.convertToTitle2(n);
+
+                    System.out.println(String.format("input: %d \t numberToTitle: %s \t titleToNumber: %d", n, s, sv.titleToNumber(s)));
+            }
+
+    }
 
 }

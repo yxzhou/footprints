@@ -1,12 +1,13 @@
-package easy;
+package array;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import util.Misc;
 
 /**
- * Given an array A, output another array B such that B[k]=product  of all elements in A but A[k]. 
+ * Given an array A, output another array B such that B[k]=product of all elements in A but A[k]. 
  * 
  * e.g. 
  *  input: {4, 3, 2, 1, 2}
@@ -17,8 +18,7 @@ import util.Misc;
  * #2 B[i]= A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1]
  */
 
-public class ProductOf
-{
+public class ProductOf {
 
   /**
    * @param args
@@ -45,7 +45,6 @@ public class ProductOf
     public List<Long> productExcludeItself(int[] A) {
         List<Long> result = new ArrayList<>();
                 
-        // check
         if(null == A){
             return result;
         }
@@ -62,6 +61,28 @@ public class ProductOf
             tmp *= A[i];
         }
         
+        return result;
+    }
+    
+    public int[] productExceptSelf(int[] nums) {
+        if(nums == null){
+            return new int[0];
+        }
+
+        int n = nums.length;
+        int[] result = new int[n];
+        Arrays.fill(result, 1);
+
+        int left = 1;
+        int right = 1;
+        for(int i = 0, j = n - 1; i < n; i++, j--){
+            result[i] *= left;
+            result[j] *= right;
+
+            left *= nums[i];
+            right *= nums[j];
+        }
+
         return result;
     }
     

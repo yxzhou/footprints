@@ -1,4 +1,4 @@
-package matrix;
+package geometry.distance;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.List;
  * find the place to build a post office, the distance that post office to all the house sum is smallest.
  * Returns the sum of the minimum distances from all houses to the post office, Return -1 if it is not possible.
  *
+ * Notes:
  * You can pass through house and empty.
  * You only build post office on an empty.
  * The distance between house and the post office is Manhattan distance

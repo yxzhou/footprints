@@ -1,4 +1,4 @@
-package matrix;
+package geometry.distance;
 
 import util.Misc;
 
@@ -12,7 +12,8 @@ import java.util.Queue;
     0 - A gate.
     INF - Infinity means an empty room. We use the value 2^31 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
     
-    Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+ *  Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+ * 
     For example, given the 2D grid:
     INF  -1  0  INF
     INF INF INF  -1
@@ -28,7 +29,7 @@ import java.util.Queue;
 
 public class WallsAndGates {
 
-    public void dfs(int[][] rooms) {
+    public void wallsAndGates_dfs(int[][] rooms) {
         if(null == rooms){
             return;
         }
@@ -55,7 +56,7 @@ public class WallsAndGates {
         dfs(rooms, r, c - 1, d);
     }
     
-    public void wallsAndGates_n(int[][] rooms) {
+    public void wallsAndGates_bfs(int[][] rooms) {
         if(null == rooms || 0 == rooms.length || 0 == rooms[0].length){
             return;
         }
@@ -113,8 +114,8 @@ public class WallsAndGates {
         System.out.println(" Input:  ");
         System.out.println(Misc.array2String(input));
         
-        //sv.dfs(input);
-        sv.wallsAndGates_n(input);
+        //sv.wallsAndGates_dfs(input);
+        sv.wallsAndGates_bfs(input);
         
         System.out.println("Output:  ");
         System.out.println(Misc.array2String(input));

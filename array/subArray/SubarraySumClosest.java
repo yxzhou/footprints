@@ -1,4 +1,4 @@
-package array.subArraySum;
+package array.subArray;
 
 import java.util.ArrayList;
 import java.util.Collections;

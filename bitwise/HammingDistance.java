@@ -4,9 +4,13 @@ package bitwise;
  * Hamming distance is a metric for comparing two binary data strings.
  * While comparing two binary strings of equal length, Hamming distance is the number of bit positions in which the two bits are different.
  *
- * (a) first, write a function to calculate the hamming distance between two binary numbers 
- * (b) write a function that takes a list of binary numbers and returns the sum of the hamming distances for each pair 
- * (c) find a solution for (b) that works in O(n) time.
+ * Problem #1
+ *   write a function to calculate the hamming distance between two binary numbers 
+ * 
+ * Problem #2
+ *   write a function that takes a list of binary numbers and returns the sum of the hamming distances for each pair 
+ *  
+ *   Challenge: find a solution that works in O(n) time.
  */
 
 public class HammingDistance {
@@ -29,25 +33,54 @@ public class HammingDistance {
     /**
      * @param array, int
      * @return the sum of the hamming distances for each pair in binary numbers
-     */
-    public static int hammingDistance_binary(int[] nums) {
-        int sum = 0;
-        for (int i = 0; i < 32; i++) {
-            int mask = 1 << i;
-            int numOf0 = 0;
-            int numOf1 = 0;
-            for (int value : nums) {
-                if ((value & mask) != 0) {
-                    numOf1++;
-                } else {
-                    numOf0++;
+     */    
+    
+    public int totalHammingDistance(int[] nums) {
+        if(nums == null){
+            return 0;
+        }
+
+        int result = 0;
+        int n = nums.length;
+        int count;
+        for(int i = 0, k = 1; i < 31; i++, k <<= 1){
+            count = 0;
+            for(int x : nums){
+                if( (x & k) == 0){
+                    count++;
                 }
             }
-            sum += numOf0 * numOf1;
+
+            result += count * (n - count);
         }
-        return sum;
+
+        return result;
     }
     
+    public int totalHammingDistance_2(int[] nums) {
+        if(nums == null){
+            return 0;
+        }
+
+        int[] counts = new int[31];  
+        for(int x : nums){
+            for(int i = 0; i < 31; i++){
+                if( (x & 1) == 0){
+                    counts[i]++;
+                }
+                x >>>= 1;
+            }
+        }
+        
+        int result = 0;
+        int n = nums.length;
+        for(int i = 0; i < 31; i++){
+            result += counts[i] * (n - counts[i]);
+        }
+
+        return result;
+    }
+        
     
     /**
      * @param nums, int 
