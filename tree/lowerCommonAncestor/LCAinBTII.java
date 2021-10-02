@@ -21,62 +21,69 @@ public class LCAinBTII {
      * Time O(n)  Space O(1)
      * 
      */
-    boolean findAll = false;
-    public TreeNode findLCAinBT(TreeNode root, TreeNode p, TreeNode q){
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode p, TreeNode q){
         //check
-        if( p == null || q == null){
+        if(root == null || p == null || q == null){
           return null;
         }
         if(p == q){
             return p;
         }
         
-        findAll = false;
-        TreeNode ret = helper(root, p, q);
-        return findAll? ret : null;
+        boolean[] found = new boolean[2];//default both are false
+        TreeNode result = helper(root, p, q, found);
+        return found[0] && found[1]? result : null;
     }
-    private TreeNode helper(TreeNode root, TreeNode p, TreeNode q){
-      //check
-      if(root == null || root == p || root == q){
-        return root;
-      }
-      
-      //Divide
-      TreeNode left = helper(root.left, p, q);
-      TreeNode right = helper(root.right, p, q);
-      
-      //Conquer
-      if(left != null && right != null){
-          findAll = true;
-          return root; // p and q are on 2 side. 
-      }
-      
-      return (left != null)? left : right; //
+    private TreeNode helper(TreeNode root, TreeNode p, TreeNode q, boolean[] found) {
+        if (root == null) {
+            return null;
+        }
+        
+        TreeNode result = null;
+        if(root == p){
+            found[0] = true;
+            result = p;
+        }else if(root == q){
+            found[1] = true;
+            result = q;
+        }
+
+        //Divide
+        TreeNode left = helper(root.left, p, q, found);
+        TreeNode right = helper(root.right, p, q, found);
+
+        //Conquer
+        if (left != null && right != null) {
+            result =  root; // p and q are on 2 side. 
+        }else{
+            if (result == null){
+                result = ( (left != null) ? left : right );
+            } 
+        }
+
+        return result; //
     }
-    
-    
 
     public static void main(String[] args) {
-        LCAinBT sv = new LCAinBT();
+        LCAinBTII sv = new LCAinBTII();
         Print print = new Print();
-        
+
         System.out.println("===create a binary tree===");
-        
 
         TreeNode root = BinaryTree.initBT();
         //Main.postorder_R(root);
         print.printTreeShape(root);
 
         TreeNode[][] test = {{root.left.left.right, root.left.right}, // LCD( A, C ) = D
-            {root.left.left.right, root.left},  //LCD( A, D ) = D 
-            {root.left.left, root.right.right},  //LCD( B, F ) = H 
-            {root.left.left, null}
-        }; 
-                
-        for(int i=0; i< test.length; i++){
-          System.out.println("\nThe LCD of " + test[i][0]+" and " + test[i][1]);
-          System.out.println(" with bottom-up approach, the LCD is: " + sv.findLCAinBT(root, test[i][0], test[i][1]));
-         
+        {root.left.left.right, root.left}, //LCD( A, D ) = D 
+        {root.left.left, root.right.right}, //LCD( B, F ) = H 
+        {root.left.left, null}
+        };
+
+        for (int i = 0; i < test.length; i++) {
+            System.out.println("\nThe LCD of " + test[i][0] + " and " + test[i][1]);
+            System.out.println(" with bottom-up approach, the LCD is: " + sv.lowestCommonAncestor3(root, test[i][0], test[i][1]));
+
         }
 
     }

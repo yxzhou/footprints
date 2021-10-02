@@ -1,5 +1,19 @@
 package tree.lowerCommonAncestor;
 
+import java.util.HashSet;
+import java.util.Set;
+import tree.TreeNode;
+
+
+/**
+ * 
+ * Given two nodes in a Binary Tree. Find the lowest common ancestor(LCA) of the two nodes.
+ * The nearest common ancestor of two nodes refers to the nearest common node among all the parent nodes of two nodes (including the two nodes).
+ *
+ * In addition to the left and right son pointers, each node also contains a father pointer, parent, pointing to its own father.
+ * 
+ */
+
 
 public class LCAinBTWithParentRef {
 
@@ -17,61 +31,52 @@ public class LCAinBTWithParentRef {
      * As root->parent is not NULL, we don't need to pass root in.
      * 
      */
-    public TreeNode LCAwithParentP(TreeNode p, TreeNode q) {
-      //check
-      if(p == null || q == null){
+    public ParentTreeNode LCAwithParentP(ParentTreeNode A, ParentTreeNode B) {
+        Set<ParentTreeNode> parents = new HashSet<>();
+        
+        ParentTreeNode p = A;
+        while(p != null){
+            parents.add(p);
+            p = p.parent;
+        }
+
+        p = B;
+        while(p != null){
+            if(parents.contains(p)){
+                return p;
+            }
+            p = p.parent;
+        }        
+
         return null;
-      }
-      
-      int h1 = getHeight(p);
-      int h2 = getHeight(q);
-
-      if (h1 > h2) {
-        return LCAwithParentP(q, p); // to make the constraint,  h1<=h2.
-      }    
+    }
+    
+    /**
+     * 
+     * refer to linkedlist.Intersection solution2
+     * 
+     * Notes: Given two nodes in a Binary Tree
+     * 
+     */
+    public ParentTreeNode lowestCommonAncestorII(ParentTreeNode A, ParentTreeNode B) {
+//        if (headA == null || headB == null) {
+//            return null;
+//        }
         
-      // invariant: h1 <= h2.
-      for (int diff = h2 - h1; diff > 0; diff--){
-        q = q.parent;
-      }
-      
-      for ( ; p!= null && q!=null && p!=q; p=p.parent, q=q.parent) ;
-          
-      return p;  // if p, q are not in a same tree, p==null.
-    }
-    
-    private int getHeight(TreeNode p) {
-      int height = 0;
-      for ( ; p!=null; p = p.parent ) {
-        height++;
-      }
-      
-      return height;
-    }
-    
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        ParentTreeNode p = A;
+        ParentTreeNode q = B;
 
-    }
+        while(p != q ){
+            p = (p.parent == null ? B : p.parent);
+            q = (q.parent == null ? A : q.parent);
+        }
+        
+        return p;
+    }    
 
-    class TreeNode{
+
+    class ParentTreeNode{
         public int val;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode parent;
-        
-        public TreeNode(int x) {
-          val = x;
-        }
-        
-        public TreeNode(int key, TreeNode left, TreeNode right) {
-            this.val = key;
-            this.left = left;
-            this.right = right;
-        }
-        
-        public String toString() {
-            return String.valueOf(this.val);
-        }
+        public ParentTreeNode left, right, parent;
     }
 }

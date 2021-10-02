@@ -6,8 +6,12 @@ import tree.TreeNode;
 
 /**
  * 
- * Given a binary tree, find the lowest common ancestor of two given nodes in the tree.
+ * Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+ * 
+ * Assume two nodes are exist in tree.
  *
+ * Solution:
+ * 
  * The two given nodes is in the tree, there are only three cases:
  * 1. Both nodes are to the left of the tree.  
  * 2. Both nodes are to the right of the tree.
@@ -52,35 +56,24 @@ public class LCAinBT {
      * Time O(n)  Space O(1)
      * 
      */
-    public TreeNode findLCAinBT(TreeNode root, TreeNode p, TreeNode q){
-        //check
-        if( p == null || q == null){
-          return null;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
         }
-        if(p == q){
-            return p;
-        }
-        
-        return helper(root, p, q);
-    }
-    private TreeNode helper(TreeNode root, TreeNode p, TreeNode q){
-      //check
-      if(root == null || root == p || root == q){
+
+        //Divide
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+        //Conquer
+        if(left == null){
+            return right;
+        }else if(right == null){
+            return left;
+        } // else{ left != null && right != null
+
         return root;
-      }
-      
-      //Divide
-      TreeNode left = helper(root.left, p, q);
-      TreeNode right = helper(root.right, p, q);
-      
-      //Conquer
-      if(left != null && right != null){
-        return root; // p and q are on 2 side. 
-      }
-      
-      return (left != null)? left : right; //
     }
-    
     
 
     public static void main(String[] args) {
@@ -101,7 +94,7 @@ public class LCAinBT {
                 
         for(int i=0; i< test.length; i++){
           System.out.println("\nThe LCD of " + test[i][0]+" and " + test[i][1]);
-          System.out.println(" with bottom-up approach, the LCD is: " + sv.findLCAinBT(root, test[i][0], test[i][1]));
+          System.out.println(" with bottom-up approach, the LCD is: " + sv.lowestCommonAncestor(root, test[i][0], test[i][1]));
          
         }
 

@@ -77,6 +77,49 @@ public class Rectangle {
         return "NO";
     }
     
+    public String rectangle_n(Point[] pointSet) {
+        Map<Integer, List<Integer>> lines = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        
+        for(Point p : pointSet){
+            set.add(p.x + " " + p.y);
+
+            lines.putIfAbsent(p.y, new ArrayList<>());
+            lines.get(p.y).add(p.x);
+        }
+
+        List<Integer> yList = new ArrayList<>(lines.keySet());
+        Collections.sort(yList);
+
+        int y2;
+        int x1;
+        int x2;
+        List<Integer> xList;
+        for(Integer y1 : yList){
+            xList = lines.get(y1);
+            Collections.sort(xList);
+
+            for(int i = 0, n = xList.size(); i < n; i++ ){
+                for(int j = i + 1; j < n; j++){
+                    x1 = xList.get(i);
+                    x2 = xList.get(j);
+
+                    if(x1 == x2){
+                        continue;
+                    }
+
+                    y2 = y1 + x2 - x1;
+
+                    if(set.contains(x1 + " " + y2) && set.contains(x2 + " " + y2)){
+                        return "YES";
+                    } 
+                }
+            }
+        }
+
+        return "NO";
+    }
+    
     /**
      * Definition for a point.
      */

@@ -27,8 +27,8 @@ import java.util.Stack;
  * output: (0*6, 2*6, 1*6) => (0, 12, 6) => (0, 2, 7)   
  * 
  * 
- * 3) square root 
- *  Newton's Method,  http://en.wikipedia.org/wiki/Newton%27s_method#Square%5Froot%5Fof%5Fa%5Fnumber
+ *
+ *  
  *  
  *  
  * 
@@ -37,158 +37,11 @@ import java.util.Stack;
 public class Mathmatics
 {
 
-  /*
-   * There are many method of computing square roots,  here it's Newton's method
-   *
-   *  input, int n.
-   * output, double x, x^2 is close to n.
-   * 
-   *  x^2 = n;
-   *  f(x) = x^2 - n;  
-   *  f'(x) = 2x;   
-   * 
-   *  f'(x0) = (f(x0) - 0)/(x0 - x1)  // 2 points of (x0, f(x0)) and (x1, 0)
-   *
-   *  => x1 = x0 - f(x0)/f'(x0)
-   *  => x1 = x0 - (x0^2 - n) / (2x0)
-   *  
-   *  estimate x0 = n/4;  
-   *  x1 = x0 - (x0^2 - n) / (2x0);
-   *  x2 = x1 - (x1^2 - n) / (2x1);
-   *  ---  
-   * 
-   *  e.g: 
-   *  x^2 = 612
-   *  estimate x0 = 10;
-   *  x1 = x0 - f(x0)/f'(x0) = 10 -  (10*10 - 612)/(2*10)       = 35.6
-   *  x2 = x1 - f(x1)/f'(x1) = 35.6- (35.6*35.6 - 612)/(2*35.6) = 26.395505617
-   *  x3 = x2 - f(x2)/f'(x2) = ---                              = 24.790635492
-   *  x4 = x3 - f(x3)/f'(x3) = ---                              = 24.738688294
-   *  x5 = x4 - f(x4)/f'(x4) = ---                              = 24.738633753
-   *  ---
-   */
-  public double sqrt_Newton(float n){
-    //check 
-    if(n<0) return Double.NaN;
-    if(n == 0 || n == 1) return n;
-    
-    double x = java.lang.Math.max((double) n/4, 1);
-    //final int TIMES = 15;
-    
-    //for(int i=0; i<TIMES; i++){
-    double ret;
-    while(true){
-      x = x - (double)(x * x - n) / (double)(2 * x) ;
-      
-      ret = (double)x * x;
-      if(java.lang.Math.abs(ret - n) < 0.00001)
-        return x;
-      
-      //System.out.println( i + " --- " + x);
-    }    
-  }
   
 //  private double max(double x, double y){
 //    return x>y? x: y;
 //  } 
-/**
- * input	output
- * 0		0
- * -1		0
- * 4		2
- * 5		2
- * 
- * @param x
- * @return
- */
-	public int sqrt_binarysearch(int x) {
-		if (x < 2)
-			return x;
 
-		int low = 1;
-		int high = x;
-		while (low < high) {
-			int mid = low + ((high - low) >> 1);
-			long ret = (long) mid * mid;
-			long ret1 = ret + (mid << 1) + 1; // (mi+1)*(mi+1)
-			if (ret == x || (ret < x && x < ret1))
-				return mid;
-
-			if (ret < x)
-				low = mid + 1;
-			else
-				high = mid - 1;
-		}
-
-		return low;
-	}
-
-    public int sqrt_binarysearch_n(int x) {
-        //check
-        if(x < 0){
-            return -1;
-        }
-        
-        int high = x;
-        int low = 0;
-        int middle;
-        long squareMiddle;
-        long squareMiddlePlus;
-        while(low < high){
-            middle = low + ((high - low) >> 1);
-            squareMiddle = (long)middle * middle; //(long) is very important
-            if(squareMiddle == x){
-                return middle - 1;
-            }else if(squareMiddle > x){
-                high = middle - 1;
-            }else{//squareMiddle < x
-                squareMiddlePlus = squareMiddle + (middle << 1) + 1;
-                if(squareMiddlePlus == x){
-                    return middle + 1;
-                }else if(squareMiddlePlus > x){
-                    return middle;
-                }else{//squareMiddlePlus < x
-                    low = middle + 1;
-                }
-            }
-        }
-        
-        return low;
-    }
-    
-  public double sqrt_binarysearch(float n, final float e){
-    //check
-    if(n<0) return Double.NaN;
-    if(n == 0 || n == 1) return n;
-    
-    double left = 0;
-    double right = n;
-
-    if(n < 1){
-      left = n;
-      right = 1;
-    }
-    
-    double mid;
-    double ret;
-    while(left < right){
-      mid = left + (double)(right-left)/2;
-      ret = (double)mid * mid;
-      
-      if(java.lang.Math.abs(ret - n) < e)
-        return mid;
-      
-      if(ret < n)
-        left = mid;
-      else
-        right = mid;
-      
-      //System.out.println("left="+left+", right="+right+", mid="+mid);
-    }
-    
-    return Double.NaN;
-    
-  }
   
   /*
    * iteral addition
@@ -873,33 +726,6 @@ public class Mathmatics
       System.out.println(ans[i]);
     }
 */
-    
-    
-    /* test square root    */  
-    //float fn ;
-    //float[] fn = {-1, 0, 1, 3, 0.01f, 0.25f, 0.0000001f, 1.44f, 25, 100, 10000, 100000, 1000000, 10000000, 100000000};
-    int[] fn = {999999999};
-    //for(n = 0; n < 30; n++){
-    //  fn = (float)n/100;
-    double sqrt;
-    double sqrt_B;
-    for(int i=0; i< fn.length; i++){
-      System.out.print("\nThe square root of "  );
-      System.out.format("%d%n", fn[i]);
-      
-      sqrt =  s.sqrt_Newton(fn[i]);
-      System.out.println("\n with Newton's method: \t" +sqrt );
-      //System.out.format("%10.3f%n", sqrt);
-      
-      sqrt_B = s.sqrt_binarysearch(fn[i]);
-      System.out.println(" with binary search: \t" + sqrt_B);
-      //System.out.format("%8d%n", sqrt_B);
-      //System.out.println();
-      
-      sqrt_B = s.sqrt_binarysearch_n(fn[i]);
-      System.out.println(" with binary search: \t" + sqrt_B);
-      
-    }
 
       
     
