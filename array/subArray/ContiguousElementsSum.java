@@ -1,5 +1,7 @@
-package dailyCoding;
+package array.subArray;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,20 +41,34 @@ public class ContiguousElementsSum {
         return null;
     }
 
+    /**
+     * prefixSum + Hash
+     * 
+     * @param nums
+     * @param target
+     * @return 
+     */
     public int[] contiguousElementsSum_n(int[] nums, int target){
         if(null == nums || nums.length == 0){
             return null; //or {-1, -1}
         }
 
-        long[] sums = new long[nums.length]; //default all are 0
+        long sums = 0l; //default all are 0
+        
+        Map<Long, Integer> map = new HashMap<>(); //<prefixSum, position>
+        map.put(0l, -1);
+        
+        int diff;
         for(int r = 0; r < nums.length; r++){
-            for(int l = 0; l <= r; l++){
-                sums[l] += nums[r];
-
-                if(sums[l] == target){
-                    return new int[]{l, r};
-                }
+            sums += nums[r];
+            
+            diff = nums[r] - target;
+            if(map.containsKey(diff)){
+                return new int[]{map.get(diff), r};
+            }else{
+                map.put(sums, r);
             }
+          
         }
 
         return null;

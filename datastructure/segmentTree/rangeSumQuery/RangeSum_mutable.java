@@ -34,38 +34,38 @@ package datastructure.segmentTree.rangeSumQuery;
  *
  *   Search with a interval [start, end]
  *
- *
+ *  better solution, please see BinaryIndexedTree
  */
 
 public class RangeSum_mutable {
-	int[] origin = null;
-	int[] tree;  //interval tree, store the sum of leftChildren tree
-	
-	public RangeSum_mutable(int[] nums){
-        if(null == nums || 0 == nums.length ){
-        	throw new IllegalArgumentException("origin cannot be null or empty");
+    int[] origin = null;
+    int[] tree;  //interval tree, store the sum of leftChildren tree
+
+    public RangeSum_mutable(int[] nums) {
+        if (null == nums || 0 == nums.length) {
+            throw new IllegalArgumentException("origin cannot be null or empty");
         }
-        
+
         this.origin = nums;
 
         int length = nums.length;
-		int[] tree = new int[length * 2 - 1]; //defaul all are 0
+        int[] tree = new int[length * 2 - 1]; //defaul all are 0
 
         initTree(tree, 0, 0, length - 1, nums);
-	}
+    }
 
-	private long initTree(int[] tree, int nodeIndex, int start, int end, int[] nums){
-		if(start == end){
-			tree[nodeIndex] += nums[start];
-		}else{
-			int mid = start + ((end - start) >> 1);
-			int leftSon = nodeIndex * 2 + 1;
-			tree[nodeIndex] += initTree(tree, leftSon, start, mid, nums);
-			tree[nodeIndex] += initTree(tree, leftSon + 1, mid + 1, end, nums);
-		}
+    private long initTree(int[] tree, int nodeIndex, int start, int end, int[] nums) {
+        if (start == end) {
+            tree[nodeIndex] += nums[start];
+        } else {
+            int mid = start + ((end - start) >> 1);
+            int leftSon = nodeIndex * 2 + 1;
+            tree[nodeIndex] += initTree(tree, leftSon, start, mid, nums);
+            tree[nodeIndex] += initTree(tree, leftSon + 1, mid + 1, end, nums);
+        }
 
-		return tree[nodeIndex];
-	}
+        return tree[nodeIndex];
+    }
 
     /**
      * @param targetStart, end: Indices
@@ -75,45 +75,45 @@ public class RangeSum_mutable {
         return query(tree, 0, 0, origin.length - 1, targetStart, targetEnd);
     }
 
-	private long query(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int targetStart, int targetEnd){
-		if(nodeStart == nodeEnd){
-			return tree[nodeIndex];
-		}
+    private long query(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int targetStart, int targetEnd) {
+        if (nodeStart == nodeEnd) {
+            return tree[nodeIndex];
+        }
 
-		if(targetStart <= nodeStart && nodeEnd <= targetEnd){
-			return tree[nodeIndex];
-		}else{
-			int result = 0;
-			int leftSon = nodeIndex * 2 + 1;
-			int nodeMiddle = nodeStart + (nodeEnd - nodeStart) / 2;
+        if (targetStart <= nodeStart && nodeEnd <= targetEnd) {
+            return tree[nodeIndex];
+        } else {
+            int result = 0;
+            int leftSon = nodeIndex * 2 + 1;
+            int nodeMiddle = nodeStart + (nodeEnd - nodeStart) / 2;
 
-			result += query(tree, leftSon, nodeStart, nodeMiddle, targetStart, targetEnd);
-			result += query(tree, leftSon + 1, nodeMiddle = 1, nodeEnd, targetStart, targetEnd);
-			return result;
-		}
-	}
+            result += query(tree, leftSon, nodeStart, nodeMiddle, targetStart, targetEnd);
+            result += query(tree, leftSon + 1, nodeMiddle = 1, nodeEnd, targetStart, targetEnd);
+            return result;
+        }
+    }
 
     /**
      * @param index, value: modify origin[index] to value.
      */
     public void modify(int index, int value) {
-    	modify(tree, 0, 0, origin.length - 1, value, value - origin[index]);
-    	origin[index] = value;
+        modify(tree, 0, 0, origin.length - 1, value, value - origin[index]);
+        origin[index] = value;
     }
-    
-    private void modify(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int newValue, int diff){
-    	if(nodeStart == nodeEnd){
-			tree[nodeIndex] += diff;
-			return;
-		}
 
-    	if(nodeStart <= newValue && newValue <= nodeEnd ){
-			tree[nodeIndex] += diff;
+    private void modify(int[] tree, int nodeIndex, int nodeStart, int nodeEnd, int newValue, int diff) {
+        if (nodeStart == nodeEnd) {
+            tree[nodeIndex] += diff;
+            return;
+        }
 
-			int leftSon = nodeIndex * 2 + 1;
-			int nodeMiddle = nodeStart + (nodeEnd - nodeStart) / 2;
-			modify(tree, leftSon, nodeStart, nodeMiddle, newValue, diff);
-			modify(tree, leftSon + 1, nodeMiddle + 1, nodeEnd, newValue, diff);
-		}
+        if (nodeStart <= newValue && newValue <= nodeEnd) {
+            tree[nodeIndex] += diff;
+
+            int leftSon = nodeIndex * 2 + 1;
+            int nodeMiddle = nodeStart + (nodeEnd - nodeStart) / 2;
+            modify(tree, leftSon, nodeStart, nodeMiddle, newValue, diff);
+            modify(tree, leftSon + 1, nodeMiddle + 1, nodeEnd, newValue, diff);
+        }
     }
 }

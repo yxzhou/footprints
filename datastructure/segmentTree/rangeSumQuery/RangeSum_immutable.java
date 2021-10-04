@@ -13,7 +13,7 @@ package datastructure.segmentTree.rangeSumQuery;
     Note:
     You may assume that the array does not change. There are many calls to sumRange function.
  *
- *  Solution:
+ *  Solution: prefixSum
  *     define int[] sums, sums[i] is the sum of nums[0] to nums[i]
  *     so, sumRange(i, j) = sums[j] - sum[i]
  *
@@ -28,15 +28,13 @@ public class RangeSum_immutable {
         }
         
         this.sum = new int[nums.length + 1];
-        
-        for(int i = 1; i < sum.length; i++){
-            sum[i] = sum[i - 1] + nums[i - 1];
+        for(int i = 0; i < sum.length; i++){
+            sum[i + 1] = sum[i] + nums[i];
         }
     }
 
     public int sumRange(int i, int j) {
-        //check
-        if(i < 0 || j < i || j > sum.length - 2){
+        if(i < 0 || j < i || j + 2 > sum.length){
             throw new IllegalArgumentException(String.format("The input i and j should be in [%d, %d]", 0, sum.length - 2));
         }
         
@@ -72,17 +70,16 @@ public class RangeSum_immutable {
 
     
     public static void main(String[] args) {
-
-        
+       
         int[][] input = {
-                    {-2, 0, 3, -5, 2, -1}
+            {-2, 0, 3, -5, 2, -1}
                     
         };
                 
         int[][] ranges = {
-                    {0, 2}, // 1
-                    {2, 5}, // -1, 
-                    {0, 5}  //-3
+            {0, 2}, // 1
+            {2, 5}, // -1, 
+            {0, 5}  //-3
         };
         
         for(int[] nums : input){
