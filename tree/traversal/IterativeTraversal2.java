@@ -3,6 +3,7 @@ package tree.traversal;
 import tree.TreeNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -102,7 +103,7 @@ public class IterativeTraversal2 {
         }
     }
 
-    public static void  preorder_iterative(TreeNode root){
+    public static void  preorder_iterative_n(TreeNode root){
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
 
@@ -117,6 +118,29 @@ public class IterativeTraversal2 {
             }
         }
     }
+    
+    public List<Integer> preorder_iterative_2(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+
+        TreeNode curr;
+        while(!stack.isEmpty()){
+            curr = stack.pop();
+
+            if(curr == null){
+                continue;
+            }
+
+            result.add(curr.val);
+            stack.add(curr.right);
+            stack.add(curr.left);
+
+        }
+
+        return result;
+    }
+        
 
     /**
      * postorder with one Stack and 2 node
@@ -141,6 +165,34 @@ public class IterativeTraversal2 {
             }
 
         }
+    }
+    
+    public List<Integer> postorder_iterative_n(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root; 
+        TreeNode pre = root;
+
+        while(curr != null || !stack.isEmpty()){
+            if(curr == null){
+                curr = stack.peek();
+
+                if(curr.right == null || curr.right == pre){
+                    stack.pop();
+                    result.add(curr.val);
+                    pre = curr;
+                    curr = null;
+                }else{
+                    curr = curr.right;
+                }
+            }else{
+                stack.add(curr);
+                curr = curr.left;
+            }
+        }
+
+        return result;
     }
 
     private static void print(TreeNode p) {

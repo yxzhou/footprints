@@ -52,9 +52,12 @@ public class NestedIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        int res = top.getInteger();
-        top = null;
-        return res;
+        if(hasNext()){
+            int res = top.getInteger();
+            top = null;
+            return res;            
+        }
+        return null; //or throw new IllegalAccessException()
     }
 
     @Override

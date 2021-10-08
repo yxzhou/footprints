@@ -35,7 +35,7 @@ public class Main
       System.out.println();
       iterativeTraversal.preorder_iterative(node);
       System.out.println();
-      IterativeTraversal2.preorder_iterative(node);
+      IterativeTraversal2.preorder_iterative_n(node);
 
       System.out.print("\n   Recursive In-Order: \n");
       RecursiveTraversal.inorder_R(node);

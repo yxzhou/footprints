@@ -38,10 +38,29 @@ import java.util.*;
       [20],
       [7]
     ]
+
+    Given binary tree [3,9,20,4,5,2,7],
+        _3_
+      /      \
+     9         8
+    / \       / \
+   4   0     1   7
+        \   /
+         5 2
+    return its vertical order traversal as:
+    [
+      [4],
+      [9],
+      [0],
+      [3,5,2],
+      [1],
+      [8],
+      [7]
+    ]
  *
  */
 
-public class TraversalVerticalOrder {
+public class TraversalVerticalOrderII {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> result = new LinkedList<>();
         
@@ -97,7 +116,7 @@ public class TraversalVerticalOrder {
         List<TreeNode> list = BinaryTree.initBTs();
 
         // traverse
-        TraversalVerticalOrder sv = new TraversalVerticalOrder();
+        TraversalVerticalOrderII sv = new TraversalVerticalOrderII();
         Print pnt = new Print();
         
         TreeNode root;

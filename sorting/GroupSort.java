@@ -66,26 +66,29 @@ public class GroupSort
     }
 
     /**Time O(n) Space O(1) */
-    public void sortColors_x(int[] nums) {
+    public void sortColors_x2(int[] nums) {
         if (nums == null || nums.length < 2) {
             return;
         }
-
-        for(int l = 0, r = nums.length - 1, i = 0; i <= r; ){
-            if (nums[i] == 2) {
-                //swap(nums, i, r);
-                nums[i] = nums[r];
-                nums[r] = 2;
-                r--;
-            }else {
-                if (nums[i] == 0) {
-                    //swap(nums, l, i);
-                    nums[i] = nums[l];
-                    nums[l] = 0;
+                
+        for(int i = 0, l = 0, r = nums.length - 1; i <= r; ){
+            switch (nums[i]){
+                case 0:
+                    // l <= i, so num[l] must be 0 or 1
+                    if(nums[l] == 1){
+                        nums[i] = 1;
+                        nums[l] = 0;
+                    }
                     l++;
-                }
-
-                i++;
+                    i++;
+                    break;
+                case 2:
+                    nums[i] = nums[r];
+                    nums[r] = 2;
+                    r--;
+                    break;
+                default:
+                    i++;
             }
         }
     }

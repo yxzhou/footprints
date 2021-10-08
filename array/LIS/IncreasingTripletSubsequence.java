@@ -22,27 +22,44 @@ public class IncreasingTripletSubsequence {
 
 
     public boolean increasingTriplet(int[] nums) {
-
         if(nums == null || nums.length < 3){
             return false;
         }
 
-        int n = nums.length;
-        int x1 = nums[0];
+        int x1 = Integer.MAX_VALUE;
         int x2 = Integer.MAX_VALUE;
 
-        for(int i = 1; i < n; i++){
-            if( x2 < nums[i] ){
+        for(int x : nums){
+            if( x2 < x ){
                 return true;
-            }else if(x1 < nums[i] ){
-                x2 = nums[i];
-            }else{
-                x1 = nums[i];
+            }else if(x1 < x ){ // x <= x2
+                x2 = x;
+            }else{ // x <= x1
+                x1 = x;
             }
         }
 
         return false;
     }
 
+    public boolean increasingTriplet_n(int[] nums) {
+        if(nums == null || nums.length < 3){
+            return false;
+        }
 
+        int x1 = Integer.MAX_VALUE;
+        int x2 = Integer.MAX_VALUE;
+
+        for(int x : nums){
+            if( x <= x1 ){
+                x1 = x;
+            }else if(x <= x2 ){
+                x2 = x;
+            }else{
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
