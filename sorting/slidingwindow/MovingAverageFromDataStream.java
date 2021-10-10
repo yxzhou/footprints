@@ -3,7 +3,7 @@ package sorting.slidingwindow;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import sorting.TopKFrequent;
+import datastructure.heap.TopKFrequentNumber;
 import util.Misc;
 
 /**

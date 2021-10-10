@@ -5,7 +5,7 @@ package datastructure.trie;
  * Given a trie, print all words in the trie
  *
  */
-public class PrintTrie extends Trie{
+public class PrintTrie extends MyTrie{
 
     public void printTrie(){
         printTrie(getRoot(), new StringBuilder());

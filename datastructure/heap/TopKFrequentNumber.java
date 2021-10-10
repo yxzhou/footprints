@@ -1,7 +1,7 @@
-package sorting;
+package datastructure.heap;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,54 +22,37 @@ import util.Misc;
  *
  */
 
-public class TopKFrequent {
+public class TopKFrequentNumber {
 
 
     public List<Integer> topKFrequent(int[] nums, int k) {
-        List<Integer> ret = new ArrayList<>();
-        
-        //check
         if(null == nums || 0 == nums.length || k <= 0){
-            return ret;
+            return Collections.EMPTY_LIST ;
         }
         
         //count with Hashmap
-        Map<Integer, Integer> counts = new HashMap<>();
-        for(int num : nums){
-            if(counts.containsKey(num)){
-                counts.put(num, counts.get(num) + 1);
-            }else{
-                counts.put(num, 1);
-            }
+        Map<Integer, Integer> counts = new HashMap<>(); //<element, frequency>
+        for(int x : nums){
+            counts.put(x, counts.getOrDefault(x, 0) + 1);
         }
         
         //get top k with minHeap
-        PriorityQueue<Pair> minHeap=new PriorityQueue<>(k, new Comparator<Pair>(){
-            @Override
-            public int compare( Pair x, Pair y )
-            {
-                return x.value - y.value;
-            }
-        });
-        
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>((i1, i2) -> Integer.compare( counts.get(i1), counts.get(i2)) );
         for(Map.Entry<Integer, Integer> entry : counts.entrySet()){
             if(minHeap.size() < k){
-                minHeap.add(new Pair(entry.getKey(), entry.getValue()));
-            }else if(entry.getValue() > minHeap.peek().value){
+                minHeap.add(entry.getKey());
+            }else if(counts.get(minHeap.peek()) < entry.getValue()){
                 minHeap.poll();
-                minHeap.add(new Pair(entry.getKey(), entry.getValue()));
+                minHeap.add(entry.getKey());
             }
         }
         
         //return
-        for(Pair pair : minHeap){
-            ret.add(pair.key);
-        }
-        return ret;
+        return new ArrayList<>(minHeap);
     }
     
     public static void main(String[] args) {
-        TopKFrequent sv = new TopKFrequent();
+        TopKFrequentNumber sv = new TopKFrequentNumber();
         
         int[][] input = {
                 {1,1,1,2,2,3},
@@ -85,13 +68,4 @@ public class TopKFrequent {
 
     }
 
-    class Pair{
-        int key;
-        int value;
-        
-        Pair(int key, int value){
-            this.key = key;
-            this.value = value;
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package mianjing.amazon;
+package datastructure.trie;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,7 +17,7 @@ import org.apache.commons.lang3.tuple.Pair;
  *
  */
 
-public class AutoComplete2 {
+public class Autocomplete2 {
     class TrieNode{
         TrieNode[] nexts = new TrieNode[26]; // assume it's from a to z
         boolean isLeaf = false;
@@ -28,7 +28,7 @@ public class AutoComplete2 {
 
     TrieNode header;
 
-    public AutoComplete2(List<String> keyWords, int limit){
+    public Autocomplete2(List<String> keyWords, int limit){
         header = new TrieNode();
 
         init(keyWords);
