@@ -12,25 +12,31 @@ import java.util.*;
  * Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
  *
  * Note:
- * Return 0 if there is no such transformation sequence.
- * All words have the same length.
- * All words contain only lowercase alphabetic characters.
- * You may assume no duplicates in the word list.
- * You may assume beginWord and endWord are non-empty and are not the same.
+ *   Return 0 if there is no such transformation sequence.
+ *   All words have the same length.
+ *   All words contain only lowercase alphabetic characters.
+ *   You may assume no duplicates in the word list.
+ *   You may assume beginWord and endWord are non-empty and are not the same.
  *
  * Example 1:
  * beginWord = "hit",  endWord = "cog",  wordList = ["hot","dot","dog","lot","log","cog"]
- *
  * Output: 5
  * Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
  * return its length 5.
  *
  * Example 2:
  * beginWord = "hit" endWord = "cog" wordList = ["hot","dot","dog","lot","log"]
- *
  * Output: 0
  * Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
  *
+ * 
+ * Solutions:
+ *  1. find a shortest path in Graph BFS, from start to end, every time it need try a new word for start.length * 26 times. 
+ *    define m as the word.length, t as the shortest path, n as the dictionary size, 
+ *    assume average it find out p possible word, p < dict.size()
+ *    the time complexity is O( (m * 26) + p * m * 26 + p * p * m * 26 + ... ), it's about O( m * 26 * n  ) 
+ *  2. 
+ * 
  */
 
 
@@ -53,66 +59,63 @@ public class WordLadderI {
      * 存储邻接点，最大是dict的size, 因为dict不会是规模的，所以算是O(1)
      *
      */
-
-    public int ladderLength_oneWay(String beginWord, String endWord, Set<String> words) {
-
-        //words.add(endWord); //for safe, words should includes the end word
-        if(!words.contains(endWord)){
+    public int ladderLength_BFS_oneWay(String start, String end, Set<String> dict) {
+        if (start == null || end == null || dict == null) {
+            return 0;
+        }
+        if (start.equals(end)) {
             return 0;
         }
 
-        int distance = 0;
-
         Set<String> visited = new HashSet<>();
-        visited.add(beginWord);
+        visited.add(start);
 
         Queue<String> queue = new LinkedList<>();
-        queue.add(beginWord);
+        queue.add(start);
 
-        final int size = beginWord.length();
-
-        char[] curr;
-        char old;
+        String curr;
         String next;
-        while(!queue.isEmpty()){
+        char[] chars;
+        int distance = 1;
+        while (!queue.isEmpty()) {
             distance++;
+            for (int k = queue.size(); k > 0; k--) {
+                curr = queue.poll();
+                chars = curr.toCharArray();
 
-            for(int l = queue.size(); l > 0; l--){
-                curr = queue.poll().toCharArray();
+                for (int i = 0; i < curr.length(); i++) { //to every letter 
+                    for (char c = 'a'; c <= 'z'; c++) { // to 26 possible
+                        chars[i] = c;
+                        next = String.valueOf(chars);
 
-                for(int i = 0; i < size; i++){
-                    old = curr[i];
+                        if (next.equals(end)) {
+                            return distance;
+                        }
 
-                    for(char c = 'a'; c <='z'; c++ ){
-                        curr[i] = c;
-                        next = new String(curr);
-
-                        if(!visited.contains(next) && words.contains(next)){
-                            if(next.equals(endWord)){
-                                return distance + 1;
-                            }
-
-                            queue.add(next);
+                        if (!visited.contains(next) && dict.contains(next)) {
                             visited.add(next);
+                            queue.add(next);
                         }
                     }
 
-                    curr[i] = old;
+                    chars[i] = curr.charAt(i); //backtracking
                 }
             }
-
         }
 
         return 0;
     }
 
 
-    public int ladderLength_twoWay(String beginWord, String endWord, Set<String> words) {
-
-        //words.add(endWord); //for safe, words should includes the end word
-        if(!words.contains(endWord)){
+    public int ladderLength_twoWay(String start, String end, Set<String> dict) {
+        if (start == null || end == null || dict == null) {
             return 0;
         }
+        if (start.equals(end)) {
+            return 0;
+        }
+
+        dict.add(end); //for safe, words should includes the end word
 
         int distance = 0;
 
@@ -120,11 +123,11 @@ public class WordLadderI {
 
         Set<String>[] sets = new HashSet[2];
         sets[0] = new HashSet<>();
-        sets[0].add(beginWord);
+        sets[0].add(start);
         sets[1] = new HashSet<>();
-        sets[1].add(endWord);
+        sets[1].add(end);
 
-        final int size = beginWord.length();
+        final int size = start.length();
 
         Set<String> tmp;
         char[] curr;
@@ -150,7 +153,7 @@ public class WordLadderI {
                         curr[i] = c;
                         next = new String(curr);
 
-                        if(!visited.contains(next) && words.contains(next)){
+                        if(!visited.contains(next) && dict.contains(next)){
                             if(sets[1].contains(next)){
                                 return distance + 1;
                             }
@@ -169,6 +172,102 @@ public class WordLadderI {
         return 0;
     }
 
+    
+    /** 
+     *
+     */
+    public int ladderLength_BFS_Trie_oneWay(String start, String end, Set<String> dict) {
+        if (start == null || end == null || dict == null) {
+            return 0;
+        }
+        if (start.equals(end)) {
+            return 0;
+        }
+        
+        TrieNode root = new TrieNode();
+        
+        dict.remove(start);
+        dict.add(end); 
+        dict.forEach(s -> add(root, s) );
+
+        Queue<String> queue = new LinkedList<>();
+        queue.add(start);
+
+        int m = start.length(); //all words have the same length
+        String curr;
+        char[] chars;
+        int distance = 1;
+        while (!queue.isEmpty()) {
+            distance++;
+            for (int k = queue.size(); k > 0; k--) {
+                curr = queue.poll();
+                chars = curr.toCharArray();
+                
+                for (int i = 0; i < m; i++) {
+                    chars[i] = '*';
+                    if (searchAndAdd(root, chars, 0, end, queue)) {
+                        return distance;
+                    }
+                    chars[i] = curr.charAt(i);
+                }
+            }
+        }
+        
+        return 0;
+    }
+    
+    class TrieNode{
+        TrieNode[] children = new TrieNode[26];
+        String word;
+        
+        boolean visited;
+    }
+    
+    private void add(TrieNode root, String word){
+        TrieNode curr = root;
+        
+        int i;
+        for(char c : word.toCharArray()){
+            i = c - 'a';
+            if( curr.children[i] == null ){
+                curr.children[i] = new TrieNode();
+            }
+            
+            curr = curr.children[i];
+        }
+        
+        curr.word = word;
+    }
+    
+    private boolean searchAndAdd(TrieNode node, char[] word, int i, String end, Queue<String> queue){
+        while(node != null && i < word.length){
+            if(word[i] == '*'){
+                for(TrieNode child : node.children){
+                    if(child != null && searchAndAdd(child, word, i + 1, end, queue)){
+                        return true;
+                    }
+                }
+                return false;
+            }else{
+                node = node.children[word[i] - 'a'];
+                i++;
+            }
+        }
+        
+        if(node == null || node.visited){
+            return false;
+        }
+        
+        if(end.equals(node.word)){
+            return true;
+        }
+        
+        node.visited = true;
+        queue.add(node.word);
+        
+        return false;
+    }
+    
 
     public static void main(String[] args) {
         //init
@@ -193,8 +292,9 @@ public class WordLadderI {
         for (int i = 0; i < input.length; i++) {
             System.out.println(String.format("\nconvert %s to %s,  List: [%s] \n expect: %d", input[i][0][0], input[i][0][1], Misc.array2String(input[i][1]), expects[i]));
 
-            System.out.println(sv.ladderLength_oneWay(input[i][0][0], input[i][0][1], sv.convert(input[i][1])));
+            System.out.println(sv.ladderLength_BFS_oneWay(input[i][0][0], input[i][0][1], sv.convert(input[i][1])));
             System.out.println(sv.ladderLength_twoWay(input[i][0][0], input[i][0][1], sv.convert(input[i][1])));
+            System.out.println(sv.ladderLength_BFS_Trie_oneWay(input[i][0][0], input[i][0][1], sv.convert(input[i][1])));
         }
 
     }

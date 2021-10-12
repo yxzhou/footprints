@@ -2,11 +2,7 @@ package dp.twosequence;
 
 /**
  * 
- * Q1: Given two strings S and T, determine if they are both one edit distance apart.
- * 
- *    boolean isOneEdit(String s, String t)
- * 
- * time O(n) and space O(1)
+
  * 
  * Q2: Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. 
  * (each operation is counted as 1 step.)
@@ -100,44 +96,58 @@ public class EditDistance {
    * time O(m*n) and space O(m*n)
    * 
    */
-  public int minDistance_DP(String word1, String word2) {
-      if(word1 == null && word2 == null) {
-          return 0;
-      } else if(word1 == null || word2 == null ) {
-          return word1 == null ? word2.length() : word1.length();
-      }
-
-      final int m = word1.length();
-      final int n = word2.length();
-
-      int[][] dp = new int[m + 1][n + 1]; //default all are 0
-
-      for (int j = 0; j <= n; j++) {
-          dp[0][j] = j;
-      }
-
-      for (int i = 0; i <= m; i++) {
-          dp[i][0] = i;
-      }
-
-      char[] chars1 = word1.toCharArray();
-      char[] chars2 = word2.toCharArray();
-      for (int i = 1; i <= m; i++) {
-          for (int j = 1; j <= n; j++) {
-              dp[i][j] = dp[i - 1][j - 1] + (chars1[i - 1] == chars2[j - 1] ? 0 : 1);
-              dp[i][j] = Math.min(dp[i][j], Math.min(dp[i][j - 1], dp[i - 1][j]) + 1);
-          }
-      }
-
-      return dp[m][n];
-  }
-
-    public int minDistance_DP2(String word1, String word2) {
-        if(word1 == null && word2 == null){
-            return 0;
+    public int minDistance_DP(String word1, String word2) {
+        if (word1 == null || word1.length() == 0) {
+            return word2 == null ? 0 : word2.length();
         }
-        if(word1 == null || word2 == null){
-            return word1 == null ? word2.length() : word1.length();
+        if (word2 == null || word2.length() == 0) {
+            return word1.length();
+        }
+
+        final int m = word1.length();
+        final int n = word2.length();
+        char[] s = word1.toCharArray(); //source
+        char[] t = word2.toCharArray(); //target
+
+        int[][] f = new int[m][n]; //default all are 0
+
+        // i = 0, j from 0 to n
+        boolean found = false;
+        for (int j = 0; j < n; j++) {
+            if (!found && s[0] == t[j]) {
+                f[0][j] = (j == 0 ? 0 : f[0][j - 1]);
+                found = true;
+            } else {
+                f[0][j] = (j == 0 ? 0 : f[0][j - 1]) + 1;
+            }
+        }
+        // i from 0 to m, n = 0
+        found = false;
+        for (int i = 0; i < m; i++) {
+            if (!found && s[i] == t[0]) {
+                f[i][0] = (i == 0 ? 0 : f[i - 1][0]);
+                found = true;
+            } else {
+                f[i][0] = (i == 0 ? 0 : f[i - 1][0]) + 1;
+            }
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                f[i][j] = Math.min(f[i][j - 1], f[i - 1][j]) + 1;
+                f[i][j] = Math.min(f[i][j], f[i - 1][j - 1] + (s[i] == t[j] ? 0 : 1));
+            }
+        }
+
+        return f[m - 1][n - 1];
+    }
+
+    public int minDistance_DP_1(String word1, String word2) {
+        if(word1 == null || word1.length() == 0){
+            return word2 == null? 0 : word2.length();
+        }
+        if(word2 == null || word2.length() == 0){
+            return word1.length();
         }
 
         final int M = word1.length();
@@ -199,60 +209,7 @@ public class EditDistance {
         return pre[N];
     }
   
-  /**
-   * Q1: Given two strings S and T, determine if they are both one edit distance apart.
-   */
-  
-  public boolean isOneEditDistance(String s, String t) {
-      if(null == s || null == t){
-          return false;
-      }
-      
-      int diff = s.length() - t.length();
-      
-      if(0 == diff){ // same length, check if it can be one replace 
-          return isOneReplace(s, t);
-      }else if(1 == diff){ // 
-          return isOneAdd(s, t);
-      }else if(-1 == diff){
-          return isOneAdd(t, s);
-      }
-      
-      return false;
-  }
-  
-  private boolean isOneReplace(String s, String t){
-      boolean once = false; // it's 0 at beginning.
-      
-      for(int i = 0; i < s.length(); i++){
-          if(s.charAt(i) != t.charAt(i)){
-              if(once){ // if it has 1 now, return false
-                  return false;
-              }
-              
-              once = true; //
-          }
-      }
 
-      return once; // if s.equals(t), once will be false here.
-  }
-
-  
-  private boolean isOneAdd(String longer, String shorter){
-      boolean once = false;
-      for(int i = 0, j = 0; i < shorter.length(); i++, j++){
-          if(longer.charAt(i) != shorter.charAt(i)){
-              if(once){
-                  return false;
-              }
-
-              once = true;
-              i--;
-          }
-      }
-      
-      return true;
-  }
 
   
   /**
@@ -268,7 +225,7 @@ public class EditDistance {
           System.out.println("\nInput s1:" + s1[i] + ", s2:" + s2[i]);
           System.out.println("Output  :" + sv.minDistance_recur(s1[i], s2[i]));
           System.out.println("Output  :" + sv.minDistance_DP(s1[i], s2[i]));
-          System.out.println("Output  :" + sv.minDistance_DP2(s1[i], s2[i]));
+          System.out.println("Output  :" + sv.minDistance_DP_1(s1[i], s2[i]));
           System.out.println("Output  :" + sv.minDistance_DP_n(s1[i], s2[i]));
 
       }

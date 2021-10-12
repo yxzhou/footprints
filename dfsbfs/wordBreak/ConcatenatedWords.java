@@ -1,4 +1,4 @@
-package game.wordbreak;
+package dfsbfs.wordBreak;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package game.wordbreak;
+package dfsbfs.wordBreak;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

@@ -1,4 +1,4 @@
-package leetcode.facebook;
+package graph;
 
 import junit.framework.Assert;
 import org.junit.Test;
@@ -44,7 +44,11 @@ import org.junit.Test;
 
 public class GraphBipartite {
 
-    public boolean isBipartite(int[][] graph) {
+    public boolean isBipartite_DFS(int[][] graph) {
+        if(graph == null){
+            return true;
+        }
+                
         int n = graph.length;
         int[] colors = new int[n]; //init-0, groupA - 1, groupB - 2
 
@@ -60,18 +64,51 @@ public class GraphBipartite {
     private boolean dfs(int[][] graph, int i, int color, int[] colors){
         if(colors[i] == color){
             return true;
+        } else if(colors[i] != 0){
+            return false;
         }
 
-        if(colors[i] == 0){
-            colors[i] = color;
+        //colors[i] == 0
+        colors[i] = color;
+        for(int next : graph[i]){
+            if(!dfs(graph, next, color == 1 ? 2 : 1, colors)){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    public boolean isBipartite_2(int[][] graph) {
+        if(graph == null){
+            return true;
+        }
 
-            for(int next : graph[i]){
-                if(!dfs(graph, next, color == 1 ? 2 : 1, colors)){
-                    return false;
+        int n = graph.length;
+        int[] colors = new int[n + 1]; //default all are 0, 1 - Black, 2 - White
+
+        for(int v = 0; v < n; v++){
+            if(colors[v] == 0){
+                for(int neighbor : graph[v]){
+                    if(colors[neighbor] > 0){
+                        colors[v] = 3 - colors[neighbor];
+                        break;
+                    }
+                }
+
+                if(colors[v] == 0){
+                    colors[v] = 1;
                 }
             }
-        }else{
-            return false;
+
+            // when colors[v] != 0
+            for(int neighbor : graph[v]){
+                if( colors[v] == colors[neighbor] ){
+                    return false;
+                }else if(colors[neighbor] == 0 ) {
+                    colors[neighbor] = 3 - colors[v];
+                }
+            }
         }
 
         return true;
@@ -79,8 +116,8 @@ public class GraphBipartite {
 
     @Test
     public void test(){
-        Assert.assertEquals(true, isBipartite(new int[][]{{1, 3}, {0, 2}, {1, 3}, {0, 2}}));
-        Assert.assertEquals(false, isBipartite(new int[][]{{1, 2, 3}, {0, 2}, {0, 1, 3}, {0, 2}}));
+        Assert.assertEquals(true, isBipartite_DFS(new int[][]{{1, 3}, {0, 2}, {1, 3}, {0, 2}}));
+        Assert.assertEquals(false, isBipartite_DFS(new int[][]{{1, 2, 3}, {0, 2}, {0, 1, 3}, {0, 2}}));
     }
 
 }
