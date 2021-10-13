@@ -3,6 +3,7 @@ package array.anagram;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,7 @@ import util.Misc;
 import org.junit.Test;
 
 /**
- *
-Given an array of strings, group anagrams together.
+ * Given an array of strings, group anagrams together.
 
 For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"],
 Return:
@@ -25,38 +25,28 @@ Return:
  *
  */
 
-public class GroupAnagrams {
+public class AnagramGroup {
 
     public List<List<String>> groupAnagrams(String[] strs) {
+        
         List<List<String>> result = new ArrayList<>();
-
         if (null == strs || 0 == strs.length) {
             return result;
         }
 
         Map<String, List<String>> map = new HashMap<>();
-
         for (String s : strs) {
             if (s == null) {
                 continue;
             }
 
-            char[] newArray = s.toCharArray();
-            Arrays.sort(newArray);
-            String key = String.valueOf(newArray);
+            String key = anagramCode(s);
 
-            if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<String>());
-            }
-
+            map.putIfAbsent(key, new LinkedList<>());
             map.get(key).add(s);
         }
 
-//        for (List<String> subList : map.values()) {
-//            result.add(subList);
-//        }
         result.addAll(map.values());
-
         return result;
     }
 
@@ -66,14 +56,14 @@ public class GroupAnagrams {
         return String.valueOf(codes);
     }
 
-    @Test public void test() {
+    public static void main(String[] args) {
 
         System.out.println("------------Start-------------- ");
 
-
+        AnagramGroup sv = new AnagramGroup();
         String[] strs = { "tea", "and", "ate", "eat", "dan", "eat", "abc" };
 
-        List<List<String>> result = groupAnagrams(strs);
+        List<List<String>> result = sv.groupAnagrams(strs);
 
         Misc.printListList(result);
 

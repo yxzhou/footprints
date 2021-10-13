@@ -1,5 +1,8 @@
 package graph;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -118,6 +121,8 @@ public class GraphBipartite {
     public void test(){
         Assert.assertEquals(true, isBipartite_DFS(new int[][]{{1, 3}, {0, 2}, {1, 3}, {0, 2}}));
         Assert.assertEquals(false, isBipartite_DFS(new int[][]{{1, 2, 3}, {0, 2}, {0, 1, 3}, {0, 2}}));
+        
+        Map<int[], List<String>> map = new HashMap<>();
     }
 
 }
