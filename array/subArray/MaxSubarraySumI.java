@@ -6,126 +6,112 @@
 package array.subArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import util.Misc;
 
 /**
- *
- * @author yuanxi
+ * 
+ * Given an integer array, find a continuous subarray where the sum of numbers is the biggest. 
+ * Your code should return the index of the first number and the index of the last number. 
+ * (If their are duplicate answer, return the minimum one in lexicographical order)
+ * 
+ * Example: Give [-3, 1, 3, -3, 4], return [1,4].
+ * 
+ * Follow up:
+ *   How about the array is an circular (the next of the last element is the first element, your sub array length can't exceed the input array ) ? 
+ *   Example: Give [3, 1, -100, -3, 4], return [4,1].
+ * 
  */
 public class MaxSubarraySumI {
-    /**
-     * Given an integer array, find a continuous subarray where the sum of numbers is the biggest. 
-     * Your code should return the index of the first number and the index of the last number. 
-     * (If their are duplicate answer, return anyone)
 
-        Example
-        Give [-3, 1, 3, -3, 4], return [1,4].
-     */
     
-    public ArrayList<Integer> maxSubArray(int[] A) {
-        assert(null != A && 0 < A.length);
-        
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        result.add(0,0);
-        result.add(1,1);
-        
-        int localSubSum = Integer.MIN_VALUE; //the subsum that include the current one
-        int globalSubSum = Integer.MIN_VALUE;
-        int start = 0;
+    public List<Integer> maxSubarraySum(int[] A) {
+        if(A == null){
+            return Collections.EMPTY_LIST;
+        }
+
+        int max = Integer.MIN_VALUE; //global max sum of subarray
+        int[] maxIndex = new int[2];
+        int localMax = Integer.MIN_VALUE; //
+        int localMaxStart = 0;
+
         for(int i = 0; i < A.length; i++){
-            if(localSubSum < 0){
-                localSubSum = A[i];
+            if(localMax < 0){
+                localMax = A[i];
+                localMaxStart = i;
+            }else{
+                localMax += A[i];
+            }
+
+            if(max < localMax){
+                max = localMax;
+                maxIndex[0] = localMaxStart;
+                maxIndex[1] = i;
+            }
+        }
+
+        List<Integer> result = new ArrayList<>(maxIndex.length);
+        for(int i : maxIndex){
+            result.add(i);
+        }
+        return result;
+    }
+    
+
+    /*
+     * @param A: An integer array
+     * @return: A list of integers includes the index of the first number and the index of the last number
+     */
+    public List<Integer> maxSubArraySum_P2(int[] A) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if (A == null || A.length == 0){
+            return result;
+        }
+        
+        int[] maxSum = subSum(A, 1); // maximal subarray sum
+        int[] minSum = subSum(A, -1); // minimal subarray sum
+
+        int n = A.length;
+        if( minSum[2] == minSum[3] || minSum[3] - minSum[2] <= maxSum[2] ){ // minSum[2] == minSum[3] means all are negative 
+            result.add(maxSum[0]);
+            result.add(maxSum[1]);
+        }else{
+            result.add( (minSum[1] + 1 + n) % n );
+            result.add( (minSum[0] - 1 + n) % n );
+        }
+
+        return result;
+    }
+
+    private int[] subSum(int[] A, int sign) {
+        int[] result = new int[4];
+        
+        int maxSum = Integer.MIN_VALUE;
+        int localSum = Integer.MIN_VALUE;
+        
+        int start = 0; // candidate for first
+        int x;
+        for (int i = 0; i < A.length; i++) {
+            result[3] += A[i];
+                        
+            x = sign * A[i];
+            if (localSum < 0) {
+                localSum = x;
                 start = i;
             }else{
-                localSubSum += A[i];
+                localSum += x;
             }
-            
-            if(localSubSum > globalSubSum ){
-                globalSubSum = localSubSum;
-                if(start <= i){
-                    result.set(0, start);
-                    result.set(1, i);
-                }
-            }
-        }
-        
-        return result;
-    }
-    
-    
-    /**
-     * Given an integer array, find a continuous rotate subarray where the sum
-     * of numbers is the biggest. Your code should return the index of the first
-     * number and the index of the last number. (If their are duplicate answer,
-     * return anyone. The answer can be rotate array or non- rotate array)
-     * 
-     * Example Give [3, 1, -100, -3, 4], return [4,1].
-     * 
-     * refer: http://algorithm.yuanbin.me/zh-hans/problem_misc/continuous_subarray_sum_ii.html
-     */
-    public ArrayList<Integer> maxSubArray_2(int[] A) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        if (A == null || A.length == 0)
-            return result;
-        
-        // maximal subarray sum
-        ArrayList<Integer> sub1 = subSum(A, 1);
-        // minimal subarray sum
-        ArrayList<Integer> sub2 = subSum(A, -1);
-        
-        int first = 0, last = 0;
-        if (sub1.get(3) - sub2.get(2) > sub1.get(2)) {
-            last = sub2.get(0) - 1;
-            first = sub2.get(1) + 1;
-        } else {
-            first = sub1.get(0);
-            last = sub1.get(1);
-        }
-        
-        // corner case(all elements are negtive)
-        if (last == -1 && first == A.length) {
-            first = sub1.get(0);
-            last = sub1.get(1);
-        }
 
-        result.add(first);
-        result.add(last);
-        return result;
-    }
-
-    private ArrayList<Integer> subSum(int[] A, int sign) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        
-        // find the max/min subarray sum from [0...A.length]
-        int sum = 0, minSum = 0, maxSub = Integer.MIN_VALUE;
-        if (sign == -1){
-            maxSub = Integer.MAX_VALUE;
-        }
-        
-        int first = 0, last = 0;
-        int first2 = 0; // candidate for first
-        for (int i = 0; i < A.length; i++) {
-            if (sign * minSum > sign * sum) {
-                minSum = sum;
-                first2 = i;
-            }
-            
-            sum += A[i];
-            if (sign * (sum - minSum) > sign * maxSub) {
-                maxSub = sum - minSum;
-                last = i;
-                
-                // update first if valid
-                if (first2 <= last){
-                    first = first2;
-                }
+            if (maxSum < localSum) {
+                maxSum = localSum;
+                result[0] = start;
+                result[1] = i;
             }
         }
         
-        result.add(first);
-        result.add(last);
-        result.add(maxSub);
-        result.add(sum);
+        result[2] = sign * maxSum;
         return result;
     }
     
@@ -142,7 +128,7 @@ public class MaxSubarraySumI {
         for(int i = 0; i< 1; i++){
           System.out.println("\nThe original array is: "+Misc.array2String(arr[i]) );
           
-          System.out.println("The value of max sub array is: "+ sv.maxSubArray(arr[i]) );  
+          System.out.println("The value of max sub array is: "+ sv.maxSubArraySum_P2(arr[i]) );  
         }
         
     }

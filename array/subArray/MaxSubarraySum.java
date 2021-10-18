@@ -2,9 +2,6 @@ package array.subArray;
 
 import util.Misc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * 
  * Given an array of integers, find a contiguous subarray which has the largest sum.

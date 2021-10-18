@@ -7,8 +7,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Given a word W and a string S, find all starting indices in S which are anagrams of W.
- * For example, given that W is "ab", and S is "abxaba", return 0, 3, and 4.
+ * Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
+ * If s is an anagram of p, then s is a permutation of p.
+ * Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 40,000.
+ * The order of output does not matter.
+ * 
+ * Example 1:
+ * Input : s =  "cbaebabacd", p = "abc"
+ * Output : [0, 6]
+ * Explanation : 
+ *   The substring with start index = 0 is "cba", which is an anagram of "abc".
+ *   The substring with start index = 6 is "bac", which is an anagram of "abc".
+ * 
  *
  * Tags: Google
  */
@@ -109,7 +119,7 @@ public class AnagramSlideWindow {
 
     public List<Integer> findAnagrams_x(String s, String p) {
         List<Integer> list = new ArrayList<>();
-        if (s == null || s.length() == 0 || p == null || p.length() == 0) {
+        if(null == s || null == p || s.length() < p.length()){
             return list;
         }
 
@@ -143,17 +153,64 @@ public class AnagramSlideWindow {
         return list;
     }
 
+    
+    public List<Integer> findAnagrams_n2(String s, String p) {
+        if(s == null || s.isEmpty() || p == null || p.isEmpty() || s.length() < p.length()){
+            return Collections.EMPTY_LIST;
+        }
+
+        //int[] counts = new int[26]; //default all are 0
+        int[] found = new int[26]; //default all are 0. int[256] is better than int[26], beause it avoid a minus operation. 
+        boolean[] visited = new boolean[26]; //default all are false
+        int count = 0;
+
+        int m = p.length();
+        int j;
+        for(int i = 0; i < m; i++){
+            j = p.charAt(i) - 'a';
+            
+            visited[j] = true;
+            count -=(found[j] == 0 ? 1 : 0);
+            found[j]--;
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        for(int i = 0; i < s.length(); i++){
+            j = s.charAt(i) - 'a';
+            if(visited[j]){
+                found[j]++;
+                count +=(found[j] == 0 ? 1 : 0);
+            }
+
+            if(i >= m){
+                j = s.charAt(i - m) - 'a';
+                if(visited[j]){
+                    count -=(found[j] == 0 ? 1 : 0);
+                    found[j]--;
+                }
+            }
+
+            if(count == 0){
+                result.add(i - m + 1);
+            }
+        }
+
+        return result;
+    }
 
 
-
-    @Test public void test(){
-
+    public static void main(String[] args){
+        AnagramSlideWindow sv = new AnagramSlideWindow();
+        
         String[][] input = {
             {"abxaba", "ab"},
-            {"cbaebabacdefcba","abc"}, {"abab", "ab"}
+            {"cbaebabacdefcba","abc"}, 
+            {"abab", "ab"},
+            {"abcba", "bc"}
         };
 
-        int[][] expects = {{ 0, 3, 4}, {0, 6, 12}, {0, 1, 2}};
+        int[][] expects = {{ 0, 3, 4}, {0, 6, 12}, {0, 1, 2}, {1,2}};
 
         List<Integer> expect;
 
@@ -164,9 +221,10 @@ public class AnagramSlideWindow {
 
             //Misc.printList(slideWindowIndexes("abxaba", "ab"));
 
-            Assert.assertEquals(expect, slideWindowIndexes(input[i][0], input[i][1]));
-            Assert.assertEquals(expect, findAnagrams_n(input[i][0], input[i][1]));
-            Assert.assertEquals(expect, findAnagrams_x(input[i][0], input[i][1]));
+            Assert.assertEquals(expect, sv.slideWindowIndexes(input[i][0], input[i][1]));
+            Assert.assertEquals(expect, sv.findAnagrams_n(input[i][0], input[i][1]));
+            Assert.assertEquals(expect, sv.findAnagrams_x(input[i][0], input[i][1]));
+            Assert.assertEquals(expect, sv.findAnagrams_n2(input[i][0], input[i][1]));
         }
 
     }

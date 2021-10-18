@@ -1,8 +1,7 @@
 package game.palindrome;
 
 /**
- * _https://www.lintcode.com/problem/891/?_from=ladder&fromId=29
- * _https://leetcode.com/problems/valid-palindrome-ii/
+ * _https://www.lintcode.com/problem/891
  *
  * Valid Palindrome II
  *

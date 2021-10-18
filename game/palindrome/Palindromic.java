@@ -22,7 +22,7 @@ import org.junit.Test;
  *
  *  Problem #2,
  *    Given a positive number, Check if it is a palindrome or not.
- *    _https://www.lintcode.com/problem/491/?_from=ladder&fromId=190
+ *    _https://www.lintcode.com/problem/491
  *
  *    Example 1:
  *    Input:11   Output:true
@@ -82,7 +82,7 @@ public class Palindromic {
         int[] n = {-1, 10, -10, 1, 2, 3, 4, 5, 11, 12};
         for (int i = 0; i < n.length; i++) {
             //System.out.println((new StringBuilder().append(x[i])).reverse().toString());
-            System.out.println(n[i] + " is a palindromic number: " + isPalindrome(n[i]));
+            System.out.println(n[i] + " is a palindromic number: " + isPalindrome_p2(n[i]));
         }
 
     }
@@ -165,11 +165,22 @@ public class Palindromic {
      * Problem #2, determine whether an integer is a palindrome. Do this without extra space.
      *
      */
-    public static boolean isPalindrome(int x) {
+    public static boolean isPalindrome_p2(int x) {
         return String.valueOf(x).equals((new StringBuilder().append(x)).reverse().toString());
 
         /* the following is not good because overflow (when x is Integer.MAX_VALUE, Integer.MIN_VALUE) */
         //return x == Integer.valueOf((new StringBuilder().append(x)).reverse().toString());
+    }
+    
+    public boolean isPalindrome_p2_n(int num) {
+        String s = String.valueOf(num);
+        for (int l = 0, r = s.length() - 1; l < r; l++, r--) {
+            if (s.charAt(l) != s.charAt(r)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

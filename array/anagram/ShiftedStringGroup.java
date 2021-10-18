@@ -2,8 +2,10 @@ package array.anagram;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import util.Misc;
 import org.junit.Test;
@@ -35,7 +37,7 @@ import org.junit.Test;
  *
  */
 
-public class GroupShiftedStrings {
+public class ShiftedStringGroup {
 
     public List<List<String>> groupStrings(String[] strings) {
         List<List<String>> result = new ArrayList<>();
@@ -50,10 +52,7 @@ public class GroupShiftedStrings {
         for(String s : strings){
             code = groupCode(s);
             
-            if(!groups.containsKey(code)){
-                groups.put(code, new ArrayList<>());
-            }
-            
+            groups.putIfAbsent(code, new ArrayList<>());
             groups.get(code).add(s);
         }
         
@@ -61,15 +60,25 @@ public class GroupShiftedStrings {
         return result;
     }
     
-    private String groupCode(String s){
+    private String groupCode(String s) {
         StringBuilder sb = new StringBuilder();
-        
-        for(int i = 1; i < s.length(); i++){
-            sb.append( (s.charAt(i) - s.charAt(i - 1) + 26) % 26 );
-            sb.append( '#' );
+
+        for (int i = 1; i < s.length(); i++) {
+            sb.append((s.charAt(i) - s.charAt(i - 1) + 26) % 26);
+            sb.append('#'); // here it need '#',  for case sb.append(1).append(2) vs sb.append(12) 
         }
-        
+
         return sb.toString();
+    }
+
+    private String groupCode_2(String str) {
+        int n = str.length();
+        char[] diffs = new char[n - 1];
+        for(int i = 0, j = 1; j < n; i++, j++ ){
+            diffs[i] = (char)((str.charAt(j) - str.charAt(i) + 26) % 26);
+        }
+
+        return String.valueOf(diffs);
     }
     
     @Test public void test(){

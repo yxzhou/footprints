@@ -86,7 +86,7 @@ public class LargestPalindromic {
      *
      * Time O(n)  Space O(n)
      */
-    public static String largetPalindrome_Manacher(String str) {
+    public static String largestPalindrome_Manacher(String str) {
         //check
         if (str == null)
             return "";
@@ -155,8 +155,7 @@ public class LargestPalindromic {
 
         for (int i = 0; i < ss.length; i++) {
             System.out.println("\n " + i + "input: " + ss[i]);
-            System.out.println(
-                    " the longest palindormic substring of " + ss[i] + " is: " + largetPalindrome_Manacher(ss[i]));
+            System.out.println(" the longest palindormic substring of " + ss[i] + " is: " + largestPalindrome_Manacher(ss[i]));
             System.out.println(" the longest palindormic substring of " + ss[i] + " is: " + longestPalindrome(ss[i]));
         }
 
