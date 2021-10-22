@@ -77,85 +77,85 @@ public class Misc
 //  }
 
   
-  public static void printIntArrayList(List<int[]> resultList) {
+    public static void printIntArrayList(List<int[]> resultList) {
 
-    for (int i = 0; i < resultList.size(); i++) {
-      System.out.print("," + array2String(resultList.get(i)));
-    }
-  }
-
-  public static void printInt2ArrayList(List<int[][]> resultList) {
-
-    for (int i = 0; i < resultList.size(); i++) {
-      System.out.println(array2String(resultList.get(i)));
-      
-    }
-  }
-  
-  public static void printArrayList_Integer(List<Integer> list) {
-      if(list == null || list.size() == 0){
-        System.out.println("Null");
-        return;
-      }
-      
-      for (int i = 0; i < list.size(); i++) {
-        System.out.print("\t-"+i+"-\t\""+list.get(i)+"\"");
-      }
-      
-      System.out.println();
-  }
-
-  public static void printArray_Int(int[] list) {
-    if(list == null || list.length == 0){
-      System.out.println("[]");
-      return;
+        for (int i = 0; i < resultList.size(); i++) {
+            System.out.print("," + array2String(resultList.get(i)));
+        }
     }
 
-    StringBuilder result = new StringBuilder();
+    public static void printInt2ArrayList(List<int[][]> resultList) {
 
-    result.append("[");
+        for (int i = 0; i < resultList.size(); i++) {
+            System.out.println(array2String(resultList.get(i)));
 
-    for (int i = 0; i < list.length; i++) {
-      result.append(list[i]).append(",\t");
+        }
     }
 
-    result.delete(result.length() - 2, result.length());
-    result.append("]");
-    System.out.println(result.toString());
-  }
+    public static void printArrayList_Integer(List<Integer> list) {
+        if (list == null || list.size() == 0) {
+            System.out.println("Null");
+            return;
+        }
 
-  public static void printArrayList(List<String> list) {
-    if(list == null || list.size() == 0){
-      System.out.println("Null");
-      return;
-    }
-    
-    for (int i = 0; i < list.size(); i++) {
-      System.out.print("\t-"+i+"-\t\""+list.get(i)+"\"");
-    }
-    
-    System.out.println();
-  }
-  
-  public static void printStringArrayList(List<String[]> resultList) {
-    if(resultList == null || resultList.size() == 0){
-      System.out.println("Null");
-      return;
-    }
-    
-    for (int i = 0; i < resultList.size(); i++) {
-      System.out.print("\t-"+i+"-\t"+Misc.array2String(resultList.get(i)));
-    }
-    
-    System.out.println();
-  }
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print("\t-" + i + "-\t\"" + list.get(i) + "\"");
+        }
 
-  public static <E> void printList(List<E> result){
-	    if(result == null || result.size() == 0){
-	        System.out.println("Null");
-	        return;
-	      }
-	      
+        System.out.println();
+    }
+
+    public static void printArray_Int(int[] list) {
+        if (list == null || list.length == 0) {
+            System.out.println("[]");
+            return;
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        result.append("[");
+
+        for (int i = 0; i < list.length; i++) {
+            result.append(list[i]).append(",\t");
+        }
+
+        result.delete(result.length() - 2, result.length());
+        result.append("]");
+        System.out.println(result.toString());
+    }
+
+    public static void printArrayList(List<String> list) {
+        if (list == null || list.size() == 0) {
+            System.out.println("Null");
+            return;
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print("\t-" + i + "-\t\"" + list.get(i) + "\"");
+        }
+
+        System.out.println();
+    }
+
+    public static void printStringArrayList(List<String[]> resultList) {
+        if (resultList == null || resultList.size() == 0) {
+            System.out.println("Null");
+            return;
+        }
+
+        for (int i = 0; i < resultList.size(); i++) {
+            System.out.print("\t-" + i + "-\t" + Misc.array2String(resultList.get(i)));
+        }
+
+        System.out.println();
+    }
+
+    public static <E> void printList(List<E> result) {
+        if (result == null || result.size() == 0) {
+            System.out.println("Null");
+            return;
+        }
+
 //        for (int i = 0; i < result.size(); i++) {
 //            System.out.print("\t-" + i + "-\t" );
 //        }
@@ -163,208 +163,212 @@ public class Misc
         for (int i = 0; i < result.size(); i++) {
             System.out.print("\t" + result.get(i) + "\t");
         }
-	      
-	      System.out.println();
-  }
-  
-  public static <E> void printListList(List<List<E>> result){
-	    if(result == null || result.size() == 0){
-	        System.out.println("Null");
-	        return;
-	      }
-	      
-	      for (int i = 0; i < result.size(); i++) {
-	    	  System.out.print("---"+i+"---");
-	    	  printList(result.get(i));
-	      }
-	      
-	      System.out.println();
-  }
-  
-  public static <E> void printListList(ArrayList<ArrayList<E>> result){
-	    if(result == null || result.size() == 0){
-	        System.out.println("Null");
-	        return;
-	      }
-	      
-	      for (int i = 0; i < result.size(); i++) {
-	    	  //System.out.print("---"+i+"---");
-	    	  printList(result.get(i));
-	      }
-	      
-	      System.out.println();
-}
-  
-	public static void printMetrix(char[][] metrix) {
-		if (null == metrix || 0 == metrix.length || 0 == metrix[0].length) {
-			System.out.println("Null");
-			return;
-		}
 
-		for (int i=0; i< metrix.length; i++) {
-			System.out.print("\t-" + i + "-\t"
-					+ Misc.array2String(metrix[i]));
-		}
+        System.out.println();
+    }
 
-		System.out.println();
-	}
+    public static <E> void printListList(List<List<E>> result) {
+        if (result == null || result.size() == 0) {
+            System.out.println("Null");
+            return;
+        }
 
-	public static void printFile(String file){
+        for (int i = 0; i < result.size(); i++) {
+            System.out.print("---" + i + "---");
+            printList(result.get(i));
+        }
+
+        System.out.println();
+    }
+
+    public static <E> void printListList(ArrayList<ArrayList<E>> result) {
+        if (result == null || result.size() == 0) {
+            System.out.println("Null");
+            return;
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            //System.out.print("---"+i+"---");
+            printList(result.get(i));
+        }
+
+        System.out.println();
+    }
+
+    public static void printMetrix(char[][] metrix) {
+        if (null == metrix || 0 == metrix.length || 0 == metrix[0].length) {
+            System.out.println("Null");
+            return;
+        }
+
+        for (int i = 0; i < metrix.length; i++) {
+            System.out.print("\t-" + i + "-\t"
+                    + Misc.array2String(metrix[i]));
+        }
+
+        System.out.println();
+    }
+
+    public static void printFile(String file) {
 
         byte[] buffer = new byte[8192];
 
-        try(InputStream input = new BufferedInputStream(new FileInputStream(file))) {
+        try ( InputStream input = new BufferedInputStream(new FileInputStream(file))) {
             for (int length = 0; (length = input.read(buffer)) != -1;) {
                 System.out.write(buffer, 0, length);
             }
-        } catch (Exception e){
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
         }
     }
 
-  public static StringBuffer array2String(boolean[] array) {
-    StringBuffer returnValue = new StringBuffer();
+    public static StringBuffer array2String(boolean[] array) {
+        StringBuffer returnValue = new StringBuffer();
 
-    returnValue.append("[");
-    for (int i = 0; i < array.length; i++) {
-      returnValue.append(array[i]);
-      returnValue.append(", ");
-    }
-    returnValue.deleteCharAt(returnValue.length() - 1);
-    returnValue.deleteCharAt(returnValue.length() - 1);
-    returnValue.append("]");
-    
-    return returnValue;
-  }
-  
-  public static StringBuffer array2String(int[] array) {
-    if(array == null)
-      return null;
+        returnValue.append("[");
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append(array[i]);
+            returnValue.append(", ");
+        }
+        returnValue.deleteCharAt(returnValue.length() - 1);
+        returnValue.deleteCharAt(returnValue.length() - 1);
+        returnValue.append("]");
 
-    StringBuffer returnValue = new StringBuffer();
-
-    returnValue.append("[ ");
-    for (int i = 0; i < array.length; i++) {
-      returnValue.append(array[i]);
-      returnValue.append(", ");
-    }
-    
-    if(array.length > 0)
-      returnValue.deleteCharAt(returnValue.length() - 2);
-    
-    //if(returnValue.length() > 0)
-      returnValue.append("]");
-    
-    return returnValue;
-  }
-  
-  public static <E> StringBuffer array2String(E[] array) {
-	    if(array == null)
-	      return null; 
-	    
-	    StringBuffer returnValue = new StringBuffer();
-
-	    returnValue.append("[ ");
-	    for (int i = 0; i < array.length; i++) {
-	      returnValue.append(array[i]);
-	      returnValue.append(", ");
-	    }
-	    
-	    if(array.length > 0)
-	      returnValue.deleteCharAt(returnValue.length() - 2);
-	    
-	    //if(returnValue.length() > 0)
-	      returnValue.append("]");
-	    
-	    return returnValue;
-	  }
-  
-  public static StringBuffer array2String_T(int[] array) {
-    if(array == null)
-      return null; 
-    
-    StringBuffer returnValue1 = new StringBuffer();
-    StringBuffer returnValue2 = new StringBuffer();
-    StringBuffer returnValue3 = new StringBuffer();
-    
-    
-    returnValue1.append("[ ");
-    returnValue2.append("--");
-    returnValue3.append("  ");
-    
-    for (int i = 0; i < array.length; i++) {
-      returnValue1.append(array[i]);
-      returnValue1.append("\t");
-      
-      returnValue2.append("-------");
-      
-      returnValue3.append(i + "\t");
-    }
-    
-    //if(returnValue.length() > 0)
-      returnValue1.append("]");
-    
-    returnValue1.append("\n");
-    returnValue1.append(returnValue2);
-    returnValue1.append("\n");
-    returnValue1.append(returnValue3);
-    
-    return returnValue1;
-  }
-
-  public static StringBuffer array2String(double[] array) {
-    StringBuffer returnValue = new StringBuffer();
-
-    returnValue.append("[");
-    for (int i = 0; i < array.length; i++) {
-      returnValue.append(array[i]);
-      returnValue.append(", ");
-    }
-    returnValue.deleteCharAt(returnValue.length() - 1);
-    returnValue.deleteCharAt(returnValue.length() - 1);
-    returnValue.append("]");
-    
-    return returnValue;
-  }
-
-
-  public static StringBuffer array2String(int[][] array) {
-    StringBuffer returnValue = new StringBuffer();
-    if(null == array){
-    	return returnValue;
-    }
-    
-    for (int i = 0; i < array.length; i++) {
-      returnValue.append("\n");
-      
-      for(int j = 0; j< array[i].length; j++){
-        returnValue.append(array[i][j]);
-        returnValue.append(",\t");        
-      }
+        return returnValue;
     }
 
-    return returnValue;
-  }
+    public static StringBuffer array2String(int[] array) {
+        if (array == null) {
+            return null;
+        }
 
-  
-  public static StringBuffer array2String(String[] array) {
-    StringBuffer returnValue = new StringBuffer();
+        StringBuffer returnValue = new StringBuffer();
 
-    for (int i = 0; i < array.length; i++) {
-      returnValue.append(array[i]);
-      returnValue.append(", ");
+        returnValue.append("[ ");
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append(array[i]);
+            returnValue.append(", ");
+        }
+
+        if (array.length > 0) {
+            returnValue.deleteCharAt(returnValue.length() - 2);
+        }
+
+        //if(returnValue.length() > 0)
+        returnValue.append("]");
+
+        return returnValue;
     }
 
-    return returnValue;
-  }
+    public static <E> StringBuffer array2String(E[] array) {
+        if (array == null) {
+            return null;
+        }
+
+        StringBuffer returnValue = new StringBuffer();
+
+        returnValue.append("[ ");
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append(array[i]);
+            returnValue.append(", ");
+        }
+
+        if (array.length > 0) {
+            returnValue.deleteCharAt(returnValue.length() - 2);
+        }
+
+        //if(returnValue.length() > 0)
+        returnValue.append("]");
+
+        return returnValue;
+    }
+
+    public static StringBuffer array2String_T(int[] array) {
+        if (array == null) {
+            return null;
+        }
+
+        StringBuffer returnValue1 = new StringBuffer();
+        StringBuffer returnValue2 = new StringBuffer();
+        StringBuffer returnValue3 = new StringBuffer();
+
+        returnValue1.append("[ ");
+        returnValue2.append("--");
+        returnValue3.append("  ");
+
+        for (int i = 0; i < array.length; i++) {
+            returnValue1.append(array[i]);
+            returnValue1.append("\t");
+
+            returnValue2.append("-------");
+
+            returnValue3.append(i + "\t");
+        }
+
+        //if(returnValue.length() > 0)
+        returnValue1.append("]");
+
+        returnValue1.append("\n");
+        returnValue1.append(returnValue2);
+        returnValue1.append("\n");
+        returnValue1.append(returnValue3);
+
+        return returnValue1;
+    }
+
+    public static StringBuffer array2String(double[] array) {
+        StringBuffer returnValue = new StringBuffer();
+
+        returnValue.append("[");
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append(array[i]);
+            returnValue.append(", ");
+        }
+        returnValue.deleteCharAt(returnValue.length() - 1);
+        returnValue.deleteCharAt(returnValue.length() - 1);
+        returnValue.append("]");
+
+        return returnValue;
+    }
+
+    public static StringBuffer array2String(int[][] array) {
+        StringBuffer returnValue = new StringBuffer();
+        if (null == array) {
+            return returnValue;
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append("\n");
+
+            for (int j = 0; j < array[i].length; j++) {
+                returnValue.append(array[i][j]);
+                returnValue.append(",\t");
+            }
+        }
+
+        return returnValue;
+    }
+
+    public static StringBuffer array2String(String[] array) {
+        StringBuffer returnValue = new StringBuffer();
+
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append(array[i]);
+            returnValue.append(", ");
+        }
+
+        return returnValue;
+    }
 
     public static <T> StringBuffer array2String(List<T> list) {
         StringBuffer returnValue = new StringBuffer();
 
-      if(null == list){
-        return returnValue.append("null");
-      }
+        if (null == list) {
+            return returnValue.append("null");
+        }
 
         for (int i = 0; i < list.size(); i++) {
             returnValue.append(list.get(i));
@@ -372,93 +376,90 @@ public class Misc
         }
 
         int length = returnValue.length();
-        if(length > 2){
-            returnValue.delete(length -2, length);
+        if (length > 2) {
+            returnValue.delete(length - 2, length);
         }
 
         return returnValue;
     }
 
-  public static StringBuffer array2String(String[][] array) {
-    StringBuffer returnValue = new StringBuffer();
-    
-    for (int i = 0; i < array.length; i++) {
-      returnValue.append("\n");      
-      for(int j = 0; j< array[i].length; j++){
-        returnValue.append(array[i][j]);
-        returnValue.append(", ");        
-      }
+    public static StringBuffer array2String(String[][] array) {
+        StringBuffer returnValue = new StringBuffer();
+
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append("\n");
+            for (int j = 0; j < array[i].length; j++) {
+                returnValue.append(array[i][j]);
+                returnValue.append(", ");
+            }
+        }
+
+        return returnValue;
     }
 
-    return returnValue;
-  }
+    public static StringBuffer array2String(char[] array, int len) {
+        StringBuffer returnValue = new StringBuffer();
 
-  
-  public static StringBuffer array2String(char[] array, int len) {
-    StringBuffer returnValue = new StringBuffer();
+        for (int i = 0; i < len; i++) {
+            returnValue.append(array[i]);
 
-    for (int i = 0; i < len; i++) {
-      returnValue.append(array[i]);
+        }
 
+        return returnValue;
     }
 
-    return returnValue;
-  }
-  
-  public static StringBuffer array2String(char[] array) {
-    StringBuffer returnValue = new StringBuffer();
+    public static StringBuffer array2String(char[] array) {
+        StringBuffer returnValue = new StringBuffer();
 
-    for (int i = 0; i < array.length; i++) {
-      returnValue.append(array[i]);
+        for (int i = 0; i < array.length; i++) {
+            returnValue.append(array[i]);
 
+        }
+
+        return returnValue;
     }
 
-    return returnValue;
-  }
+    public static boolean compare(int[] array1, int[] array2) {
+        if (array1 == null) {
+            return array2 == null;
+        }
 
-
-  public static boolean compare(int[] array1, int[] array2){
-	if(array1 == null){
-	    return array2 == null;
-    }
-
-    if(array1.length != array2.length){
-	    return false;
-    }
-
-    for(int i = 0; i < array1.length; i++){
-        if(array1[i] != array2[i]){
+        if (array1.length != array2.length) {
             return false;
         }
+
+        for (int i = 0; i < array1.length; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    return true;
-  }
+    public static boolean compare(Object[] o1, Object[] o2) {
+        if (o1 == null) {
+            return o2 == null;
+        }
 
-  public static boolean compare(Object[] o1, Object[] o2){
-      if(o1 == null){
-          return o2 == null;
-      }
+        if (o1.length != o2.length) {
+            return false;
+        }
 
-      if(o1.length != o2.length){
-          return false;
-      }
+        for (int i = 0; i < o1.length; i++) {
+            if (o1[i].equals(o2[i])) {
+                return false;
+            }
+        }
 
-      for(int i = 0; i < o1.length; i++){
-          if(o1[i].equals(o2[i])){
-              return false;
-          }
-      }
+        return true;
+    }
 
-      return true;
-  }
-
-
-    public static List<List<String>> convert(String[][] strings){
+    public static List<List<String>> convert(String[][] strings) {
 
         List<List<String>> result = new LinkedList<>();
 
-        for(String[] ss : strings){
+        for (String[] ss : strings) {
             result.add(Arrays.asList(ss));
         }
 

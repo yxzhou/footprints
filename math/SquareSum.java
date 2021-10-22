@@ -1,70 +1,49 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package math;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  *
- * Given a positive integer n, find the smallest number of squared integers which sum to n.
-
- For example, given n = 13, return 2 since 13 = 32 + 22 = 9 + 4.
-
- Given n = 27, return 3 since 27 = 32 + 32 + 32 = 9 + 9 + 9.
- *
+ * Given a integer c, your task is to decide whether there're two integers a and b such that a^2 + b^2 = c.
+ * 
+ * Example 1:
+ *   Input : n = 5
+ *   Output : true
+ *   Explanation : 1 * 1 + 2 * 2 = 5
+ * 
+ * Example 2:
+ *   Input : n = -5
+ *   Output : false
+ * 
  */
-
 public class SquareSum {
     /**
-     *  Time O(n * n),  Space O(n)
+     * @param num: the given number
+     * @return: whether whether there are two integers
      */
-    public int smallestOfSquare(int n){
-        if(n < 1){
-            return 0;
+    public boolean checkSumOfSquareNumbers(int num) {
+        if(num < 0){
+            return false;
+        }else if(num < 2){
+            return true;
         }
 
-        int squareRoot = (int)Math.ceil(Math.sqrt(n));
-        if(squareRoot * squareRoot == n){
-            return 1;
-        }
+        // (a = x * x) + (b = y * y) == (c = z * z)
+        int b;
+        int y;
+        for(int x = 0, a = 0, half = num / 2; a <= half ; a += x*2 + 1, x++){ // (a + 1)*(a + 1) - a*a = a*2 + 1
+            b = num - a;
 
-        int[] counter = new int[n + 1];
-        for(int i = 1; i < squareRoot; i++){
-            counter[i * i] = 1;
-        }
+            y = (int)Math.sqrt(b);
 
-        for(int i = 2; i <= n; i++){
-            if(counter[i] == 1){
-                continue;
-            }
-            counter[i] = n; //init value
-            for(int j = 1, half = (i >> 1); j <= half; j++){
-                counter[i] = Math.min(counter[i], counter[j] + counter[i - j]);
+            if( y * y == b ){
+                return true;
             }
         }
 
-        return counter[n];
+        return false;
     }
-
-    @Test
-    public void test(){
-        Assert.assertEquals(1, smallestOfSquare(1));
-        Assert.assertEquals(2, smallestOfSquare(2));
-        Assert.assertEquals(3, smallestOfSquare(3));
-        Assert.assertEquals(1, smallestOfSquare(4));
-        Assert.assertEquals(2, smallestOfSquare(5));
-        Assert.assertEquals(3, smallestOfSquare(6));
-        Assert.assertEquals(4, smallestOfSquare(7));
-        Assert.assertEquals(2, smallestOfSquare(8));
-        Assert.assertEquals(1, smallestOfSquare(9));
-        Assert.assertEquals(2, smallestOfSquare(10));
-        Assert.assertEquals(3, smallestOfSquare(11));
-        Assert.assertEquals(3, smallestOfSquare(12));
-        Assert.assertEquals(2, smallestOfSquare(13));
-        Assert.assertEquals(3, smallestOfSquare(14));
-        Assert.assertEquals(4, smallestOfSquare(15));
-        Assert.assertEquals(1, smallestOfSquare(16));
-
-        Assert.assertEquals(3, smallestOfSquare(27));
-    }
-
 }
