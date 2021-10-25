@@ -153,8 +153,9 @@ public class TwoSum{
      * <p>
      * Input: numbers={2, 7, 11, 15}, target=9
      * Output: index1 = 0, index2 = 1
+     * 
+     * Time O(n)  Space O(n)
      */
-    /* Time O(n)  Space O(n)*/
     public int[] twoSum_hash(int[] numbers, int target) {
         //check input,  bypass, I can assume that each input would have exactly one solution
 
