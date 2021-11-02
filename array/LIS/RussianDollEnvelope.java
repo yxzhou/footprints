@@ -1,8 +1,9 @@
-package array.LIS;
+package array.lis;
 
 import util.Misc;
 
 import java.util.*;
+import org.junit.Assert;
 
 /**
  * 
@@ -32,43 +33,67 @@ import java.util.*;
 public class RussianDollEnvelope {
     
     /*Time Complexity O(n^2) Space O(1)*/
-    public int maxEnvelopes_memorycache(int[][] envelopes) {
-        if(null == envelopes){
+    public int maxEnvelopes_DP(int[][] envelopes) {
+        if(null == envelopes || envelopes.length == 0){
             return 0;
         }
         
-        //TODO
-        return -1;
+        Arrays.sort(envelopes, (p1, p2) -> (p1[0] == p2[0] ? p2[1] - p1[1] : p1[0] - p2[0]));
+        //Arrays.sort(envelopes, (p1, p2) -> p1[0] == p2[0]? Integer.compare(p2[1], p1[1]) : Integer.compare(p1[0], p2[0]) );
+
+        int max = 0;
+        int n = envelopes.length;
+        int[] depths = new int[n];
         
+        int[] pre;
+        int[] curr;
+        for(int i = 0; i < n; i++){
+            curr = envelopes[i];
+            
+            for(int j = 0; j < i; j++){
+                pre = envelopes[j];
+                
+                if(pre[0] < curr[0] && pre[1] < curr[1]){
+                    depths[i] = Math.max(depths[i], depths[j] + 1);
+                }
+            }
+            
+            max = Math.max(max, depths[i]);
+        }
+        
+        return max + 1;
     }
 
 
     /*Time Complexity O(nlogn) Space O(n)*/
     public int maxEnvelopes_Greedy(int[][] envelopes) {
-        if (null == envelopes || 0 == envelopes.length) {
+        if (envelopes == null || envelopes.length == 0) {
             return 0;
         }
 
-        Arrays.sort(envelopes, (p1, p2) -> (p1[0] == p2[0]? p2[1] - p1[1] : p1[0] - p2[0]));
+        Arrays.sort(envelopes, (p1, p2) -> (p1[0] == p2[0] ? p2[1] - p1[1] : p1[0] - p2[0]));
+        //Arrays.sort(envelopes, (p1, p2) -> p1[0] == p2[0]? Integer.compare(p2[1], p1[1]) : Integer.compare(p1[0], p2[0]) );
 
-        int max = 0;
-        int[] dp = new int[envelopes.length];
-        int end = 0;
+        int n = envelopes.length;
 
-        for(int[] pair : envelopes){
-            int top = Arrays.binarySearch(dp, 0, end, pair[1]);
-            if(top < 0){
-                top = 0 - top - 1;
-            }
-            
-            max = Math.max(max, top + 1);
-            dp[top] = pair[1];
-            if(top == end){
-                end++;
+        int[] sequence = new int[n];
+        sequence[0] = envelopes[0][1];
+        int r = 0;
+
+        int p;
+        for (int[] curr : envelopes) {
+            p = Arrays.binarySearch(sequence, 0, r + 1, curr[1]);
+
+            if (p < 0) {
+                p = -p - 1;
+
+                sequence[p] = curr[1];
+
+                r = Math.max(r, p);
             }
         }
 
-        return max;
+        return r + 1;
     }
 
     public static void main(String[] args) {
@@ -87,10 +112,15 @@ public class RussianDollEnvelope {
                     {{2,100},{3,200},{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}}
         };
         
+        int[] expects = {0, 1, 2, 3, 4, 3, 3, 3, 5};
         
-        for(int[][] envelopes : input ){
-            System.out.println(String.format("Input: %s", Misc.array2String(envelopes)));
-            System.out.println(String.format("Output: %d, %d, %d", sv.maxEnvelopes_Greedy(envelopes)));
+        for(int i = 0; i < input.length; i++ ){
+            System.out.println(String.format("Input: %s\n", Misc.array2String(input[i])));
+            //System.out.println(String.format("Output: %d, %d", sv.maxEnvelopes_Greedy(envelopes), sv.maxEnvelopes_DP(envelopes)));
+            
+            Assert.assertEquals(expects[i], sv.maxEnvelopes_DP(input[i]));
+            Assert.assertEquals(expects[i], sv.maxEnvelopes_Greedy(input[i]));
+            
         }
     }
 

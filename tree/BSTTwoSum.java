@@ -35,62 +35,63 @@ public class BSTTwoSum {
      * @param : the target sum
      * @return: two numbers from tree which sum is n
      */
-    public int[] twoSum(TreeNode root, int n) {
+   public int[] twoSum(TreeNode root, int n) {
 
         int[] result = new int[2];
-        if(find(root, n, result, 0)){
+        if(helper(root, n, result)){
             return result;
         }
 
         return null;
     }
 
-    /**
-     * @return true if found, and fill in the result.
-     */
-    private boolean find(TreeNode node, int n, int[] result, int i){
+    private boolean helper(TreeNode node, int target, int[] result){
         if(node == null){
             return false;
         }
-        if(i == 1){ // only need find one node whose value is n
-            if(node.val == n){
-                return true;
-            }
 
-            if(node.val < n){
-                return find(node.right, n, result, 1);
-            }else{
-                return find(node.left, n, result, 1);
-            }
-        }
-        
-        // i == 0, need find out the two node that the sum is n
         //case 1, one is current node
         result[0] = node.val;
-        result[1] = n - node.val;
-        if(result[1] > 0 && result[0] != result[1] && find( node, result[1], result, 1 )){
+        result[1] = target - node.val;
+        if(result[1] > 0 && result[0] != result[1] && existed( node, result[1] )){
             return true;
         }
 
-        //case 2, both are in the left tree
-        if(node.val * 2 - 2 > n && find( node.left, n, result, 0 )){
+        //case 2, both are in left tree
+        if(node.val * 2 - 2 > target && helper( node.left, target, result )){
             return true;
         }
 
-        //case 3, both are in the right tree
-        if( node.val * 2 + 2 < n && find( node.right, n, result, 0 )){
+        //case 3, both are in right tree
+        if( node.val * 2 + 2 < target && helper( node.right, target, result )){
             return true;
         }
 
-        //case 4, one is in the left tree, the other is in the right tree 
-        for(int l = 1, r = n - l; l < node.val && r > node.val; l++, r-- ){
+        //case 4, one is in left tree, the other is in right tree
+        for(int l = 1, r = target - l; l < node.val && r > node.val; l++, r-- ){
             result[0] = l;
             result[1] = r;
-            if(find( node.left, l, result, 1 ) && find( node.right, r, result, 1 )){
+            if(existed( node.left, l ) && existed( node.right, r )){
                 return true;
             }
         }
 
         return false;
+    }
+
+    private boolean existed(TreeNode node, int target){
+        if(node == null){
+            return false;
+        }
+
+        if(node.val == target){
+            return true;
+        }
+
+        if(node.val < target){
+            return existed(node.right, target);
+        }else{
+            return existed(node.left, target);
+        }
     }
 }

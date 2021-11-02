@@ -1,4 +1,4 @@
-package array.LIS;
+package array.lis;
 
 /**
  *  Leetcode #334
