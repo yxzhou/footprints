@@ -69,136 +69,139 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class Main
-{
+public class Main {
 
-  final static int maxN = 10001;   //(int) 1E7  
-  final static int[] idInAll = new int[maxN << 3]; //the poster id in the whole of interval, default it's 0, means no poster
-  final static boolean[] idInPartial = new boolean[maxN << 3]; //default it's false. 
-  
-  final static int[] inputStart = new int[maxN];
-  final static int[] inputEnd = new int[maxN];
-  final static int[] inputAll = new int[maxN << 1];  
-  
-  final static int DEFALT_ID = 0;
-  
-  private void count(int l, int r, int rt, HashSet<Integer> set) {
-      
-    if(idInAll[rt] != DEFALT_ID){  //if(!idInPartial[rt] && idInAll[rt] != DEFALT_ID)
-      set.add(idInAll[rt]);
-      return;
+    final static int maxN = 10001;   //(int) 1E7  
+    final static int[] idInAll = new int[maxN << 3]; //the poster id in the whole of interval, default it's 0, means no poster
+    final static boolean[] idInPartial = new boolean[maxN << 3]; //default it's false. 
+
+    final static int[] inputStart = new int[maxN];
+    final static int[] inputEnd = new int[maxN];
+    final static int[] inputAll = new int[maxN << 1];
+
+    final static int DEFALT_ID = 0;
+
+    private void count(int l, int r, int rt, HashSet<Integer> set) {
+
+        if (idInAll[rt] != DEFALT_ID) {  //if(!idInPartial[rt] && idInAll[rt] != DEFALT_ID)
+            set.add(idInAll[rt]);
+            return;
+        }
+
+        if (l == r) {
+            return;
+        }
+
+        int m = (l + r) >> 1;
+        int leftSon = rt << 1;
+        count(l, m, leftSon, set);// build(lson);
+        count(m + 1, r, leftSon + 1, set);// build(rson); rt << 1 | 1
     }
-      
-    if (l == r) 
-      return;
 
-    int m = (l + r) >> 1;
-    int leftSon = rt << 1;
-    count(l, m, leftSon, set);// build(lson);
-    count(m + 1, r, leftSon + 1, set );// build(rson); rt << 1 | 1
-  }  
-   
-  private void pushUp(int rt) {
-    int leftSon = rt << 1;
-    idInPartial[rt] = idInPartial[leftSon] || idInPartial[leftSon+1];
-        
-  }
-  
-  private void build(int l, int r, int rt) {
-    idInAll[rt] = DEFALT_ID;  //re-initial  
-    idInPartial[rt] = false;
-    
-    if (l == r) 
-      return;
+    private void pushUp(int rt) {
+        int leftSon = rt << 1;
+        idInPartial[rt] = idInPartial[leftSon] || idInPartial[leftSon + 1];
 
-    int m = (l + r) >> 1;
-    int leftSon = rt << 1;
-    build(l, m, leftSon);// build(lson);
-    build(m + 1, r, leftSon + 1 );// build(rson); rt << 1 | 1
-  }
-  
-  
-  /*
+    }
+
+    private void build(int l, int r, int rt) {
+        idInAll[rt] = DEFALT_ID;  //re-initial  
+        idInPartial[rt] = false;
+
+        if (l == r) {
+            return;
+        }
+
+        int m = (l + r) >> 1;
+        int leftSon = rt << 1;
+        build(l, m, leftSon);// build(lson);
+        build(m + 1, r, leftSon + 1);// build(rson); rt << 1 | 1
+    }
+
+    /*
    * 
-   */
-  private void update(int L, int R, int postId, int l, int r, int rt) {
-    if(idInAll[rt] != DEFALT_ID)
-      return;
-      
-    if (!idInPartial[rt] && (L <= l && r <= R)) {
-      idInAll[rt] = postId;
-      idInPartial[rt] = true;
-      return;
-    }
-    
-    int mid = (l + r) >> 1;
-    int leftSon = rt << 1;
-    int rightSon = leftSon + 1;
-    if (mid >= R )
-      update(L, R, postId, l, mid, leftSon); // update lson
-    else if(mid < L)
-      update(L, R, postId, mid + 1, r, rightSon); // update rson
-    else{  // mid is between L and R 
-      update(L, R, postId, l, mid, leftSon); // update lson
-      update(L, R, postId, mid + 1, r, rightSon); // update lson
-    }       
-      
-    pushUp(rt);
-  }
+     */
+    private void update(int L, int R, int postId, int l, int r, int rt) {
+        if (idInAll[rt] != DEFALT_ID) {
+            return;
+        }
 
-  
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    Main sv = new Main();
-    Scanner in = new Scanner(new BufferedInputStream(System.in), "ISO-8859-1");
-    
-    //read input
-    try {
-      //get test case one by one
-      int n, m;
-      while(in.hasNext()){
-        
-        n = in.nextInt();
-        
-        while( n-- > 0 ){
-          m = in.nextInt();
-            
-          for(int i=1, j=1; i<=m; i++){
-            inputStart[i] = in.nextInt();
-            inputEnd[i] = in.nextInt();
+        if (!idInPartial[rt] && (L <= l && r <= R)) {
+            idInAll[rt] = postId;
+            idInPartial[rt] = true;
+            return;
+        }
 
-            inputAll[j++] = inputStart[i];
-            inputAll[j++] = inputEnd[i];    
-          }
-          
-          Arrays.sort(inputAll, 1, m << 1 | 1);
-          HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>();
-          int index = 1;
-          for(int k=1; k<=(m << 1); k++)
-            if(inputAll[k] != inputAll[k-1])
-              hash.put(inputAll[k], index++);
-          
-          sv.build(1, index-1, 1);
-          
-          for(int i=m; i>0; i--)  //this is important !!
-            sv.update(hash.get(inputStart[i]), hash.get(inputEnd[i]) - 1, i, 1, index-1, 1);
-          
-          //
-          HashSet<Integer> set = new HashSet<Integer>();
-          sv.count(1, index-1, 1, set);
-          System.out.printf("%d\n", set.size());
-        }        
-      }
-    }
-    catch (Exception e) {
+        int mid = (l + r) >> 1;
+        int leftSon = rt << 1;
+        int rightSon = leftSon + 1;
+        if (mid >= R) {
+            update(L, R, postId, l, mid, leftSon); // update lson
+        } else if (mid < L) {
+            update(L, R, postId, mid + 1, r, rightSon); // update rson
+        } else {  // mid is between L and R 
+            update(L, R, postId, l, mid, leftSon); // update lson
+            update(L, R, postId, mid + 1, r, rightSon); // update lson
+        }
 
-    }
-    finally {
-      in.close();
+        pushUp(rt);
     }
 
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        Main sv = new Main();
+        Scanner in = new Scanner(new BufferedInputStream(System.in), "ISO-8859-1");
 
-  }
+        //read input
+        try {
+            //get test case one by one
+            int n, m;
+            while (in.hasNext()) {
+
+                n = in.nextInt();
+
+                while (n-- > 0) {
+                    m = in.nextInt();
+
+                    for (int i = 1, j = 1; i <= m; i++) {
+                        inputStart[i] = in.nextInt();
+                        inputEnd[i] = in.nextInt();
+
+                        inputAll[j++] = inputStart[i];
+                        inputAll[j++] = inputEnd[i];
+                    }
+
+                    Arrays.sort(inputAll, 1, m << 1 | 1);
+                    HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>();
+                    int index = 1;
+                    for (int k = 1; k <= (m << 1); k++) {
+                        if (inputAll[k] != inputAll[k - 1]) {
+                            hash.put(inputAll[k], index++);
+                        }
+                    }
+
+                    sv.build(1, index - 1, 1);
+
+                    for (int i = m; i > 0; i--) //this is important !!
+                    {
+                        sv.update(hash.get(inputStart[i]), hash.get(inputEnd[i]) - 1, i, 1, index - 1, 1);
+                    }
+
+                    //
+                    HashSet<Integer> set = new HashSet<Integer>();
+                    sv.count(1, index - 1, 1, set);
+                    System.out.printf("%d\n", set.size());
+                }
+            }
+        }
+        catch (Exception e) {
+
+        }
+        finally {
+            in.close();
+        }
+
+    }
 }

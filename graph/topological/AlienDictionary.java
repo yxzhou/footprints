@@ -24,7 +24,7 @@ import static org.apache.commons.lang3.CharSetUtils.count;
  * Example 3: 
  *   Input: [ "z", "x", "z" ] 
  *   Output: "" 
- * Explanation: The order is invalid, so return "".
+ *   Explanation: The order is invalid, so return "".
  * 
  * Note:
  *   You may assume all letters are in lowercase.

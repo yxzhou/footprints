@@ -1,4 +1,4 @@
-package sorting.slidingwindow;
+package design.others.stream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,25 +6,23 @@ import java.util.PriorityQueue;
 
 import util.Misc;
 
-public class MedianSlideWindow {
+public class SlideWindowMedian {
 
-	/**
-	 * Given an array of n integer, and a moving window(size k), move the window
-	 * at each iteration from the start of the array, find the median of the
-	 * element inside the window at each moving. (If there are even numbers in
-	 * the array, return the N/2-th number after sorting the element in the
-	 * window. )
-	 * 
-	 * Example
-	 * For array [1,2,7,8,5], moving window size k = 3. return [2,7,7]
-	 * 
-	 * At first the window is at the start of the array like this [ | 1,2,7 | ,8,5] , return the median 2;
-	 * then the window move one step forward. [1, | 2,7,8 | ,5], return the median 7;
-	 * then the window move one step forward again. [1,2, | 7,8,5 | ], return the median 7;
-	 * 
-	 * Challenge
-	 * O(nlog(n)) time
-	 */
+    /**
+     * Given an array of n integer, and a moving window(size k), move the window at each iteration from the start of the
+     * array, find the median of the element inside the window at each moving. (If there are even numbers in the array,
+     * return the N/2-th number after sorting the element in the window. )
+     *
+     * Example 
+     * Input array [1,2,7,8,5], moving window size k = 3. 
+     * Output [2,7,7]
+     * Explanation: 
+     *   At first the window is at the start of the array like this [ | 1,2,7 | ,8,5] , return the median 2; 
+     *   then the window move one step forward. [1, | 2,7,8 | ,5], return the median 7; 
+     *   then the window move one step forward again. [1,2, | 7,8,5 | ], return the median 7;
+     *
+     * Challenge O(nlog(n)) time
+     */
 	
 	
 	/**
@@ -126,7 +124,7 @@ public class MedianSlideWindow {
 	    };
 	    int[] k = {1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 1, 2, 3};
 
-	    MedianSlideWindow sv = new MedianSlideWindow();
+	    SlideWindowMedian sv = new SlideWindowMedian();
 	    for(int i = 0; i < input.length; i++){
 	    	
 	    	System.out.println(String.format("Input: %s k=%d", Misc.array2String(input[i]), k[i]));
