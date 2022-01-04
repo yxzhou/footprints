@@ -32,20 +32,21 @@ public class Read4II {
     public int read(char[] buf, int n) {
 
         int total = 0;
+        int read = 0;
+        int need = 0;
 
         while (total < n) {
-            int read = 0;
             if(offset > 0){
                 read = buffer.length;
             }else{
                 read = read4(buffer);
             }
             
-            int bytes = Math.min(n - total, read - offset);
+            need = Math.min(n - total, read - offset);
             
-            System.arraycopy(buffer /* src */, offset /* srcPos */, buf /* dest */, total /* destPos */, bytes /* length */);
-            total += bytes;
-            offset = (offset + bytes) % BLOCKSIZE;
+            System.arraycopy(buffer /* src */, offset /* srcPos */, buf /* dest */, total /* destPos */, need/* length */);
+            total += need;
+            offset = (offset + need) % BLOCKSIZE;
             
             if (read < BLOCKSIZE){ // for case, n >= filesize
                 break;

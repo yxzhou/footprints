@@ -5,7 +5,38 @@ import tree.TreeNode;
 import java.util.Stack;
 
 public class KthSmallestBST {
-    //inorder traversal
+    
+    /**
+     * inorder traversal
+     * 
+     * @param root: the given BST
+     * @param k: the given k
+     * @return the kth smallest element in BST
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        TreeNode curr = root;
+        Stack<TreeNode> stack = new Stack<>();
+
+        while(curr != null || !stack.isEmpty()){
+            if(curr == null){
+                curr = stack.pop();
+
+                if(--k == 0){
+                    return curr.val;
+                }
+
+                curr = curr.right;
+            }else{
+                stack.add(curr);
+                curr = curr.left;
+            }
+
+        }
+
+        //assume k is always valid
+        return -1;
+    }
+    
     public int kthSmallestBST(TreeNode root, int k) {
         //ignore check, You may assume k is always valid, 1 ≤ k ≤ BST's total element
 

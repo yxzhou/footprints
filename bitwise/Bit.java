@@ -64,13 +64,15 @@ public class Bit {
     /**
      * check if num is a power of 2, num = 2^k ?
      *
-     * (a power of 2) == only have one bit 1
+     * 2^0 = 1 = 0b1
+     * 2^1 = 2 = 0b10
+     * 2^2 = 4 = 0b100
+     * -- only one bit 1. 
      *
+     * Time O(1)
      */
-    /*Time O(1)*/
     public static boolean isPowerOfTwo_n(int n) {
-        // return (num & (num-1)) == 0; // how to do if num == 0; 0 is not a
-        // power of 2.
+        
         return (n > 0) && ((n & (n - 1)) == 0);
     }
 
@@ -83,12 +85,33 @@ public class Bit {
         return n == 1;
     }
 
+    /**
+     * check if num is a power of 3, num = 3^k ?
+     *
+     * n = 3^k,  k = lgn / lg3
+     *
+     * Time O(1)
+     */
     public boolean isPowerOfThree(int n) {
-        return (Math.log10(n) / Math.log10(3)) % 1 == 0;
+        // n > 0 and n is odd and logn / log3 is very close to a whole number.
+        return n > 0 && (n & 1) == 1 && (Math.log10(n) / Math.log10(3)) % 1 < 0.000000001;
+        
+        //note  Math.log(n) / Math.log(3) doesn't work here.
     }
 
+    /**
+     * check if num is a power of 4, num = 4^k ?
+     *
+     * 4^0 = 1 = 0b  0001
+     * 4^1 = 4 = 0b  0100
+     * 4^2 = 16 =0b 10000
+     * -- only one bit 1. and the bit 1 is at the odd position ( 0101 0101 ) 
+     *
+     * Time O(1)
+     */    
     private static boolean isPowerOfFour(int n) {
-        return (n & (n - 1)) == 0 && (n & 0x55555555) != 0;
+        return n > 0 && (n & (n - 1)) == 0 && (n & 0x55555555) != 0;
+        //return n > 0 && ((n & (n - 1)) == 0) && (n & 0xaaaaaaaa) == 0;
     }
 
     public boolean isPowerOfFour_1(int num) {
@@ -118,9 +141,6 @@ public class Bit {
         return num == 1;
     }
 
-    public boolean isPowerOfFour_x(int num) {
-        return num > 0 && ((num & (num - 1)) == 0) && ((num & 0xaaaaaaaa) == 0);
-    }
 
     /**
      * Input a positive long, N, find the largest number that: 1 smaller or equals to N 2 it's a power of 2
@@ -196,19 +216,26 @@ public class Bit {
      */
     public static void main(String[] args) {
 
+        
+        
         System.out.println(0b11111111111111111111111111111101);
 
         System.out.println(Integer.toBinaryString(~(1 << 3)));
         System.out.println(Integer.toBinaryString(~0b00111100));
 
-        for (int i = 8; i < 16; i++) {
+        for (int i = 242; i < 245; i++) {
+            
 
-            System.out.println(Integer.toBinaryString(i));
-            System.out.println(Integer.toBinaryString(-i));
+//            System.out.println(Integer.toBinaryString(i));
+//            System.out.println(Integer.toBinaryString(-i));
+//
+//            System.out.println(Integer.toBinaryString(i & (-i)));
 
-            System.out.println(Integer.toBinaryString(i & (-i)));
+            System.out.println( i & 1 );
 
-            System.out.println();
+            System.out.println( Math.log10(i) / Math.log10(3) );
+            System.out.println( (Math.log10(i) / Math.log10(3)) % 1 < 0.00001 );
+            System.out.println( );
         }
 
     }

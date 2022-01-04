@@ -69,30 +69,11 @@ import java.util.Stack;
 public class Add2NumberII {
 
 
-    class ListNode{
-        int val;  // value
-        ListNode next;
-
-        ListNode(){ }
-        ListNode(int x){
-            this(x, null);
-        }
-        ListNode(int x, ListNode node){
-            val = x;
-            next = node;
-        }
-
-        public String toString(){
-            return String.valueOf(this.val);
-        }
-    }
-
-
     public ListNode addTwoNumbers_stack(ListNode l1, ListNode l2) {
-        Stack<Integer> s1 = build(l1);
-        Stack<Integer> s2 = build(l2);
+        Stack<Integer> s1 = fillIn(l1);
+        Stack<Integer> s2 = fillIn(l2);
 
-        ListNode head = new ListNode();
+        ListNode head = new ListNode(0);
         ListNode curr;
 
         int sum = 0;
@@ -121,7 +102,7 @@ public class Add2NumberII {
         return head.next;
     }
 
-    private Stack<Integer> build(ListNode l){
+    private Stack<Integer> fillIn(ListNode l){
         Stack<Integer> result = new Stack<>();
 
         while(l != null){
@@ -133,50 +114,53 @@ public class Add2NumberII {
     }
 
     public ListNode addTwoNumbers_recursive(ListNode l1, ListNode l2) {
-        // align l1 and l2 on the right side
-        ListNode s = l1;
-        ListNode l = l2;
-
-        while(s.next != null && l.next != null ){
-            s = s.next;
-            l = l.next;
+        if(l1 == null || l2 == null){
+            return l1 == null ? l2 : l1;
         }
 
-        ListNode r = l;  //remained
-        if(s.next == null){
-            s = l1;
-            l = l2;
-        } else { //l.next == null
-            r = s;
-            s = l2;
-            l = l1;
-        }
-
-        //recursive addition
         ListNode dummy = new ListNode(0);
 
-        helper(dummy, s, l, r);
+        // align l1 and l2 on the right side
+        int diff = 0;
+        
+        ListNode curr = l1;
+        while(curr != null){
+            curr = curr.next;
+            diff++;
+        }
+        curr = l2;
+        while(curr != null){
+            curr = curr.next;
+            diff--;
+        }
+
+        if(diff >= 0){
+            helper( l1, diff, l2, dummy);
+        }else{
+            helper( l2, -diff, l1, dummy);
+        }
 
         return dummy.val == 0 ? dummy.next : dummy;
     }
 
-    private void helper(ListNode result, ListNode s, ListNode l, ListNode r ){
-         if(r.next != null){
-            result.next = new ListNode(l.val);
-
-            helper(result.next, s, l.next, r.next);
-        }else{
-            if(s == null || l == null){
-                return;
-            }
-
-            result.next = new ListNode(s.val + l.val);
-
-            helper(result.next, s.next, l.next, r);
+    private void helper(ListNode longer, int offset, ListNode shorter, ListNode curr){
+        if(longer == null){
+            return;
         }
 
-        result.val += result.next.val / 10;
-        result.next.val %= 10;
+        if(offset > 0){
+            curr.next = new ListNode(longer.val);
+
+            helper(longer.next, offset - 1, shorter, curr.next);
+        }else{ // offset == 0
+            curr.next = new ListNode(longer.val + shorter.val);
+
+            helper(longer.next, offset, shorter.next, curr.next);
+        }
+
+        int x = curr.next.val;
+        curr.next.val = x % 10;
+        curr.val += x / 10;
     }
 
 }

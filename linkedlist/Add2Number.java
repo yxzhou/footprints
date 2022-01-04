@@ -29,27 +29,25 @@ package linkedlist;
  *     (9) + (9 9) => (8 0 1)
  *         
  */
-public class Add2Number
-{
+public class Add2Number {
   
-
     /**
      * @param l1: the first list
      * @param l2: the second list
-     * @return: the sum list of l1 and l2 
+     * @return the sum list of l1 and l2
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode head = new ListNode();
+        ListNode dummy = new ListNode(0);
 
-        ListNode curr = head;
+        ListNode curr = dummy;
         int sum = 0;
-        while(l1 != null || l2 != null){
-            if(l1 != null){
+        while (l1 != null || l2 != null) {
+            if (l1 != null) {
                 sum += l1.val;
                 l1 = l1.next;
             }
 
-            if(l2 != null){
+            if (l2 != null) {
                 sum += l2.val;
                 l2 = l2.next;
             }
@@ -59,94 +57,76 @@ public class Add2Number
             curr = curr.next;
         }
 
-        if(sum > 0){
+        if (sum > 0) {
             curr.next = new ListNode(sum);
         }
 
-        return head.next;
-    }
-  
-  
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    Add2Number sv = new Add2Number();
-    
-    int[] a = {243, 578};
-    int[] b = {564, 632};
-    
-    for(int i=0; i< a.length; i++){
-      ListNode aLN = sv.initNodeList(a[i]);
-      ListNode bLN = sv.initNodeList(b[i]);
-      
-      System.out.print("\nInput a: "+ a[i] + "\t");
-      sv.printNodeList(aLN);
-      System.out.print("\nInput b: "+ b[i] + "\t");
-      sv.printNodeList(bLN);
-      
-      System.out.print("\nOutput : \t" );
-      ListNode result = sv.addTwoNumbers(aLN, bLN);
-      sv.printNodeList(result);
-
+        return dummy.next;
     }
 
-  }
+    
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        Add2Number sv = new Add2Number();
 
+        int[] a = {243, 578};
+        int[] b = {564, 632};
+
+        for (int i = 0; i < a.length; i++) {
+            ListNode aLN = sv.initNodeList(a[i]);
+            ListNode bLN = sv.initNodeList(b[i]);
+
+            System.out.print("\nInput a: " + a[i] + "\t");
+            sv.printNodeList(aLN);
+            System.out.print("\nInput b: " + b[i] + "\t");
+            sv.printNodeList(bLN);
+
+            System.out.print("\nOutput : \t");
+            ListNode result = sv.addTwoNumbers(aLN, bLN);
+            sv.printNodeList(result);
+
+        }
+
+    }
   
-  class ListNode{
-      int val;  // value
-      ListNode next;
-
-        ListNode(){ }
-        ListNode(int x){
-        this(x, null);
-        }
-        ListNode(int x, ListNode node){
-          val = x;
-          next = node;
-        }
-
-        public String toString(){
-          return String.valueOf(this.val);
-        }
-  }
-  
-  /*
+    /*
    * int 243 ==> list nodes 3->4->2->null 
    * 
-   */
-  private ListNode initNodeList(int num){
-    ListNode preN = null;
-    ListNode curN = null;
-    ListNode head = null;
-    
-    int digit = 0;
-    int factor = 10;
-    while(num > 0){
-      digit = num % factor;
-      num = num / factor;
-            
-      curN = this.new ListNode(digit);
-      
-      if(preN == null)
-        head = curN;
-      else
-        preN.next = curN;
-        
-      preN = curN;
-      
+     */
+    private ListNode initNodeList(int num) {
+        ListNode preN = null;
+        ListNode curN = null;
+        ListNode head = null;
+
+        int digit = 0;
+        int factor = 10;
+        while (num > 0) {
+            digit = num % factor;
+            num = num / factor;
+
+            curN = new ListNode(digit);
+
+            if (preN == null) {
+                head = curN;
+            } else {
+                preN.next = curN;
+            }
+
+            preN = curN;
+
+        }
+
+        return head;
     }
-    
-    return head;
-  }
-  
-  private void printNodeList(ListNode head){
-    while(head != null){
-      System.out.print(head.val);
-      System.out.print("->");
-      head = head.next;
+
+    private void printNodeList(ListNode head) {
+        while (head != null) {
+            System.out.print(head.val);
+            System.out.print("->");
+            head = head.next;
+        }
     }
-  }
   
 }

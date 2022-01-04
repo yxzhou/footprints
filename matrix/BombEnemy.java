@@ -2,7 +2,7 @@ package matrix;
 
 /**
  * 
- * :https://leetcode.com/problems/bomb-enemy/
+ * https://leetcode.com/problems/bomb-enemy/
 
  *  Given a 2D grid, each cell is either a wall 'W', an enemy 'E' or empty '0' (the number zero), 
     return the maximum enemies you can kill using one bomb.
@@ -25,60 +25,56 @@ package matrix;
 
 public class BombEnemy {
 
-    public int maxKilledEnemies(char[][] grid) { 
-        if(null == grid || 0 == grid.length || 0 == grid[0].length){
+    /*
+     * @param grid: Given a 2D grid, each cell is either 'W', 'E' or '0'
+     * @return an integer, the maximum enemies you can kill using one bomb
+     */
+    public int maxKilledEnemies(char[][] grid) {
+        if(grid == null || grid.length == 0 || grid[0].length == 0){
             return 0;
         }
-        
+
+        int n = grid.length;
+        int m = grid[0].length;
+
         int max = 0;
-        int[] upToDown = new int[grid[0].length];
-        int leftToRight = -1;
-        
-        for(int row = 0; row < grid.length; row++){
-            for(int col = 0; col < grid[0].length; col++){
-                if(row == 0 || 'W' == grid[row][col]){
-                    upToDown[col] = countVerticalEnemy(grid, row + 1, col);
+
+        int[] numOnCol = new int[m];
+        int numOnRow = 0;
+        for(int r = 0; r < n; r++ ){
+            for(int c = 0; c < m; c++){
+                if(c == 0 || grid[r][c - 1] == 'W'){
+                    numOnRow = checkOnRow(grid, r, c, m);
                 }
-                
-                if(col == 0 || 'W' == grid[row][col]){
-                    leftToRight = countHorizonEnemy(grid, row, col + 1);
+
+                if(r == 0 || grid[r - 1][c] == 'W'){
+                    numOnCol[c] = checkOnColumn(grid, r, c, n);
                 }
-                
-                
-                if('0' == grid[row][col]){
-                    max = Math.max(max, leftToRight + upToDown[col]);
-                } 
+
+                if(grid[r][c] == '0'){
+                    max = Math.max( max, numOnRow + numOnCol[c] );
+                }
             }
         }
-        
+
         return max;
     }
-    
-    private int countHorizonEnemy(char[][] grid, int row, int col){
+
+    private int checkOnRow(char[][] grid, int r, int c, int m){
         int count = 0;
-        
-        for( ; col < grid[0].length; col++ ){
-            if('E' == grid[row][col]){
-                count++;
-            }else if('W' == grid[row][col]){
-                break;
-            }
+        while(c < m && grid[r][c] != 'W'){
+            count += grid[r][c] == 'E' ? 1 : 0;
+            c++;    
         }
-        
         return count;
     }
-    
-    private int countVerticalEnemy(char[][] grid, int row, int col){
+
+    private int checkOnColumn(char[][] grid, int r, int c, int n){
         int count = 0;
-        
-        for( ; row < grid.length; row++ ){
-            if('E' == grid[row][col]){
-                count++;
-            }else if('W' == grid[row][col]){
-                break;
-            }
+        while(r < n && grid[r][c] != 'W'){
+            count += grid[r][c] == 'E' ? 1 : 0;
+            r++;
         }
-        
         return count;
     }
     

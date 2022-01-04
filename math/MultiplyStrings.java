@@ -91,7 +91,7 @@ public class MultiplyStrings {
     }
     
     
-    public String multiply_n (String num1, String num2) {
+    public String multiply_n(String num1, String num2) {
         if(num1 == null || num2 == null){
             return "0";
         }
@@ -141,6 +141,50 @@ public class MultiplyStrings {
         return r;
     }
     
+    /**
+     * @param num1: a non-negative integers
+     * @param num2: a non-negative integers
+     * @return: return product of num1 and num2
+     */
+    public String multiply_x(String num1, String num2) {
+        if(num1 == null || num2 == null || num1.equals("0") || num2.equals("0")){
+            return "0";
+        }
+
+        int n = num1.length();
+        int m = num2.length();
+
+        int[] nums1 = helper(num1, n);
+        int[] nums2 = helper(num2, m);
+
+        int[] r = new int[n + m]; // result
+
+        for(int i = 0; i < n; i++){
+            if(nums1[i] == 0){
+                continue;
+            }
+            
+            for(int j = 0, k = i; j < m; j++, k++){
+                r[k] += nums1[i] * nums2[j];
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+ 
+
+        return result.reverse().toString();
+    }
+
+    private int[] helper(String nums, int n){
+        int[] r = new int[n];
+        int k = 0;
+        for(int i = n - 1; i >= 0; i--){
+            r[k++] = nums.charAt(i) - '0';
+        }
+
+        return r;
+    }
+    
     public static void main(String[] args){
         
         int[] nums = new int[]{0, 1, 2, 3, 4};
@@ -153,12 +197,20 @@ public class MultiplyStrings {
         
         MultiplyStrings sv = new MultiplyStrings();
         
-        Assert.assertEquals("6", sv.multiply_n("2", "3"));
-        Assert.assertEquals("56088", sv.multiply_n("123", "456"));
-        Assert.assertEquals("0", sv.multiply_n("123", "0"));
-        Assert.assertEquals("121932631112635269", sv.multiply_n("123456789", "987654321"));
-        Assert.assertEquals("491555843274052692", sv.multiply_n("6913259244", "71103343"));
+        String[][] inputs = {
+            //{num1, num2, expect}
+            {"2", "3", "6"},
+            {"123", "456", "56088"},
+            {"123", "0", "0"},
+            {"123456789", "987654321", "121932631112635269"},
+            {"6913259244", "71103343", "491555843274052692"}
+        };
+        
+        for(String[] input : inputs){
+            Assert.assertEquals(input[2], sv.multiply_n(input[0], input[1]));
+            
+            Assert.assertEquals(input[2], sv.multiply_x(input[0], input[1]));
+        }
        
-
     }
 }
