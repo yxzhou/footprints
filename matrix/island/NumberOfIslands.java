@@ -1,4 +1,4 @@
-package matrix.Islands;
+package matrix.island;
 
 /**
  * Number of Islands    _https://www.lintcode.com/problem/433

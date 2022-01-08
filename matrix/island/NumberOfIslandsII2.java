@@ -1,4 +1,4 @@
-package matrix.Islands;
+package matrix.island;
 
 import org.junit.Assert;
 import org.junit.Test;

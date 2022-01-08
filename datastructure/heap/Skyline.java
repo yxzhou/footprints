@@ -184,10 +184,10 @@ public class Skyline {
 	
     /**
      * @param buildings: A list of lists of integers
-     * @return: Find the outline of those buildings
+     * @return Find the outline of those buildings
      */
     public ArrayList<ArrayList<Integer>> buildingOutline_2(int[][] buildings) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         
         //check
         if(null == buildings || 0 == buildings.length){
@@ -195,13 +195,13 @@ public class Skyline {
         }
            
         //order by x (x_left and x_right)
-        List<int[]> list = new ArrayList<int[]>();
+        List<int[]> list = new ArrayList<>();
         for(int[] b : buildings){
             list.add(new int[]{b[0], b[2]});
             list.add(new int[]{b[1], -b[2]});
         }
         
-        Collections.sort(list, new Comparator<int[]>(){
+        Collections.sort(list, new Comparator<>(){
             @Override
             public int compare(int[] a, int[] b){
                 if(a[0] == b[0]){

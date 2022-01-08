@@ -1,6 +1,7 @@
 package game.palindrome;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,55 @@ public class PalindromePermutation {
         
         boolean isOdd = (s.length() & 1) == 1;
         return oddNum == (isOdd ? 1 : 0 );
+    }
+    
+    /**
+     * @param s: the given string
+     * @return if a permutation of the string could form a palindrome
+     */
+    public boolean canPermutePalindrome_n(String s) {
+        int count = 0;
+        boolean[] flag = new boolean[256]; //default all are false
+        int i; 
+        for(char c : s.toCharArray()){
+            i = (int)c;
+            flag[i] = !flag[i];
+
+            if(flag[i]){
+                count++;
+            }else{
+                count--;
+            }
+        }
+
+        return count < 2;
+    }
+    public boolean canPermutePalindrome_n2(String s) {
+        int count = 0;
+        
+        BitSet bits = new BitSet();
+        int i; 
+        for(char c : s.toCharArray()){
+            i = (int)c;
+            bits.flip(i);
+
+            if(bits.get(i)){
+                count++;
+            }else{
+                count--;
+            }
+        }
+
+        return count < 2;
+    }
+    public boolean canPermutePalindrome_nx(String s) {
+        
+        BitSet bits = new BitSet();
+        for(char c : s.toCharArray()){
+            bits.flip(c);
+        }
+
+        return bits.cardinality() < 2;
     }
     
     public List<String> generatePalindromes_n(String s) {
@@ -227,6 +277,12 @@ public class PalindromePermutation {
     }
     
     public static void main(String[] args){
+        BitSet bits = new BitSet();
+        bits.flip(3);
+        bits.flip(3);
+        bits.flip(2);
+        System.out.println(bits.cardinality());
+        
         PalindromePermutation sv = new PalindromePermutation();
         
         String[] input = {"a", "aa", "aab", "abc", "aabb", "aaab", "abca", "aabbc", "carerac"};

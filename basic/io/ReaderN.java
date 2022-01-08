@@ -20,7 +20,7 @@ public class ReaderN {
      * @param n maximum number of characters to read
      * @return the number of characters read
      */
-    char[] buffer = new char[4];
+    char[] buffer = new char[4]; 
     int left = 0; // offset
     int right = 0;
 

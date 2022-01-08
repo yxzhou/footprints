@@ -1,4 +1,4 @@
-package matrix.Islands;
+package matrix.island;
 
 import java.util.ArrayList;
 import java.util.Collections;

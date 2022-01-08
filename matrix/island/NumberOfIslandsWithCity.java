@@ -1,4 +1,4 @@
-package matrix.Islands;
+package matrix.island;
 
 /**
  * Island City   _https://www.lintcode.com/problem/897

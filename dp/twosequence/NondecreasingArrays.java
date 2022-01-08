@@ -9,7 +9,9 @@ import java.util.Arrays;
 import junit.framework.Assert;
 
 /**
- *
+ *_https://www.lintcode.com/problem/1016 
+ * Minimum Swaps To Make Sequences Increasing
+ * 
  * We have two integer sequences A and B of the same non-zero length.
  * 
  * We are allowed to swap elements A[i] and B[i]. Note that both elements are in the same index position in their respective sequences.
@@ -44,7 +46,7 @@ import junit.framework.Assert;
  *       3rd, A[i - 1] >= A[i] && B[i - 1] <  B[i]
  *       4th, A[i - 1] >= A[i] && B[i - 1] >= B[i]
  * 
- *    Because It is guaranteed that the given input always makes it possible, to make both squences strictly increasing,
+ *    Because It is guaranteed that the given input always makes it possible, to make both sequences strictly increasing,
  *    the above 4th is not possible.
  *    And 2nd is B[i - 1] < A[i] <= A[i - 1] < B[i] 
  *        3rd is A[i - 1] < B[i] <= B[i - 1] < A[i] 
@@ -56,7 +58,7 @@ import junit.framework.Assert;
  *  2) DP, Time O(n),  Space O(n) that can be optimized to O(1) 
  * 
  */
-public class MinimumSwap {
+public class NondecreasingArrays {
     
     int min = Integer.MAX_VALUE;
     public int minSwap_DFS(int[] A, int[] B) {
@@ -103,7 +105,7 @@ public class MinimumSwap {
      * Time O(n),  Space O(n) that can be optimized to O(1) 
      * @param A
      * @param B
-     * @return 
+     * @return the minimum number of swaps to make both sequences strictly increasing
      */
     public int minSwap_DP(int[] A, int[] B) {
         if(A == null || A.length < 2){
@@ -112,8 +114,8 @@ public class MinimumSwap {
         
         int n = A.length;
         
-        int[] keep = new int[n];
-        int[] swap = new int[n];
+        int[] keep = new int[n]; // keep[i] stores the minimum swap when keep i_th
+        int[] swap = new int[n]; // swap[i] stores the mininum swap when swap i_th
         Arrays.fill(keep, Integer.MAX_VALUE);
         Arrays.fill(swap, Integer.MAX_VALUE);
         keep[0] = 0;
@@ -135,7 +137,7 @@ public class MinimumSwap {
     }
     
     public static void main(String[] args){
-        MinimumSwap sv = new MinimumSwap();
+        NondecreasingArrays sv = new NondecreasingArrays();
         
         int[][][] inputs = {
             {
