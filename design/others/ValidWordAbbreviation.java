@@ -63,18 +63,18 @@ public class ValidWordAbbreviation {
 
     /*
     * @param dictionary: a list of words
-    */
+     */
     public ValidWordAbbreviation(String[] dictionary) {
 
         words = new HashSet<>();
         abbrs = new HashMap<>();
 
         String hashcode;
-        for(String word : dictionary){
+        for (String word : dictionary) {
             words.add(word);
 
             hashcode = getAbbr(word);
-            abbrs.put(hashcode, abbrs.getOrDefault(hashcode, 0) + 1 );
+            abbrs.put(hashcode, abbrs.getOrDefault(hashcode, 0) + 1);
         }
     }
 
@@ -88,13 +88,13 @@ public class ValidWordAbbreviation {
         // }
 
         String hashcode = getAbbr(word);
-        return !abbrs.containsKey(hashcode) || ( abbrs.get(hashcode) == 1 && words.contains(word) ) ;
+        return !abbrs.containsKey(hashcode) || (abbrs.get(hashcode) == 1 && words.contains(word));
     }
 
-    private String getAbbr(String word){
+    private String getAbbr(String word) {
         int n = word.length();
 
-        if(n < 3){
+        if (n < 3) {
             return word;
         }
 

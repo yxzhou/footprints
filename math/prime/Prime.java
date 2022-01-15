@@ -8,26 +8,25 @@ import java.util.List;
  * Output all prime numbers up to a specified integer n.
  * 
  */
-public class Prime
-{
+public class Prime {
 
-    public boolean isPrime(int n){
-        if(n < 2){
+    public boolean isPrime(int n) {
+        if (n < 2) {
             return false;
         }
-        
-        for(int i = 2; i < n; i++){
-            if(n % i == 0){
+
+        for (int i = 2; i < n; i++) {
+            if (n % i == 0) {
                 return false;
             }
         }
-        
+
         return true;
     }
     
 
   /* 
-   * Generate a prime list from 0 up to n, using The Sieve of Erantosthenes
+   * Generate a prime list from 0 up to n, using The Sieve of Erantosthenes,
    * param n The upper bound of the prime list (including n)
    * param prime[] An array of truth value whether a number is prime
    * 
@@ -42,33 +41,33 @@ public class Prime
    * 
    * 
   */
-    public boolean[] isPrime_sieve(int n){
-        if(n < 0){
+    public boolean[] isPrime_sieve(int n) {
+        if (n < 0) {
             return new boolean[0];
         }
-        
+
         boolean[] result = new boolean[n + 1];//default all are true ??
         // 0 and 1 is not prime and composite
         result[0] = false;
         result[1] = false;
-        for(int i = 2; i < result.length; i++){
+        for (int i = 2; i < result.length; i++) {
             result[i] = true;
         }
-        
-        int limit = (int)Math.sqrt(n);  //**
+
+        int limit = (int) Math.sqrt(n);  //**
         for (int i = 2; i <= limit; i++) {
-            if(result[i]){
-                for(int k = i*i; k < n; k += i){
+            if (result[i]) {
+                for (int k = i * i; k < n; k += i) {
                     result[k] = false;
                 }
             }
         }
-        
+
         return result;
     }
 
     public List<Integer> prime(int n) {
-        if(n < 2){
+        if (n < 2) {
             return Collections.EMPTY_LIST;
         }
 
@@ -76,15 +75,15 @@ public class Prime
         List<Integer> result = new LinkedList<>();
 
         result.add(2);
-        for(int j = 2; j <= n; j += 2){
+        for (int j = 2; j <= n; j += 2) {
             v[j] = true;
         }
 
-        for(int i = 3; i <= n; i += 2){
-            if(!v[i]){
+        for (int i = 3; i <= n; i += 2) {
+            if (!v[i]) {
                 result.add(i);
 
-                for(int j = (i << 1); j <= n; j += i){
+                for (int j = (i << 1); j <= n; j += i) {
                     v[j] = true;
                 }
             }
@@ -97,58 +96,57 @@ public class Prime
    * 
    * Count the number of prime numbers less than a non-negative number, n
    */
-  public int countPrimes(int n) {
-      //check input
-	  if(n < 2){ //0 and 1 is not prime and composite
-		  return 0;
-	  }
-	  
-	  //init, 
-	  boolean[] isPrime = new boolean[n];
-	 
-	  //using The Sieve of Erantosthenes
-	  int limit = (int) Math.sqrt(n);
-	  for(int i=2; i<= limit; i++){
-		  if(!isPrime[i]){
-			  for(int j= i*i; j<n; j+=i){ //start from i*i
-				  isPrime[j] = false;
-			  }
-		  }
-	  }
-	  
-	  //count how many isPrime[] is true;
-	  int count = 0;
-	  for(int i=2; i<n; i++){
-		  if(isPrime[i]){
-			  count++;
-		  }
-	  }
-	  
-	  return count;
-  }
-  
-  public static void main(String[] args) {
+    public int countPrimes(int n) {
+        //check input
+        if (n < 2) { //0 and 1 is not prime and composite
+            return 0;
+        }
 
-    System.out.println("====start====");
-    
-    
-    int n = 120; 
-    
-        
-    Prime sv = new Prime();
-    boolean[] prime  = sv.isPrime_sieve(n);
-    
-    for(int i=0; i<n; i++){
-      
-      if(prime[i])
-        System.out.print(i + " ");
-        
+        //init, 
+        boolean[] isPrime = new boolean[n];
+
+        //using The Sieve of Erantosthenes
+        int limit = (int) Math.sqrt(n);
+        for (int i = 2; i <= limit; i++) {
+            if (!isPrime[i]) {
+                for (int j = i * i; j < n; j += i) { //start from i*i
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        //count how many isPrime[] is true;
+        int count = 0;
+        for (int i = 2; i < n; i++) {
+            if (isPrime[i]) {
+                count++;
+            }
+        }
+
+        return count;
     }
-    
-    System.out.println();
-    System.out.println(sv.countPrimes(n));
-    
-    System.out.println("====end====");
-  }
+  
+    public static void main(String[] args) {
+
+        System.out.println("====start====");
+
+        int n = 120;
+
+        Prime sv = new Prime();
+        boolean[] prime = sv.isPrime_sieve(n);
+
+        for (int i = 0; i < n; i++) {
+
+            if (prime[i]) {
+                System.out.print(i + " ");
+            }
+
+        }
+
+        System.out.println();
+        System.out.println(sv.countPrimes(n));
+
+        System.out.println("====end====");
+    }
 
 }

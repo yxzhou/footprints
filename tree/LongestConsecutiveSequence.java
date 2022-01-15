@@ -2,6 +2,7 @@ package tree;
 
 
 /**
+ * _https://www.lintcode.com/problem/595
  * 
  * Given a binary tree, find the length of the longest consecutive sequence path.
     The path refers to any sequence of nodes from some starting node to any node
@@ -29,29 +30,29 @@ package tree;
 
 public class LongestConsecutiveSequence {
 
+    int max = 0;
+        
+    /**
+     * @param root: the root of binary tree
+     * @return: the length of the longest consecutive sequence path
+     */
     public int longestConsecutive(TreeNode root) {
-        if(null == root){
-            return 0;
-        }
-        
-        return longestConsecutive(root, 0, root.val);
+        helper(root, 0, 0);
+
+        return max;
     }
-    
-    private int longestConsecutive(TreeNode node, int preLen, int target){
-        if(null == node){
-            return preLen;
+
+    private void helper(TreeNode node, int target, int path){
+        if(node == null){
+            return;
         }
+
+        path = (node.val == target ? path + 1 : 1); 
+        max = Math.max(max, path);
         
-        if(node.val == target){
-            preLen++;
-        }else{
-            preLen = 1;
-        }
-        
-        int left = longestConsecutive(node.left, preLen, node.val + 1);
-        int right = longestConsecutive(node.right, preLen, node.val + 1);
-        
-        return Math.max(preLen, Math.max(left, right));
+        target = node.val + 1;
+        helper(node.right, target, path);
+        helper(node.left, target, path);
     }
     
     public static void main(String[] args) {

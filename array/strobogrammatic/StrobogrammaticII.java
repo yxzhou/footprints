@@ -1,74 +1,68 @@
 package array.strobogrammatic;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import util.Misc;
 
 /**
+ * _https://www.lintcode.com/problem/776
  * 
- *A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down). 
- *For example, the numbers "69", "88", and "818" are all strobogrammatic.
-
-    Find all strobogrammatic numbers that are of length = n.
-    
-    For example,
-    Given n = 2, return ["11","69","88","96"].
+ * A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down). For
+ * example, the numbers "69", "88", and "818" are all strobogrammatic.
+ * 
+ *  Find all strobogrammatic numbers that are of length = n.
+ *  
+ *  For example,
+ *  Given n = 2, return ["11","69","88","96"].
+ *  Given n = 1, return ["0","1","8"].
  *
  */
 
 public class StrobogrammaticII {
     
-    int[] middleDigits = {0, 1, 8}; 
-    int[] validDigits = {0, 1, 6, 8, 9}; 
-    char[] map = {'0', '1', '#', '#', '#', '#', '9', '#', '8', '6'};
+    char[] selfable = {'0', '1', '8'}; // the digit in the middle, it's same after rotating,
+    char[] mirrorable = {'0', '1', '6', '8', '9'}; // the digit except in the middle, note, 0 can't be in the left-most
+    char[] mirrors = {'0', '1', '#', '#', '#', '#', '9', '#', '8', '6'};
     
+    /**
+     *
+     * @param n: the length of strobogrammatic number
+     * @return: All strobogrammatic numbers
+     */
     public List<String> findStrobogrammatic(int n) {
+        List<String> result = new LinkedList<>();
 
-        List<String> result = new ArrayList<>();
-        
-        //check
-        if(1 > n){
-            return result;
-        }else if(1 == n){
-            for(int i = 0; i < validDigits.length; i++){
-                result.add(String.valueOf(validDigits[i]));
-            }
-            return result;
-        }
-        
-        helper(n, result, new StringBuilder(n), true);
-        
+        dfs(new char[n], 0, n - 1, result );
+
         return result;
     }
-    
-    private void helper(int n, List<String> result, StringBuilder str, boolean isFirst){
-        if(n < 1){
-            int size = str.length();
-            
-            for(int i = size - 1 + n; i >= 0; i--){  //n = 0 or n = -1
-                str.append(map[str.charAt(i) - '0']);
-            }
-            
-            result.add(str.toString());
-            str.delete(size, str.length());
-        }else if(n == 1){
-            for(int i = 0; i < middleDigits.length; i++){  //**
-                str.append(middleDigits[i]);
-                
-                helper(n - 2, result, str, false);
-                
-                str.deleteCharAt(str.length() - 1);
-            }
-        }else if(n > 1){
-            for(int i = ( isFirst ? 1 : 0); i < validDigits.length; i++){  //**
-                str.append(validDigits[i]);
-                
-                helper(n - 2, result, str, false);
-                
-                str.deleteCharAt(str.length() - 1);
-            }
+
+    private void dfs(char[] arr, int l, int r, List<String> result){
+        if(l > r){
+            result.add(String.valueOf(arr));
+            return;
         }
+
+        if(l == r){
+            for(char x : selfable){
+                arr[l] = x;
+                dfs(arr, l + 1, r - 1, result);
+            }
+            return;
+        }
+
+        //l < r
+        for(char x : mirrorable){
+            if(l == 0 && x == '0'){
+                continue;
+            }
+
+            arr[l] = x;
+            arr[r] = mirrors[x - '0'];
+            dfs(arr, l + 1, r - 1, result);
+        }
+        
     }
     
     public static void main(String[] args){

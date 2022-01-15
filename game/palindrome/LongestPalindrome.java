@@ -54,7 +54,7 @@ public class LongestPalindrome {
     
    /**
      * @param s: a string which consists of lowercase or uppercase letters
-     * @return: the length of the longest palindromes that can be built
+     * @return the length of the longest palindromes that can be built
      */
     public int longestPalindrome_n(String s) {
         if(s == null || s.isEmpty() ){

@@ -1,5 +1,7 @@
 package array.strobogrammatic;
 
+import junit.framework.Assert;
+
 /**
  * 
  * A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
@@ -7,18 +9,18 @@ package array.strobogrammatic;
  * For example, the numbers "69", "88", and "818" are all strobogrammatic.
  *
  *  cases:
- *    0,  -> 0
- *    1,  -> 1
- *    2,  
+ *    0,  -> 0    true
+ *    1,  -> 1    true
+ *    2,  -> 5       
  *    3,
  *    4,
- *    5,
+ *    5,  -> 2
  *    6,  -> 9
  *    7,
  *    8,  -> 8
  *    9,  -> 6
  *    10, -> 01
- *    69, -> 
+ *    69, ->  
  *    88,
  *    414,
  *    818,
@@ -27,64 +29,32 @@ package array.strobogrammatic;
 
 public class Strobogrammatic {
 
-    public boolean isStrobogrammatic(String num){
-        //check
-        if(null == num || 0 == num.length() || (!num.equals("0") && num.endsWith("0"))){
+    char[] mirrors = {'0', '1', '5', '#', '#', '2', '9', '#', '8', '6'};
+
+    public boolean isStrobogrammatic(String num) {
+        if (num == null) {
             return false;
         }
-        
-        for(int left = 0, right = num.length() - 1; left <= right; left++, right--){
-            if(!isStrobogrammatic(num.charAt(left), num.charAt(right))){
+
+        for (int l = 0, r = num.length() - 1; l <= r; l++, r--) {
+            if (num.charAt(l) != mirrors[num.charAt(r) - '0']) {
                 return false;
             }
         }
-        
-        return true;
-    }
-    
-    private boolean isStrobogrammatic(char a, char b){
-        switch(a){
-            case '0':
-                return b == '0';
-            case '1':
-                return b == '1';
-            case '6':
-                return b == '9';
-            case '8':
-                return b == '8';
-            case '9':
-                return b == '6';
-            default:
-                return false;
-        }
-    }
-    
-    public boolean isStrobogrammatic_2(String num){
-        //check
-        if(null == num || 0 == num.length() || (1 != num.length() && num.endsWith("0"))){
-            return false;
-        }
-        
-        char[] map = {'0', '1', '#', '#', '#', '#', '9', '#', '8', '6'};
-        int a;
-        for(int left = 0, right = num.length() - 1; left <= right; left++, right--){
-            a = num.charAt(left) - '0';
-            
-            if(a < 0 || a > 9 || map[a] == '#' || map[a] != num.charAt(right)){
-                return false;
-            }
-        }
-        
+
         return true;
     }
     
     public static void main(String[] args){
-        int[] input = {0,1,2,3,4,5,6,7,8,9,10, 11,69,88,414,818};
+        int[] inputs = {0,1,2,3,4,5,6,7,8,9,10, 11,69,88,414,818, 26895};
+        boolean[] expects = {true, true, false, false, false, false, false, false, true, false, false, true, true, true, false, true, true };
         
         Strobogrammatic sv = new Strobogrammatic();
         
-        for(int i : input){
-            System.out.println(String.format("%d --> %b, %b ", i, sv.isStrobogrammatic(String.valueOf(i)), sv.isStrobogrammatic_2(String.valueOf(i))));
+        for(int i = 0; i < expects.length; i++){
+            System.out.println(String.format(" Input %d:  %d ", i, inputs[i]));
+            
+            Assert.assertEquals(expects[i], sv.isStrobogrammatic(String.valueOf(inputs[i])));
         }
     }
 }

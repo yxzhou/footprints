@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package math;
+package array.strobogrammatic;
 
 /**
  * _https://www.lintcode.com/problem/1028
