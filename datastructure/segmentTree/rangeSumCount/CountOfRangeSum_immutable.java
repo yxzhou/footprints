@@ -6,53 +6,95 @@ import java.util.Arrays;
 import java.util.TreeMap;
 
 /**
+ * _https://www.lintcode.com/problem/1293
  * 
  * Given an integer array nums, return the number of range sums that lie in [lower, upper] inclusive.
-    Range sum S(i, j) is defined as the sum of the elements in nums between indices i and j (i ≤ j), inclusive.
-    
-    Note:
-    A naive algorithm of O(n^2) is trivial. You MUST do better than that.
-    
-    Example:
-    Given nums = [-2, 5, -1], lower = -2, upper = 2,
-    Return 3.
-    The three ranges are : [0, 0], [2, 2], [0, 2] and their respective sums are: -2, -1, 2.
+ * Range sum S(i, j) is defined as the sum of the elements in nums between indices i and j (i ≤ j), inclusive.
+ *   
+ *  Note:
+ *  A naive algorithm of O(n^2) is trivial. You MUST do better than that.
+ *  
+ *  Example:
+ *  Given nums = [-2, 5, -1], lower = -2, upper = 2,
+ *  Return 3.
+ *  Explanation: The three ranges are : [0, 0], [2, 2], [0, 2] and their respective sums are: -2, -1, 2.
  *
  *
  * Solution:
  *   It's a range sum issue.
- *   All the range would be [x, y], total it's n^2, so the worst case, the time complexity is O(n^2).
- *   To get a "better algorithm",  it's improve time complexity with space cost.
- *   A "better algorithm" is,
- *     1 define int[] sums, sums[i] = nums[0] + -- + nums[i]
- *     2 from sums[0] to sums[n-1],  count if it is in range [lower, upper]
- *     3 from sums[1] to sums[n-1],  count if it is in range [lower + sums[0], upper + sums[0]]
- *     4 from sums[2] to sums[n-1],  count if it is in range [lower + sums[1], upper + sums[1]]
- *     5 - - -
- *
- *     time complexity is O(n^2)
- *
- *   Further improve.
- *     Interval Tree
- *     1 To array of sums[0..n-1], build a interval tree from min and max of the array. The treeNode includes ( start, end, count ) , default the count is 0.
- *     2 insert sums[n-1] in the tree, update the treeNode's count that includes sums[n-1]
- *       get sum of the treeNode's count when it in the range of [lower + sums[n-2], upper + sums[n-2]]
- *     3 insert sums[n-2] in the tree, update the treeNode's count that includes sums[n-2]
- *       get sum of the treeNode's count when it in the range of [lower + sums[n-3], upper + sums[n-3]]
- *     4 - - -
- *
- *     Segment Tree
- *     1 To ranges of [lower, upper], [lower + sums[0], upper + sums[0]], - , [lower + sums[n-2], upper + sums[n-2]], build a Segment tree, The treeNode includes ( start, end, count ) , default the count is 0.
- *     2 insert range [lower + sums[n-2], upper + sums[n-2]], update the treeNode's count that is in the range.
- *       get sum of the count of treeNode [sums[n-1], sums[n-1]]
- *     3 - -
- *
- *   The following implements the Interval Tree
+ *   Example for [a, b, c, d], the naive solution is check the following with a range [lower, upper]
+ *     a, 
+ *     a+b, b
+ *     a+b+c, b+c, c
+ *     a+b+c+d, b+c+d, c+d, d 
+ *   Total it's n^2, so the worst case, the time complexity is O(n^2).
+ * 
+ *   To do better, it cannot calculate all combination.  only way is reuse the prefix sum.  
+ * 
+ *   M1) it's improve time complexity with space cost. Build a segment tree to store the prefix sunm, sums[i] = nums[0] + -- + nums[i]
+ *     a+b+c+d                  with [l+a+b+c, u+a+b+c]
+ *     a+b+c+d, a+b+c           with [l+a+b, u+a+b]  
+ *     a+b+c+d, a+b+c, a+b      with [l+a, u+a]
+ *     a+b+c+d, a+b+c, a+b, a   with [l, u]
+ * 
+ *   As same as
+ *     from sums[0] to sums[n-1],  count if it is in range [lower, upper]
+ *     from sums[1] to sums[n-1],  count if it is in range [lower + sums[0], upper + sums[0]]
+ *     from sums[2] to sums[n-1],  count if it is in range [lower + sums[1], upper + sums[1]]
+ *      - - -
+ *      
+ *   M2) count with the TreeMap.subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive)
+ *     a                with [l, u]
+ *     a, b-b           with [l-b, u-b]
+ *     a, 0, c-b-c      with [l-b-c, u-b-c]
+ *     a, 0, c-b-c, d-b-c-d  with [l-b-c-d, u-b-c-d]
+ * 
+ *   M3) count with the TreeMap.subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive)
+ *     a        with [l, u]
+ *     a+b      with [l, u]     and     a          with [a+b-u , a+b-l]
+ *     a+b+c    with [l, u]     and     a, a+b     with [a+b+c-u, a+b+c-l]
+ *     a+b+c+d  with [l, u]     and     a, a+b, a+b+c     with [a+b+c+d-u, a+b+c+d-l]
+ *  
+ *   
  */
 
 public class CountOfRangeSum_immutable {
 
-    public int countRangeSum_x(int[] nums, int lower, int upper) {
+    /**
+     * with TreeMap
+     * 
+     * define n as the length of nums
+     * Time O(n * logn), space O(n)
+     * 
+     * @param nums
+     * @param lower
+     * @param upper
+     * @return 
+     */
+    public int countRangeSum_m2(int[] nums, int lower, int upper) {
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+        
+        int count = 0;
+        TreeMap<Long, Integer> treeMap = new TreeMap<>();
+        
+        long sum = -nums[0];
+        
+        for(int x : nums){
+            sum += x;
+            
+            treeMap.put(x - sum, treeMap.getOrDefault(x - sum, 0) + 1);
+            
+            for(int c : treeMap.subMap(lower - sum, true, upper - sum, true).values()){
+                count += c;
+            }
+        }
+        
+        return count;
+    }
+    
+    public int countRangeSum_m3(int[] nums, int lower, int upper) {
 
         TreeMap<Long, Integer> treeMap = new TreeMap<>();
 
@@ -77,8 +119,15 @@ public class CountOfRangeSum_immutable {
         return count;
     }
 
-    /****          **/
-    public int countRangeSum(int[] nums, int lower, int upper) {
+    /**
+     * with Binary Search Tree
+     * 
+     * @param nums
+     * @param lower
+     * @param upper
+     * @return 
+     */
+    public int countRangeSum_m1(int[] nums, int lower, int upper) {
         //check
         if(null == nums || 0 == nums.length){
             return 0;
@@ -177,7 +226,7 @@ public class CountOfRangeSum_immutable {
         };
         
         for(int i = 0; i < input.length; i++){
-            System.out.println(String.format("%s and [%d, %d] -- %d", Misc.array2String(input[i]), pairs[i][0], pairs[i][1], sv.countRangeSum(input[i], pairs[i][0], pairs[i][1])));
+            System.out.println(String.format("%s and [%d, %d] -- %d", Misc.array2String(input[i]), pairs[i][0], pairs[i][1], sv.countRangeSum_m1(input[i], pairs[i][0], pairs[i][1])));
 
         }
      }

@@ -202,7 +202,7 @@ public class Misc
         }
 
         for (int i = 0; i < metrix.length; i++) {
-            System.out.print("\t-" + i + "-\t"
+            System.out.print("\n-" + i + "-\t"
                     + Misc.array2String(metrix[i]));
         }
 
@@ -360,10 +360,17 @@ public class Misc
             returnValue.append(", ");
         }
 
+        if(returnValue.length() > 2){
+            returnValue.delete(returnValue.length() - 2, returnValue.length());
+        }
+
         return returnValue;
     }
 
     public static <T> StringBuffer array2String(List<T> list) {
+        return array2String(list, true);
+    }
+    public static <T> StringBuffer array2String(List<T> list, boolean needSpace) {
         StringBuffer returnValue = new StringBuffer();
 
         if (null == list) {
@@ -372,12 +379,21 @@ public class Misc
 
         for (int i = 0; i < list.size(); i++) {
             returnValue.append(list.get(i));
-            returnValue.append(", ");
+            if(needSpace){
+                returnValue.append(", ");
+            }else{
+                returnValue.append(",");
+            }
+            
         }
 
         int length = returnValue.length();
         if (length > 2) {
-            returnValue.delete(length - 2, length);
+            if(needSpace){
+                returnValue.delete(length - 2, length);
+            }else{
+                returnValue.deleteCharAt(length - 1);
+            }
         }
 
         return returnValue;

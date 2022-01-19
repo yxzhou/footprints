@@ -16,7 +16,7 @@ import java.util.*;
  *    Let's suppose there are m unique frequent count, the time complexity can be O(logm) (m << n)
  *
  *    Cleanup() can be done in the other thread when it's over capacity and idle. and if so, it can remove the minHeap operation
- *    when set() and get(). Let's say it need cleanup n/5 with a maxHeap, the time complexity is O(mlogn). Totally average it's O(1)
+ *    when set() and get(). Let's say it need cleanup n/5 with a minHeap, the time complexity is O(mlogn). Totally average it's O(1)
  *
  *
  *  Todo:

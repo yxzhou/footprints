@@ -23,30 +23,29 @@ import java.util.*;
 
 public class LFUCacheImpl42{
 
-    class Entity{
+    class Node{
         int key;
         int value;
-        int frequent;
+        int freq; //frequent number
 
-        Entity(int key, int value){
+        Node(int key, int value){
             this.key = key;
             this.value = value;
-            this.frequent = 0;
+            this.freq = 1;
         }
     }
 
     int capacity;
-    Map<Integer, Entity> datas; // <key, value>
-
-    Map<Integer, LinkedHashSet<Integer>> frequents;  //<frequent, List<key>>
-    int minFrequent;
+    Map<Integer, Node> datas; //<key, Node>
+    Map<Integer, LinkedHashSet<Integer>> freqs; //<freq, LinkedHashSet<key>>
+    int minFreq;
 
     public LFUCacheImpl42(int capacity) {
         this.capacity = capacity;
-        this.datas = new HashMap(capacity * 2);
+        this.minFreq = 1;
 
-        this.frequents = new HashMap<>();
-        this.minFrequent = 0;
+        datas = new HashMap<>();
+        freqs = new HashMap<>();
     }
 
     public int get(int key) {
@@ -54,42 +53,49 @@ public class LFUCacheImpl42{
             return -1;
         }
 
-        Entity result = datas.get(key);
+        Node curr = datas.get(key);
+        
+        freqs.get(curr.freq).remove(curr.key);
+        curr.freq++;
 
-        increaseFrequent(result);
+        add(curr);
 
-        return result.value;
+        return curr.value;
     }
 
-    public void put(int key, int value) {
-        if(datas.containsKey(key)){
-            datas.get(key).value = value;
-        }else{
-            if(datas.size() == capacity){
-                Iterator<Integer> itr = frequents.get(minFrequent).iterator();
-                int toRemoveKey = itr.next();
-                itr.remove();
+    public void set(int key, int value) {
+        Node curr = datas.get(key);
 
-                datas.remove(toRemoveKey);
+        if(curr == null){
+            if(datas.size() == capacity){
+                int toRemove = freqs.get(minFreq).iterator().next();
+
+                freqs.get(minFreq).remove(toRemove);
+                datas.remove(toRemove);
             }
 
-            datas.put(key, new Entity(key, value));
-            minFrequent = 1;
+            curr = new Node(key, value);
+            minFreq = 1;
+
+            datas.put(key, curr);
+        }else{
+            freqs.get(curr.freq).remove(curr.key) ;
+
+            curr.value = value;
+            curr.freq++;
         }
 
-        increaseFrequent(datas.get(key));
+        add(curr);
     }
 
-    private void increaseFrequent(Entity entity){
+    private void add(Node curr){
+        freqs.putIfAbsent(curr.freq, new LinkedHashSet<>() );
+        freqs.get(curr.freq).add(curr.key);
 
-        frequents.computeIfPresent(entity.frequent, (k, v) -> {v.remove(entity.key); return v.isEmpty() ? null : v;});
-
-        entity.frequent++;
-        frequents.computeIfAbsent(entity.frequent, x->new LinkedHashSet<>()).add(entity.key);
-
-        while( !frequents.containsKey(minFrequent) || frequents.get(minFrequent).isEmpty() ){
-            minFrequent++;
+        while(!freqs.containsKey(minFreq) || freqs.get(minFreq).isEmpty()){
+            minFreq++;
         }
+
     }
 
     /**   **/
@@ -101,19 +107,19 @@ public class LFUCacheImpl42{
         LFUCacheImpl42 cache = new LFUCacheImpl42(3);
 
         Assert.assertTrue(cache.get(5) == -1);
-        cache.put(2, 2);
+        cache.set(2, 2);
         //Assert.assertTrue(2 == cache.get(2));
 
         //cache.put(2, 22);
         //Assert.assertTrue(22 == cache.get(2));
 
-        cache.put(1, 1);
+        cache.set(1, 1);
         Assert.assertTrue(2 == cache.get(2));
         Assert.assertTrue(1 == cache.get(1));
         Assert.assertTrue(2 == cache.get(2));
 
-        cache.put(3, 3);
-        cache.put(4, 4);  // evict (3)
+        cache.set(3, 3);
+        cache.set(4, 4);  // evict (3)
         Assert.assertTrue(cache.get(3) == -1);
 
         //Assert.assertTrue(cache.get(2) == 22);

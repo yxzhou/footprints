@@ -36,7 +36,7 @@ public class Factorial{
      * @param n
      * @return
      */
-    public static BigDecimal factorial_BigDecimal(int n) {
+    public static BigDecimal factorial_BigDecimal1(int n) {
         return factorial(2, n);
     }
   
@@ -47,10 +47,36 @@ public class Factorial{
      * @return
      */
     public static BigDecimal factorial_BigDecimal2(int n) {
-        BigDecimal r1 = factorial(2, n / 2);
-        BigDecimal r2 = factorial(n / 2 + 1, n);
-        return r1.multiply(r2);
+        int x = n/2;//third
+        BigDecimal t1 = factorial(2, x); //thread1
+        BigDecimal t2 = factorial(x + 1, n);  //thread2
+        return t1.multiply(t2);
     }
+    
+    public static BigDecimal factorial_BigDecimal3(int n) {
+        int x = n/3;//third
+        BigDecimal r1 = factorial(2, x);   //
+        BigDecimal r2 = factorial(x + 1, x << 1);
+        BigDecimal r3 = factorial((x << 1)  + 1, n);
+        
+        return r1.multiply(r2.multiply(r3));
+    }
+    
+    public static BigDecimal factorial_BigDecimal4(int n) {
+        int x = n/4;//
+        int y = n/2;
+        BigDecimal t1 = factorial(2, x); //thread1
+        BigDecimal t2 = factorial(x + 1, y);  //thread2
+        t1 = t1.multiply(t2);
+        
+        x += y; 
+        t2 = factorial(y+1, x); //thread1
+        BigDecimal t3 = factorial(x + 1, n);  //thread2         
+        t2 = t2.multiply(t3);
+        
+        return t1.multiply(t2);
+    }
+    
 
     private static BigDecimal factorial(int begin, int end) {
         BigDecimal result = new BigDecimal(1);
@@ -138,7 +164,7 @@ public class Factorial{
 
     /**
      * @param n: an integer
-     * @return:  the factorial of n
+     * @return the factorial of n
      */
     public static String factorial_String(int n) {
         if(n < 2){
@@ -173,7 +199,7 @@ public class Factorial{
 
         //System.out.println("test lg120 = " + Math.log10(120));
         //if(true) return;
-        int[] arr = {1, 2, 3, 4, 12, 13, 20, 25, 100, 1000, 10000, 50000}; //10000, 50000
+        int[] arr = {1, 2, 3, 4, 12, 13, 20, 25, 100, 1000, 7000, 10000, 30000, 50000}; //10000, 50000
         String[] expects = {
             "1",
             "2",
@@ -192,7 +218,8 @@ public class Factorial{
         
         /** check the result correction  **/
         for (int i = 0; i < arr.length && arr[i] < 2000 ; i++) {
-            System.out.println("\nThe factorial       of " + arr[i] + " is: " + factorial_BigDecimal(arr[i]).toString() );
+            
+            System.out.println("\nThe factorial       of " + arr[i] + " is: " + factorial_BigDecimal1(arr[i]).toString() );
             System.out.println("The factorial2      of " + arr[i] + " is: " + factorial_BigDecimal2(arr[i]).toString() );
             System.out.println("The factorial_Array of " + arr[i] + " is: " + factorial_Array(arr[i]) );
             System.out.println("The factorial_22    of " + arr[i] + " is: " + factorial_String(arr[i]) );
@@ -212,11 +239,17 @@ public class Factorial{
 
         for (int i = 8; i < arr.length; i++) {
             
-            factorial_BigDecimal(arr[i]).toString();
+            factorial_BigDecimal1(arr[i]).toString();
             System.out.println("\nThe factorial       of " + arr[i] + " timeCost:" + tc.getTimeCost());
 
             factorial_BigDecimal2(arr[i]).toString();
             System.out.println("The factorial2      of " + arr[i] + " timeCost:" + tc.getTimeCost());
+            
+            factorial_BigDecimal3(arr[i]).toString();
+            System.out.println("The factorial3      of " + arr[i] + " timeCost:" + tc.getTimeCost());
+            
+            factorial_BigDecimal4(arr[i]).toString();
+            System.out.println("The factorial4      of " + arr[i] + " timeCost:" + tc.getTimeCost());
 
             factorial_Array(arr[i]);
             System.out.println("The factorial_Array of " + arr[i] + " timeCost:" + tc.getTimeCost());

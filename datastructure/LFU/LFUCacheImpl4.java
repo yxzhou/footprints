@@ -1,12 +1,6 @@
 package datastructure.LFU;
 
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  *  Problem:
  *    same as LFUCacheImpl
@@ -25,6 +19,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 
 public class LFUCacheImpl4<K, V> implements LFUCache<K, V>{
+    
+    private class Node<K, V>{
+        K key;
+        V value;
+        int count;
+
+        Node(K key, V value){
+            this.key = key;
+            this.value = value;
+            this.count = 0;
+        }
+    }
+    
     private final int capacity;
     private final int evictNum;
     Map<K, Node> cache;
@@ -44,17 +51,6 @@ public class LFUCacheImpl4<K, V> implements LFUCache<K, V>{
         counts = new HashMap<>(capacity); //
     }
 
-    private class Node<K, V>{
-        K key;
-        V value;
-        int count;
-
-        Node(K key, V value){
-            this.key = key;
-            this.value = value;
-            this.count = 0;
-        }
-    }
 
     @Override public synchronized void set(K key, V value){
 
@@ -68,7 +64,6 @@ public class LFUCacheImpl4<K, V> implements LFUCache<K, V>{
             }
 
             cache.put(key, curr);
-
             minCount = 0;
         }
 

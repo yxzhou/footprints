@@ -16,7 +16,7 @@ import java.util.Map;
  *
  *
  *  Thoughts:
- *    LRU (Least Recently Used) cache,  linkedHashMap
+ *    LRU (Least Recently Used) cache,  
  *    LFU, HashMap + Heap,
  *
  *    HashMap stores the (key, value) for get()
