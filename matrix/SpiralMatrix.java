@@ -5,7 +5,7 @@ import java.util.List;
 
 import algs4.stdlib.In;
 
-import Constants;
+import util.Constants;
 import util.Misc;
 
 /*

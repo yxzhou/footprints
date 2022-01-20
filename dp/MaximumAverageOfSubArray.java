@@ -1,4 +1,4 @@
-package todo.foo;
+package dp;
 
 /**
  * Q1 _https://www.jiuzhang.com/solution/maximum-average-subarray/

@@ -2,7 +2,7 @@ package matrix;
 
 import algs4.stdlib.In;
 
-import Constants;
+import util.Constants;
 import util.Misc;
 import util.TimeCost;
 

@@ -216,6 +216,10 @@ public class Bit {
      */
     public static void main(String[] args) {
 
+        int fifteen = (1 << 4) - 1;
+        System.out.println( Integer.toBinaryString(fifteen) );
+        
+        System.out.println( Integer.toBinaryString( setBit(fifteen, 2, false) ));
         
         
         System.out.println(0b11111111111111111111111111111101);
