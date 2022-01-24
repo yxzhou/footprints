@@ -4,8 +4,6 @@
  */
 package stringmatching;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 import junit.framework.Assert;
 
@@ -35,6 +33,8 @@ import junit.framework.Assert;
  *   The conversion is completed in three steps, within the range of n, so it is true
  * 
  * Thoughts:
+ *   The key point is 
+ * 
  *   From the test cases, 'l' is only swap with the closest 'r' on the left side   
  *   
  * 
@@ -47,9 +47,7 @@ public class LRString {
      * @return if s can transform to t.
      */
     public boolean LRString(String s, String t, int n) {
-        if(s.length() != t.length()){
-            return false;
-        }
+        assert s.length() != t.length();
         
         int m = s.length();
         if( m == 0){
@@ -93,10 +91,9 @@ public class LRString {
         return true;
     }
     
+    
     public boolean LRString_n(String s, String t, int n) {
-        if(s.length() != t.length()){
-            return false;
-        }
+        assert s.length() != t.length();
         
         int m = s.length();
         if( m == 0){

@@ -335,13 +335,19 @@ public class Misc
     }
 
     public static StringBuffer array2String(int[][] array) {
+        return array2String(array, false);
+    }
+        
+    public static StringBuffer array2String(int[][] array, boolean oneLine) {
         StringBuffer returnValue = new StringBuffer();
         if (null == array) {
             return returnValue;
         }
 
         for (int i = 0; i < array.length; i++) {
-            returnValue.append("\n");
+            if(!oneLine){
+                returnValue.append("\n");
+            }
 
             for (int j = 0; j < array[i].length; j++) {
                 returnValue.append(array[i][j]);
@@ -360,8 +366,9 @@ public class Misc
             returnValue.append(", ");
         }
 
-        if(returnValue.length() > 2){
-            returnValue.delete(returnValue.length() - 2, returnValue.length());
+        int length = returnValue.length();
+        if(length > 2){
+            returnValue.delete(length - 2, length);
         }
 
         return returnValue;

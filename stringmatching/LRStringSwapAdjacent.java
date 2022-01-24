@@ -33,30 +33,39 @@ import junit.framework.Assert;
  * 
  * Thoughts:
  *   Think about the following cases:
+ *   case #1
  *      "XXXL" 
  *      "LXXX"
  *
+ *   case #2
  *      "RXXX" 
  *      "XXXR"
  *
+ *   case #3
  *      "LXR" 
  *      "XLR" 
+ * 
+ *   case #4
+ *      "XXLRXX"    --1st
+ *      "LXXXXR"    --2nd
+ * 
+ *   Because the rule is: "XL" to "LX",  "RX" to "XR".  
+ *   So like the above case #4, the LR related position cannot be changed, it means
+ *     found_1: ignore with 'X', the 1st equals to 2nd. 
+ *    like the above case #3
+ *     found_2: found_1 is not enough, because "LX" cannot be changed to "XL"
  * 
  */
 public class LRStringSwapAdjacent {
     
     /**
      * 
-     * Wrong for case "XXLRXX", "LXXXXR"
-     * 
      * @param start: the start
      * @param end: the end
      * @return is there exists a sequence of moves to transform one string to the other
      */
     public boolean canTransform(String start, String end) {
-//        if(start.length() != end.length()){
-//            return false;
-//        }
+        assert start.length() != end.length();
 
         int n = start.length();
 
@@ -105,8 +114,7 @@ public class LRStringSwapAdjacent {
      * @param end: the end
      * @return is there exists a sequence of moves to transform one string to the other
      */
-    public boolean canTransform_n(String start, String end) {
-
+    public boolean canTransform_n(String start, String end) {        
         if (!start.replace("X", "").equals(end.replace("X", ""))) {
             return false;
         }
@@ -131,7 +139,6 @@ public class LRStringSwapAdjacent {
                 return false;
             }
         }
-        
 
         return l == 0 && r == 0;
     }
