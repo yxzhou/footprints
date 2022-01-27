@@ -1,4 +1,4 @@
-package sorting.median;
+package sorting.kth;
 
 import java.util.Hashtable;
 

@@ -23,21 +23,21 @@ public class NumbersWithUniqueDigits {
      *   It's P(9, 1) * P(9, 2) = 9 * 9 * 8
      */
     public int countNumbersWithUniqueDigits(int n) {
-        if(n == 0){
-            return 1;
+        if(n < 1){
+            return 0;
         }
 
         n = Math.min(n, 10);
 
+        int sum = 10;
         int m = 9;
-        int curr = 10;
 
-        for(int i = 0; i < n - 1; i++){
-            m *= 9 - i;
-            curr += m;
+        for(int i = 1; i < n; i++){
+            m *= 10 - i;
+            sum += m;
         }
 
-        return curr;
+        return sum;
     }
 
     public static void main(String[] args) {

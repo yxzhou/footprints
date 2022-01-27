@@ -35,7 +35,7 @@ public class QueryReconstructionByHeight {
     /**
      * define n as the number of people, h as the max height of the people, 
      * The worst case is like {{1,0},{2,0},{3,0},{4,0},{5,0},{6,0},{7,0}}
-     * Time O(n*logn + n * n * logh )
+     * Time O(n*logn + n * n * logh ),  Space O(n)
      * 
      * @param people: a random list of people
      * @return the queue that be reconstructed
@@ -131,6 +131,13 @@ public class QueryReconstructionByHeight {
     }
     
     /**
+     * It's like a topological sort
+     *   do it with a int array inDegrees, the init value is the people[i][1], inDegrees[i]-- when 
+     *   and a minHeap that order by hight
+     * 
+     *  //The worst case is like {{1,3},{2,2},{3,1},{4,1},{5,0},{6,0},{7,0}}
+     *  Time O(n * logn + n * n * logn) ), Space O(n)
+     * 
      * @param people: a random list of people
      * @return the queue that be reconstructed
      */
@@ -177,7 +184,9 @@ public class QueryReconstructionByHeight {
         return result; 
     }
     
-   /**
+    /**
+     * Time O(n * logn + n * n), space O(1)
+     * 
      * @param people: a random list of people
      * @return the queue that be reconstructed
      */

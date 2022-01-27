@@ -1,10 +1,10 @@
-package sorting.median;
+package sorting.kth;
 
 import java.util.PriorityQueue;
 
-import sorting.median.KthSmallestOfSortedMatrix.Node;
 
 /**
+ * similar with KPairsWithSmallestSums
  * 
  * Find the kth smallest number in sum of two sorted array.
 
@@ -45,7 +45,7 @@ public class KthSmallestSumOfTwoSortedArray {
         }
         
         int result = Integer.MAX_VALUE;
-        PriorityQueue<Node> minHeap=new PriorityQueue<Node>();
+        PriorityQueue<Node> minHeap=new PriorityQueue<>();
         minHeap.offer(new Node(0, 0, arr1[0] + arr2[0]));
         
         boolean[][] isVisited = new boolean[m][n]; //default all are false

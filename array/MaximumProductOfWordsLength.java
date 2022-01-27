@@ -7,9 +7,11 @@ import java.util.Map;
 
 
 /**
+ * _https://www.lintcode.com/problem/1296
  * 
- * Given a string array words, find the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. 
- * You may assume that each word will contain only lower case letters. If no such two words exist, return 0.
+ * Given a string array words, find the maximum value of length(word[i]) * length(word[j]) where the two words do not
+ * share common letters. You may assume that each word will contain only lower case letters. If no such two words exist,
+ * return 0.
 
     Example 1:
     Given ["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
@@ -31,8 +33,7 @@ import java.util.Map;
 public class MaximumProductOfWordsLength {
 
     
-    public int maxProduct_n(String[] words) {
-        //check
+    public int maxProduct(String[] words) {
         if(null == words || words.length < 2 ){
             return 0;
         }
@@ -69,6 +70,46 @@ public class MaximumProductOfWordsLength {
         }
         
         return max;
+    }
+    
+    /**
+     * 
+     * @param words: a string array
+     * @return the maximum product
+     */
+    public int maxProduct_n(String[] words) {
+        if(words == null){
+            return 0;
+        }
+
+        int n = words.length;
+
+        int[] hashcodes = new int[n];
+        for(int i = 0; i < n; i++){
+            hashcodes[i] = hashcode(words[i]);
+        }
+
+        int max = 0;
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                if( (hashcodes[i] & hashcodes[j]) == 0 ){
+                    max = Math.max(max, words[i].length() * words[j].length() );
+                }
+            }
+        }
+
+        return max;
+    }
+
+    private int hashcode(String word){
+        int r = 0;
+        
+        for(int i = 0; i < word.length(); i++){
+            r |= (1 << (word.charAt(i) - 'a' ));
+        }
+
+        return r;
     }
     
     public static void main(String[] args) {

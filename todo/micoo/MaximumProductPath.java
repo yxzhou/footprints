@@ -9,7 +9,8 @@ import java.util.Map;
  *
  * A two fork tree with n nodes and a root node of 1. Each edge is described by two vertices x[i] and y[i],
  * and the weight of each point is described by d[i].
- * We define the weights of all nodes from the root node to the leaf node path to be x. Find the maximum value of x % 1e9+7.
+ * We define the weights of all nodes from the root node to the leaf node path to be x. 
+ * Find the maximum value of x % 1e9+7.
  *
  */
 

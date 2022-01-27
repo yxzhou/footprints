@@ -1,4 +1,4 @@
-package sorting.median;
+package sorting.kth;
 
 import java.util.PriorityQueue;
 
@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
  * Find the kth smallest number in N sorted arrays.
 
     Example
-    Given M sorted arrays:
+    Given N sorted arrays:
     
     [
       [1 ,5 ,7],
@@ -26,7 +26,6 @@ public class KthSmallestOfNSortedArray {
     /* Time O(k * logn),  Space O(n), n is the number of arrays*/
     public int kthSmallest_n(int[][] arrays, int k) {
 
-        //check
         if(null == arrays || 0 == arrays.length || k < 1){
             return Integer.MAX_VALUE;
         }
@@ -40,7 +39,7 @@ public class KthSmallestOfNSortedArray {
         }
         
         int result = Integer.MAX_VALUE;
-        PriorityQueue<Node> minHeap=new PriorityQueue<Node>();
+        PriorityQueue<Node> minHeap=new PriorityQueue<>();
         
         for(int i = 0; i < arrays.length; i++){
             minHeap.offer(new Node(i, 0, arrays[i][0]));
