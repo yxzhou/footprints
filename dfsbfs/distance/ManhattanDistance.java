@@ -1,4 +1,4 @@
-package geometry.distance;
+package dfsbfs.distance;
 
 import java.util.ArrayList;
 import java.util.Collections;
