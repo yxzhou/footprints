@@ -15,21 +15,6 @@ import java.util.List;
  */
 public class InsertInterval {
 
-    public class Interval {
-        int start;
-        int end;
-
-        Interval() {
-            start = 0;
-            end = 0;
-        }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
-    }
-
     public List<Interval> insert_n(List<Interval> intervals, Interval newInterval) {
         List<Interval> res = new LinkedList<>();
 //        if(newInterval == null && intervals == null){

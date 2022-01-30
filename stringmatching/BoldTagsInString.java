@@ -6,8 +6,6 @@
 package stringmatching;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import junit.framework.Assert;
 
 /**
@@ -33,7 +31,7 @@ import junit.framework.Assert;
  * Output: "ceaaa<b>bbb</b>e<b>d</b>a<b>bb</b>ec<b>b</b>cce<b>d</b>"
  * 
  */
-public class BoldWordsInString {
+public class BoldTagsInString {
     
     /**
      * define n as the length of S, m as the length of words, w as the length of words[i]
@@ -96,6 +94,8 @@ public class BoldWordsInString {
                 i++;
             }
         }
+        
+        
         StringBuilder sb = new StringBuilder();
         int pre = 0;
         int sum = 0;
@@ -112,6 +112,7 @@ public class BoldWordsInString {
             }
             pre = sum;
         }
+        
         return sb.toString();
        
     }
@@ -135,7 +136,7 @@ public class BoldWordsInString {
             }
         };
         
-        BoldWordsInString sv = new BoldWordsInString();
+        BoldTagsInString sv = new BoldTagsInString();
         
         for(int i = 0, n = inputs.length; i < n; i++ ){
             Assert.assertEquals(inputs[i][2][0], sv.boldWords(inputs[i][0], inputs[i][1][0]));

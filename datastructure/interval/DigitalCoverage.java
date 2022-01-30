@@ -33,7 +33,7 @@ import java.util.List;
 public class DigitalCoverage {
     /**
      * @param intervals: The intervals
-     * @return: The answer
+     * @return The answer
      */
     public int digitalCoverage(List<Interval> intervals) {
         if(intervals == null){
@@ -63,9 +63,9 @@ public class DigitalCoverage {
         return r;
     }
     
-        /**
+    /**
      * @param intervals: The intervals
-     * @return: The answer
+     * @return The answer
      */
     public int digitalCoverage_x(List<Interval> intervals) {
         if(intervals == null){
@@ -93,9 +93,4 @@ public class DigitalCoverage {
         return r;
     }
     
-    
-    public class Interval {
-        int start;
-        int end;
-    }
 }

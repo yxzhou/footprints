@@ -16,165 +16,146 @@ import java.util.*;
 
 public class AirplaneNumber {
 
-	/**
-	 * @param airplanes
-	 *            : An interval array
-	 * @return: Count of airplanes are in the sky.
-	 */
-	public int countOfAirplanes(List<Interval> airplanes) {
-		// check
-		if (null == airplanes) {
-			return 0;
-		}
+    /**
+     * @param airplanes : An interval array
+     * @return Count of airplanes are in the sky.
+     */
+    public int countOfAirplanes(List<Interval> airplanes) {
+        // check
+        if (null == airplanes) {
+            return 0;
+        }
 
-		int[] count = new int[25]; // 24 hours, default all count are 0
-		for (Interval x : airplanes) {
-			for (int i = x.start; i <= x.end; i++) {
-				count[i]++;
-			}
-		}
+        int[] count = new int[25]; // 24 hours, default all count are 0
+        for (Interval x : airplanes) {
+            for (int i = x.start; i <= x.end; i++) {
+                count[i]++;
+            }
+        }
 
-		int max = 0;
-		for (int num : count) {
-			max = Math.max(max, num);
-		}
+        int max = 0;
+        for (int num : count) {
+            max = Math.max(max, num);
+        }
 
-		return max;
-	}
-	    
-	public int countOfAirplanes_n(List<Interval> airplanes) {
-		if (null == airplanes) {
-			return 0;
-		}
-		
-		int size = airplanes.size();
-		int[] starts = new int[size];
-		int[] ends = new int[size];
-		
-		int k = 0;
-		for (Interval x : airplanes) {
-			starts[k] = x.start;
-			ends[k] = x.end;
-			k++;
-		}
+        return max;
+    }
 
-		Arrays.sort(starts);
-		Arrays.sort(ends);
+    public int countOfAirplanes_n(List<Interval> airplanes) {
+        if (null == airplanes) {
+            return 0;
+        }
 
-		int max = 0;
-		int count = 0;
-		for(int i = 0, j = 0; i < size && j < size; ){
-			if(starts[i] < ends[j]){
-				count++;
-				i++;
-				
-				max = Math.max(max, count);
-			}else if(starts[i] > ends[j]){
-				count--;
-				j++;
-			}else{ // ==
-				i++;
-				j++;
-			}
-		}
-		
-		return max;
-	}
+        int size = airplanes.size();
+        int[] starts = new int[size];
+        int[] ends = new int[size];
 
-	public int countOfAirplanes_x(List<Interval> airplanes) {
-		if (null == airplanes) {
-			return 0;
-		}
+        int k = 0;
+        for (Interval x : airplanes) {
+            starts[k] = x.start;
+            ends[k] = x.end;
+            k++;
+        }
 
-		int size = airplanes.size();
+        Arrays.sort(starts);
+        Arrays.sort(ends);
 
-		List<int[]> events = new ArrayList<>(size * 2);
-		for(Interval interval : airplanes){
-			events.add(new int[]{interval.start, 1});
-			events.add(new int[]{interval.end, -1});
-		}
+        int max = 0;
+        int count = 0;
+        for (int i = 0, j = 0; i < size && j < size;) {
+            if (starts[i] < ends[j]) {
+                count++;
+                i++;
 
-		Collections.sort(events, (e1, e2) -> e1[0] == e2[0] ? e1[1] - e2[1] : e1[0] - e2[0]);
+                max = Math.max(max, count);
+            } else if (starts[i] > ends[j]) {
+                count--;
+                j++;
+            } else { // ==
+                i++;
+                j++;
+            }
+        }
 
-		int counter = 0;
-		int max = 0;
-		for(int[] event : events){
-			counter += event[1];
-			max = Math.max(max, counter);
-		}
+        return max;
+    }
 
-		return max;
-	}
+    public int countOfAirplanes_x(List<Interval> airplanes) {
+        if (null == airplanes) {
+            return 0;
+        }
 
-	/**
-	 *  special better for there are lots of same landing and flying
-	 *
-	 * @param airplanes
-	 * @return
-	 */
-	public int countOfAirplanes_x2(List<Interval> airplanes) {
-		if(airplanes == null){
-			return 0;
-		}
+        int size = airplanes.size();
 
-		HashMap<Integer, Integer> map = new HashMap<>();//<time, count>
-		for(Interval it : airplanes){
-			map.put(it.start, map.getOrDefault(it.start, 0) + 1);
-			map.put(it.end, map.getOrDefault(it.end, 0) - 1);
-		}
+        List<int[]> events = new ArrayList<>(size * 2);
+        for (Interval interval : airplanes) {
+            events.add(new int[]{interval.start, 1});
+            events.add(new int[]{interval.end, -1});
+        }
 
-		List<Integer> times = new ArrayList<>(map.keySet());
-		Collections.sort(times);
+        Collections.sort(events, (e1, e2) -> e1[0] == e2[0] ? e1[1] - e2[1] : e1[0] - e2[0]);
 
-		int max = 0;
-		int count = 0;
-		for(Integer time : times){
-			count += map.get(time);
-			max = Math.max(max, count);
-		}
+        int counter = 0;
+        int max = 0;
+        for (int[] event : events) {
+            counter += event[1];
+            max = Math.max(max, counter);
+        }
 
-		return max;
-	}
+        return max;
+    }
 
-/**
-	class Pair implements Comparable<Pair>{
-		Integer key;
-		boolean type;
-		
-		Pair(Integer key, boolean type){
-			this.key = key;
-			this.type = type;
-		}
+    /**
+     * special better for there are lots of same landing and flying
+     *
+     * @param airplanes
+     * @return
+     */
+    public int countOfAirplanes_x2(List<Interval> airplanes) {
+        if (airplanes == null) {
+            return 0;
+        }
 
-		@Override
-		public int compareTo(Pair other) {
-					
-			if(this.key != other.key){
-				return this.key - other.key;
-			}
-			if(this.type){
-				return other.type ? 0 : 1; 
-			}else{
-				return other.type ? -1 : 0; 
-			}
-			
-		}
-	}
-*/
-	public static void main(String[] args) {
+        HashMap<Integer, Integer> map = new HashMap<>();//<time, count>
+        for (Interval it : airplanes) {
+            map.put(it.start, map.getOrDefault(it.start, 0) + 1);
+            map.put(it.end, map.getOrDefault(it.end, 0) - 1);
+        }
 
+        List<Integer> times = new ArrayList<>(map.keySet());
+        Collections.sort(times);
 
-	}
+        int max = 0;
+        int count = 0;
+        for (Integer time : times) {
+            count += map.get(time);
+            max = Math.max(max, count);
+        }
 
-	/**
-	 * Definition of Interval:
-	 */
-	class Interval {
-		int start, end;
+        return max;
+    }
 
-		Interval(int start, int end) {
-			this.start = start;
-			this.end = end;
-		}
-	}
+    /**
+     * class Pair implements Comparable<Pair>{ Integer key; boolean type;
+     *
+     * Pair(Integer key, boolean type){ this.key = key; this.type = type; }
+     *
+     * @Override public int compareTo(Pair other) {
+     *
+     *  if(this.key != other.key){ 
+     *      return this.key - other.key; 
+     *  } 
+     * 
+     * if(this.type){ 
+     *      return other.type ? 0 : 1; 
+     *  }else{ 
+     *      return other.type ? -1 : 0; }
+     *
+     *  }
+     * }
+     */
+    public static void main(String[] args) {
+
+    }
+
 }

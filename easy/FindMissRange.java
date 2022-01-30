@@ -1,10 +1,9 @@
-package sorting;
+package easy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Assert;
-import util.Misc;
 
 /**
  * _https://www.lintcode.com/problem/641

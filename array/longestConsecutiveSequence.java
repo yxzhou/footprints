@@ -41,7 +41,7 @@ public class longestConsecutiveSequence {
         }
 
         int max = 0;
-        int count = 0;
+        int count;
         int smaller;
         int bigger;
         for (int i : num) {

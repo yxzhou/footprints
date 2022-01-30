@@ -30,15 +30,6 @@ import java.util.List;
 
 public class Merge2SortedIntervalList {
 
-    class Interval {
-        int start;
-        int end;
-
-        Interval(int s, int e) {
-            this.start = s;
-            this.end = e;
-        }
-    }
 
     public List<Interval> intervalAnd(Interval[] list1, Interval[] list2) {
         List<Interval> result = new LinkedList<>();

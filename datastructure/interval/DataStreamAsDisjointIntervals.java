@@ -3,39 +3,43 @@ package datastructure.interval;
 import java.util.*;
 
 /**
+ * _https://www.lintcode.com/problem/1280
  *
- * Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.
-
- For example, suppose the integers from the data stream are 1, 3, 7, 2, 6, ..., then the summary will be:
-
- [1, 1]
- [1, 1], [3, 3]
- [1, 1], [3, 3], [7, 7]
- [1, 3], [7, 7]
- [1, 3], [6, 7]
-
-
- Follow up:
- What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
+ * Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list
+ * of disjoint intervals.
+ *
+ * Example 1:
+ *   Input：                Output： 
+ *   addNum(1) 
+ *   getIntervals()         [[(1,1)],
+ *   addNum(3) 
+ *   getIntervals()         [(1,1),(3,3)],
+ *   addNum(7) 
+ *   getIntervals()         [(1,1),(3,3),(7,7)],
+ *   addNum(2) 
+ *   getIntervals()         [(1,3),(7,7)],
+ *   addNum(6)
+ *   getIntervals()         [(1,3),(6,7)]]
+ * Explanation： 
+ * addNum(1) getIntervals([[1, 1]]) 
+ * addNum(3) getIntervals([[1, 1], [3, 3]]) 
+ * addNum(7) getIntervals([[1, 1], [3, 3], [7, 7]]) 
+ * addNum(2)-merge(1,2,3) getIntervals([[1, 3], [7, 7]]) 
+ * addNum(6)->merge(6,7) getIntervals([[1, 3], [6, 7]])
+ *
+ * 
+ * Follow up: 
+ *   What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?\
+ * 
+ * Thoughts:
+ *   m1) Set<Integer> store every Value 
+ *   m2) interval tree 
+ *   m3) TreeMap,     Map<value, Interval> 
+ *   m4) UnionFind
  *
  */
 
 public class DataStreamAsDisjointIntervals {
-
-
-    /**
-     * Definition for an interval.
-     */
-     public class Interval {
-          int start;
-          int end;
-          Interval() {
-              start = 0; end = 0;
-          }
-          Interval(int s, int e) {
-              start = s; end = e;
-          }
-     }
 
      Map<Integer, Integer> groupIdMap;
      Map<Integer, Interval> intervalMap;

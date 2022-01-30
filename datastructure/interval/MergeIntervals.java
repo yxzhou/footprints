@@ -15,27 +15,18 @@ import java.util.*;
  */
 
 public class MergeIntervals {
-    public class Interval {
-        int start;
-        int end;
-    }
 
     public List<Interval> merge_n(List<Interval> intervals) {
         List<Interval> result = new ArrayList<>();
 
         // check
-        if (null == intervals || 0 == intervals.size()){
+        if (null == intervals || intervals.isEmpty()){
             return result;
         }
 
         // order the input intervals by start
-        Collections.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1,
-                               Interval o2) {
-                return o1.start - o2.start; // ascend order
-            }
-        });
+        Collections.sort(intervals, (Interval o1, Interval o2) -> o1.start - o2.start ); // ascend order
+        
 
         // insert one by one
         Interval top = intervals.get(0);
