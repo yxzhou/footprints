@@ -37,8 +37,7 @@ import org.junit.Test;
  *   Note:  s.toCharArray() takes O(n) space.  it created a new char[]; 
  */
 
-public class Anagram
-{
+public class Anagram {
 
     /*
      * check if the two string have identical counts for each unique char with Hashtable / Array
