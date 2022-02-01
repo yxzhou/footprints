@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package stringmatching;
+package stringmatching.subsequence;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +44,7 @@ import util.Misc;
  *   if n >> m, the m2 is better. Here n == m, the m1 is better.
  * 
  */
-public class LongestSubsequenceInDictionary {
+public class LongestSubsequence {
     /**
      * 
      * 
@@ -178,7 +178,7 @@ public class LongestSubsequenceInDictionary {
 
         };
         
-        LongestSubsequenceInDictionary sv = new LongestSubsequenceInDictionary();
+        LongestSubsequence sv = new LongestSubsequence();
         
         for(String[][] input : inputs){
             System.out.println(String.format("\ns=%s, dictionary = %s, \nexpect: %s", input[0][0], Misc.array2String(input[1]), input[2][0] ));

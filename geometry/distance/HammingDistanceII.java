@@ -1,4 +1,4 @@
-package math.distance;
+package geometry.distance;
 
 import java.lang.Math;
 

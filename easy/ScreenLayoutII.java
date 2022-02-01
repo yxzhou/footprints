@@ -5,124 +5,44 @@ import util.Misc;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Given an array of words and a length L, format the text such that each line 
- * has exactly L characters and is fully (left and right) justified. You should
- * pack your words in a greedy approach; that is, pack as many words as you can
- * in each line. 
- * Pad extra spaces ' ' when necessary so that each line has exactly L characters.
- * Extra spaces between words should be distributed as evenly as possible. 
- * If the number of spaces on a line do not divide evenly between words, 
- * the empty slots on the left will be assigned more spaces than the slots on the right.
+/**
+ * _https://www.lintcode.com/problem/1361/
+ * 
+ * Given an array of words and a length L, format the text such that each line has exactly L characters and is fully
+ * (left and right) justified. You should pack your words in a greedy approach; that is, pack as many words as you can
+ * in each line. Pad extra spaces ' ' when necessary so that each line has exactly L characters. Extra spaces between
+ * words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between
+ * words, the empty slots on the left will be assigned more spaces than the slots on the right.
  * 
  * For the last line of text, it should be left justified and no extra space is inserted between words.
  * 
- * For example,<br>
- * words: ["This", "is", "an", "example", "of", "text", "justification."]<br>
- * L: 16.<br>
+ * For example,
+ * words: ["This", "is", "an", "example", "of", "text", "justification."]   L: 16
  *
- * Return the formatted lines as: <br>
- * [<br>
- *    "This    is    an",<br>
- *    "example  of text",<br>
- *    "justification.  "<br>
- * ]<br>
+ * Return the formatted lines as: 
+ * [
+ *    "This    is    an",
+ *    "example  of text",
+ *    "justification.  "
+ * ]
  *
- * For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16,
+ * For example, words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16,
  * you should return the following:
 
     ["the  quick brown", # 1 extra space on the left
      "fox  jumps  over", # 2 extra spaces distributed evenly
      "the   lazy   dog"] # 4 extra spaces distributed evenly
-
  *
- * Note: Each word is guaranteed not to exceed L in length.<br>
+ *
+ * Note: Each word is guaranteed not to exceed L in length.
  * 
  */
 
-public class TextJustification
-{
+public class ScreenLayoutII{
 
-  public ArrayList<String> fullJustify_1(String[] words, int L) {
-    ArrayList<String> returnvalue = new ArrayList<String>();
-    
-    if(words == null || words.length == 0){
-      return returnvalue;
-    }
-    
-    int currLineLenRest = L;   //default value
-    int currLineStart = 0; 
-    for(int i=0; i<words.length; i++){
-      int currWordLen = words[i].length();
-      
-      if( currLineLenRest > currWordLen){  // currLineLenRest > currWordLen 
-        currLineLenRest -= 1 + currWordLen;  
-        continue;            
-      }
-      
-      StringBuffer sb = new StringBuffer();      
-      if( currLineLenRest == currWordLen){  //  currLineLenRest == currWordLen 
-        sb.append(words[currLineStart++]); 
-        
-        while (currLineStart <= i) {
-          sb.append(" ");
-          sb.append(words[currLineStart++]);
-        }  
-        
-        currLineLenRest = L;
-      }else{                               // currLineLenRest < currWordLen 
-        sb.append(words[currLineStart++]); 
-        
-        if( currLineStart == i ){ //A line other than the last line might contain only one word, add the space after the word  
-            sb.append(buildSpace(currLineLenRest+1));
-        }else{  //
-          int result = (currLineLenRest + 1) / (i - currLineStart);
-          int rest = (currLineLenRest + 1) % (i - currLineStart);
-          String spaces = buildSpace(result + 1);
-
-          while (currLineStart < i) {
-            if (rest-- > 0){
-              sb.append(" ");
-            }
-              
-            sb.append(spaces);
-            sb.append(words[currLineStart++]);
-          }        
-        }
-        
-        currLineLenRest = L - 1 - currWordLen ;
-      }
-      
-      returnvalue.add(sb.toString());
-    }
-    
-    if(currLineStart < words.length){
-      StringBuffer sb = new StringBuffer();
-      sb.append(words[currLineStart++]);
-      
-      while (currLineStart < words.length){
-        sb.append(" ");    
-        sb.append(words[currLineStart++]);   
-      }
-      
-      sb.append(buildSpace(currLineLenRest+1));
-      returnvalue.add(sb.toString());      
-    }
-    
-    return returnvalue;
-  }
-  
-  private String buildSpace(int num){
-    StringBuffer sb = new StringBuffer();
-    
-    for(int i=0; i<num; i++)
-      sb.append(" ");
-    
-    return sb.toString();
-  }
 
     public List<String> fullJustify_1_n(String[] words, int L) {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
 
         int index = 0;
         while (index < words.length) {
@@ -139,7 +59,7 @@ public class TextJustification
             // if last line or number of words in the line is 1, left-justified
             if (last == words.length || diff == 0) {
                 for (int i = index; i < last; i++) {
-                    builder.append(words[i] + " ");
+                    builder.append(words[i]).append(" ");
                 }
                 builder.deleteCharAt(builder.length() - 1);
                 for (int i = builder.length(); i < L; i++) {
@@ -262,35 +182,49 @@ public class TextJustification
         return result.toString();
     }
 
+    private String buildSpace(int num) {
+        StringBuilder sb = new StringBuilder();
 
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    String[][] words = {{""}, {""},{"a"},{"a"},{"a","b","c","d","e"}, {"a","b","c","d","e"}
-    , {"Listen","to","many,","speak","to","a","few."}, {"What","must","be","shall","be."},
-            {"What","must","be","shall","be."},
-            {"This", "is", "an", "example", "of", "text", "justification."},
-            {"the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"}};
-    int[] L = {0, 2, 1, 2, 1, 3, 6, 5, 12, 16, 16};
-    
-    TextJustification sv = new TextJustification();
+        for (int i = 0; i < num; i++) {
+            sb.append(" ");
+        }
 
-    for(int i=0; i< words.length; i++){
-      
-      System.out.println("Input :" + Misc.array2String(words[i]) + " " + L[i]);
-      
-      Misc.printArrayList(sv.fullJustify_1(words[i], L[i]));
-
-        Misc.printArrayList(sv.fullJustify_1_n(words[i], L[i]));
-      
-      Misc.printArrayList(sv.fullJustify_2_n(words[i], L[i]));
-
-
-      Misc.printArrayList(sv.fullJustify_2(words[i], L[i]));
+        return sb.toString();
     }
     
-      
-  }
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        String[][] words = {
+            {""},
+            {""},
+            {"a"},
+            {"a"},
+            {"a", "b", "c", "d", "e"},
+            {"a", "b", "c", "d", "e"},
+            {"Listen", "to", "many,", "speak", "to", "a", "few."},
+            {"What", "must", "be", "shall", "be."},
+            {"What", "must", "be", "shall", "be."},
+            {"This", "is", "an", "example", "of", "text", "justification."},
+            {"the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"}
+        };
+        int[] L = {0, 2, 1, 2, 1, 3, 6, 5, 12, 16, 16};
+
+        ScreenLayoutII sv = new ScreenLayoutII();
+
+        for (int i = 0; i < words.length; i++) {
+
+            System.out.println("Input :" + Misc.array2String(words[i]) + " " + L[i]);
+
+
+            Misc.printArrayList(sv.fullJustify_1_n(words[i], L[i]));
+
+            Misc.printArrayList(sv.fullJustify_2_n(words[i], L[i]));
+
+            Misc.printArrayList(sv.fullJustify_2(words[i], L[i]));
+        }
+
+    }
 
 }

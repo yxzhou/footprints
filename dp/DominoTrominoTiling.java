@@ -5,6 +5,9 @@
  */
 package dp;
 
+import junit.framework.Assert;
+import util.TimeCost;
+
 /**
  *
  * We have two types of tiles: a 2x1 domino shape, and an "L" tromino shape. These shapes may be rotated.
@@ -164,4 +167,72 @@ public class DominoTrominoTiling {
         
         return f[N%3][0];
     }
+    
+    /**
+     * @param N: a integer
+     * @return return a integer
+     */
+    public int numTilings_x(int N) {
+        if(N < 3){
+            return N;
+        }
+
+        final int MOD = 1_000_000_007;
+
+        int[][] f = new int[3][2];
+
+        f[0][0] = 1;
+        f[0][1] = 2;
+        f[1][0] = 2;
+        f[1][1] = 4;
+
+        int n = 2;
+        for( int i, j, k; n < N; n++){
+            k = (n - 2) % 3;
+            j = (n - 1) % 3;
+            i = n % 3;
+
+            f[i][0] = ((f[j][0] + f[k][0]) % MOD + f[k][1])%MOD;
+            f[i][1] = ((f[j][0] * 2) % MOD + f[j][1]) % MOD;
+        }
+
+        return f[(N - 1)%3][0];
+    }
+    
+    public static void main(String[] args){
+        
+        int[][] inputs = {
+            //{N, expect}
+            {1, 1},
+            {2, 2},
+            {3, 5},
+            {4, 11}, 
+            {1000, 979232805}
+        };
+        
+        DominoTrominoTiling sv = new DominoTrominoTiling();
+
+        for (int[] input : inputs) {
+            System.out.println(String.format("\nN = %d,  expect: %d", input[0], input[1]));
+
+            Assert.assertEquals(input[1], sv.numTilings_x(input[0]));
+            Assert.assertEquals(input[1], sv.numTilings_DPII_2(input[0]));
+        }
+
+        System.out.println("\n---performance test--");
+        TimeCost tc = TimeCost.getInstance();
+        tc.init();
+
+        for (int k = 19999; k <= 39999; k++) {
+            sv.numTilings_DPII_2(k);
+        }
+        System.out.println("\nThe numTilings_DPII_2, timeCost:" + tc.getTimeCost());
+
+        for (int k = 999; k <= 3999; k++) {
+            sv.numTilings_x(k);
+        }
+        System.out.println("\nThe numTilings_x, timeCost:" + tc.getTimeCost());
+        
+    }
+    
 }

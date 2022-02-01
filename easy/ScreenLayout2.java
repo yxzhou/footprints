@@ -1,4 +1,4 @@
-package todo.goo;
+package easy;
 
 
 /**
@@ -14,11 +14,9 @@ package todo.goo;
  * 
  */
 
-public class PageLayout {
+public class ScreenLayout2 {
 
-    public char[][] layout(int width,
-                           int height,
-                           String repeatable) {
+    public char[][] layout(int width, int height, String repeatable) {
         if (width <= 0 || height <= 0 || null == repeatable || 0 == repeatable.length()) {
             return new char[0][0];
         }
@@ -63,9 +61,7 @@ public class PageLayout {
         return result;
     }
     
-    public int times(int width,
-                           int height,
-                           String repeatable) {
+    public int times(int width, int height, String repeatable) {
         if (width <= 0 || height <= 0 || null == repeatable || 0 == repeatable.length()) {
             return 0;
         }
@@ -123,7 +119,7 @@ public class PageLayout {
         int height = 60;
         String repeatable = "Oh my God they kill kenny";
 
-        PageLayout sv = new PageLayout();
+        ScreenLayout2 sv = new ScreenLayout2();
         
         System.out.println(sv.times(width, height, repeatable));
         
