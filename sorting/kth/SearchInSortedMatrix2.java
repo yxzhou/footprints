@@ -28,8 +28,7 @@ import util.TimeCost;
  *   
  */
 
-public class SearchInSortedMatrix2
-{
+public class SearchInSortedMatrix2 {
 
   
     /**
@@ -206,9 +205,6 @@ public class SearchInSortedMatrix2
           
           System.out.println("Is " + elems[i] + " in? "
               + m.stepWise_Binary(aInt, elems[i]) + " timeCost:"+ tc.getTimeCost());
-          
-          System.out.println("Is " + elems[i] + " in? "
-              + m.quadPartition(aInt, elems[i]) + " timeCost:"+ tc.getTimeCost());
           
         }
     

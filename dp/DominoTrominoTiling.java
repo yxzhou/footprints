@@ -228,7 +228,7 @@ public class DominoTrominoTiling {
         }
         System.out.println("\nThe numTilings_DPII_2, timeCost:" + tc.getTimeCost());
 
-        for (int k = 999; k <= 3999; k++) {
+        for (int k = 19999; k <= 39999; k++) {
             sv.numTilings_x(k);
         }
         System.out.println("\nThe numTilings_x, timeCost:" + tc.getTimeCost());

@@ -42,6 +42,7 @@ public class PrimeFactorization {
     }
 
     public List<Integer> primeFactorization_2(int num) {
+        
         boolean[] v = new boolean[ (int)Math.sqrt(num) + 1 ]; //default all are false
 
         List<Integer> factors = new LinkedList<>();
