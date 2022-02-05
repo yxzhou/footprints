@@ -5,6 +5,11 @@
  */
 package dp.twosequence;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import junit.framework.Assert;
 
 /**
@@ -27,12 +32,26 @@ import junit.framework.Assert;
  * Explanation: There is no repeating subsequence
  * 
  * Thoughts:
+ *   It's not as same as the LongestCommonSequence, that has two independent input string. Here it only has one input 
+ *   string and it's required that the two subsequence don't have same string.  
+ *  
+ *   example s = "abcabcbb",  define boolean[][] visited , f[0][1] as the longest repeating subsequence 
+ *   step 1, find all pair,  
+ *     pair #1, s[0] = s[3] = 'a',  f[0][1] = 1 + f[1][4] 
+ *     pair #2, s[1] = s[4] = 'b',  f[0][1] = 1 + f[2][5] 
+ *     pair #3, s[1] = s[6] = 'b',  f[0][1] = 1 + f[2][7] 
+ *     pair #4, s[1] = s[7] = 'b',  f[0][1] = 1 + f[2][8] 
+ *     pair #5, s[2] = s[5] = 'c',  f[0][1] = 1 + f[3][6] 
+ * 
  * 
  */
 public class LongestRepeatingSubsequence {
 
     /**
-     * refer to LongestCommonSequence
+     * refer to LongestCommonSequence, 
+     * Wrong!! for case {"aab", "a"},  It's "a" instead of "ab"
+     * Because it is required that the two subsequence don't have same character at the same position, 
+     *  
      * 
      * @param s
      * @return 
@@ -104,6 +123,63 @@ public class LongestRepeatingSubsequence {
         return cache[i][j];
     }
     
+    /**
+     * Wrong!!  for case {"abccbabb", "abb"}
+     * 
+     * 
+     * @param s
+     * @return 
+     */
+    public int longestRepeatingSubsequence_Wrong2(String s) {
+        if (null == s || 0 == s.length() ) {
+            return 0;
+        }
+    
+        Map<Character, Queue<Integer>> map = new HashMap<>();
+        char c;
+        for(int i = 0; i < s.length(); i++){
+            c = s.charAt(i);
+            
+            map.computeIfAbsent(c, x -> new LinkedList<>()).add(i);
+        }
+        
+        PriorityQueue<Queue<Integer>> minHeap = new PriorityQueue<>( (a, b) -> Integer.compare( a.peek(), b.peek() ) );
+        for(Queue<Integer> queue : map.values()){
+            if(queue.size() > 1){
+                minHeap.add(queue);
+            }
+        }
+        
+        int count = 0;
+        //int x = -1;
+        int y = -1;
+        int ny;
+        Queue<Integer> top;
+        while(!minHeap.isEmpty()){
+            top = minHeap.poll();
+            
+            if(top.size() > 1){
+                top.poll();
+                ny = top.poll();
+                
+                if(ny > y){
+                    count++;
+                }else{
+                    y = ny;
+                }
+            }
+            
+            if(top.size() > 1){
+                minHeap.add(top);
+            }
+        }
+        
+        return count;
+    }
+    
+    class Node{
+        
+    }
 
     
     public static void main(String[] args) {
@@ -116,7 +192,8 @@ public class LongestRepeatingSubsequence {
             {"abccbabcd", "abc"},
             {"abcabcbb", "abcb"}, 
             {"abccbabb", "abb"}, 
-            {"aabebcdd", "abd"}
+            {"aabebcdd", "abd"},
+            {"bccbb", "cb"}
         };
 
         LongestRepeatingSubsequence sv = new LongestRepeatingSubsequence();
@@ -127,6 +204,7 @@ public class LongestRepeatingSubsequence {
             
             //Assert.assertEquals(input[1].length(), sv.longestRepeatingSubsequence_Wrong(input[0]));
             Assert.assertEquals(input[1].length(), sv.longestRepeatingSubsequence(input[0]));
+            //Assert.assertEquals(input[1].length(), sv.longestRepeatingSubsequence_n(input[0]));
         }
     }
 }

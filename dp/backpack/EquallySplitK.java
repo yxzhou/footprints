@@ -1,4 +1,4 @@
-package dp.combination;
+package dp.backpack;
 
 import org.junit.Test;
 
