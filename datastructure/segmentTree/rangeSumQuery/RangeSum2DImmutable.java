@@ -28,10 +28,10 @@ package datastructure.segmentTree.rangeSumQuery;
  * 
  */
 
-public class RangeSum2D_immutable {
+public class RangeSum2DImmutable {
     int[][] sums;
 
-    public RangeSum2D_immutable(int[][] matrix) {
+    public RangeSum2DImmutable(int[][] matrix) {
         if(null == matrix || 0 == matrix.length || 0 == matrix[0].length){
             return;
         }
@@ -41,12 +41,12 @@ public class RangeSum2D_immutable {
         
         this.sums = new int[m+1][n+1];
         
-        int rowSum = 0;
-        for(int row = 0; row < m; row++){
-            rowSum = 0;
-            for(int col = 0; col < n; col++){
-                rowSum += matrix[row][col];
-                sums[row + 1][col + 1] = sums[row][col + 1] + rowSum;
+        int localSum; // row by row
+        for(int r = 0; r < m; r++){ 
+            localSum = 0;
+            for(int c = 0; c < n; c++){
+                localSum += matrix[r][c];
+                sums[r + 1][c + 1] = sums[r][c + 1] + localSum;
             }
         }
     }

@@ -1,6 +1,7 @@
 package datastructure.segmentTree.rangeSumQuery;
 
 /**
+ * _https://www.lintcode.com/problem/943
  * 
  * Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
@@ -19,10 +20,10 @@ package datastructure.segmentTree.rangeSumQuery;
  *
  */
 
-public class RangeSum_immutable {
+public class RangeSumImmutable {
 
     int[] sum ; 
-    public RangeSum_immutable(int[] nums) {
+    public RangeSumImmutable(int[] nums) {
         if(null == nums || 0 == nums.length){
             return;
         }
@@ -41,33 +42,6 @@ public class RangeSum_immutable {
         return sum[j + 1] - sum[i];
     }
 
-
-    public RangeSum_immutable(int[] nums, int n) {
-        if(null == nums || 0 == nums.length){
-            return;
-        }
-        
-        this.sum = new int[nums.length];
-        sum[0] = nums[0];
-        for(int i = 1; i < sum.length; i++){
-            sum[i] = sum[i - 1] + nums[i];
-        }
-    }
-
-    public int sumRange_2(int i, int j) {
-        //check
-        if(i < 0 || j < i || j > sum.length - 1){
-            throw new IllegalArgumentException(String.format("The input i and j should be in [%d, %d]", 0, sum.length - 2));
-        }
-
-        if(i == 0){
-            return sum[j];
-        }else{
-            return sum[j] - sum[i - 1];
-        }
-
-    }
-
     
     public static void main(String[] args) {
        
@@ -83,11 +57,10 @@ public class RangeSum_immutable {
         };
         
         for(int[] nums : input){
-            RangeSum_immutable sv = new RangeSum_immutable(nums);
-            RangeSum_immutable sv2 = new RangeSum_immutable(nums, 1);
+            RangeSumImmutable sv = new RangeSumImmutable(nums);
             
             for(int[] range : ranges){
-                System.out.println(String.format("[%d, %d], %d - %d ", range[0], range[1], sv.sumRange(range[0], range[1]), sv2.sumRange_2(range[0], range[1])));    
+                System.out.println(String.format("[%d, %d], %d ", range[0], range[1], sv.sumRange(range[0], range[1])) );    
             }
         }
           

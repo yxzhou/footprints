@@ -16,7 +16,7 @@ package bitwise;
  * Time complexity O( log(n - m) )
  */
 
-public class ANDOfNumbers {
+public class AndOfNumbers {
     public int rangeBitwiseAnd_n(int m, int n) {
         assert m > 0 && n > 0 && m <= n;
 
@@ -91,7 +91,7 @@ public class ANDOfNumbers {
                     {2, 0x7FFFFFFF}
         };
         
-        ANDOfNumbers sv = new ANDOfNumbers();
+        AndOfNumbers sv = new AndOfNumbers();
         
         for(int i = 0; i < input.length; i++){
             System.out.println(String.format("Input: [%d, %d]", input[i][0], input[i][1]));

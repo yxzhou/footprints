@@ -2,27 +2,27 @@ package datastructure.segmentTree.rangeSumQuery;
 
 
 /**
- * 
-
+ * _https://www.lintcode.com/problem/840
+ *
  * Given an integer array in the construct method, implement two methods query(start, end) and modify(index, value):
 
-	For query(start, end), return the sum from index start to index end in the given array.
-	For modify(index, value), modify the number in the given index to value
-	
-	Example
-	Given array origin = [1,2,7,8,5].
-	
-	query(0, 2), return 10.
-	modify(0, 4), change origin[0] from 1 to 4.
-	query(0, 1), return 6.
-	modify(2, 1), change origin[2] from 7 to 1.
-	query(2, 4), return 14.
+    For query(start, end), return the sum from index start to index end in the given array.
+    For modify(index, value), modify the number in the given index to value
 
-	Note
-	We suggest you finish problem Segment Tree Build, Segment Tree Query and Segment Tree Modify first.
-	
-	Challenge
-	O(logN) time for query and modify.
+    Example
+    Given array origin = [1,2,7,8,5].
+
+    query(0, 2), return 10.
+    modify(0, 4), change origin[0] from 1 to 4.
+    query(0, 1), return 6.
+    modify(2, 1), change origin[2] from 7 to 1.
+    query(2, 4), return 14.
+
+    Note
+    We suggest you finish problem Segment Tree Build, Segment Tree Query and Segment Tree Modify first.
+
+    Challenge
+    O(logN) time for query and modify.
  *
  * Solution:
  *   Interval Tree,

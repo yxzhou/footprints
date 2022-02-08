@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
+ * _https://www.lintcode.com/problem/840
  *
  * Given an integer array in the construct method, implement two methods:
  *      update(i, val) Modify the element whose index is i to val.
@@ -38,22 +39,19 @@ import java.util.Random;
  *   Solution: with BinaryIndexedTree
  */
 
-public class RangeSum_mutable {
-    final int size;  //length
-    int[] nums; // the copy of the original array, start from 1
-    int[] sums; // the BinaryIndexedTree array, start from 1
+public class RangeSumMutable {
+    int[] nums; // the copy of the original matrix, zero-based indexing
+    int[] sums; // the BinaryIndexedTree array, 1-based indexing
 
-    public RangeSum_mutable(int[] origin){
+    public RangeSumMutable(int[] origin){
         if(null == origin || 0 == origin.length){
             throw new IllegalArgumentException("The input Integer array should not be null or empty. ");
         }
 
-        size = origin.length;
+        nums = origin;  //default all are 0
 
-        nums = new int[size + 1];  //default all are 0
-        //System.arraycopy(origin, 0, nums, 1, length); //it is done in the update method 
-        sums = new int[size + 1]; //default all are 0
-        for(int i = 0; i < size; i++){
+        sums = new int[origin.length + 1]; //default all are 0
+        for(int i = 0; i < nums.length; i++){
             update(i, origin[i]);
         }
     }
@@ -61,13 +59,13 @@ public class RangeSum_mutable {
 
     /** update datas[pos] to the new value, it's equal to update nums[pos+1]  */
     public void update(int p, int val){
-        p++;
-        int diff = val - this.nums[p];
+        
+        int delta = val - this.nums[p];
         this.nums[p] = val;  //update in the datas
 
         //update in the BI tree
-        for(; p <= size; p += lowbit(p)){
-            sums[p] += diff;
+        for( p++; p < sums.length; p += lowbit(p)){
+            sums[p] += delta;
         }
     }
 
@@ -79,10 +77,10 @@ public class RangeSum_mutable {
     public int sumRange(int start, int end){
         //assert start >= 0 && end < n
         //return i == 0? sumRange(j) : sumRange(j) - sumRange(i - 1);
-        return sumRange(end) - sumRange(start - 1);
+        return getSum(end) - getSum(start - 1);
     }
 
-    private int sumRange(int p){
+    private int getSum(int p){
         int result = 0;
 
         for( p++; p > 0; p -= lowbit(p)){
@@ -115,7 +113,7 @@ public class RangeSum_mutable {
                     Integer.toBinaryString( x & (x - 1)) ));
         }
         
-        RangeSum_mutable sv = new RangeSum_mutable(new int[]{0, 0, 0, 0, 0, 0, 0, 0});
+        RangeSumMutable sv = new RangeSumMutable(new int[]{0, 0, 0, 0, 0, 0, 0, 0});
         //        for(int i = 0; i <= 16; i++){
         //            System.out.println(Integer.toBinaryString(i) + "  " + Integer.toBinaryString(sv.lowbit(i)));
         //        }
@@ -129,7 +127,7 @@ public class RangeSum_mutable {
         for (int i = 0; i < origin.length; i++) {
             origin[i] = random.nextInt(100);
         }
-        RangeSum_mutable biTree = new RangeSum_mutable(origin);
+        RangeSumMutable biTree = new RangeSumMutable(origin);
 
         //print the input
         System.out.print(String.format("Origin \t\t%s\n", Arrays.toString(origin)));
@@ -141,7 +139,7 @@ public class RangeSum_mutable {
         //get the prefix sum
         System.out.print("rangeSum \t");
         for (int i = 0; i < origin.length; i++) {
-            System.out.printf("%3d \t",biTree.sumRange(i));
+            System.out.printf("%3d \t",biTree.getSum(i));
         }
 
         //cal the range sum

@@ -1,15 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package basic.serialize;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import org.junit.Assert;
+import util.Misc;
 
 /**
+ * _https://www.lintcode.com/problem/659
  * 
- * Design an algorithm to encode a list of strings to a string. The encoded 
- * string is then sent over the network and is decoded back to the original list of strings.
+ * Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is
+ * decoded back to the original list of strings.
  * 
    Machine 1 (sender) has the function:
-        string encode(vector<string> strs) {
+        string encode(vector<String> strs) {
           // ... your code
           return encoded_string;
         }
@@ -42,17 +51,17 @@ public class StringSerialize {
 
     // Encodes a list of strings to a single string.
     public String encode(List<String> strs) {
-        if (strs == null || strs.size() == 0) {
+        if (strs == null || strs.isEmpty()) {
             return "";
         }
         
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
          
         for (String str : strs) {
-            if (str == null || str.length() == 0) {
-                sb.append("0#");
+            if (str == null) {
+                sb.append("-1##");
             } else {
-                sb.append(str.length() + "#" + str);
+                sb.append(str.length()).append("#").append(str).append("#");
             }
         }
          
@@ -61,31 +70,60 @@ public class StringSerialize {
  
     // Decodes a single string to a list of strings.
     public List<String> decode(String s) {
-        List<String> strs = new ArrayList<>();
+        List<String> result = new ArrayList<>();
          
         if (s == null || s.length() == 0) {
-            return strs;
+            return result;
         }
          
-        for (int i = 0; i < s.length(); ) {
-            int j = i;
-            while (j < s.length() && Character.isDigit(s.charAt(j))) {
+        int num;
+        for (int i = 0, j; i < s.length(); ) {
+            j = s.indexOf("#", i);
+            num = Integer.parseInt(s.substring(i, j));
+            
+            i = j + 1; // skip '#'
+            
+            if(num == -1){
+                result.add(null);
                 j++;
-            }
-             
-            int num = Integer.parseInt(s.substring(i, j));
-            i = j;
-            i++; // skip '#'
-            if (num == 0) {
-                strs.add("");
+            }else if (num == 0) {
+                result.add("");
+                j++;
             } else {
-                strs.add(s.substring(i, i + num));
+                j = i + num;
+                result.add(s.substring(i, j));
             }
              
-            i += num;
+            i = j + 1;
         }
          
-        return strs;
+        return result;
     }
+
     
+    
+    public static void main(String[] args){
+        String[][] inputs= {
+            {"we", "say", ":", "yes"},
+            {"try", "escape", "/#", "string1"},
+            {"try", "escape/", "/#", "string1/"},
+            {"try", "escape", "//#", "string1 //# string2"},
+            {"try", "empty string", "", "end"},
+            {"try", "escape", null, "string"},  // a solution, example { "", null, "end" }, encode to "0##-1##3#end#"
+        };
+        
+        StringSerialize sv = new StringSerialize();
+        
+        List<String> list;
+        for(String[] input : inputs){
+            System.out.println(String.format("\n%s", Arrays.toString(input) ));
+            
+            list = Arrays.asList(input);
+            String encoded = sv.encode(list);
+            
+            System.out.println(String.format("%s", Misc.array2String(sv.decode(encoded)) ));
+            
+            Assert.assertEquals(list, sv.decode(encoded));
+        }
+    }
 }
