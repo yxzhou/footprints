@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * _https://www.lintcode.com/problem/601
  * 
  * Implement an iterator to flatten a 2d vector.
 
@@ -18,7 +19,7 @@ import java.util.List;
  *
  */
 
-public class Vector2D {
+public class Vector2D implements Iterator<Integer>{
     
     Iterator<List<Integer>> it;
     Iterator<Integer> curr;
@@ -27,7 +28,8 @@ public class Vector2D {
         it = vec2d.iterator();
     }
 
-    public int next() {
+    @Override
+    public Integer next() {
         if(hasNext()){
             return curr.next();
         }
@@ -35,12 +37,20 @@ public class Vector2D {
         return -1; //error code
     }
 
+    @Override
     public boolean hasNext() {
         
         while((curr == null || !curr.hasNext()) && it.hasNext()){
             curr = it.next().iterator();
         }
         return curr != null && curr.hasNext();
+    }
+    
+    @Override
+    public void remove() {
+        if(hasNext()){
+            curr.remove();
+        }
     }
     
 }

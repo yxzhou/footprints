@@ -4,17 +4,23 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * _https://www.lintcode.com/problem/540
  *
  * Leetcode #281
  *
  * Given two 1d vectors, implement an iterator to return their elements alternately.
-
-    For example, given two 1d vectors:
-    v1 = [1, 2]
-    v2 = [3, 4, 5, 6]
-    By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1, 3, 2, 4, 5, 6].
-    
-    Follow up: What if you are given k 1d vectors? How well can your code be extended to such cases?
+ *
+ * Example1 
+ * Input: v1 = [1, 2] v2 = [3, 4, 5, 6] 
+ * Output: [1, 3, 2, 4, 5, 6]
+ * By calling next repeatedly until hasNext returns false, 
+ *
+ *
+ * Example2
+ * Input: v1 = [1, 1, 1, 1] and v2 = [3, 4, 5, 6] 
+ * Output: [1, 3, 1, 4, 1, 5, 1, 6]
+ *
+ * Follow up: What if you are given k 1d vectors? How well can your code be extended to such cases?
  *
  */
 

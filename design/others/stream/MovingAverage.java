@@ -5,10 +5,8 @@
  */
 package design.others.stream;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
+ * _https://www.lintcode.com/problem/642
  *
  * Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.
  *
@@ -21,17 +19,20 @@ import java.util.Queue;
  *
  */
 public class MovingAverage {
-    Queue<Integer> queue;
-    int size;
-    double sum;
+    int[] datas;  //all datas in the sliding window, it's a circular array.
+    int tail;
 
+    long sum;
+    int size;
     /*
     * @param size: An integer
-     */
+    */
     public MovingAverage(int size) {
-        queue = new LinkedList<>();
-        this.size = size;
-        this.sum = 0;
+        datas = new int[size];
+        tail = 0;
+
+        sum = 0;
+        this.size = 0;
     }
 
     /*
@@ -39,13 +40,18 @@ public class MovingAverage {
      * @return:  
      */
     public double next(int val) {
-        sum += val;
-        queue.add(val);
-
-        if (queue.size() > size) {
-            sum -= queue.poll();
+        if(size == datas.length){
+            sum -= datas[tail];
+            size--;
         }
 
-        return sum / queue.size();
+        sum += val;
+        datas[tail] = val;
+        tail = (tail + 1) % datas.length; 
+
+        size++;
+        return (double)sum / size;
     }
+    
+    
 }

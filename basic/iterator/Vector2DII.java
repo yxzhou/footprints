@@ -1,35 +1,46 @@
 package basic.iterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
-public class Vector2DII {
+public class Vector2DII implements Iterator<Integer>{
 
-    List<Iterator<Integer>> its;
-    int curr = 0;
-    
+    Queue<Iterator<Integer>> iterators;
+
     public Vector2DII(List<List<Integer>> vec2d) {
-        this.its = new ArrayList<>();
-        for(List<Integer> l : vec2d){
-            // 只将非空的迭代器加入数组
-            if(l.size() > 0){
-               this.its.add(l.iterator()); 
+
+        iterators = new LinkedList<>();
+        if(vec2d == null){
+            return;
+        }
+
+        for(List<Integer> list : vec2d){
+            
+            if(list != null && !list.isEmpty()){
+                iterators.add(list.iterator());
             }
         }
     }
 
-    public int next() {
-        Integer res = its.get(curr).next();
-        // 如果该迭代器用完了，换到下一个
-        if(!its.get(curr).hasNext()){
-            curr++;
-        }
-        return res;
+    @Override
+    public Integer next() {
+        return iterators.peek().next();
     }
 
+    @Override
     public boolean hasNext() {
-        return curr < its.size() && its.get(curr).hasNext();
+        while(!iterators.isEmpty() && !iterators.peek().hasNext()){
+            iterators.poll();
+        }
+
+        return !iterators.isEmpty() && iterators.peek().hasNext();
+    }
+
+    @Override
+    public void remove() {
+        iterators.peek().remove();
     }
     
 }

@@ -1,6 +1,5 @@
 package game.sudoku;
 
-import Constants;
 import algs4.stdlib.In;
 
 /**
@@ -128,7 +127,7 @@ public class SolveSudoku {
         SolveSudoku sv = new SolveSudoku();
         //int[][] matrix = parseProblem(args);
 
-        String args0 = Constants.TEST_DATA_URL + "sudoku2.txt";
+        String args0 =  "./src/testData/sudoku2.txt";
         
         In in = new In(args0);
 

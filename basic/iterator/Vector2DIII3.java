@@ -19,8 +19,9 @@ import org.junit.Assert;
 
 
  Notes:
- Please remember to RESET your class variables declared in Vector2D, as static/class variables are persisted across multiple test cases. Please see here for more details.
- You may assume that next() call will always be valid, that is, there will be at least a next element in the 2d vector when next() is called.
+ Please remember to RESET your class variables declared in Vector2D, as static/class variables are persisted
+ * across multiple test cases. Please see here for more details. You may assume that next() call will always be valid,
+ * that is, there will be at least a next element in the 2d vector when next() is called.
 
 
  Follow up:

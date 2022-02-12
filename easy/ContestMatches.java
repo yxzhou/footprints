@@ -107,6 +107,23 @@ public class ContestMatches {
         result.append(")");
     }
     
+    
+    public String findContestMatch_2(int n) {
+        String[] s = new String[n];
+        
+        for(int i = 0; i < n; i++){
+            s[i] = Integer.toString(i + 1);
+        }
+        
+        for( ; n > 1;  n/= 2){
+            for(int i = 0; i < n / 2; i++){
+                s[i] = String.format("(%s,%s)", s[i], s[n - i - 1]); 
+            }
+        }
+        
+        return s[0];
+    }
+    
     public static void main(String[] args){
         String[][] inputs = {
             {"2","(1,2)"},
@@ -122,6 +139,7 @@ public class ContestMatches {
             System.out.println(String.format("\n n = %s\n %s", input[0], input[1]));
             
             Assert.assertEquals("n = " + input[0], input[1], sv.findContestMatch(Integer.parseInt(input[0])));
+            Assert.assertEquals("n = " + input[0], input[1], sv.findContestMatch_2(Integer.parseInt(input[0])));
         }
         
     }

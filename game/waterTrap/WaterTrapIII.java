@@ -1,5 +1,6 @@
 package game.waterTrap;
 
+import junit.framework.Assert;
 import util.Misc;
 
 /**
@@ -28,14 +29,15 @@ import util.Misc;
  */
 
 public class WaterTrapIII {
+    
+    
 
     public int maxArea(int[] height) {
-        int result = 0;
-
-        if (height == null || height.length == 0) {
-            return result;
+        if (height == null || height.length < 2) {
+            return 0;
         }
 
+        int result = 0;
         int len = height.length;
         int max = 0;  // till to now, the index of max height
         for (int i = 1; i < len; i++) {
@@ -62,14 +64,26 @@ public class WaterTrapIII {
     public static void main(String[] args) {
         WaterTrapIII sv = new WaterTrapIII();
 
-        int[][] arr = {{1, 1}, {1, 2}, {2, 1}, {0, 2}, {2, 0}, {1, 2, 1}, {1, 2, 4, 3}, {3, 2, 1, 3}, {4, 3, 2, 1, 4}, {2, 3, 10, 5, 7, 8, 9}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {10, 9, 8, 7, 6, 5, 4, 3, 2, 1}};
-        int[] ans = {1, 1, 1, 0, 0, 2, 6, 9, 16, 41, 45, 45};
+        int[][][] inputs = {
+            {{1, 1}, {1}},
+            {{1, 2}, {1}}, 
+            {{2, 1}, {1}}, 
+            {{0, 2}, {0}}, 
+            {{2, 0}, {0}}, 
+            {{1, 2, 1}, {2}}, 
+            {{1, 2, 4, 3}, {6}}, 
+            {{3, 2, 1, 3}, {9}}, 
+            {{4, 3, 2, 1, 4}, {16}}, 
+            {{2, 3, 10, 5, 7, 8, 9}, {41}}, 
+            {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {45}}, 
+            {{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, {45}}
+        };
 
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println("\n Input the elevation map: " + Misc.array2String(arr[i]));
-            int ret = sv.maxArea(arr[i]);
+        for (int[][] input : inputs) {
+            System.out.println(String.format("\n Input the elevation map: %s", Misc.array2String(input[0])));
 
-            System.out.println("It can trap after a enough big rain: " + ret + "\t" + (ret == ans[i]));
+            Assert.assertEquals(input[1][0], sv.maxArea(input[0]));
+
         }
     }
 

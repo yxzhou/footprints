@@ -1,14 +1,17 @@
 package datastructure.heap;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class HashHeap {
     
     ArrayList<Integer> heap; //ArrayList,  id -> value 
-    String mode;
+    //String mode;
     int size;
     HashMap<Integer, Node> hash; // Map<value, id + count>
+    
+    private final Comparator<Integer> comparator;
 
     class Node {
         public Integer id;
@@ -26,12 +29,13 @@ public class HashHeap {
         }
     }
 
-    public HashHeap(String mod) { // 传入min 表示最小堆，max 表示最大堆
+    public HashHeap(Comparator<Integer> comparator) { 
 
         heap = new ArrayList<Integer>();
-        mode = mod;
         hash = new HashMap<Integer, Node>();
         size = 0;
+        
+        this.comparator = comparator;
     }
 
     public int peak() {
@@ -62,18 +66,12 @@ public class HashHeap {
     }
 
     private boolean comparesmall(int a, int b) {
-        if (a <= b) {
-            if (mode == "min")
-                return true;
-            else
-                return false;
-        } else {
-            if (mode == "min")
-                return false;
-            else
-                return true;
+        if(this.comparator == null ){
+            return Integer.compare(a, b) < 0;
+        }else{
+            return this.comparator.compare(a, b) < 0;
         }
-
+        
     }
 
     private void swap(int idA, int idB) {

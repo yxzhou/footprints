@@ -239,26 +239,39 @@ public class Misc
 
         return returnValue;
     }
-
+    
     public static StringBuffer array2String(int[] array) {
+        return array2String(array, true);
+    }
+
+    public static StringBuffer array2String(int[] array, boolean needSpace) {
         if (array == null) {
             return null;
         }
 
         StringBuffer returnValue = new StringBuffer();
 
-        returnValue.append("[ ");
+        //returnValue.append("[ ");
         for (int i = 0; i < array.length; i++) {
             returnValue.append(array[i]);
-            returnValue.append(", ");
+            if(needSpace){
+                returnValue.append(", ");
+            }else{
+                returnValue.append(",");
+            }
         }
 
-        if (array.length > 0) {
-            returnValue.deleteCharAt(returnValue.length() - 2);
+        int length = returnValue.length();
+        if (length > 2) {
+            if(needSpace){
+                returnValue.delete(length - 2, length);
+            }else{
+                returnValue.deleteCharAt(length - 1);
+            }
         }
-
+        
         //if(returnValue.length() > 0)
-        returnValue.append("]");
+        //returnValue.append("]");
 
         return returnValue;
     }
@@ -384,6 +397,7 @@ public class Misc
             return returnValue.append("null");
         }
 
+        //returnValue.append("[ ");
         for (int i = 0; i < list.size(); i++) {
             returnValue.append(list.get(i));
             if(needSpace){
@@ -402,6 +416,7 @@ public class Misc
                 returnValue.deleteCharAt(length - 1);
             }
         }
+        //returnValue.append("]");
 
         return returnValue;
     }

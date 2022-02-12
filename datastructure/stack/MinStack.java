@@ -1,9 +1,11 @@
 package datastructure.stack;
 
 import java.util.Stack;
+
 /**
+ * _https://www.lintcode.com/problem/12
  * 
- Design a stack that supports push, pop, top, and retrieving the minimum
+ * Design a stack that supports push, pop, top, and retrieving the minimum
  * element in constant time.
  * 
  * push(x) -- Push element x onto stack. 
@@ -11,7 +13,9 @@ import java.util.Stack;
  * top() -- Get the top element. 
  * getMin() -- Retrieve the minimum element in the stack.
  *
- * Implement a stack with min() function, which will return the smallest number in the stack.
+ * Note:  
+ *   min operation will never be called if there is no number in the stack. 
+ *   It should support push, pop and min operation all in O(1) cost.
  * 
  * 
  * Example
@@ -23,40 +27,49 @@ import java.util.Stack;
  * min()   // return 2
  * push(1)
  * min()   // return 1
- * Note
- * min operation will never be called if there is no number in the stack. It should support push, pop and min operation all in O(1) cost.
+ * 
+ * Thoughts:
+ *   m1) two stack, one is to store the full data , the other is to store the min data. 
+ *   m2) one stack and one variable, which stores the current min data, store the previous min data in
+ *       the stack. 
+ *       when new min value appear, store the previous and current min data both in the stack
+ * 
  *
  */
-public class MinStack
-{
+public class MinStack {
 
-	private Stack<Integer> full = new Stack<>();
-	private Stack<Integer> min = new Stack<>();
-	
+    private final Stack<Integer> full;
+    private final Stack<Integer> min;
+
+    public MinStack() {
+        full = new Stack<>();
+        min = new Stack<>();
+    }
+
     public void push(int x) {
         full.push(x);
-        
-        if(min.isEmpty() || x <= min.peek()){
-        	min.push(x);
+
+        if (min.isEmpty() || x <= min.peek()) {
+            min.push(x);
         }
     }
 
     public int pop() {
         int top = full.pop();
-        
-        if(top == min.peek()){
-        	min.pop();
+
+        if (top == min.peek()) {
+            min.pop();
         }
-        
+
         return top;
     }
-    
+
     public int pop_2() {
         //if(full.peek() == min.peek()){   //it's wrong
-        if(full.peek().equals(min.peek())){
-        	min.pop();
+        if (full.peek().equals(min.peek())) {
+            min.pop();
         }
-        
+
         return full.pop();
     }
 
@@ -67,13 +80,13 @@ public class MinStack
     public int getMin() {
         return min.peek();
     }
-    
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    // TODO Auto-generated method stub
 
-  }
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

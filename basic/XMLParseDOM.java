@@ -20,7 +20,7 @@ public class XMLParseDOM
   public static void main(String[] args) {
     try {
       
-      File fXmlFile = new File(Constants.TEST_DATA_URL + "testData//test.xml");
+      File fXmlFile = new File("./src/testData//test.xml");
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
       Document doc = dBuilder.parse(fXmlFile);

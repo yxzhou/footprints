@@ -227,7 +227,7 @@ public class SearchInSortedMatrix2 {
 //
 //    int[] elems = {503886, 517885};
         
-    String filename = Constants.TEST_DATA_URL + "matrix_search_performance1000_input.txt";
+    String filename = "./src/matrix_search_performance1000_input.txt";
     
     In in = new In(filename);
     
@@ -266,10 +266,6 @@ public class SearchInSortedMatrix2 {
     }
     System.out.println(" stepWise_Binary timeCost:"+ tc.getTimeCost());    
 
-    for (int i = 0; i < elems_big.length; i++) {
-      m.quadPartition(aInt_big, elems_big[i]) ;
-    }
-    System.out.println(" quadPartition timeCost:"+ tc.getTimeCost());  
     //-------------performance test end-------------*/
   }
 }
