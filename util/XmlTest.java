@@ -37,10 +37,9 @@ public class XmlTest {
 	}
 
 	public static void main(String[] args) {
-		//
 
 		File fXmlFile = new File(
-				"C:\\Users\\ivy\\Google Drive\\app\\gafa\\testData\\decodedResponseStr_2.xml");
+				"./testData/decodedResponseStr_2.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
 		try {
@@ -66,7 +65,7 @@ public class XmlTest {
 		try {
 			in = new Scanner(
 					new FileInputStream(
-							"C:\\Users\\ivy\\Google Drive\\app\\gafa\\testData\\decodedResponseStr_2.xml"),
+							"./testData/decodedResponseStr_2.xml"),
 					"UTF-8");
 			StringBuilder strXml = new StringBuilder();
 
@@ -92,7 +91,7 @@ public class XmlTest {
 		try {
 			in = new Scanner(
 					new FileInputStream(
-							"C:\\Users\\ivy\\Google Drive\\app\\gafa\\testData\\decodedResponseStr_zh.xml"),
+							"./testData/decodedResponseStr_zh.xml"),
 					"UTF-8");
 			StringBuilder strXml = new StringBuilder();
 

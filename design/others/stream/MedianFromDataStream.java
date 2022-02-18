@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 
 /**
+ * _https://www.lintcode.com/problem/81
  *
  * You are given a data stream in this problem, and you need to implement two functions as following:
  * function add(val) : receive a num from the data stream. 
@@ -11,7 +12,9 @@ import java.util.PriorityQueue;
  * 
  * The median is not equal to median in math. The median is the number that in the middle of a sorted array, if there 
  * are n numbers in a sorted array A, the median is A[(n - 1) / 2] . 
- * For example, if A=[1,2,3], the median is A[(3-1)/2] = A[1] = 2, if A=[1,19], median is A[(2-1)/2] = A[0] = 1.
+ * For example, 
+ * if A=[1,2,3], the median is A[(3-1)/2] = A[1] = 2, 
+ * if A=[1,19], median is A[(2-1)/2] = A[0] = 1.
  *
  * Example #1
  * For numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].
@@ -43,13 +46,17 @@ public class MedianFromDataStream {
      * @param num 
      */
     public void add(int num){
-        maxHeap.add(num);
-        
-        while(maxHeap.size() >= minHeap.size()){
-            minHeap.add(maxHeap.poll());
+        if(maxHeap.isEmpty() || maxHeap.peek() >= num){
+            maxHeap.add(num);
+        }else{
+            minHeap.add(num);
         }
-        while(minHeap.size() > maxHeap.size()){
+
+        int diff = maxHeap.size() - minHeap.size();
+        if(diff < 0){
             maxHeap.add(minHeap.poll());
+        }else if(diff > 1){
+            minHeap.add(maxHeap.poll());
         }
     }
     

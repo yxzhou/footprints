@@ -6,9 +6,13 @@
 package design.others.stream;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 /**
+ * _https://www.lintcode.com/problem/685
+ * 
  * Given a continuous stream of data, write a function that returns the first unique number (including the last number)
  * when the terminating number arrives. If the terminating number is not found, return -1.
  *
@@ -28,78 +32,66 @@ import java.util.Map;
  * Explanation: not found any unique number by 3
  * 
  * Solutions:
- *   Because the input is a data stream, so it need get the answer by the terminating number, one pass.
+ *   Two pass
+ *   m1) HashMap<value, count>
+ * 
+ *   One pass,  
+ *   Because the input is a data stream, so it is better to One Pass. see FirstUniqueNumberII
+ *   m2) LinkedList + HashMap 
+ *   m3) LinkedHashSet
  *   And because it need check if it's unique, it has to cache the inputted numbers, the best way is BloomFilter
  * 
+ *   
  */
 public class FirstUniqueNumber {
     
-    class FirstUniqueSteam {
-
-        class Node {
-
-            int value;
-
-            Node pre;
-            Node next;
-        }
-
-        Map<Integer, Node> datas;
-        Node header;
-
-        FirstUniqueSteam() {
-            datas = new HashMap<>();
-            header = new Node();
-            header.next = header;
-            header.pre = header;
-        }
-
-        void add(int num) {
-            if (datas.containsKey(num)) {
-                Node curr = datas.get(num);
-
-                if (curr.next != null) {
-                    curr.next.pre = curr.pre;
-                    curr.pre.next = curr.next;
-                    curr.next = null;
-                    curr.pre = null;
-                }
-            } else {
-                Node curr = new Node();
-                curr.value = num;
-                datas.put(num, curr);
-
-                //Node pre = header.pre;
-                curr.pre = header.pre;
-                curr.next = header;
-                header.pre.next = curr;
-                header.pre = curr;
-            }
-        }
-
-        int getFirstUnique() {
-            if (header == header.next) {
-                return -1;
-            }
-
-            return header.next.value;
-        }
-    }
-
     /**
-     * 
      * @param nums: a continuous stream of numbers
      * @param number: a number
-     * @return: returns the first unique number
+     * @return the first unique number
      */
-    public int firstUniqueNumber(int[] nums, int number) {
-        FirstUniqueSteam stream = new FirstUniqueSteam();
+    public int firstUniqueNumber_onepass(int[] nums, int number) {
 
-        for (int x : nums) {
-            stream.add(x);
+        LinkedHashSet<Integer> uniques = new LinkedHashSet<>();  //<value>
+        HashSet<Integer> visited = new HashSet<>();
 
-            if (x == number) {
-                return stream.getFirstUnique();
+        for(int num : nums){
+            if(!visited.contains(num) ){
+                visited.add(num);
+                uniques.add(num);
+            } else if(uniques.contains(num) ) {
+                uniques.remove(num);
+            }
+
+            if(num == number){ // terminating number
+                return uniques.isEmpty()? -1 : uniques.iterator().next();
+            }
+        }
+
+        return -1;
+    }
+    
+    
+    /**
+     * @param nums: a continuous stream of numbers
+     * @param number: a number
+     * @return the first unique number
+     */
+    public int firstUniqueNumber_twopass(int[] nums, int number) {
+
+        int n = nums.length;
+
+        Map<Integer, Integer> counts = new HashMap<>();  //<value, count>
+
+        for(int i = 0; i < n; i++){
+            counts.put(nums[i], counts.getOrDefault(nums[i], 0) + 1);
+
+            if(nums[i] == number){ // terminating number
+                for(int j = 0; j <= i; j++){
+                    if(counts.get(nums[j]) == 1 ){
+                        return nums[j];
+                    }
+                }
             }
         }
 

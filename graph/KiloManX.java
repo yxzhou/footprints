@@ -1,68 +1,54 @@
-package topCoder.graph;
+package graph;
 
 import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import graph.traversal.TraversalLevalOrder;
 
 /**
  *
  *  * http://community.topcoder.com/stat?c=problem_statement&pm=2288&rd=4725
  *
- * The KiloMan series has always had a consistent pattern: you start off with one
- * (rather weak) default weapon, and then defeat some number of bosses. When you defeat
- * a boss, you then acquire his weapon, which can then be used against other bosses, and
- * so on. Usually, each boss is weak against some weapon acquired from another boss, so
- * there is a recommended order in which to tackle the bosses. You have been playing for
- * a while and wonder exactly how efficient you can get at playing the game. Your metric
- * for efficiency is the total number of weapon shots fired to defeat all of the bosses.
+ * The KiloMan series has always had a consistent pattern: you start off with one (rather weak) default weapon, and then
+ * defeat some number of bosses. When you defeat a boss, you then acquire his weapon, which can then be used against
+ * other bosses, and so on. Usually, each boss is weak against some weapon acquired from another boss, so there is a
+ * recommended order in which to tackle the bosses. You have been playing for a while and wonder exactly how efficient
+ * you can get at playing the game. Your metric for efficiency is the total number of weapon shots fired to defeat all
+ * of the bosses.
  *
- * You have a chart in front of you detailing how much damage each weapon does to each
- * boss per shot, and you know how much health each boss has. When a boss's health is
- * reduced to 0 or less, he is defeated. You start off only with the Kilo Buster, which
- * does 1 damage per shot to any boss. The chart is represented as a String[], with the
- * ith element containing N one-digit numbers ('0'-'9'), detailing the damage done to
- * bosses 0, 1, 2, ..., N-1 by the weapon obtained from boss i, and the health is
- * represented as a int[], with the ith element representing the amount of health that
- * boss i has.
+ * You have a chart in front of you detailing how much damage each weapon does to each boss per shot, and you know how
+ * much health each boss has. When a boss's health is reduced to 0 or less, he is defeated. You start off only with the
+ * Kilo Buster, which does 1 damage per shot to any boss. The chart is represented as a String[], with the ith element
+ * containing N one-digit numbers ('0'-'9'), detailing the damage done to bosses 0, 1, 2, ..., N-1 by the weapon
+ * obtained from boss i, and the health is represented as a int[], with the ith element representing the amount of
+ * health that boss i has.
  *
- * Given a String[] damageChart representing all the weapon damages, and a int[]
- * bossHealth showing how much health each boss has, your method should return an int
- * which is the least number of shots that need to be fired to defeat all of the bosses.
+ * Given a String[] damageChart representing all the weapon damages, and a int[] bossHealth showing how much health each
+ * boss has, your method should return an int which is the least number of shots that need to be fired to defeat all of
+ * the bosses.
  *
  *
- * Constraints
- * =================
- * -	damageChart will contain between 1 and 15 elements, inclusive.
- * -	each element of damageChart will be of the same length, which will be the same as the number of elements in damageChart.
- * -	each element of damageChart will contain only the characters '0'-'9'.
- * -	bossHealth will contain between 1 and 15 elements, inclusive.
- * -	damageChart and bossHealth will contain the same number of elements.
- * -	each element in bossHealth will be between 1 and 1000000, inclusive.
+ * Constraints ================= -	damageChart will contain between 1 and 15 elements, inclusive. -	each element of
+ * damageChart will be of the same length, which will be the same as the number of elements in damageChart. -	each
+ * element of damageChart will contain only the characters '0'-'9'. -	bossHealth will contain between 1 and 15 elements,
+ * inclusive. -	damageChart and bossHealth will contain the same number of elements. -	each element in bossHealth will
+ * be between 1 and 1000000, inclusive.
  *
- * 0)
- * {"070","500","140"}
- * {150,150,150}
- * Returns: 218
- * The best way to go is to use the KiloBuster to defeat boss 2 (indexed from 0), then use the weapon from boss 2 to defeat boss 1,
- * and then use the weapon from boss 1 to defeat boss 0. This leads to total damage of 150 + 38 + 30 = 218.
+ * 0) {"070","500","140"}  {150,150,150} 
+ * Returns: 218 
+ * The best way to go is to use the KiloBuster to defeat boss 2 (indexed from 0), then use the weapon from boss 2 to 
+ * defeat boss 1, and then use the weapon from boss 1 to defeat boss 0. 
+ * This leads to total damage of 150 + 38 + 30 = 218.
  *
- * 1)
- * {"1542", "7935", "1139", "8882"}
- * {150,150,150,150}
- * Returns: 205
- * Defeat boss 2, use his weapon to defeat boss 3, and then use boss 3's weapon to defeat both bosses 0 and 1, for a total shot count of 150 + 17 + 19 + 19 = 205. It would be more efficient to defeat boss 1 with his own weapon, but it would be cheating to get his weapon before defeating him.
+ * 1) {"1542", "7935", "1139", "8882"} {150,150,150,150} 
+ * Returns: 205 
+ * Defeat boss 2, use his weapon to defeat boss 3, and then use boss 3's weapon to defeat both bosses 0 and 1, for a 
+ * total shot count of 150 + 17 + 19 + 19 = 205. It would be more efficient to defeat boss 1 with his own weapon, but it
+ * would be cheating to get his weapon before defeating him.
  *
- * 2)
- * {"07", "40"}
- * {150,10}
+ * 2) {"07", "40"} {150,10} 
  * Returns: 48
  *
  * 3)
@@ -100,7 +86,7 @@ import graph.traversal.TraversalLevalOrder;
  *   2.2 from the higher level to lower level,
  *      if it's 1 vertex in this level,  calculated directly
  *      if it's multiple vertices in this level, (there is 1 or more circle ), for every vertex each:
- *        loop 2.1 with the vertices in this level execept this one.
+ *        loop 2.1 with the vertices in this level except this one.
  *
  *
  */

@@ -18,6 +18,10 @@ public class Point {
         y = b;
     }
     
+    public static Point build(int[] points) {
+        return new Point(points[0], points[1]);
+    }
+        
     public static Point[] build(int[][] points) {
         if (null == points || 0 == points.length) {
             return null;
@@ -28,5 +32,16 @@ public class Point {
             ret[i] = new Point(points[i][0], points[i][1]);
         }
         return ret;
+    }
+    
+    
+    public static String toString(Point[] points){
+        StringBuilder sb = new StringBuilder();
+        
+        for(Point p : points){
+            sb.append("[").append(p.x).append(", ").append(p.y).append("]");
+        }
+        
+        return sb.toString();
     }
 }

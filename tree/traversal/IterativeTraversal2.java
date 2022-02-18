@@ -19,9 +19,9 @@ public class IterativeTraversal2 {
      *  Time O(n)  Space O(n)
      */
     public static List<Integer> inorder_iterative_2(TreeNode p) {
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
 
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode node = p;
         while (node != null || !stack.isEmpty()) {
             while (node != null) {
@@ -54,7 +54,7 @@ public class IterativeTraversal2 {
      *
      */
     public List<Integer> inorder_iterative_3(TreeNode root) {
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
 
         TreeNode curr = root;
         TreeNode pre;
@@ -146,7 +146,7 @@ public class IterativeTraversal2 {
      * postorder with one Stack and 2 node
      */
     public static void postorder_iterative(TreeNode p) {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode node = p, prev = p;
         while (node != null || !stack.isEmpty()) {
             while (node != null) {

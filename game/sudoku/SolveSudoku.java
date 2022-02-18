@@ -127,7 +127,7 @@ public class SolveSudoku {
         SolveSudoku sv = new SolveSudoku();
         //int[][] matrix = parseProblem(args);
 
-        String args0 =  "./src/testData/sudoku2.txt";
+        String args0 =  "./testData/sudoku2.txt";
         
         In in = new In(args0);
 

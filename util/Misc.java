@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Misc
@@ -240,11 +241,11 @@ public class Misc
         return returnValue;
     }
     
-    public static StringBuffer array2String(int[] array) {
+    public static String array2String(int[] array) {
         return array2String(array, true);
     }
 
-    public static StringBuffer array2String(int[] array, boolean needSpace) {
+    public static String array2String(int[] array, boolean needSpace) {
         if (array == null) {
             return null;
         }
@@ -273,7 +274,7 @@ public class Misc
         //if(returnValue.length() > 0)
         //returnValue.append("]");
 
-        return returnValue;
+        return returnValue.toString();
     }
 
     public static <E> StringBuffer array2String(E[] array) {
@@ -347,14 +348,14 @@ public class Misc
         return returnValue;
     }
 
-    public static StringBuffer array2String(int[][] array) {
+    public static String array2String(int[][] array) {
         return array2String(array, false);
     }
         
-    public static StringBuffer array2String(int[][] array, boolean oneLine) {
+    public static String array2String(int[][] array, boolean oneLine) {
         StringBuffer returnValue = new StringBuffer();
         if (null == array) {
-            return returnValue;
+            return "";
         }
 
         for (int i = 0; i < array.length; i++) {
@@ -362,14 +363,25 @@ public class Misc
                 returnValue.append("\n");
             }
 
-            for (int j = 0; j < array[i].length; j++) {
+            returnValue.append("[");
+            for (int j = 0, m = array[i].length; j < m; j++) {
                 returnValue.append(array[i][j]);
-                returnValue.append(",\t");
+                
+                if(j != m - 1){
+                    returnValue.append(", ");
+
+                    if(!oneLine){
+                        returnValue.append("\t");
+                    }
+                }
             }
+            returnValue.append("]");
+
         }
 
-        return returnValue;
+        return returnValue.toString();
     }
+     
 
     public static StringBuffer array2String(String[] array) {
         StringBuffer returnValue = new StringBuffer();
@@ -386,37 +398,74 @@ public class Misc
 
         return returnValue;
     }
-
+    
     public static <T> StringBuffer array2String(List<T> list) {
         return array2String(list, true);
     }
+
+    /**
+     * 
+     * @param <T>
+     * @param list
+     * @param needSpace or oneLine,  
+     * @return 
+     */
     public static <T> StringBuffer array2String(List<T> list, boolean needSpace) {
         StringBuffer returnValue = new StringBuffer();
 
         if (null == list) {
             return returnValue.append("null");
+        }else if(list.isEmpty()){
+            return returnValue;
         }
+        
+        if(list.get(0) instanceof List){
+            boolean oneLine = needSpace;
+            List tmp;
+            
+            for (int i = 0; i < list.size(); i++) {
+                tmp = (List)list.get(i);
 
-        //returnValue.append("[ ");
-        for (int i = 0; i < list.size(); i++) {
-            returnValue.append(list.get(i));
-            if(needSpace){
-                returnValue.append(", ");
-            }else{
-                returnValue.append(",");
+                if(!oneLine){
+                    returnValue.append("\n");
+                }
+                
+                returnValue.append("[");
+                for (int j = 0, m = tmp.size(); j < m; j++) {
+                    returnValue.append(tmp.get(j));
+
+                    if(j != m - 1){
+                        returnValue.append(", ");
+                        
+                        if(!oneLine){
+                            returnValue.append("\t");
+                        }
+                    }
+
+                }
+                returnValue.append("]");
             }
             
-        }
-
-        int length = returnValue.length();
-        if (length > 2) {
-            if(needSpace){
-                returnValue.delete(length - 2, length);
-            }else{
-                returnValue.deleteCharAt(length - 1);
+            
+        }else{
+            for (int i = 0; i < list.size(); i++) {
+                returnValue.append(list.get(i));
+                if (needSpace) {
+                    returnValue.append(", ");
+                } else {
+                    returnValue.append(",");
+                }
+            }
+            
+            int length = returnValue.length();
+            if (length > 2) {
+                if (needSpace) {
+                    returnValue.delete(length - 2, length);
+                } else {
+                    returnValue.deleteCharAt(length - 1);
+                }
             }
         }
-        //returnValue.append("]");
 
         return returnValue;
     }
@@ -499,6 +548,19 @@ public class Misc
 
         for (String[] ss : strings) {
             result.add(Arrays.asList(ss));
+        }
+
+        return result;
+    }
+    
+    public static List<List<Integer>> convert(int[][] nums) {
+
+        List<List<Integer>> result = new LinkedList<>();
+
+        for (int[] ss : nums) {
+            result.add(Arrays.stream(ss)
+                                .boxed()
+                                .collect(Collectors.toCollection(ArrayList::new)));
         }
 
         return result;

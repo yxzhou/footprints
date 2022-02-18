@@ -9,23 +9,23 @@ import util.Misc;
 
 /**
  *
- * Problem Statement http://community.topcoder.com/stat?c=problem_statement&pm=1524&rd=4472
- * =========================
+ * Problem Statement http://community.topcoder.com/stat?c=problem_statement&pm=1524&rd=4472  =================
  *
- * You work for a very large company that markets many different products. In some cases, one product you market competes with another.
- * To help deal with this situation you have split the intended consumers into two groups, namely Adults and Teenagers. If your company
- * markets 2 products that compete with each other, selling one to Adults and the other to Teenagers will help maximize profits. Given a
- * list of the products that compete with each other, you are going to determine whether all can be marketed such that no pair of competing
- * products are both sold to Teenagers or both sold to Adults.
+ * You work for a very large company that markets many different products. In some cases, one product you market
+ * competes with another. To help deal with this situation you have split the intended consumers into two groups, namely
+ * Adults and Teenagers. If your company markets 2 products that compete with each other, selling one to Adults and the
+ * other to Teenagers will help maximize profits. Given a list of the products that compete with each other, you are
+ * going to determine whether all can be marketed such that no pair of competing products are both sold to Teenagers or
+ * both sold to Adults.
  *
- * If such an arrangement is not feasible your method will return -1. Otherwise, it should return the number of possible ways of marketing
- * all of the products.
+ * If such an arrangement is not feasible your method will return -1. Otherwise, it should return the number of possible
+ * ways of marketing all of the products.
  *
- * The products will be given in a String[] compete whose kth element describes product k. The kth element will be a single-space delimited
- * list of integers. These integers will refer to the products that the kth product competes with. For example:
- *            compete = {"1 4", "2","3", "0",  ""}
- * The example above shows product 0 competes with 1 and 4, product 1 competes with 2, product 2 competes with 3, and product 3 competes with
- * 0. Note, competition is symmetric so product 1 competing with product 2 means product 2 competes with product 1 as well.
+ * The products will be given in a String[] compete whose kth element describes product k. The kth element will be a
+ * single-space delimited list of integers. These integers will refer to the products that the kth product competes
+ * with. For example: compete = {"1 4", "2","3", "0", ""} The example above shows product 0 competes with 1 and 4,
+ * product 1 competes with 2, product 2 competes with 3, and product 3 competes with 0. Note, competition is symmetric
+ * so product 1 competing with product 2 means product 2 competes with product 1 as well.
  *
  * Ways to market:
  *  1) 0 to Teenagers, 1 to Adults, 2 to Teenagers, 3 to Adults, and 4 to Adults
@@ -49,7 +49,8 @@ import util.Misc;
  * The example from above.
  * 
  * 1){"1","2","0"} Returns: -1
- * Product 0 cannot be marketed with product 1 or 2. Product 1 cannot be marketed with product 2. There is no way to achieve a viable marketing scheme.
+ * Product 0 cannot be marketed with product 1 or 2. Product 1 cannot be marketed with product 2. 
+ * There is no way to achieve a viable marketing scheme.
  * 
  * 2){"1","2","3","0","0 5","1"} Returns: 2
  * 
@@ -58,7 +59,8 @@ import util.Misc;
  * 4){"1","2","3","0","5","6","4"} Returns: -1
  *
  * Thoughts:
- *   It's to find all the connected component, and to every component, check if it can set value to every vertex and make 2 adjacent vertex can not be set the same value.
+ *   It's to find all the connected component, and to every component, check if it can set value to every vertex and 
+ *   make 2 adjacent vertex can not be set the same value.
  *
  *   The input is a directed graph. It would be simple to change it to undirect graph
  *
@@ -251,10 +253,7 @@ public class Marketing {
 
 
     public static void main(String[] args){
-//        System.out.println(Misc.array2String("".split(" ")));
-//        System.out.println(Misc.array2String(" ".split(" ")));
-//        System.out.println(Misc.array2String("a b".split(" ")));
-//
+
         System.out.println(1L << 1);
         System.out.println(1L << 32);
 

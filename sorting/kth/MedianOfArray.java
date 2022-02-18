@@ -58,7 +58,7 @@ public class MedianOfArray {
      * @param nums: A list of integers. (unsorted)
      * @return median of the array.
      */
-    public int medianOfUnsortedArray_quicksort(int[] nums) {
+    public int medianOfUnsortedArray_quickSelect(int[] nums) {
         if (null == nums || 0 == nums.length) {
             return Integer.MIN_VALUE; // error
         }
@@ -69,7 +69,7 @@ public class MedianOfArray {
         int pivot;
 
         while (start < end) {
-            pivot = quickSort(nums, start, end);
+            pivot = quickSelect(nums, start, end);
 
             if (mid == pivot) {
                 return nums[mid];
@@ -83,7 +83,7 @@ public class MedianOfArray {
         return nums[start];
     }
 
-    private int quickSort(int[] nums, int start, int end) {
+    private int quickSelect(int[] nums, int start, int end) {
         int pivot = start + new Random().nextInt(end - start + 1);
 
         swap(nums, pivot, start);

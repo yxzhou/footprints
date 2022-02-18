@@ -2,7 +2,6 @@ package basic.serialize;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -32,68 +31,67 @@ You can use other method to do serializaiton and deserialization.
 
 public class BinaryTreeSerialize {
     /**
-     * This method will be invoked first, you should design your own algorithm 
-     * to serialize a binary tree which denote by a root node to a string which
-     * can be easily deserialized by your own "deserialize" method later.
+     * preOrder
+     * 
+     * This method will be invoked first, you should design your own algorithm to serialize a binary tree which denote
+     * by a root node to a string which can be easily deserialized by your own "deserialize" method later.
      */
-    /*preOrder*/
+
     public String serialize(TreeNode root) {
-        if(null == root){
+        if (null == root) {
             return "";
         }
-        
+
         StringBuilder sb = new StringBuilder();
-        
+
         //preOrder traversal
         TreeNode p = root;
         Stack<TreeNode> stack = new Stack<TreeNode>();
-        
-        while(null != p || !stack.isEmpty()){
+
+        while (null != p || !stack.isEmpty()) {
             sb.append(',');
-            if(null == p){
+            if (null == p) {
                 sb.append('#');
-            }else{
+            } else {
                 sb.append(p.val);
             }
-            
-            if(null != p){
+
+            if (null != p) {
                 stack.push(p.right);
                 p = p.left;
-            }else{
+            } else {
                 p = stack.pop();
             }
         }
-        
+
         return sb.substring(1);
     }
-    
-    
+
     /**
-     * This method will be invoked second, the argument data is what exactly
-     * you serialized at method "serialize", that means the data is not given by
-     * system, it's given by your own serialize method. So the format of data is
-     * designed by yourself, and deserialize it here as you serialize it in 
-     * "serialize" method.
+     * preOrder traversal
+     * 
+     * This method will be invoked second, the argument data is what exactly you serialized at method "serialize", that
+     * means the data is not given by system, it's given by your own serialize method. So the format of data is designed
+     * by yourself, and deserialize it here as you serialize it in "serialize" method.
      */
-    //preOrder traversal
     public TreeNode deserialize(String data) {
         TreeNode root = null;
-        
-        if(null == data || 0 == data.length()){
+
+        if (null == data || 0 == data.length()) {
             return root;
         }
-        
+
         StringTokenizer tokens = new StringTokenizer(data, ",");
 
         return deserialize(tokens);
     }
-    
-    private TreeNode deserialize(StringTokenizer tokens){
+
+    private TreeNode deserialize(StringTokenizer tokens) {
         TreeNode node = null;
-        
-        if(tokens.hasMoreTokens()){
+
+        if (tokens.hasMoreTokens()) {
             String token = tokens.nextToken();
-            if(token.equals("#")){
+            if (token.equals("#")) {
                 return null;
             }
 
@@ -101,68 +99,66 @@ public class BinaryTreeSerialize {
             node.left = deserialize(tokens);
             node.right = deserialize(tokens);
         }
-        
+
         return node;
     }
-    
-    
+
     // Encodes a tree to a single string.
     //level order
     public String serialize_2(TreeNode root) {
         StringBuilder result = new StringBuilder();
-        
+
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        
+
         TreeNode node;
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             node = queue.poll();
-            
-            result.append(',');  
-            if(null == node){
+
+            result.append(',');
+            if (null == node) {
                 result.append('#');
-            }else{
+            } else {
                 result.append(node.val);
-                
+
                 queue.add(node.left);
                 queue.add(node.right);
             }
         }
-        
+
         return result.toString().substring(1);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize_2(String data) {
-        if(null == data || 0 == data.length()){
+        if (null == data || 0 == data.length()) {
             return null;
         }
-        
+
         String[] tokens = data.split(",");
-        TreeNode root = null;
         int i = 0;
-        root = deserializeHelper_2(tokens[i++]);
+        TreeNode root = deserializeHelper_2(tokens[i++]);
 
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         TreeNode parent;
-        while(i < tokens.length - 1 && !queue.isEmpty()){
+        while (i < tokens.length - 1 && !queue.isEmpty()) {
             parent = queue.poll();
-            
+
             parent.left = deserializeHelper_2(tokens[i++]);
             parent.right = deserializeHelper_2(tokens[i++]);
-            
-            if(null != parent.left){
+
+            if (null != parent.left) {
                 queue.add(parent.left);
             }
-            if(null != parent.right){
+            if (null != parent.right) {
                 queue.add(parent.right);
             }
         }
-        
+
         return root;
     }
-    
+
     public TreeNode deserializeHelper_2(String token) {
         TreeNode node = null;
 
@@ -173,8 +169,6 @@ public class BinaryTreeSerialize {
 
         return node;
     }
-    
-
     
     
     /*
@@ -191,53 +185,19 @@ public class BinaryTreeSerialize {
      * 
      * serialization as: 30 2 3 # # 4 # # 50 # 6 # #
      */
-    public StringBuffer writeBinaryTree(TreeNode root){
-     StringBuffer  ret = new StringBuffer();
-     if(root == null)
-        ret.append("# ");
-     else{
-        ret.append(root.val);
-        ret.append(" ");
-        ret.append(writeBinaryTree(root.left));
-        ret.append(writeBinaryTree(root.right));
-     }
-     return ret;
-   }
-
-    public TreeNode readBinaryTree(Scanner in) {
-
-        String token;
-
-        // read header
-        TreeNode root;
-        token = in.next();
-        if ("#".equals(token)) {
-          root = null;
-          return root;
+    public StringBuffer writeBinaryTree(TreeNode root) {
+        StringBuffer ret = new StringBuffer();
+        if (root == null) {
+            ret.append("# ");
+        } else {
+            ret.append(root.val);
+            ret.append(" ");
+            ret.append(writeBinaryTree(root.left));
+            ret.append(writeBinaryTree(root.right));
         }
-        else {
-          root = new TreeNode(Integer.parseInt(token));
-          readBinaryTreeHelper(root, true, in);
-          readBinaryTreeHelper(root, false, in);
-          return root;
-        }
-      }
-    
-    private void readBinaryTreeHelper(TreeNode root, boolean isLeft, Scanner in) {
-      String token = in.next();
-      if ("#".equals(token)) {
-        return;
-      }
-      else {
-        TreeNode newNode = new TreeNode(Integer.parseInt(token));
-        if (isLeft)
-          root.left = newNode;
-        else
-          root.right = newNode;
+        return ret;
+    }
 
-        readBinaryTreeHelper(newNode, true, in);
-        readBinaryTreeHelper(newNode, false, in);
-      }
-    }  
+
     
 }

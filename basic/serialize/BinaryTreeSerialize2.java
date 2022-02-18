@@ -3,6 +3,8 @@ package basic.serialize;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import tree.TreeNode;
+
 /**
  *
  * Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
@@ -28,16 +30,6 @@ import java.util.Queue;
 
 public class BinaryTreeSerialize2 {
 
-    /**
-     * Definition for a binary tree node.
-     */
-     public class TreeNode {
-         int val;
-         TreeNode left;
-         TreeNode right;
-         TreeNode(int x) { val = x; }
-     }
-
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         StringBuilder result = new StringBuilder();
@@ -50,7 +42,7 @@ public class BinaryTreeSerialize2 {
             top = queue.poll();
 
             if(top == null){
-                result.append("n,");
+                result.append("#,");
                 continue;
             }
 
@@ -67,7 +59,7 @@ public class BinaryTreeSerialize2 {
     public TreeNode deserialize(String data) {
         String[] tokens = data.split(",");
 
-        TreeNode root = tokens[0].equals("n") ? null : new TreeNode(Integer.parseInt(tokens[0]));
+        TreeNode root = tokens[0].equals("#") ? null : new TreeNode(Integer.parseInt(tokens[0]));
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
 
@@ -80,9 +72,9 @@ public class BinaryTreeSerialize2 {
                 continue;
             }
 
-            top.left = tokens[i].equals("n") ? null : new TreeNode(Integer.parseInt(tokens[i]));
+            top.left = tokens[i].equals("#") ? null : new TreeNode(Integer.parseInt(tokens[i]));
             i++;
-            top.right = tokens[i].equals("n") ? null : new TreeNode(Integer.parseInt(tokens[i]));
+            top.right = tokens[i].equals("#") ? null : new TreeNode(Integer.parseInt(tokens[i]));
             i++;
 
             queue.add(top.left);
@@ -96,7 +88,7 @@ public class BinaryTreeSerialize2 {
 
         BinaryTreeSerialize2 sv = new BinaryTreeSerialize2();
 
-        String[] inputs = {"1,2,3,n,n,4,5,n,n,n,n"};
+        String[] inputs = {"1,2,3,#,#,4,5,#,#,#,#"};
 
         for(String input : inputs){
             TreeNode root = sv.deserialize(input);

@@ -113,7 +113,7 @@ public class WiggleSortII {
         int left = (n - 1) / 2;
         int right = n - 1;
         
-        getKth_quicksort(nums, left);
+        getKth_quickSelect(nums, left);
         //Arrays.sort(nums);
         //System.out.println(String.format(" %s", Misc.array2String(nums)));
             
@@ -131,7 +131,7 @@ public class WiggleSortII {
         System.arraycopy(tmp, 0, nums, 0, n);
     }
     
-    private void getKth_quicksort(int[] nums, int k){
+    private void getKth_quickSelect(int[] nums, int k){
         java.util.Random random = new java.util.Random();
  
         int start = 0;

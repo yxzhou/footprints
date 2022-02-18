@@ -128,7 +128,7 @@ public class SpiralMatrix {
         System.out.println("------------Start-------------- ");
 
         //input from file
-        String inputF = "./src/testData/matrix_spiral_input.txt";
+        String inputF = "./testData/matrix_spiral_input.txt";
         In in = new In(inputF);
         
         int caseNum = in.readInt();
@@ -149,7 +149,7 @@ public class SpiralMatrix {
             cases.add(aInt);
         }
 
-        String outputF = "./src/testData/matrix_spiral_output.txt";
+        String outputF = "./testData/matrix_spiral_output.txt";
         In in2 = new In(outputF);
 
         int[][] outputs = new int[caseNum][];
