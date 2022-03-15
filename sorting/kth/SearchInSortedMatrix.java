@@ -3,6 +3,7 @@ package sorting.kth;
 import junit.framework.Assert;
 
 /**
+ * _https://www.lintcode.com/problem/28
  * 
  * Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
  * Integers in each row are sorted from left to right. The first integer of each row is greater than the last integer of
@@ -72,30 +73,32 @@ public class SearchInSortedMatrix {
      *  Time O( log(n*m) ) = O( logn + logm )
      */
     public boolean searchMatrix_n(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        if (matrix == null || matrix.length == 0 ) {
             return false;
         }
 
-        int rows = matrix.length;
-        int cols = matrix[0].length;
+        int n = matrix.length;
+        int m = matrix[0].length;
 
         int low = 0;
-        int high = rows * cols - 1;
+        int high = n * m - 1;
+        
         int mid;
-        int midValue;
+        int diff;
         while (low <= high) {
-            mid = (low + high) / 2;
+            mid = low  + (high - low) / 2;
             
-            midValue = matrix[mid / cols][mid % cols];
+            diff = matrix[mid / m][mid % m] - target;
             
-            if (midValue == target) {
+            if (diff == 0) {
                 return true;
-            } else if (midValue < target) {
+            } else if (diff < 0) {
                 low = mid + 1;
             } else {
                 high = mid - 1;
             }
         }
+        
         return false;
     }
     

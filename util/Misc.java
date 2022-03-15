@@ -353,11 +353,12 @@ public class Misc
     }
         
     public static String array2String(int[][] array, boolean oneLine) {
-        StringBuffer returnValue = new StringBuffer();
+
         if (null == array) {
             return "";
         }
 
+        StringBuffer returnValue = new StringBuffer();
         for (int i = 0; i < array.length; i++) {
             if(!oneLine){
                 returnValue.append("\n");
@@ -470,18 +471,38 @@ public class Misc
         return returnValue;
     }
 
-    public static StringBuffer array2String(String[][] array) {
+    public static String array2String(String[][] array) {
+        return array2String(array, false);
+    }
+        
+    public static String array2String(String[][] array, boolean oneLine) {
+        if (null == array) {
+            return "";
+        }
+                
         StringBuffer returnValue = new StringBuffer();
 
         for (int i = 0; i < array.length; i++) {
-            returnValue.append("\n");
-            for (int j = 0; j < array[i].length; j++) {
-                returnValue.append(array[i][j]);
-                returnValue.append(", ");
+            if(!oneLine){
+                returnValue.append("\n");
             }
+            
+            returnValue.append("[");
+            for (int j = 0, m = array[i].length; j < m; j++) {
+                returnValue.append(array[i][j]);
+                
+                if(j != m - 1){
+                    returnValue.append(", ");
+
+                    if(!oneLine){
+                        returnValue.append("\t");
+                    }
+                }
+            }
+            returnValue.append("]");
         }
 
-        return returnValue;
+        return returnValue.toString();
     }
 
     public static StringBuffer array2String(char[] array, int len) {

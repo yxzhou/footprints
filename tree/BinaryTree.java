@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import basic.serialize.BinaryTreeSerialize;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinaryTree {
 
@@ -52,87 +54,78 @@ public class BinaryTree {
   }
 
 
-  /** 
-   * @param args 
-   */
-	public static void main(String[] args) {
-        System.out.println("This is Bianry Tree");
-	}
-  
-
-	/**
-	 * 
-	 * Given preorder and inorder traversal of a tree, construct the binary
-	 * tree.
-	 * 
-	 * Note: You may assume that duplicates do not exist in the tree.
-	 */
-	public TreeNode buildTree_preorderInorder(int[] preorder, int[] inorder) {
-		if (null == preorder || null == inorder
-				|| preorder.length != inorder.length || 0 == preorder.length) {
-			return null;
-		}
-
-		return buildTree_preorderInorder(preorder, 0, preorder.length - 1, inorder, 0,
-				inorder.length - 1);
-	}
-
-	private TreeNode buildTree_preorderInorder(int[] preorder, int s1, int e1, int[] inorder,
-			int s2, int e2) {
-		if (s2 > e2) {
-			return null;
-		} else if (s2 == e2) {
-			return new TreeNode(inorder[s2]);
-		}
-
-		int index = getIndex(inorder, s2, e2, preorder[s1]);
-
-		if (-1 == index) {
-			throw new IllegalArgumentException(
-					"the input is not right, inorder-" + inorder);
-		}
-
-		TreeNode root = new TreeNode(preorder[s1]);
-		root.left = buildTree_preorderInorder(preorder, s1 + 1, s1 + index - s2, inorder, s2, index - 1);
-		root.right = buildTree_preorderInorder(preorder, e1 + index + 1 - e2, e1, inorder, index + 1, e2);
-
-		return root;
-	}
-
-	private int getIndex(int[] arr, int start, int end, int target) {
-		for (int i = start; i <= end; i++) {
-			if (target == arr[i]) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-    public TreeNode buildTree_inorderPostorder(int[] inorder, int[] postorder) {
-        if(null == inorder || null == postorder || inorder.length != postorder.length || 0 == inorder.length){
-        	return null;
+    /**
+     *
+     * Given preorder and inorder traversal of a tree, construct the binary tree.
+     *
+     * Note: You may assume that duplicates do not exist in the tree.
+     */
+    public TreeNode buildTree_preorderInorder(int[] preorder, int[] inorder) {
+        if (null == preorder || null == inorder
+                || preorder.length != inorder.length || 0 == preorder.length) {
+            return null;
         }
-        
-        return buildTree_inorderPostorder(inorder, 0, inorder.length -1, postorder, 0, postorder.length -1);
+
+        return buildTree_preorderInorder(preorder, 0, preorder.length - 1, inorder, 0,
+                inorder.length - 1);
     }
-    
-    private TreeNode buildTree_inorderPostorder(int[] inorder, int s1, int e1, int[] postorder, int s2, int e2){
-    	if(s1 > e1){
-    		return null;
-    	}else if(s1 == e1){
-    		return new TreeNode(inorder[s1]);
-    	}
-    	
-    	int index = getIndex(inorder, s1, e1, postorder[e2]);
-    	if(-1 == index){
-    		throw new IllegalArgumentException("");
-    	}
-    	
-    	TreeNode root = new TreeNode(postorder[e2]);
-    	root.left = buildTree_inorderPostorder(inorder, s1, index -1, postorder, s2, index - 1 - s1 + s2);
-    	root.right = buildTree_inorderPostorder(inorder, index + 1, e1, postorder, e2 - e1 + index, e2 - 1);
-    	
-    	return root;
+
+    private TreeNode buildTree_preorderInorder(int[] preorder, int s1, int e1, int[] inorder,
+            int s2, int e2) {
+        if (s2 > e2) {
+            return null;
+        } else if (s2 == e2) {
+            return new TreeNode(inorder[s2]);
+        }
+
+        int index = getIndex(inorder, s2, e2, preorder[s1]);
+
+        if (-1 == index) {
+            throw new IllegalArgumentException(
+                    "the input is not right, inorder-" + inorder);
+        }
+
+        TreeNode root = new TreeNode(preorder[s1]);
+        root.left = buildTree_preorderInorder(preorder, s1 + 1, s1 + index - s2, inorder, s2, index - 1);
+        root.right = buildTree_preorderInorder(preorder, e1 + index + 1 - e2, e1, inorder, index + 1, e2);
+
+        return root;
+    }
+
+    private int getIndex(int[] arr, int start, int end, int target) {
+        for (int i = start; i <= end; i++) {
+            if (target == arr[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public TreeNode buildTree_inorderPostorder(int[] inorder, int[] postorder) {
+        if (null == inorder || null == postorder || inorder.length != postorder.length || 0 == inorder.length) {
+            return null;
+        }
+
+        return buildTree_inorderPostorder(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+    }
+
+    private TreeNode buildTree_inorderPostorder(int[] inorder, int s1, int e1, int[] postorder, int s2, int e2) {
+        if (s1 > e1) {
+            return null;
+        } else if (s1 == e1) {
+            return new TreeNode(inorder[s1]);
+        }
+
+        int index = getIndex(inorder, s1, e1, postorder[e2]);
+        if (-1 == index) {
+            throw new IllegalArgumentException("");
+        }
+
+        TreeNode root = new TreeNode(postorder[e2]);
+        root.left = buildTree_inorderPostorder(inorder, s1, index - 1, postorder, s2, index - 1 - s1 + s2);
+        root.right = buildTree_inorderPostorder(inorder, index + 1, e1, postorder, e2 - e1 + index, e2 - 1);
+
+        return root;
     }
     
     /**
@@ -334,6 +327,41 @@ public class BinaryTree {
         
         System.out.print("\n init tree done");
         return list;
+    }
+
+    /**
+     * 
+     * @param tree {1,#,2,3,4}
+     *  Explanation: 
+        1
+         \
+          2
+         / \
+        3   4
+     * @return 
+     */
+    public static TreeNode buildTree_levelOrder(String tree) {
+        if (null == tree || tree.isEmpty()) {
+            return null;
+        }
+        String[] nodeValues = tree.split(",");
+        TreeNode root = new TreeNode(Integer.valueOf(nodeValues[0]));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        for (int i = 1, n = nodeValues.length; !queue.isEmpty() && i < n;) {
+            TreeNode curr = queue.poll();
+            if (!nodeValues[i].equals("#")) {
+                curr.left = new TreeNode(Integer.valueOf(nodeValues[i]));
+                queue.add(curr.left);
+            }
+            i++;
+            if (i < n && !nodeValues[i].equals("#")) {
+                curr.right = new TreeNode(Integer.valueOf(nodeValues[i]));
+                queue.add(curr.right);
+            }
+            i++;
+        }
+        return root;
     }
     
   }

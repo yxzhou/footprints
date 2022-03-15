@@ -90,7 +90,7 @@ public class XMLParseSAX
 
       };
 
-      saxParser.parse("f:\\footprint\\lib\\gafa\\testData\\test.xml", handler);
+      saxParser.parse("./testData/test.xml", handler);
 
     }
     catch (Exception e) {

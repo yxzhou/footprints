@@ -2,8 +2,33 @@ package basic.regex;
 
 import java.util.StringTokenizer;
 
-public class ValidNumber
-{
+/**
+ * _https://www.lintcode.com/problem/417/
+ * Validate if a given string is numeric.
+ * 
+ * Some examples:
+ * "0" => true
+ * " 0.1 " => true
+ * "abc" => false
+ * "1 a" => false
+ * "2e10" => true
+ * 
+ * see <ValidNumber.doc>, a valid number is (from left to right):
+ * 
+ *   space ->  zero or more times 
+ *   sign(+/-) ->  zero or once
+ *   digits(0-9) ->  0 or 1234 or 1,234,  1234,123 not ok.   
+ *   optional_fraction ->  . digits | epsilon
+ *   optional_exponent ->  ((E | e) (+ | - | epsilon) digits) | epsilon
+ *   
+ * sign digits optional_fraction optional_exponent
+ * [ ]*[+-]?([0-9]+|[0-9]{1,3}(\\,[0-9]{3})*)(\\.[0-9]+)?([Ee][+-]?[0-9]+)?[ ]*
+ * [ ]*[+-]?((0|[1-9]{1}[0-9]*|[1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[1-9]{1}[0-9]*)*[ ]*
+ * 
+ * 
+ */
+
+public class ValidNumber {
 
     private static final int ASCII_VALUE_OF_ZERO = 48; // '0' is 48, '1' is 49,
     private static final int ASCII_VALUE_OF_NINE = 57; // '9' is 57
@@ -199,10 +224,14 @@ public class ValidNumber
 
     }
 
+    /**
+     * 
+     * @param s
+     * @return 
+     */
     public boolean isNumber_Regex(String s) {
-        //"\\d{6,10}|"
-        //^\d+(\.\d+)?
-        String pattern = "^([\\+\\-])+\\d+(\\.\\d+)?";
+
+        String pattern = "[ ]*[+-]?((0|[1-9]{1}[0-9]*|[1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[1-9]{1}[0-9]*)*[ ]*";
 
         return s.matches(pattern);
     }
@@ -211,15 +240,16 @@ public class ValidNumber
      * @param args
      */
     public static void main(String[] args) {
-    /* test isNumber */
+
         ValidNumber sv = new ValidNumber();
 
-        String[] s = {"0", "+0", "00", "1,000.0", "1,000.00"};
+        String[] inputs = {"0", "+0", "00", "1,000.0", "1,000.00", "1000.0", "123,000.0", "1234,000.0", "10e5.4", "2e10", " 0.1 ", "0.", ".2", "."};
+        boolean[] expects = {true, true, false, true, true, true, true, false, false, true, true, true, true, false};
 
-        for(int i=0; i<s.length; i++){
-            System.out.print("\nInput  :" + s[i]);
+        for(int i=0; i<inputs.length; i++){
+            System.out.print(String.format("\nInput: %s,  expect: %b", inputs[i], expects[i] ));
 
-            System.out.println("\tOutput :"+ sv.isNumber(s[i]) + " \t" + sv.isNumber_FiniteAutomata(s[i]) + " \t" + sv.isNumber_Regex(s[i]) );
+            System.out.println("\nOutput :"+ sv.isNumber(inputs[i]) + " \t" + sv.isNumber_FiniteAutomata(inputs[i]) + " \t" + sv.isNumber_Regex(inputs[i]) );
         }
     }
 

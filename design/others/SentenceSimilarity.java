@@ -14,7 +14,7 @@ import junit.framework.Assert;
 import util.Misc;
 
 /**
- *
+ * 
  * 
  * Given two sentences words1, words2 (each represented as an array of strings), and a list of similar word pairs pairs,
  * determine if two sentences are similar. Detail see example #1
@@ -51,6 +51,8 @@ import util.Misc;
  * 
  */
 public class SentenceSimilarity {
+
+    
     /**
      * @param words1: a list of string
      * @param words2: a list of string
@@ -58,45 +60,6 @@ public class SentenceSimilarity {
      * @return a boolean, denote whether two sentences are similar or not
      */
     public boolean isSentenceSimilarity(String[] words1, String[] words2, List<List<String>> pairs) {
-        if(words1 == null || words2 == null || words1.length != words2.length){
-            return false;
-        }
-
-        Map<String, Integer> ids = new HashMap<>();
-        Set<Integer> edges = new HashSet<>();
-        int id = 1;
-        for(List<String> pair : pairs){
-            ids.putIfAbsent(pair.get(0), id++);
-            ids.putIfAbsent(pair.get(1), id++);
-            
-            edges.add( hashcode(ids.get(pair.get(0)), ids.get(pair.get(1))) );
-        }
-
-        int i;
-        int j;
-        for(int k = 0, n = words1.length; k < n; k++){
-            i = ids.getOrDefault(words1[k], 0);
-            j = ids.getOrDefault(words2[k], 0);
-
-            if( i != j && ( i*j == 0 || !edges.contains(hashcode(i, j)) ) ){
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private int hashcode(int i, int j){
-        return (Math.min(i, j) << 15 ) | Math.max(i, j);
-    }
-    
-        /**
-     * @param words1: a list of string
-     * @param words2: a list of string
-     * @param pairs: a list of string pairs
-     * @return a boolean, denote whether two sentences are similar or not
-     */
-    public boolean isSentenceSimilarity_2(String[] words1, String[] words2, List<List<String>> pairs) {
         if(words1 == null || words2 == null || words1.length != words2.length){
             return false;
         }
@@ -112,8 +75,8 @@ public class SentenceSimilarity {
                 continue;
             }
 
-            if(map.containsKey(words1[k]) && map.get(words1[k]).contains(words2[k]) 
-            || map.containsKey(words2[k]) && map.get(words2[k]).contains(words1[k]) ){
+            if ((map.containsKey(words1[k]) && map.get(words1[k]).contains(words2[k]))
+                    || (map.containsKey(words2[k]) && map.get(words2[k]).contains(words1[k]))) {
                 continue;
             }
 
@@ -150,6 +113,49 @@ public class SentenceSimilarity {
         return true;
     }
     
+    /**
+     * @param words1: a list of string
+     * @param words2: a list of string
+     * @param pairs: a list of string pairs
+     * @return a boolean, denote whether two sentences are similar or not
+     */
+    public boolean isSentenceSimilarity_2(String[] words1, String[] words2, List<List<String>> pairs) {
+        if(words1 == null || words2 == null || words1.length != words2.length){
+            return false;
+        }
+
+        Map<String, Integer> ids = new HashMap<>();
+        Set<Integer> edges = new HashSet<>();
+        int id = 1;
+        for(List<String> pair : pairs){
+            ids.putIfAbsent(pair.get(0), id++);
+            ids.putIfAbsent(pair.get(1), id++);
+            
+            edges.add( hashcode(ids.get(pair.get(0)), ids.get(pair.get(1))) );
+        }
+
+        int i;
+        int j;
+        for(int k = 0, n = words1.length; k < n; k++){
+            if(words1[k].equals(words2[k])){
+                continue;
+            }
+            
+            i = ids.getOrDefault(words1[k], -1);
+            j = ids.getOrDefault(words2[k], -2);
+
+            if( i < 0 || j < 0 || !edges.contains(hashcode(i, j)) ){
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
+    private int hashcode(int i, int j){
+        return (Math.min(i, j) << 15 ) | Math.max(i, j);
+    }
+    
     public static void main(String[] args){
         String[][][][] inputs = {
             {
@@ -157,67 +163,65 @@ public class SentenceSimilarity {
                     {"great","acting","skills"},
                     {"fine","drama","talent"}
                 },
-                {{"great","fine"},{"drama","acting"},{"skills","talent"}} //true
+                {{"great","fine"},{"drama","acting"},{"skills","talent"}},  //symmetric
+                {{"true"}}
             },
             {
                 {
                     {"fine","skills","acting"}, 
                     {"fine","drama","talent"}
                 }, 
-                {{"great","fine"},{"drama","acting"},{"skills","talent"}} //false
+                {{"great","fine"},{"drama","skills"},{"acting","talent"}}, //similar with itself
+                {{"true"}}
             },
             {
                 {
                     {"great","fine","skills"},
                     {"fine", "drama", "talent"}
                 }, 
-                {{"great","fine"},{"drama","fine"},{"skills","talent"}} //true
+                {{"great","fine"},{"drama","great"},{"skills","talent"}}, //not transitive
+                {{"false"}}
             },
             {
                 {
-                    {"great","drama", "skills"},
-                    {"fine", "fine", "talent"}
+                    {"fine1","drama", "skills"},
+                    {"fine2", "acting", "talent"}
                 }, 
-                {{"great","fine"},{"fine","drama"},{"skills","talent"}} // true
-            },
-            {
-                {
-                    {"great","fine","great", "skills"},
-                    {"fine", "drama", "drama", "talent"}
-                }, 
-                {{"great","fine"},{"fine","drama"},{"skills","talent"}} //false
+                {{"great","fine"},{"drama","acting"},{"skills","talent"}},
+                {{"false"}}
             },
             {
                 {
                     {"great","drama", "talent"},
                     {"fine", "fine", "talent"}
                 }, 
-                {{"great","fine"},{"fine","drama"}} //true
+                {{"great","fine"},{"fine","drama"}}, //similar with itself
+                {{"true"}}
+            },
+            {
+                {
+                    {"great","acting","skills"},
+                    {"fine","drama","talent"}
+                }, 
+                {{"great","a"},{"b", "fine"},{"b","a"},{"drama","acting"},{"skills","talent"}}, //not transitive
+                {{"false"}}
             }
         };
         
-        boolean[] expects = {
-            true,
-            false, 
-            true,
-            true,
-            false,
-            true
-        };
-        
         SentenceSimilarity sv = new SentenceSimilarity();
-        for(int i = 0; i < expects.length; i++){
-            System.out.println(String.format("\n- -Input--%d-- \n%s \n%s \n%s  ", i, Misc.array2String(inputs[i][0][0]), Misc.array2String(inputs[i][0][1]), Misc.array2String(inputs[i][1]) ));
-            
-            Assert.assertEquals(expects[i], sv.isSentenceSimilarity(inputs[i][0][0], inputs[i][0][1], Misc.convert(inputs[i][1])));
-            
-            Assert.assertEquals(expects[i], sv.isSentenceSimilarity_2(inputs[i][0][0], inputs[i][0][1], Misc.convert(inputs[i][1])));
+        int i = 0;
+        for(String[][][] input : inputs){
+            System.out.println(String.format("\n- -Input--%d-- \n%s \n%s \n%s  ", i++, 
+                    Misc.array2String(input[0][0]), 
+                    Misc.array2String(input[0][1]), 
+                    Misc.array2String(input[1]) ));
+           
+            Assert.assertEquals(input[2][0][0], String.valueOf(sv.isSentenceSimilarity(input[0][0], input[0][1], Misc.convert(input[1]))));
             
             //Assert.assertEquals(expects[i], sv.isSentenceSimilarity_wrong(inputs[i][0][0], inputs[i][0][1], Misc.convert(inputs[i][1])));
+            
+            Assert.assertEquals(input[2][0][0], String.valueOf(sv.isSentenceSimilarity_2(input[0][0], input[0][1], Misc.convert(input[1]))));
         }
-        
-        
     }
-    
     
 }
