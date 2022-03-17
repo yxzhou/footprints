@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 
  *
- * Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+ * Remove the minimum number of invalid parentheses in order to make the input string valid. 
+ * Return anyone valid result.
 
      Note: The input string may contain letters other than the parentheses ( and ).
 

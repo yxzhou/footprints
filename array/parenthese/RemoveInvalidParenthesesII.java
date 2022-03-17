@@ -1,212 +1,143 @@
 package array.parenthese;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.junit.Assert;
+import util.Misc;
 
 /**
+ * _https://www.lintcode.com/problem/780/
  * 
- * Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
-
-    Note: The input string may contain letters other than the parentheses ( and ).
-    
-    Examples:
-    "()())()" -> ["()()()", "(())()"]
-    "(a)())()" -> ["(a)()()", "(a())()"]
-    ")(" -> [""]
+ * Remove the minimum number of invalid parentheses in order to make the input string valid. 
+ * Return all possible results.
+ *
+ * Note:
+ *   The input string may contain letters other than the parentheses ( and ). 
+ * 
+ * Example 1:
+ * Input: "()())()" 
+ * Output: ["(())()","()()()"] 
+ * 
+ * Example 2:
+ * Input: "(a)())()" 
+ * Output: ["(a)()()", "(a())()"] 
+ * 
+ * Example 3:
+ * Input: ")(" 
+ * Output: [""]
  *
  */
 
 public class RemoveInvalidParenthesesII {
 
-    public List<String> removeInvalidParentheses(String s) {
-        List<String> result = new ArrayList<>();
-
-        if(null == s || 0 == s.length()){
-            result.add("");
-            return result;
-        }
-
-        Set<String> set = new HashSet<String>();
-
-        removeInvalidParentheses(s, s.toCharArray(), 0, set);
-        result.addAll(set);
-
-        return result;
-    }
-
-    private void removeInvalidParentheses(String original, char[] s, int start, Set<String> set){
-
-        int count = 0;
-
-        for(int i = start; i < s.length; i++){
-            if(s[i] == '('){
-                count++;
-            }else if(s[i] == ')'){
-                count--;
-            }
-
-            if(count == -1){
-
-                for(int j = 0; j <= i; j++){
-                    if(s[j] == ')' && (j == 0 || s[j - 1] != ')')){
-                        s[j] = '#';
-
-                        removeInvalidParentheses(original, s, i + 1, set);
-
-                        s[j] = ')';
-                    }
-                }
-                
-                return;
-            }
-        }
-        
-        if(count > 0){
-            removeInvalidLeftParentheses(original, s, start, set, count);
-        }else{//count == 0
-            set.add(build(original, s));
-        }
-    }
-    
-    private void removeInvalidLeftParentheses(String original, char[] s, int start, Set<String> set, int count){
-        if(count == 0){
-            if(isValidParentheses(s, 0)){
-                set.add(build(original, s));
-            }
-        }
-            
-        for(int j = start; j < s.length; j++){
-            if(s[j] == '('){
-                s[j] = '#';
-                
-                removeInvalidLeftParentheses(original, s, j + 1, set, count - 1);
-                            
-                s[j] = '(';
-            }
-        }
-    }
-    
-    private boolean isValidParentheses(char[] s, int start){
-        int count = 0;
-        
-        for(int i = start; i < s.length; i++){
-            if(s[i] == '('){
-                count++;
-            }else if(s[i] == ')'){
-                count--;
-            }
-            
-            if(count < 0){
-                return false;
-            }
-        }
-        
-        return count == 0;
-    }
-
-    private String build(String original, char[] s){
-        StringBuilder tmp = new StringBuilder();
-        for(int i = 0; i < s.length; i++){
-            if(s[i] != '#' || original.charAt(i) == '#'){
-                tmp.append(s[i]);
-            }
-        }
-
-        return tmp.toString();
-    }
-
-
     /**
-     * return all valid
-     *
-     * best solution, please see RemoveInvalidParentheseII.
-     *
+     * @param s: The input string
+     * @return: Return all possible results
      */
-    public List<String> removeInvalidParentheses_n(String s) {
-
-        if (null == s || s.isEmpty()) {
-            return new ArrayList<>();
+    public List<String> removeInvalidParentheses(String s) {
+        if (s == null) {
+            return Collections.EMPTY_LIST;
         }
 
         Set<String> result = new HashSet<>();
-        helper(s.toCharArray(), 0, new char[]{'(',')'}, result);
+        Set<String> visited = new HashSet<>();
 
+        removeClose(s, 0, result, visited);
 
         return new ArrayList<>(result);
     }
 
-    private void helper(char[] chars, int l, char[] pair, Set<String> result){
+    //remove invalid the close parenthesis from left to right
+    private void removeClose(String s, int start, Set<String> result, Set<String> visited) {
+        int close = 0;
+        char c;
+        for (int i = start, n = s.length(); i < n; i++) {
+            c = s.charAt(i);
+            if (c == '(') {
+                close--;
+            } else if (c == ')') {
+                close++;
+            }
 
-        int count = 0;
-        for(int i = l; i < chars.length; i++){
-            char c = chars[i];
+            if (close > 0) {
+                for (int j = i; j >= 0; j--) {
+                    if (s.charAt(j) == ')') {
+                        String state = s.substring(0, j) + s.substring(j + 1);
+                        if (!visited.contains(state)) {
+                            visited.add(state);
+                            removeClose(state, i, result, visited);
+                        }
+                    }
+                }
 
-            if(c == pair[1] && count == 0){
-                char[] newChars = new char[chars.length - 1];
+                return;
+            }
+        }
 
-                for(int j = 0; j <= i; j++){
-                    //if(chars[j] == pair[1] && ( j == 0 || (j > 0 && chars[j] != chars[j - 1]))){
-                    if(chars[j] == pair[1] && ( j == 0 || chars[j] != chars[j - 1])){
-                        System.arraycopy(chars, 0, newChars, 0, j);
-                        System.arraycopy(chars, j + 1, newChars, j, chars.length - j - 1);
+        if (close < 0) {
+            removeOpen(s, s.length() - 1, result, visited);
+        } else {
+            result.add(s);
+        }
+    }
 
-                        helper(newChars, i, pair, result);
+    //remove invalid the open parenthesis from right to left
+    private void removeOpen(String s, int start, Set<String> result, Set<String> visited) {
+        int open = 0;
+        char c;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            c = s.charAt(i);
+            if (c == '(') {
+                open++;
+            } else if (c == ')') {
+                open--;
+            }
+
+            if (open > 0) {
+                for (int j = s.length() - 1; j >= i; j--) {
+                    if (s.charAt(j) == '(') {
+                        String state = s.substring(0, j) + s.substring(j + 1);
+                        if (!visited.contains(state)) {
+                            visited.add(state);
+                            removeOpen(state, i - 1, result, visited);
+                        }
                     }
                 }
                 return;
             }
-
-            if( c == pair[0]){
-                count++;
-            }else if( c == pair[1]){
-                count--;
-            }
         }
 
-        //if(count >= 0){
-        reverse(chars);
-        if(pair[0] == '('){
-            helper(chars, 0, new char[]{')','('}, result);
-        }else{
-            result.add(String.valueOf(chars));
-        }
-        //}
-
+        result.add(s);
     }
 
-    private void reverse(char[] chars){
-        char tmp;
-        for(int l = 0, r = chars.length - 1; l < r; l++, r--){
-            tmp = chars[l];
-            chars[l] = chars[r];
-            chars[r] = tmp;
-        }
-    }
 
     public List<String> removeInvalidParentheses_x(String s) {
-        List<String> result = new ArrayList<>();
-
-        if(null == s || 0 == s.length()){
-            result.add("");
-            return result;
+        if (null == s ) {
+            return Collections.EMPTY_LIST;
         }
+                
+        List<String> result = new ArrayList<>();
 
         helper(s, result, 0, 0, new char[]{'(', ')'});
 
         return result;
     }
 
-    public void helper(String s, List<String> result, int last_i, int last_j,  char[] par) {
+    public void helper(String s, List<String> result, int last_i, int last_j, char[] par) {
         for (int counter = 0, i = last_i; i < s.length(); ++i) {
-            if (s.charAt(i) == par[0]){
+            if (s.charAt(i) == par[0]) {
                 counter++;
-            } else if (s.charAt(i) == par[1]){
+            } else if (s.charAt(i) == par[1]) {
                 counter--;
             }
 
-            if (counter >= 0) continue;
+            if (counter >= 0) {
+                continue;
+            }
 
             for (int j = last_j; j <= i; ++j) {
                 if (s.charAt(j) == par[1] && (j == last_j || s.charAt(j - 1) != par[1])) {
@@ -226,37 +157,50 @@ public class RemoveInvalidParenthesesII {
     }
 
 
-
-
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         RemoveInvalidParenthesesII sv = new RemoveInvalidParenthesesII();
-        
-        String[] input = {
-                    null,       //""
-                    "",         //""
-                    "(",        //""
-                    ")()(",     //"()"
-                    "()())()",  // ["()()()", "(())()"]
-                    "(a)())()", // ["(a)()()", "(a())()"]
-                    ")(",       //[""]
-                    "())())",   // "()()", "(())"
-                    "()())())", // "()()()","()(())","(()())","(())()
-                    "())(()"    // "()()"
+
+        String[][][] inputs = {
+            //{ s, expects }
+            { {null}, {} },
+            { {""}, {""}},
+            { {"("}, {""} },
+            { 
+                {")()("}, 
+                {"()"} 
+            },
+            { 
+                {"()())()"}, 
+                {"()()()", "(())()"} 
+            },
+            { 
+                {"(a)())()"}, 
+                {"(a)()()", "(a())()"} 
+            },
+            { 
+                {")("}, 
+                {""} 
+            },
+            { 
+                {"())())"}, 
+                {"()()", "(())"} 
+            },
+            {
+                {"()())())"}, 
+                {"()()()","()(())","(())()","(()())"}
+                    
+            },
+            {
+                {"())(()"},
+                {"()()"}
+            }
         };
-        
-        for(int i = 0; i < input.length; i++){
-            System.out.println(String.format("\nInput: %s, Output: ", input[i]));
+
+        for (String[][] input : inputs) {
+            System.out.println(String.format("\nInput: %s, Output: %s", input[0][0], Arrays.toString(input[1]) ));
             
-            System.out.println(sv.removeInvalidParentheses(input[i]));
-            System.out.println(sv.removeInvalidParentheses_n(input[i]));
-            System.out.println(sv.removeInvalidParentheses_x(input[i]));
-
-//
-//            Misc.printArrayList(sv.removeInvalidParentheses(input[i]));
-//
-//            Misc.printArrayList(sv.removeInvalidParentheses_2(input[i]));
-
+            Assert.assertArrayEquals(input[1], sv.removeInvalidParentheses(input[0][0]).stream().sorted(Collections.reverseOrder()).toArray(String[]::new) );
+            Assert.assertArrayEquals(input[1], sv.removeInvalidParentheses_x(input[0][0]).stream().sorted(Collections.reverseOrder()).toArray(String[]::new) );
         }
     }
 }

@@ -1,18 +1,27 @@
 package graph;
 
+import java.util.Arrays;
 import junit.framework.Assert;
-import org.junit.Test;
+import util.Misc;
 
 /**
+ * _https://www.lintcode.com/problem/874
  *
- * LeetCode wants to give one of its best employees the option to travel among N cities to collect algorithm problems. But all work and no play makes Jack a dull boy, you could take vacations in some particular cities and weeks. Your job is to schedule the traveling to maximize the number of vacation days you could take, but there are certain rules and restrictions you need to follow.
-
-     Rules and restrictions:
-     You can only travel among N cities, represented by indexes from 0 to N-1. Initially, you are in the city indexed 0 on Monday.
-     The cities are connected by flights. The flights are represented as a N*N matrix (not necessary symmetrical), called flights representing the airline status from the city i to the city j. If there is no flight from the city i to the city j, flights[i][j] = 0; Otherwise, flights[i][j] = 1. Also, flights[i][i] = 0 for all i.
-     You totally have K weeks (each week has 7 days) to travel. You can only take flights at most once per day and can only take flights on each week's Monday morning. Since flight time is so short, we don't consider the impact of flight time.
-     For each city, you can only have restricted vacation days in different weeks, given an N*K matrix called days representing this relationship. For the value of days[i][j], it represents the maximum days you could take vacation in the city i in the week j.
-     You're given the flights matrix and days matrix, and you need to output the maximum vacation days you could take during K weeks.
+ * LeetCode wants to give one of its best employees the option to travel among N cities to collect algorithm problems.
+ * But all work and no play makes Jack a dull boy, you could take vacations in some particular cities and weeks. Your
+ * job is to schedule the traveling to maximize the number of vacation days you could take, but there are certain rules
+ * and restrictions you need to follow.
+ *
+ * Rules and restrictions: You can only travel among N cities, represented by indexes from 0 to N-1. Initially, you are
+ * in the city indexed 0 on Monday. The cities are connected by flights. The flights are represented as a N*N matrix
+ * (not necessary symmetrical), called flights representing the airline status from the city i to the city j. If there
+ * is no flight from the city i to the city j, flights[i][j] = 0; Otherwise, flights[i][j] = 1. Also, flights[i][i] = 0
+ * for all i. You totally have K weeks (each week has 7 days) to travel. You can only take flights at most once per day
+ * and can only take flights on each week's Monday morning. Since flight time is so short, we don't consider the impact
+ * of flight time. For each city, you can only have restricted vacation days in different weeks, given an N*K matrix
+ * called days representing this relationship. For the value of days[i][j], it represents the maximum days you could
+ * take vacation in the city i in the week j. You're given the flights matrix and days matrix, and you need to output
+ * the maximum vacation days you could take during K weeks.
 
      Example 1:
      Input:flights = [[0,1,1],[1,0,1],[1,1,0]], days = [[1,3,1],[6,0,3],[3,3,3]]
@@ -55,61 +64,78 @@ import org.junit.Test;
  */
 
 public class MaxHolidays {
+    
+    /**
+     * @param flights: the airline status from the city i to the city j
+     * @param days: days[i][j] represents the maximum days you could take vacation in the city i in the week j
+     * @return: the maximum vacation days you could take during K weeks
+     */
     public int maxVacationDays(int[][] flights, int[][] days) {
-        int cityNumber = days.length;  //N
-        int weekNumber = days[0].length;  //K
+        int n = days.length;
 
-        int[][] totals = new int[2][cityNumber];
-        totals[0][0] = days[0][0];
-        for(int curr = 1; curr < cityNumber; curr++){
-            if(flights[0][curr] == 1){
-                totals[0][curr] = days[curr][0];
-            }else{
-                totals[0][curr] = -1;
-            }
-        }
+        int[][] vacationDays = new int[2][n];
+        Arrays.fill(vacationDays[0], -1);
+        Arrays.fill(vacationDays[1], -1);
+        
+        vacationDays[0][0] = 0;
 
-        int index = 0;
-        int indexNext;
-        int max = 0;
-        for(int k = 1; k < weekNumber; k++){
-            index = (k - 1) & 1;
-            indexNext = (k & 1);
+        int curr = 0;
+        int next;
+        for(int w = 0, k = days[0].length; w < k; w++){
+            next = ( curr ^ 1);
 
-            for(int curr = 0; curr < cityNumber; curr++){
-                max = -1;
+            for(int from = 0; from < n; from++){
+                if(vacationDays[curr][from] == -1){
+                    continue;
+                }
 
-                for(int pre = 0; pre < cityNumber; pre++ ){
-                    if(totals[index][pre] != -1 && (flights[pre][curr] == 1 || pre == curr)){
-                        max = Math.max(max, totals[index][pre]);
+                //flight, from-to; or stay, from-from
+                for(int to = 0; to < n; to++ ){
+                    if(flights[from][to] == 1 || from == to){
+                        vacationDays[next][to] = Math.max(vacationDays[next][to], vacationDays[curr][from] + days[to][w]);
                     }
                 }
-
-                if(max == -1){
-                    totals[indexNext][curr] = -1;
-                } else{
-                    totals[indexNext][curr] = max + days[curr][k];
-                }
+    
             }
+
+            curr = next;
         }
 
-        index = ((weekNumber - 1) & 1);
-        max = -1;
-        for(int curr = 0; curr < cityNumber; curr++){
-            max = Math.max(max, totals[index][curr]);
+        int max = 0;
+        for(int v : vacationDays[curr]){
+            max = Math.max(max, v);
         }
 
         return max;
     }
 
 
-    @Test public void test(){
+    public static void main(String[] args){
+        int[][][][] inputs = {
+            {
+                {{0,1,1},{1,0,1},{1,1,0}},
+                {{1,3,1},{6,0,3},{3,3,3}},
+                {{12}}
+            },
+            {
+                {{0,0,0},{0,0,0},{0,0,0}},
+                {{1,1,1},{7,7,7},{7,7,7}},
+                {{3}}
+            },
+            {
+                {{0,1,1},{1,0,1},{1,1,0}},
+                {{7,0,0},{0,7,0},{0,0,7}},
+                {{21}}
+            }
+        };
+        
+        MaxHolidays sv = new MaxHolidays();
 
-        Assert.assertEquals(12, maxVacationDays(new int[][]{{0,1,1},{1,0,1},{1,1,0}}, new int[][]{{1,3,1},{6,0,3},{3,3,3}}));
-
-        Assert.assertEquals(3, maxVacationDays(new int[][]{{0,0,0},{0,0,0},{0,0,0}}, new int[][]{{1,1,1},{7,7,7},{7,7,7}}));
-
-        Assert.assertEquals(21, maxVacationDays(new int[][]{{0,1,1},{1,0,1},{1,1,0}}, new int[][]{{7,0,0},{0,7,0},{0,0,7}}));
+        for(int[][][] input : inputs){
+            System.out.println(String.format("\nflights:%s, \ndays:%s", Misc.array2String(input[0], false), Misc.array2String(input[1], false) ));
+            
+            Assert.assertEquals(input[2][0][0], sv.maxVacationDays(input[0], input[1]));
+        }
 
     }
 }
