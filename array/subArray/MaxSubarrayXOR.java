@@ -36,7 +36,7 @@ import junit.framework.Assert;
  * 
  * Thoughts:
  * define n as the length of nums
- * 1 brute force, there are n * (n - 1) subarray
+ * 1 brute force, there are n * (n - 1) subarray, 
  *   Time Complexity O(n*n) 
  * 2 prefix sum (xor), define f(i) = nums[0]^nums[1]^...^nums[i] 
  *   to f(x), how to find the f(y) to make f(x)^f(y) as the max value

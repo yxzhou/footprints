@@ -9,6 +9,8 @@ import java.util.Stack;
 import junit.framework.Assert;
 
 /**
+ * _https://www.lintcode.com/problem/978
+ * 
  * Evaluate a simple expression string. 
  * The expression string contains:
  *    non-negative integers,
@@ -16,7 +18,6 @@ import junit.framework.Assert;
  *    open/closing parentheses, 
  *    empty spaces. 
  * 
- * The integer division should truncate toward zero. 
  * You may assume that the given expression is always valid. 
  * 
  * Some examples: 
@@ -33,88 +34,83 @@ public class ExpressionEvaluationIII {
         if (expression == null) {
             throw new IllegalArgumentException();
         }
+        //assume that the given expression is always valid
 
         expression += "+";
         
-        Stack<Long> datas = new Stack<>();
-        Stack<Boolean> operators = new Stack<>();
+        Stack<Long> nums = new Stack<>();
+        Stack<Boolean> operators = new Stack<>();// true, '+'; false, '-'
         
-        long r = 0;
-        boolean operator = true; // true - '+', false - '-'
         long num = 0;
-        char c;
-        for (int i = 0; i < expression.length(); i++) {
-            c = expression.charAt(i);
+        long preNum = 0;
+        boolean isPlus = true; 
+
+        for (char c : expression.toCharArray()) {
 
             switch (c) {
                 case ' ':
-                    //continue  
+                    //ignore
                     break;
                 case '+':
                 case '-':
-                    if (operator) {
-                        r += num;
-                    } else {
-                        r -= num;
-                    }
+                    preNum = calculate(preNum, isPlus, num);
+
+                    isPlus = (c == '+');
                     num = 0;
-                    operator = (c == '+');
                     break;
                 case '(':
-                    datas.add(r);
-                    operators.add(operator);
-                    //stack.add("(");
+                    nums.add(preNum);
+                    operators.add(isPlus);
 
-                    r = 0;
-                    operator = true;
+                    preNum = 0;
+                    isPlus = true;
                     break;
                 case ')':
-                    if (operator) {
-                        r += num;
-                    } else {
-                        r -= num;
-                    }
+                    num = calculate(preNum, isPlus, num);
                     
-                    num = r;
-                    operator = operators.pop();
-                    r = datas.pop();
+                    isPlus = operators.pop();
+                    preNum = nums.pop();
                     break;
                 default:
                     num = num * 10 + (c - '0');
+                    break;
             }
         }
 
-        return (int) r;
+        return (int) preNum;
+    }
+    
+    private long calculate(long a, boolean isPlus, long b){
+        if(isPlus){
+            return a + b;
+        }else{
+            return a - b;
+        }
     }
     
     public static void main(String[] args){
+        
+        String[][] inputs = {
+            {"1 + 1", "2"},
+            {"2-1 + 2", "3"},
+            {"2","2"},
+            {"-12","-12"},
+            {"(1+(4+5+2)-3)+(6+8)","23"},
+            {"(6-(1-2))","7"},
+            {"-1+22","21"},
+            {"(10 -(9-(8-(7))))","2"},
+            {"10 - (2 + 3) - ((5-2) - 2)","4"},
+            {"1-(2-(3 + 4))","6"},
+            
+        };
+        
         ExpressionEvaluationIII sv = new ExpressionEvaluationIII();
         
-        Assert.assertEquals(2, sv.evaluate_III("1 + 1"));
-        Assert.assertEquals(3, sv.evaluate_III("2-1 + 2"));
-        Assert.assertEquals(2, sv.evaluate_III("2"));
-
-        Assert.assertEquals(23, sv.evaluate_III("(1+(4+5+2)-3)+(6+8)"));
-        Assert.assertEquals(7, sv.evaluate_III("(6-(1-2))"));
-        Assert.assertEquals(-12, sv.evaluate_III("-12"));
-        Assert.assertEquals(21, sv.evaluate_III("-1+22"));
-        Assert.assertEquals(2, sv.evaluate_III("(10 -(9-(8-(7))))"));
-        Assert.assertEquals(4, sv.evaluate_III("10 - (2 + 3) - ((5-2) - 2)"));
-        Assert.assertEquals(6, sv.evaluate_III("1-(2-(3 + 4))"));
+        for(String[] input : inputs){
+            System.out.println(input[0]);
+            
+            Assert.assertEquals("Found error on input: "+input[1], Integer.parseInt(input[1]), sv.evaluate_III(input[0]));
+        }
         
-        
-//        String[] inputs = {
-//            "1 + 1",
-//            " 2-1 + 2 ",
-//            "(1+(4+5+2)-3)+(6+8)",
-//            "(10 -(9-(8-(7))))",
-//            "10 - (2 + 3) - ((5-2) - 2)"
-//        };
-//        
-//        int[] expects = {2, 3, 23, 2, 4};
-//        
-//        for(int i = 0; i < inputs.length; i++){
-//            Assert.assertEquals(" i = "+i, expects[i], sv.evaluate_III(inputs[i]));
-//        }
     }
 }

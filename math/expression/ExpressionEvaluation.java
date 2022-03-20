@@ -23,59 +23,57 @@ public class ExpressionEvaluation {
             throw new IllegalArgumentException();
         }
         
-        long r = 0;    // int maybe not enough 
-        int num = 0;
-        boolean operator = true; // true means '+', false means '-'
-        char c;
-        for(int i = 0; i < expression.length(); i++){
-            c = expression.charAt(i);
-            if(c == ' '){
-                continue;
-            }
-            if(c == '+' || c == '-'){
-                if(operator){
-                    r += num;
-                }else{
-                    r -= num;
-                }
-                
-                num = 0;
-                operator = (c == '+');
-            }else{
-                num = num * 10 + (c - '0');
+        long result = 0;    // int maybe not enough 
+        long num = 0;
+        boolean isPlus = true; // true means '+', false means '-'
+        
+        for(char c : expression.toCharArray()){
+            switch(c){
+                case ' ':
+                    //ignore
+                    break;
+                case '+':
+                case '-':
+                    result = calculate(result, isPlus, num);
+                    isPlus = (c == '+');
+                    num = 0;
+                    break;
+                default:
+                    num = num * 10 + (c - '0');
+                    break;
             }
         }
         
-        if(operator){
-            r += num;
-        }else{
-            r -= num;
-        }
-        
-        return (int)r;
+        result = calculate(result, isPlus, num);
+        return (int)result;
     }
     
+    private long calculate(long a, boolean isPlus, long b){
+        if(isPlus){
+            return a + b;
+        }else{
+            return a - b;
+        }
+    }
     
     public static void main(String[] args){
+        
+        String[][] inputs = {
+            {"1 + 1", "2"},
+            {"2-1 + 2", "3"},
+            {"2","2"},
+            {"-12","-12"},
+            {"3 + 2 + 2", "7"},
+            {"21-1 -2", "18"},
+        };
+        
         ExpressionEvaluation sv = new ExpressionEvaluation();
         
-        Assert.assertEquals(2, sv.evaluate_I("1 + 1"));
-        Assert.assertEquals(3, sv.evaluate_I("2-1 + 2"));
-        Assert.assertEquals(2, sv.evaluate_I("2"));
-        
-        Assert.assertEquals(7, sv.evaluate_I("3 + 2 + 2"));
-        Assert.assertEquals(18, sv.evaluate_I("21-1 -2"));
-        
-//        String[] inputs = {
-//            "3 + 2 + 2",
-//            "21-1 -2"
-//        };
-//        
-//        int[] expects = { 7, 18 };
-//        
-//        for(int i = 0; i < inputs.length; i++){
-//            Assert.assertEquals(expects[i], sv.evaluate_I(inputs[i]));
-//        }
+        for(String[] input : inputs){
+            System.out.println(input[0]);
+            
+            Assert.assertEquals(Integer.parseInt(input[1]), sv.evaluate_I(input[0]));
+        }
 
     }
 }
