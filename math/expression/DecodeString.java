@@ -1,11 +1,12 @@
-package easy;
+package math.expression;
 
 import org.junit.Assert;
 
 import java.util.Stack;
 
 /**
- * _https://www.lintcode.com/problem/659
+ * _https://www.lintcode.com/problem/575
+ * 
  * Given an encoded string, return it's decoded string.
  *
  * The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated
@@ -79,44 +80,54 @@ public class DecodeString {
         Stack<StringBuilder> strs = new Stack<>();
         Stack<Integer> nums = new Stack<>();
 
-        StringBuilder sb = new StringBuilder();
-        int n = 0;
-
-        for(char c : s.toCharArray()){
+        StringBuilder curr = new StringBuilder();
+        StringBuilder pre;
+        int num = 0;
+        char c;
+        for(int i = 0, n = s.length(); i < n;  ){
+            c = s.charAt(i);
+            
             if(c == '['){ // from k to encoded_string
-                strs.add(sb);
-                sb = new StringBuilder();
-
-                nums.add(n);
-                n = 0;
+                strs.add(curr);
+                nums.add(num);
+                
+                curr = new StringBuilder();
+                i++;
             }else if(c == ']'){
-                StringBuilder subResult = strs.pop();
+                pre = strs.pop();
 
-                for(int i = nums.pop(); i > 0; i--){
-                    subResult.append(sb);
+                for( num = nums.pop(); num > 0; num--){
+                    pre.append(curr);
                 }
 
-                sb = subResult;
-            }else if(c >= '0' && c <= '9' ){
-                n = n * 10 + (c - '0');
-
+                curr = pre;
+                i++;
+            }else if( Character.isDigit(c) ){
+                num = 0;
+                for( ; i < n && Character.isDigit( c = s.charAt(i) ); i++){
+                    num = num * 10 + (c - '0');
+                }
+                
             }else{ // [a, z]
-                sb.append(c);
+                for( ; i < n && Character.isLetter( c = s.charAt(i) ); i++ ){
+                    curr.append(c);
+                }
 
             }
         }
 
-        return sb.toString();
+        return curr.toString();
     }
 
 
    
     public static void main(String[] args){
         String[][] inputs = {
+            {"abc3[a]", "abcaaa"},
             {"3[a]2[bc]", "aaabcbc"},
             {"3[a2[c]]", "accaccacc"},
-            {"2[abc]3[cd]ef", "abcabccdcdcdef"}
-            
+            {"2[abc]3[cd]ef", "abcabccdcdcdef"},
+            {"3[2[ad]3[pf]]xyz", "adadpfpfpfadadpfpfpfadadpfpfpfxyz"}
         };
         
         DecodeString sv = new DecodeString();

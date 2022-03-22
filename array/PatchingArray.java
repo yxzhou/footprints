@@ -1,183 +1,273 @@
 package array;
 
 import java.util.Arrays;
-
-import util.Misc;
+import junit.framework.Assert;
 
 /**
+ * _https://www.lintcode.com/problem/1290
  * 
- * Given a sorted positive integer array nums and an integer n, add/patch elements to the array 
- * such that any number in range [1, n] inclusive can be formed by the sum of some elements in the array. 
- * Return the minimum number of patches required.
-
-    Example 1:
-    nums = [1, 3], n = 6
-    Return 1.
-    
-    Combinations of nums are [1], [3], [1,3], which form possible sums of: 1, 3, 4.
-    Now if we add/patch 2 to nums, the combinations are: [1], [2], [3], [1,3], [2,3], [1,2,3].
-    Possible sums are 1, 2, 3, 4, 5, 6, which now covers the range [1, 6].
-    So we only need 1 patch.
-    
-    Example 2:
-    nums = [1, 5, 10], n = 20
-    Return 2.
-    The two patches can be [2, 4].
-    
-    Example 3:
-    nums = [1, 2, 2], n = 5
-    Return 0.
+ * Given a sorted positive integer array nums and an integer n, add/patch elements to the array such that any number in
+ * range [1, n] inclusive can be formed by the sum of some elements in the array. Return the minimum number of patches
+ * required.
  *
+ * Example 1: 
+ * nums = [1, 3], n = 6 
+ * Return 1.
+ * Explanation: Combinations of nums are [1], [3], [1,3], which form possible sums of: 1, 3, 4. 
+ * Now if we add/patch 2 to nums, the combinations are: [1], [2], [3], [1,3], [2,3], [1,2,3]. 
+ * Possible sums are 1, 2, 3, 4, 5, 6, which now covers the range [1, 6]. So we only need 1 patch.
+ *
+ * Example 2: 
+ * nums = [1, 5, 10], n = 20 
+ * Return 2. 
+ * The two patches can be [2, 4].
+ *
+ * Example 3: 
+ * nums = [1, 2, 2], n = 5 
+ * Return 0.
+ * 
+ * Thoughts: Greedy
+ * m1)
+ * step1: Define the possible sums, 
+ *   boolean[] sums = new boolean[n + 1]
+ * 
+ * step2: Calculate all combinations of nums [1, 5, 10]
+ * 
+ *   sums[0] = true;
+ *   for(int x : nums){
+ *      for(int j = n - x; j >= 0; j--){
+ *          if(sums[j]){
+ *              sums[j + x] = true;
+ *          }
+ *      }
+ *   }
+ * 
+ * step3: Count the patch and calculate all combinations
+ *   int count = 0;
+ *   for(int x = 1; x <= n; x++){
+ *      if(sums[x]){
+ *          continue;
+ *      }
+ * 
+ *      count++; //greedy, found a patch
+ * 
+ *      for(int j = n - x; j >= 0; j--){
+ *          if(sums[j]){
+ *              sums[j + x] = true;
+ *          }
+ *      }
+ *   }
+ * 
+ *  Time complexity is O(n * n), space complexity is O(n)
+ * 
+ *  Especially when n is Integer.MAX_VALUE, it got the NegativeArraySizeException
+ * 
+ * m2)To nums = [1, 5, 10], n = 20
+ * 
+ * define count as the the minimum number of patches required.
+ * 
+ * when 1, 1 is in nums, the possible sums are {1}, the max_sum is 1, 
+ * when 2, 2 is not in nums, and 2 is not in the possible sum, count++, the possible sums are {1, 2, 3}, the max_sum is 3,  
+ * when 3, 3 is not in nums, 3 <= max_sum, means it's already in possible sums, continue
+ * when 4, 4 is not in nums, and 4 is not in the possible sum, count++, the possible sums are {1, 2, 3, ... 7}, the max_sum is 7
+ * when 5, 5 is in nums, the possible sums are {1, 2, 3, 5, 6, 7, ... 12}, the max_sum is 12
+ * ...
+ * 
+ *      int count = 0;
+        
+        int m = nums.length;
+        int index = 0;
+        long maxSum = 0;  // note, it is long
+        for(int k = 1; maxSum < n; k++){ 
+            
+            if(index < m && k >= nums[index]){
+                index++;
+                
+                maxSum += k;  // here maybe integer overflow 
+            }else if(k > maxSum){
+                count++;
+                
+                maxSum += k;  // here maybe integer overflow 
+            }// else k <= maxSum
+
+        }
+ * 
+ * Time complexity is O(n), space complexity is O(1)
+ * 
+ * m3) continue on m2
+ * To nums = [1, 5, 10], n = 20
+ * 
+ * define count as the the minimum number of patches required.
+ * 
+ *      int count = 0;
+        
+        int m = nums.length;
+        int index = 0;
+        for(long maxSum = 1; maxSum < n;  ){ // note, j is long, for overflow hwen n is very big
+            
+            if(index < m && maxSum >= nums[index]){
+                maxSum += nums[index];
+                index++;
+            }else{
+                count++;
+                maxSum <<= 1;
+            }
+        }
+ * 
+ *  Time complexity is O( nums.length + log(n - sum_nums) ), space complexity is O(1)
+ * 
  */
 
 public class PatchingArray {
 
-    /* when n is not big*/
-    public int minPatches(int[] nums, int n) {
-        //check 
-        if(null == nums || n < 1){
+    /** 
+     * Time complexity is O(n * n), space complexity is O(n)
+     * 
+     * only works when n is not big
+     * when n is Integer.MAX_VALUE, it got the NegativeArraySizeException
+     * 
+     * @param nums: an array
+     * @param n: an integer
+     * @return: the minimum number of patches required
+     */
+    public int minPatches_m1(int[] nums, int n) {
+        if (n < 1) {
             return 0;
         }
+        if (nums == null || nums.length == 0) {
+            return (int) Math.ceil(Math.log(n + 1) / Math.log(2));
+        }
+
+        boolean[] full = new boolean[n + 1]; //default all are false
         
-        boolean[] filled = new boolean[10];
-        
-        filling(nums, 0, 0, filled);
-        
-        int count = 0;
-        boolean hasMore = true;
-        while(hasMore){
-            hasMore = false;
-            for(int i = 1; i < filled.length; i++){
-                if(filled[i]){
-                    continue;
+        full[0] = true;
+        for (int k : nums) {
+            for (int j = n - k; j >= 0; j--) {
+                if (full[j]) {
+                    full[j + k] = true;
                 }
-                
-                count++;
-                hasMore = true;
-                    
-                filling(filled, i, i);
             }
         }
 
-        return count;
-    }
-    
-    private void filling(boolean[] filled, int start, int x){
-        for(int i = start; i < filled.length; i++){
-            if(filled[i]){
+        int count = 0;
+
+        for (int k = 1; k <= n; k++) {
+            if (full[k]) {
                 continue;
             }
-                
-            if(filled[i - x] || i == x){
-                filled[i] = true;
+
+            count++;
+
+            for (int j = n - k; j >= 0; j--) {
+                if (full[j]) {
+                    full[j + k] = true;
+                }
             }
         }
-    }
-    
-    private void filling(int[] nums, int i, long pathSum, boolean[] filled){
-        if(i == nums.length){
-            if(pathSum != 0){
-                filled[(int)(pathSum - 1)] = true;
-            }
 
-            return;
-        }
-        
-        filling(nums, i + 1, pathSum, filled);
-        
-        long tmp = pathSum + nums[i];
-        if(tmp <= Integer.MAX_VALUE + 1){
-            filling(nums, i + 1, tmp, filled);
-        }
-        
-    }
-
-    public int minPatches_n(int[] nums, int n) {
-        //check 
-        if(null == nums || n < 1){
-            return 0;
-        }
-    
-        Arrays.sort(nums);
-        
-        int count = 0;
-        int[] index = new int[1];//default both it's 0
-        int sum = 0;
-        for(long j = 1; j <= n;  ){ // note, j is long, for overflow hwen n is very big
-            sum = locate(nums, index, j);
-            if(sum > 0){
-                j += sum;
-            }else{
-                count++;
-
-                j <<= 1;
-            }
-        }
-        
         return count;
     }
-    
-    private int locate(int[] nums, int[] interval, long target){
-        int sum = 0;
-        for( ; interval[0] < nums.length ; interval[0]++){
-            if(nums[interval[0]] <= target){
-                sum += nums[interval[0]];
-            }else{
-                break;  //**
-            }
-        }
-        
-        return sum;
-    }
-    
-    public int minPatches_n2(int[] nums, int n) {
-        //check 
-        if(null == nums || n < 1){
+
+    /**
+     * Time complexity is O(n), space complexity is O(1)
+     * 
+     * @param nums
+     * @param n
+     * @return 
+     */
+    public int minPatches_m2(int[] nums, int n) {
+        if (n < 1) {
             return 0;
         }
-    
-        Arrays.sort(nums);
+        if (nums == null || nums.length == 0) {
+            return (int) Math.ceil(Math.log(n + 1) / Math.log(2)); // the pathes are {1, 2, 4, 8, ... }
+        }
         
         int count = 0;
+        
+        int m = nums.length;
         int index = 0;
-        for(long j = 1; j <= n;  ){ // note, j is long, for overflow hwen n is very big
+        long maxSum = 0;  // note, it is long
+        for(int k = 1; maxSum < n; k++){ 
             
-            if(index < nums.length && j >= nums[index]){
-                j += nums[index++];
-            }else{
-                j <<= 1;
+            if(index < m && k >= nums[index]){
+                index++;
+                
+                maxSum += k;  // here maybe integer overflow 
+            }else if(k > maxSum){
                 count++;
-            }
+                
+                maxSum += k;  // here maybe integer overflow 
+            }// else k <= maxSum
 
         }
         
         return count;
     }
     
-    
+    /**
+     * Time complexity is O( nums.length + log(n - sum_nums) ), space complexity is O(1)
+     * 
+     * @param nums
+     * @param n
+     * @return 
+     */
+    public int minPatches_m2_n(int[] nums, int n) {
+        if (n < 1) {
+            return 0;
+        }
+        if (nums == null || nums.length == 0) {
+            return (int) Math.ceil(Math.log(n + 1) / Math.log(2)); // the pathes are {1, 2, 4, 8, ... }
+        }
+
+        int count = 0;
+        
+        int m = nums.length;
+        int index = 0;
+        for(long maxSum = 1; maxSum < n;  ){ // note, j is long, for overflow hwen n is very big
+            
+            if(index < m && maxSum >= nums[index]){
+                maxSum += nums[index];
+                index++;
+            }else{
+                count++;
+                maxSum <<= 1;
+            }
+        }
+        
+        return count;
+    }
     
     public static void main(String[] args) {
-        int[][] input = {
-                    {1, 3},
-                    {1, 5, 10},
-                    {1, 2, 2},
-                    {1,2,31,33}
+        int[][][] inputs = {
+            //{ nums, {n}, {expect}}
+            {
+                {1, 3}, {6}, {1}
+            },
+            {
+                {1, 5, 10}, {20}, {2}
+            },
+            {
+                {1, 2, 2}, {5}, {0}
+            },
+            {
+                {2}, {17483647}, {24}
+            },
+            {
+                {1,2,31,33}, {Integer.MAX_VALUE}, {28}  //2147483647
+            }
                                 
-        };
-
-        int[] n = {
-                    6, 
-                    20,
-                    5, 
-                    2147483647
         };
         
         PatchingArray sv = new PatchingArray();
         
-        for(int i = 0; i < input.length; i++){
-            System.out.println(String.format("%s, %d", Misc.array2String(input[i]), n[i]));
+        for(int[][] input : inputs){
+            System.out.println(String.format("\nnums: %s, n = %d", Arrays.toString(input[0]), input[1][0]));
             
-            System.out.println(String.format("%d, %d", sv.minPatches_n(input[i], n[i]), sv.minPatches_n2(input[i], n[i])));
+            //Assert.assertEquals(input[2][0], sv.minPatches_m1(input[0], input[1][0]));
+            
+           Assert.assertEquals(input[2][0], sv.minPatches_m2(input[0], input[1][0]));
+           Assert.assertEquals(input[2][0], sv.minPatches_m2_n(input[0], input[1][0]));
         }
         
     }

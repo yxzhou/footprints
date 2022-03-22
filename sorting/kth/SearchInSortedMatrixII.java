@@ -15,23 +15,29 @@ import util.TimeCost;
  *   Integers in each column are sorted from up to bottom. 
  *   No duplicate integers in each row or column
  *
- * Thoughts:
- * Because the rows is sorted, 
+ * Thoughts:  
+ * Because the rows is sorted, m rows and n columns 
  * m1) check row by row with binary search, 
- * Time O(n * logn)
+ * Time O(n * logm)
  *
  * Because the rows and column are sorted, the up-left is the minimum, the bottom-right is the maximum, 
- * m2) start from up-right (or bottom-left), if k is bigger, exclude the row, or exclude the column. 
- * Time O(n + n) 
+ * m2) start from up-right (or bottom-left),  r = 0, c = n - 1
+ *     if k == arr[r][c], found
+ *     if k > arr[r][c], excludes this row, move down, r++
+ *     if k < arr[r][c], excludes the column. move left, c--
  * 
- * m3) binary search on the whole matrix, check the elements on diagonal, Every time it can exclude half Element 
- * Time O(logn)
+ * Time O(n + m) 
+ * 
+ * m3) binary search
+ * It's similar with m2, while it's not move one everytime, it move more with binary search
+ * 
+ * Time O(logm +logn)
  *
  * 
  *   
  */
 
-public class SearchInSortedMatrix2 {
+public class SearchInSortedMatrixII {
 
   
     /**
@@ -118,58 +124,58 @@ public class SearchInSortedMatrix2 {
      * worst case O( rows*log(rows) + cols*log(cols) ) ??
      *
      */
-    public boolean isExisted_Binarysearch(int[][] arr, int elem) {
+    public boolean isExisted_Binarysearch(int[][] arr, int target) {
         int n = arr.length;
         int m = arr[0].length;
 
-        int row = 0;
-        int col = m - 1;   // the start point is top-right. 
+        int r = 0;
+        int c = m - 1;   // the start point is top-right. 
 
-        int middle, right, left, top, bottom;
-        while (row < n && col >= 0) {
-            if (elem == arr[row][col]) {
+        int left, right;
+        int top, bottom;
+        int middle;
+        while (r < n && c >= 0) {
+            if (target == arr[r][c]) {
                 return true;
-            } else if (elem < arr[row][col]) {
-                //col --;
+            } else if (target < arr[r][c]) {
                 left = 0;
-                right = col;
+                right = c;
 
-                while (right > left + 1) {
+                while (left + 1 < right) {
                     middle = (left + right) / 2;
 
-                    if (elem == arr[row][middle]) {
+                    if (target == arr[r][middle]) {
                         return true;
-                    } else if (elem > arr[row][middle]) {
+                    } else if (target > arr[r][middle]) {
                         left = middle;
                     } else {
                         right = middle;
                     }
                 }
 
-                col = left;
-                if (elem < arr[row][col]) {
+                c = left;
+                if (target < arr[r][c]) {
                     return false;
                 }
 
             } else {
-                //row ++;
                 bottom = n - 1;
-                top = row;
+                top = r;
 
                 while (bottom > top + 1) {
                     middle = (top + bottom) / 2;
 
-                    if (elem == arr[middle][col]) {
+                    if (target == arr[middle][c]) {
                         return true;
-                    } else if (elem > arr[middle][col]) {
+                    } else if (target > arr[middle][c]) {
                         top = middle;
                     } else {
                         bottom = middle;
                     }
                 }
 
-                row = bottom;
-                if (elem > arr[row][col]) {
+                r = bottom;
+                if (target > arr[r][c]) {
                     return false;
                 }
             }
@@ -179,7 +185,7 @@ public class SearchInSortedMatrix2 {
     }
   
     public static void main(String[] args) {
-        SearchInSortedMatrix2 m = new SearchInSortedMatrix2();
+        SearchInSortedMatrixII m = new SearchInSortedMatrixII();
         TimeCost tc = TimeCost.getInstance();
 
         /*-------------simple test start --------------- */

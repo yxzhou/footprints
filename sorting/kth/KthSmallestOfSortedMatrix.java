@@ -7,7 +7,7 @@ import util.Misc;
 /**
  * _https://www.lintcode.com/problem/1272
  * 
- * Given a n * n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element
+ * Given a m * n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element
  * in the matrix.
  *
  * Note that it is the kth smallest element in the sorted order, not the kth distinct element.
@@ -31,7 +31,7 @@ import util.Misc;
  * m1) one by one, with two minHeap, 
  * Time O(k * logn), when k << n^2, it's O(k * log k)
  * 
- * there is n^2 elements in the matrix, if k > ((n^2) / 2),  kth smallest -> (n^2 - k + 1)_th biggest element.
+ * there is n^2 elements in the matrix, if k > ((n^2) / 2),  kth smallest -> (n^2 - k + 1)_the biggest element.
  * 
  * m2) Because the rows and column are sorted, the up-left is the minimum, the bottom-right is the maximum, 
  *  so to a number x, it takes O(n) to find out how many elements <= x. 
@@ -62,23 +62,23 @@ public class KthSmallestOfSortedMatrix {
         
         int n = matrix.length;
 
-        PriorityQueue<int[]> minHeap = new PriorityQueue<>( (a,b) -> Integer.compare(matrix[a[0]][a[1]], matrix[b[0]][b[1]] ) );
-        minHeap.add(new int[]{0, 0});
+        PriorityQueue<Cell> minHeap = new PriorityQueue<>( (a,b) -> Integer.compare(matrix[a.row][a.col], matrix[b.row][b.col] ) );
+        minHeap.add(new Cell(0, 0));
 
         boolean[][] visited = new boolean[n][n];
 
-        int[] top;
+        Cell top;
         int nr, nc;
         while( k > 1 ){
             top = minHeap.poll();
             k--;
 
             for(int[] diff : diffs){
-                nr = top[0] + diff[0];
-                nc = top[1] + diff[1];
+                nr = top.row + diff[0];
+                nc = top.col + diff[1];
 
                 if(nr < n && nc < n && !visited[nr][nc] ){
-                    minHeap.add(new int[]{nr, nc});
+                    minHeap.add(new Cell(nr, nc));
                     visited[nr][nc] = true;
                 }
             }
@@ -86,8 +86,18 @@ public class KthSmallestOfSortedMatrix {
         }
 
         top = minHeap.poll();
-        return matrix[top[0]][top[1]];
+        return matrix[top.row][top.col];
     }     
+    
+    class Cell{
+        int row;
+        int col;
+        
+        Cell(int row, int col){
+            this.row = row;
+            this.col = col;
+        }
+    }
  
     /**
      * binary search, find a number x, that smaller or equal   
@@ -109,14 +119,14 @@ public class KthSmallestOfSortedMatrix {
         while(low + 1 < high){
             mid = low + (high - low) / 2;
             
-            if(countLessEqual(matrix, mid) < k ){
+            if(countSmallerAndEqual(matrix, mid) < k ){
                 low = mid;
             } else {
                 high = mid;
             }
         }
         
-        if(countLessEqual(matrix, low) >= k){
+        if(countSmallerAndEqual(matrix, low) >= k){
             return low;
         }
         
@@ -135,7 +145,7 @@ public class KthSmallestOfSortedMatrix {
         while(low < high){
             mid = low + (high - low) / 2;
             
-            if(countLessEqual(matrix, mid) < k ){
+            if(countSmallerAndEqual(matrix, mid) < k ){
                 low = mid + 1;
             } else {
                 high = mid;
@@ -148,18 +158,20 @@ public class KthSmallestOfSortedMatrix {
     /**
      * find how many elements are <= val in the matrix, 
      * 
+     * Time complecity O(m + n)
+     * 
      * @param matrix, a sorted matrix
-     * @param val
+     * @param target
      * @return 
      */
-    private int countLessEqual(int[][] matrix, int val){
+    private int countSmallerAndEqual(int[][] matrix, int target){
         int n = matrix.length;
         
         int count = 0;
         
         //start from the left_bottom corner
         for(int r = 0, c = n - 1; r < n && c >= 0; ){
-            if(matrix[r][c] > val){
+            if(matrix[r][c] > target){
                 c--;
             }else{ // <= val
                 count += c + 1;

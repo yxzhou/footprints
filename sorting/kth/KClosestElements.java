@@ -5,6 +5,7 @@
 package sorting.kth;
 
 import java.util.Arrays;
+import org.junit.Assert;
 
 /**
  * _https://www.lintcode.com/problem/460
@@ -54,14 +55,14 @@ public class KClosestElements {
         int l = p - 1;
         int r = p;
         
-        int diff1;
-        int diff2;
+        long diffL; //to avoid overflow, for case, A = [Integer.MIN_VALUE, Long.MAX_VALUE], target = 0, k = 2
+        long diffR;
         for( int i = 0; i < k; i++){
             
-            diff1 = ( l >= 0 ? target - A[l] : Integer.MAX_VALUE );
-            diff2 = ( r < n ?  A[r] - target : Integer.MAX_VALUE );
+            diffL = ( l >= 0 ? (long)target - A[l] : Long.MAX_VALUE );
+            diffR = ( r < n ?  (long)A[r] - target : Long.MAX_VALUE );
 
-            if(diff2 < diff1){
+            if(diffR < diffL){
                 result[i] = A[r];
                 r++;
             }else{
@@ -72,5 +73,24 @@ public class KClosestElements {
         }
 
         return result;
+    }
+    
+    public static void main(String[] args){
+        
+        int[][][] inputs = {
+            //{A, {target, k}, expect}
+            {{1, 2, 3}, {2, 3}, {2, 1, 3}},
+            {{1, 4, 6, 8}, {3, 3}, {4, 1, 6}},
+            {{1, 4, 6, 8}, {2, 3}, {1, 4, 6}},
+            {{Integer.MIN_VALUE, -1, 0, 1, Integer.MAX_VALUE}, {0, 5}, {0, -1, 1, Integer.MAX_VALUE, Integer.MIN_VALUE}},
+        };
+        
+        KClosestElements sv = new KClosestElements();
+        
+        for(int[][] input : inputs){
+            System.out.println(String.format("\nA: %s, target = %d, k = %d", Arrays.toString(input[0]), input[1][0], input[1][1] ));
+            
+            Assert.assertArrayEquals(input[2], sv.kClosestNumbers(input[0], input[1][0], input[1][1]));
+        }
     }
 }

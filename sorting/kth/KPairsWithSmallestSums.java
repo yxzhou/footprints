@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
+import junit.framework.Assert;
+import util.Misc;
 
 /**
  * _https://www.lintcode.com/problem/1274
@@ -50,6 +52,16 @@ import java.util.PriorityQueue;
  * 
  */
 public class KPairsWithSmallestSums {
+    
+    class Pair{
+        int i; // index in nums1
+        int j; // index in nums2
+
+        Pair(int i, int j){
+            this.i = i;
+            this.j = j;
+        }
+    }
 
     /**
      * @param nums1: List[int]
@@ -57,42 +69,85 @@ public class KPairsWithSmallestSums {
      * @param k: an integer
      * @return: return List[List[int]]
      */
-    int[][] diffs = {{0, 1}, {1, 0}};
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        if (nums1 == null || nums2 == null || k < 1) {
+        //assert nums1 == null || nums2 == null ;
+        if(nums1 == null || nums2 == null || k < 1){
             return Collections.EMPTY_LIST;
         }
 
         int n = nums1.length;
         int m = nums2.length;
-
-        k = Math.min(k, m * n);
-
-        boolean[][] visited = new boolean[n][m]; //to avoid add heap duplicated
-
-        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> Integer.compare(nums1[a[0]] + nums2[a[1]], nums1[b[0]] + nums2[b[1]]));
-        minHeap.add(new int[]{0, 0});
-
+        
+        k = Math.min(k, n * m);
         List<List<Integer>> result = new ArrayList<>(k);
 
-        int[] top;
-        int ni;
-        int nj;
-        for (int i = 0; i < k; i++) {
+        PriorityQueue<Pair> minHeap = new PriorityQueue<>(k, (a, b) -> ((long)nums1[a.i] + nums2[a.j] - nums1[b.i] - nums2[b.j]) >= 0? 1 : -1 );
+        minHeap.add(new Pair(0, 0));
+
+        boolean[][] visited = new boolean[n][m];
+
+        Pair top;
+        for( ; k > 0; k-- ){
             top = minHeap.poll();
-            result.add(Arrays.asList(nums1[top[0]], nums2[top[1]]));
 
-            for (int[] diff : diffs) {
-                ni = top[0] + diff[0];
-                nj = top[1] + diff[1];
+            result.add(Arrays.asList(nums1[top.i], nums2[top.j]));
 
-                if (ni < n && nj < m && !visited[ni][nj]) {
-                    minHeap.add(new int[]{ni, nj});
-                    visited[ni][nj] = true;
-                }
+            if(top.j + 1 < m && !visited[top.i][top.j + 1]){
+                minHeap.add(new Pair(top.i, top.j + 1));
+                visited[top.i][top.j + 1] = true;
             }
+            if(top.i + 1 < n && !visited[top.i + 1][top.j]){
+                minHeap.add(new Pair(top.i + 1, top.j));
+                visited[top.i + 1][top.j] = true;
+            }
+
         }
 
         return result;
     }
+
+    public static void main(String[] args){
+        
+        int[][][][] inputs = {
+            //{ {nums1, nums2, {k}}, expect }
+            {{null, null, {1}}, {}},
+            {{{1}, {2}, {0}}, {}},
+            {
+                {
+                    {1,7,11},
+                    {2,4,6},
+                    {3}
+                },
+                {{1,2},{1,4},{1,6}}
+            },
+            {
+                {
+                    {1,1,2},
+                    {1,2,3},
+                    {2}
+                },
+                {{1,1},{1,1}}
+            },
+            {
+                {
+                    {1,2},
+                    {3},
+                    {3}
+                },
+                {{1,3},{2,3}}
+            }
+        };
+        
+        KPairsWithSmallestSums sv = new KPairsWithSmallestSums();
+        
+        for(int[][][] input : inputs){
+            
+            System.out.println(String.format("\nnums1: %s\nnums2: %s\nk=%d", Arrays.toString(input[0][0]), Arrays.toString(input[0][1]), input[0][2][0] ));
+            
+            Assert.assertEquals( Misc.array2String(input[1], true), Misc.array2String(sv.kSmallestPairs(input[0][0], input[0][1], input[0][2][0])).toString() );
+            
+        }
+        
+    }
+
 }
