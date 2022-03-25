@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -561,6 +562,18 @@ public class Misc
         }
 
         return true;
+    }
+    
+    public static void sort(List<List<Integer>> result){
+        Collections.sort(result, (a, b) -> {
+            for(int i = 0, n = Math.min(a.size(), b.size()); i < n; i++ ){
+                if(a.get(i) != b.get(i)){
+                    return a.get(i) - b.get(i);
+                }
+            }
+            
+            return a.size() < b.size()? 1 : -1;
+        });
     }
 
     public static List<List<String>> convert(String[][] strings) {
