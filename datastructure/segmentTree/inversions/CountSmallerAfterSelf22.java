@@ -75,8 +75,8 @@ public class CountSmallerAfterSelf22 {
     
     public static void main(String[] args){
         /** basic test  **/
-        for(int w = 0; w < 18; w++){
-            System.out.println(String.format("\n(delta = max - min)=%d, log(2,delta + 1)=%.2f, Math.ceil(log(2,delta + 1))=%d", w, Math.log(w + 1)/Math.log(2), (int)Math.ceil(Math.log(w + 1)/Math.log(2))  ));
+        for(int w = 0; w < 20; w++){
+            System.out.println(String.format("\n(delta = max - min)=%d, log(2,delta + 1)=%.2f, Math.ceil(log(2,delta + 1))=%d, capacity=%d -- %d", w, Math.log(w + 1)/Math.log(2), (int)Math.ceil(Math.log(w + 1)/Math.log(2)), 1 << ((int)Math.ceil(Math.log(w + 1)/Math.log(2)) + 1) , 1 << ((int)Math.ceil(Math.log(w)/Math.log(2)) + 1) ));
         }
         
         int w = Integer.MAX_VALUE - 1111;
