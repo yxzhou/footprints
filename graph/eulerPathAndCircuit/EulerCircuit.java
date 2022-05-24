@@ -7,6 +7,7 @@ package graph.eulerPathAndCircuit;
  *  *Eulerian Path is a path in graph that visits every edge exactly once.
  *    same as problem of "Is it possible to draw a given graph without lifting pencil from the paper and without tracing any of the edges more than once"
  *  Eulerian Circuit is an Eulerian Path which starts and ends on the same vertex.
+ *  more pls see_https://youtu.be/QsMycO8B4M0
  *
  *  *Hamiltonian Path in an undirected graph is a path that visits each vertex exactly once.
  *  A Hamiltonian cycle (or Hamiltonian circuit) is a Hamiltonian Path such that there is an edge (in graph) from the last vertex to the first vertex of the Hamiltonian Path.

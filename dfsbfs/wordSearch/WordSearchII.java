@@ -1,279 +1,161 @@
 package dfsbfs.wordSearch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.junit.Assert;
+import util.Misc;
 
 /**
+ * _https://www.lintcode.com/problem/132
  * 
- * Given a 2D board and a list of words from the dictionary, find all words
- * in the board.
+ * Given a 2D board and a list of words from the dictionary, find all words in the board.
+ *
+ * Each word must be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those
+ * horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+ *
+ * Example 1:
+ * Input：["doaf","agai","dcan"]，["dog","dad","dgdg","can","again"]
+ * Output：["again","can","dad","dog"]
+ * Explanation：
+ *   d o a f
+ *   a g a i
+ *   d c a n
+ * search in Matrix，so return ["again","can","dad","dog"].
  * 
- * Each word must be constructed from letters of sequentially adjacent cell,
- * where "adjacent" cells are those horizontally or vertically neighboring.
- * The same letter cell may not be used more than once in a word.
- * 
- * For example, Given words = ["oath","pea","eat","rain"] and board =
- * [ ['o','a','a','n'], 
- *   ['e','t','a','e'], 
- *   ['i','h','k','r'],
- *   ['i','f','l','v'] ] 
- *   
- * Return ["eat","oath"]. 
- * 
+ * Example 2:
+ * Input：["a"]，["b"]
+ * Output：[]
+ *
  * Note: You may assume that all inputs are consist of lowercase letters a-z.
  * 
  * Solutions:
  *   1)  dfs
  *   2)  trie + dfs
+ * 
  */
 
 public class WordSearchII {
 
-    /**/
-    public List<String> findWords(char[][] board, String[] words) {
-    	List<String> result = new ArrayList<>();
-    	
-        // check
-        // if(board == null )
+    class Node{
+        Node[] nexts = new Node[26];
 
-        int rows = board.length;
-        int cols = board[0].length;
-        boolean[][] isUsed = new boolean[rows][cols]; // default it's false;
+        String word = null;
+    }
 
-        out: for(String word : words){
-	        for (int row = 0; row < rows; row++) {
-	          for (int col = 0; col < cols; col++) {
-	            // isUsed[row][col] = false;
-	
-	            if (exist(board, row, col, word, 0, isUsed)){
-	              result.add(word);
-	              continue out;
-	            }  
-	          }
-	        }
+    /**
+     * @param board: A list of lists of character
+     * @param words: A list of string
+     * @return: A list of string
+     */
+    public List<String> wordSearchII(char[][] board, List<String> words) {
+        if(board == null || board.length == 0 || words == null){
+            return Collections.EMPTY_LIST;
         }
-        
-        return result;
-    }
-	
-    /* dfs */
-    private boolean exist(char[][] board, int row, int col, String word,
-        int start, boolean[][] isUsed) {
-      //
-      isUsed[row][col] = true;
 
-      if (start == word.length() - 1 && board[row][col] == word.charAt(start))
-        return true;
+        Node root = new Node();
 
-      if (board[row][col] == word.charAt(start)) {
+        //init trie 
+        for(String word : words){
+            add(root, word);
+        }
 
-        if (row > 0 && !isUsed[row - 1][col]
-            && exist(board, row - 1, col, word, start + 1, isUsed))
-          return true;
-        if (row < board.length - 1 && !isUsed[row + 1][col]
-            && exist(board, row + 1, col, word, start + 1, isUsed))
-          return true;
-        if (col > 0 && !isUsed[row][col - 1]
-            && exist(board, row, col - 1, word, start + 1, isUsed))
-          return true;
-        if (col < board[0].length - 1 && !isUsed[row][col + 1]
-            && exist(board, row, col + 1, word, start + 1, isUsed))
-          return true;
+        Set<String> result = new HashSet<>();
 
-      }
-
-      isUsed[row][col] = false;   //this is very important 
-
-      return false;
-    }
-    
-    public List<String> findWords_2(char[][] board, String[] words) {
-        ArrayList<String> result = new ArrayList<String>();
-     
+        //search
         int m = board.length;
         int n = board[0].length;
-     
-        for (String word : words) {
-            boolean flag = false;
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    char[][] newBoard = new char[m][n];
-                    for (int x = 0; x < m; x++){
-                        for (int y = 0; y < n; y++){
-                            newBoard[x][y] = board[x][y];
-                        }
-                    }
-     
-                    if (dfs(newBoard, word, i, j, 0)) {
-                        flag = true;
-                    }
-                }
-            }
-            if (flag) {
-                result.add(word);
-            }
-        }
-     
-        return result;
-    }
-     
-    private boolean dfs(char[][] board, String word, int i, int j, int k) {
-        int m = board.length;
-        int n = board[0].length;
-     
-        if (i < 0 || j < 0 || i >= m || j >= n || k > word.length() - 1) {
-            return false;
-        }
-     
-        if (board[i][j] == word.charAt(k)) {
-            char temp = board[i][j];
-            board[i][j] = '#';
-     
-            if (k == word.length() - 1) {
-                return true;
-            } else if (dfs(board, word, i - 1, j, k + 1)
-                    || dfs(board, word, i + 1, j, k + 1)
-                    || dfs(board, word, i, j - 1, k + 1)
-                    || dfs(board, word, i, j + 1, k + 1)) {
-                board[i][j] = temp;
-                return true;
-            }
-     
-        } else {
-            return false;
-        }
-     
-        return false;
-    }
-    
-    
-    public List<String> findWords_trie_n(char[][] board, String[] words) {
-        Set<String> result = new HashSet<String>();
- 
-        Trie trie = new Trie();
-        for(String word: words){
-            trie.insert(word);
-        }
- 
-        int m=board.length;
-        int n=board[0].length;
- 
         boolean[][] visited = new boolean[m][n];
- 
-        for(int i=0; i<m; i++){
-            for(int j=0; j<n; j++){
-               dfs(board, i, j, new StringBuilder(), visited, trie.root, result);
+
+        for(int r = 0; r < m; r++){
+            for(int c = 0; c < n; c++){
+                dfs(board, r, c, root, visited, result);
             }
         }
- 
-        return new ArrayList<String>(result);
-    }
- 
-    private void dfs(char[][] board, int i, int j, StringBuilder str, boolean[][] visited, TrieNode trie, Set<String> result){
-        int m=board.length;
-        int n=board[0].length;
- 
-        if(i<0 || j<0||i>=m||j>=n){
-            return;
-        }
- 
-        if(visited[i][j] || !trie.hasChild(board[i][j])){
-            return;
-        }
- 
-        str.append(board[i][j]);
-        trie = trie.getChild(board[i][j]);
 
-        if(trie.isLeaf){
-            result.add(str.toString());
+        return new ArrayList<>(result);
+    }
+
+    int[][] diffs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+    private void dfs(char[][] board, int r, int c, Node curr, boolean[][] visited, Set<String> result){
+
+        if(r < 0 || r >= board.length || c < 0 || c >= board[0].length || visited[r][c]){
+            return;
         }
- 
-        visited[i][j]=true;
+
+        curr = curr.nexts[board[r][c] - 'a'];
+        if( curr == null ){
+            return;
+        }
         
-        dfs(board, i-1, j, str, visited, trie, result);
-        dfs(board, i+1, j, str, visited, trie, result);
-        dfs(board, i, j-1, str, visited, trie, result);
-        dfs(board, i, j+1, str, visited, trie, result);
+        if(curr.word != null){
+            result.add(curr.word);
+        }
 
-        visited[i][j]=false;
-        str.deleteCharAt(str.length() - 1);
- 
+        visited[r][c] = true;
+
+        for(int[] diff : diffs){
+            dfs(board, r + diff[0], c + diff[1], curr, visited, result);
+        }
+
+        visited[r][c] = false;
     }
 
-    
-  //trie Node
-    class TrieNode{
-        public TrieNode[] children = new TrieNode[26];
-        //public String item = "";
-        public boolean isLeaf = false;
+    private void add(Node root, String word){
+        Node curr = root;
+        int p;
+        for(int i = 0, n = word.length(); i < n; i++){
+            p = word.charAt(i) - 'a';
 
-        public boolean hasChild(char c){
-            return hasChild(c - 'a');
-        }
-        public boolean hasChild(int c){
-            return getChild(c) != null;
-        }
-        public TrieNode getChild(char c){
-            return children[c - 'a'];
-        }
-        public TrieNode getChild(int c){
-            return children[c];
-        }
-    }
-     
-    //trie
-    class Trie{
-        public TrieNode root = new TrieNode();
-     
-        public void insert(String word){
-            TrieNode node = root;
-            int index;
-            for(char c : word.toCharArray()){
-                index = c - 'a';
-                if(node.children[index] == null){
-                    node.children[index]= new TrieNode();
-                }
-                node = node.children[index];
+            if(curr.nexts[p] == null){
+                curr.nexts[p] = new Node();
             }
-            //node.item = word;
-            node.isLeaf = true;
+
+            curr = curr.nexts[p];
         }
-     
-        public boolean search(String word){
-            TrieNode node = root;
-            int index;
-            for(char c: word.toCharArray()){
-                index = c - 'a';
-                if(node.children[index]==null)
-                    return false;
-                node = node.children[index];
-            }
-//            if(node.item.equals(word)){
-//                return true;
-//            }else{
-//                return false;
-//            }
-            return node.isLeaf;
-        }
-     
-        public boolean startsWith(String prefix){
-            TrieNode node = root;
-            int index;
-            for(char c: prefix.toCharArray()){
-                index = c - 'a';
-                if(node.children[index]==null)
-                    return false;
-                node = node.children[index];
-            }
-            return true;
-        }
+
+        curr.word = word;
     }
     
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    public static void main(String[] args){
+        String[][][] inputs = {
+            {
+                {"a"},
+                {"b"},
+                {}
+            },
+            {
+                {
+                    "doaf",
+                    "agai",
+                    "dcan"
+                },
+                {"dog","dad","dgdg","can","again"},
+                {"again","can","dad","dog"}
+            }
 
-	}
+        };
+        
+        WordSearchII sv = new WordSearchII();
+        
+        char[][] matrix;
+        List<String> result;
+        for(String[][] input : inputs){
+            matrix= Misc.convert(input[0]);
+                    
+            Misc.printMetrix(matrix);
+            System.out.println("words: " + Arrays.toString(input[1]));
+            
+            result = sv.wordSearchII(matrix, Arrays.asList(input[1]));
+            Collections.sort(result);
+            Assert.assertArrayEquals(input[2], result.toArray(new String[0]) );
+            
+        }
+        
+    }
 
 }
