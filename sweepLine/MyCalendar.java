@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package datastructure.map.treeMap;
+package sweepLine;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -39,27 +39,22 @@ import java.util.TreeMap;
  * 
  */
 public class MyCalendar {
-    TreeMap<Integer, Integer> map;
+    TreeMap<Integer, Integer> map; //map: the start to end 
 
     public MyCalendar() {
         map = new TreeMap<>();
     }
     
     public boolean book(int start, int end) {
-
-        Map.Entry<Integer, Integer> floor = map.floorEntry(start);
-        if(floor != null && floor.getValue() > start){
-            return false;
+        Map.Entry<Integer, Integer> pre = map.lowerEntry(end);
+        
+        if(pre == null || pre.getValue() <= start){
+            map.put(start, end);
+            
+            return true;
         }
 
-        Map.Entry<Integer, Integer> ceil = map.ceilingEntry(start);
-        if(ceil != null && ceil.getKey() < end ){
-            return false;
-        }
-
-        map.put(start, end);
-
-        return true;
+        return false;
 
     }
 }

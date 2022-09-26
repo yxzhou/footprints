@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package datastructure.interval;
+package sweepLine;
 
 import java.util.Arrays;
 import junit.framework.Assert;
@@ -41,27 +41,33 @@ import util.Misc;
  *   [[5,10],[8,9]]  -- the more-than-half is [8, 9], so check sequence is [[5,10],[8,9]]
  *   [[5,30],[6,12],[7,9]] -- the more-than-half is [18, 10, 9], so check sequence is [[7,9],[6,12],[5,30]]
  * 
+ * 
+ * 
  */
 
 public class SportsMeeting {
     /**
      * greedy
      * 
-     * @param Events: the start and end time
+     * @param events: the start and end time
      * @return: if there has a solution return 1, otherwise return -1.
      */
-    public int CheerAll(int[][] Events) {
-        if(Events == null || Events.length < 2){
+    public int CheerAll(int[][] events) {
+        if(events == null || events.length < 2){
             return 1;
         }
 
-        Arrays.sort(Events, (a, b) -> Integer.compare((a[1] + a[0] + 2) / 2 , (b[1] + b[0] + 2) / 2) );
+        Arrays.sort(events, (a, b) -> Integer.compare((a[1] + a[0] + 2) / 2 , (b[1] + b[0] + 2) / 2) );
 
-        int base = 0;
-        for(int[] event : Events){
-            base = Math.max(base - event[0], 0) + (event[1] + event[0] + 2) / 2; 
-
-            if(base > event[1]){
+        int x = 0;
+        for(int[] event : events){
+            if(x <= event[0]){
+                x = 1 + event[0] + (event[1] - event[0]) / 2;
+            }else{ // event[0] < x
+                x = x + 1 + (event[1] - event[0]) / 2; 
+            }
+            
+            if(x > event[1]){
                 return -1;
             }
         }
@@ -72,35 +78,35 @@ public class SportsMeeting {
     /**
      * greedy
      * 
-     * @param Events: the start and end time
-     * @return: if there has a solution return 1, otherwise return -1.
+     * @param events: the start and end time
+     * @return if there has a solution return 1, otherwise return -1.
      */
-    public int CheerAll_2(int[][] Events) {
-        if(Events == null || Events.length < 2){
+    public int CheerAll_2(int[][] events) {
+        if(events == null || events.length < 2){
             return 1;
         }
 
-        int n = Events.length;
+        int n = events.length;
 
-         int[][] sports = new int[n][2];
+        int[][] sports = new int[n][2];
 
-         for(int i = 0; i < n; i++){
-             sports[i][0] = i;
-             sports[i][1] = 1 + Events[i][0] + (Events[i][1] - Events[i][0]) / 2;
-         }
+        for (int i = 0; i < n; i++) {
+            sports[i][0] = i;
+            sports[i][1] = 1 + events[i][0] + (events[i][1] - events[i][0]) / 2;
+        }
 
-        Arrays.sort(sports, (a, b) -> a[1] - b[1] );
+        Arrays.sort(sports, (a, b) -> a[1] - b[1]);
 
-         int base = 0;
-         int[] event;
-         for(int[] sport : sports ){
-             event = Events[sport[0]];
-             base = Math.max(base - event[0], 0) + sport[1];
+        int base = 0;
+        int[] event;
+        for (int[] sport : sports) {
+            event = events[sport[0]];
+            base = Math.max(base - event[0], 0) + sport[1];
 
-             if(base > event[1]){
-                 return -1;
-             }
-         }
+            if (base > event[1]) {
+                return -1;
+            }
+        }
 
         return 1;
     }

@@ -4,6 +4,9 @@
  */
 package stringmatching;
 
+import java.util.Arrays;
+
+
 /**
  * _https://www.lintcode.com/problem/1127
  *
@@ -24,7 +27,7 @@ package stringmatching;
  * Output: "<b>aaabbc</b>c"
  * 
  */
-public class BoldTagsInStringII {
+public class BoldTagsInString2 {
     
     /**
      * @param s: a string
@@ -41,11 +44,9 @@ public class BoldTagsInStringII {
         StringBuilder result = new StringBuilder();
 
         int n = s.length();
-        int k;
-        for(int l = 0, r = 0, i ; r < n; ){
-            for( i = r ; i <= r && i < n; i++){
-                k = getLongest(root, s, i);
-                r = Math.max(r, k + 1);
+        for(int l = 0, r = 0, i ; l < n; l = r){
+            for( i = l ; i <= r && i < n; i++){
+                r = Math.max(r, getLongest(root, s, i) + 1);
             }
             
             if(l < r){
@@ -54,8 +55,7 @@ public class BoldTagsInStringII {
                 result.append(s.charAt(l));
                 r++;
             }
-
-            l = r;
+            
         }
 
         return result.toString();
@@ -74,36 +74,33 @@ public class BoldTagsInStringII {
             }
 
             curr = curr.nexts[c];
+            
         }
 
         curr.isLeaf = true;
     }
 
-    private int getLongest(TrieNode root, String s, int i){
+    private int getLongest(TrieNode root, String s, int start){
         TrieNode curr = root;
 
-        int c;
-        int j = -1;
-        for( ; i < s.length(); i++){
-            c = s.charAt(i);
-
-            if(curr.nexts[c] == null){
-                break;
-            }
-
-            curr = curr.nexts[c];
+        int end = -1;
+        while( start < s.length() && curr != null){
+            curr = curr.nexts[s.charAt(start)];
             
-            if( curr.isLeaf ){
-                j = i;
+            if(curr != null && curr.isLeaf ){
+                end = start;
             }
             
+            start++;
         }
 
-        return j;
+        return end;
     }
     
     class TrieNode{
         TrieNode[] nexts = new TrieNode[128];
         boolean isLeaf = false;
     }
+    
+    
 }

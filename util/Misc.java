@@ -167,23 +167,12 @@ public class Misc
         }
 
         System.out.println();
+        
+        //result.stream().map(E::toString).forEach(System.out::print);
     }
+
 
     public static <E> void printListList(List<List<E>> result) {
-        if (result == null || result.size() == 0) {
-            System.out.println("Null");
-            return;
-        }
-
-        for (int i = 0; i < result.size(); i++) {
-            System.out.print("---" + i + "---");
-            printList(result.get(i));
-        }
-
-        System.out.println();
-    }
-
-    public static <E> void printListList(ArrayList<ArrayList<E>> result) {
         if (result == null || result.size() == 0) {
             System.out.println("Null");
             return;
@@ -364,7 +353,7 @@ public class Misc
             if(!oneLine){
                 returnValue.append("\n");
             }
-
+            
             returnValue.append("[");
             for (int j = 0, m = array[i].length; j < m; j++) {
                 returnValue.append(array[i][j]);
@@ -379,6 +368,20 @@ public class Misc
             }
             returnValue.append("]");
 
+            if(oneLine) {
+                returnValue.append(", ");
+            } else {
+                returnValue.append(",");
+            }
+        }
+        
+        int length = returnValue.length();
+        if (length > 2) {
+            if (oneLine) {
+                returnValue.delete(length - 2, length);
+            } else {
+                returnValue.deleteCharAt(length - 1);
+            }
         }
 
         return returnValue.toString();
@@ -599,4 +602,15 @@ public class Misc
 
         return result;
     }
+    
+    public static char[][] convert(String[] matrix){
+        char[][] r = new char[matrix.length][];
+        
+        for(int i = 0; i < matrix.length; i++){
+            r[i] = matrix[i].toCharArray();
+        }
+        
+        return r;
+    }
+    
 }

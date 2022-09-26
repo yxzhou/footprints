@@ -1,16 +1,21 @@
 package geometry;
 
+import org.junit.Assert;
+
 /**
- * 
+ *
  * Find the total area covered by two rectilinear rectangles in a 2D plane.
+ *
+ * Each rectangle is defined by its bottom left corner and top right corner as shown in the figure.
+ *
+ * Assume that the total area is never beyond the maximum possible value of int.
  * 
- * Each rectangle is defined by its bottom left corner and top right corner
- * as shown in the figure.
+ * Example:
+ *   Input: A = -3, B = 0, C = 3, D = 4, E = 0, F = -1, G = 9, H = 2
+ *   Output: 45
  * 
- * Assume that the total area is never beyond the maximum possible value of
- * int.
  */
-public class RectilinearArea {
+public class RectangleArea {
 
     /**
      * input two Rectilinear Rectangles (bottom_left and top_right, bottom_left and top_right), return the total area size
@@ -25,10 +30,6 @@ public class RectilinearArea {
      * @return the total area size
      */
     public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
-        //if(A > E){
-        //    return computeArea(E, F, G, H, A, B, C, D); 
-        //}
-
         // rectangle 1 + rectangle 2 - overlap
         return computeRectilinear(A, B, C, D)
                 + computeRectilinear(E, F, G, H)
@@ -51,7 +52,9 @@ public class RectilinearArea {
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        RectangleArea sv = new RectangleArea();
+        
+        Assert.assertEquals(45, sv.computeArea(-3, 0, 3, 4, 0, -1, 9, 2));
 
     }
 

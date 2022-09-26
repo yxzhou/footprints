@@ -6,7 +6,7 @@
 package stringmatching;
 
 import java.util.Arrays;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * _https://www.lintcode.com/problem/812
@@ -119,29 +119,49 @@ public class BoldTagsInString {
     
     public static void main(String[] args){
         String[][][] inputs = {
+             //{String s, String[] dict, String expect}
             {
                 {"ab", "bc"},
-                {"aabcd"}, 
+                {"aabcd"},
                 {"a<b>abc</b>d"}
             },
             {
                 {"abc"},
-                {"abcabcabcdab"}, 
+                {"abcabcabcdab"},
                 {"<b>abcabcabc</b>dab"}
             },
             {
-                {"bcccaeb","b","eedcbda","aeebebebd","ccd","eabbbdcde","deaaea","aea","accebbb","d"},
+                {"bcccaeb", "b", "eedcbda", "aeebebebd", "ccd", "eabbbdcde", "deaaea", "aea", "accebbb", "d"},
                 {"ceaaabbbedabbecbcced"},
                 {"ceaaa<b>bbb</b>e<b>d</b>a<b>bb</b>ec<b>b</b>cce<b>d</b>"}
+            },
+            {
+                {"abc", "123"},
+                {"abcxyz123"},
+                {"<b>abc</b>xyz<b>123</b>"}
+            },
+            {
+                {"aaa", "aab", "bc"},
+                {"aaabbcc"},
+                {"<b>aaabbc</b>c"}
             }
+             
         };
         
-        BoldTagsInString sv = new BoldTagsInString();
+        BoldTagsInString sv1 = new BoldTagsInString();
+        BoldTagsInString2 sv2 = new BoldTagsInString2();
         
-        for(int i = 0, n = inputs.length; i < n; i++ ){
-            Assert.assertEquals(inputs[i][2][0], sv.boldWords(inputs[i][0], inputs[i][1][0]));
+        for(String[][] input : inputs){
             
-            Assert.assertEquals(inputs[i][2][0], sv.boldWords_n(inputs[i][0], inputs[i][1][0]));
+            System.out.println(String.format("\ns: %s, dict: %s", input[0][0], Arrays.toString(input[1]) ));
+            
+            System.out.println("  BoldTagsInString:" );
+            Assert.assertEquals(input[2][0], sv1.boldWords(input[0], input[1][0]));
+            Assert.assertEquals(input[2][0], sv1.boldWords_n(input[0], input[1][0]));
+
+            System.out.println("  BoldTagsInStringII:" );
+            Assert.assertEquals(input[2][0], sv2.addBoldTag(input[1][0], input[0]));
+            
         }
 
     }

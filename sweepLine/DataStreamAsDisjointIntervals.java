@@ -1,6 +1,9 @@
-package datastructure.interval;
+package sweepLine;
 
+import sweepLine.interval.Interval;
 import java.util.*;
+import org.junit.Assert;
+import util.Misc;
 
 /**
  * _https://www.lintcode.com/problem/1280
@@ -21,21 +24,20 @@ import java.util.*;
  *   addNum(6)
  *   getIntervals()         [(1,3),(6,7)]]
  * Explanation： 
- * addNum(1) getIntervals([[1, 1]]) 
- * addNum(3) getIntervals([[1, 1], [3, 3]]) 
- * addNum(7) getIntervals([[1, 1], [3, 3], [7, 7]]) 
- * addNum(2)-merge(1,2,3) getIntervals([[1, 3], [7, 7]]) 
- * addNum(6)->merge(6,7) getIntervals([[1, 3], [6, 7]])
+ *   addNum(1) getIntervals([[1, 1]]) 
+ *   addNum(3) getIntervals([[1, 1], [3, 3]]) 
+ *   addNum(7) getIntervals([[1, 1], [3, 3], [7, 7]]) 
+ *   addNum(2)-merge(1,2,3) getIntervals([[1, 3], [7, 7]]) 
+ *   addNum(6)->merge(6,7) getIntervals([[1, 3], [6, 7]])
  *
  * 
  * Follow up: 
- *   What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?\
+ *   What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
  * 
  * Thoughts:
- *   m1) Set<Integer> store every Value 
- *   m2) interval tree 
- *   m3) TreeMap,     Map<value, Interval> 
- *   m4) UnionFind
+ *   m1) TreeMap,     Map<value, Interval> 
+ *   m2) UnionFind
+ *   m3) interval tree if it knows the min and max
  *
  */
 
@@ -120,19 +122,56 @@ public class DataStreamAsDisjointIntervals {
 
 
     public static void main(String[] args){
-        DataStreamAsDisjointIntervals sv = new DataStreamAsDisjointIntervals();
 
-        //0, add; 1, get
-        int[][] input = {{0, 2}, {0, 3}, {0, 6}, {0, 5}, {0, 4}, {1, 1}};
+        int[][][][] testcases = {
+            //{ the val for addNum, the expect of getIntervals }
+            {
+                {{1}},
+                {{1, 1}},
+                {{3}},
+                {{1, 1}, {3, 3}},
+                {{7}},
+                {{1, 1}, {3, 3}, {7, 7}},
+                {{2}},
+                {{1, 3}, {7, 7}},
+                {{6}},
+                {{1, 3}, {6, 7}}
+            },
+            {
+                {{2}},
+                {{2, 2}},
+                {{3}},
+                {{2, 3}},
+                {{6}},
+                {{2, 3}, {6, 6}},
+                {{5}},
+                {{2, 3}, {5, 6}},
+                {{4}},
+                {{2, 6}}
+            }
+        };
+       
 
-        for(int[] action : input){
-            if(action[0] == 0){
-                sv.addNum(action[1]);
-            }else if(action[0] == 1){
-                List<Interval> list = sv.getIntervals();
+        for(int[][][] testcase : testcases){
+            DataStreamAsDisjointIntervals sv1 = new DataStreamAsDisjointIntervals();
+            
+            for(int i = 0; i < testcase.length; i += 2){
+                sv1.addNum(testcase[i][0][0]);
+            
+                List<Interval> list = sv1.getIntervals();
 
-                list.forEach(i -> System.out.print(String.format("[%d, %d]", i.start, i.end)));
-                System.out.println();
+                //list.forEach(i -> System.out.print(String.format("[%d, %d]", i.start, i.end)));
+                Assert.assertEquals(String.format("addNum(%d) ", testcase[i][0][0]), Misc.array2String(testcase[i + 1], true), Misc.array2String(sv1.getIntervals()).toString());
+            }
+            
+            DataStreamAsDisjointIntervals2 sv2 = new DataStreamAsDisjointIntervals2();
+            for(int i = 0; i < testcase.length; i += 2){
+                sv2.addNum(testcase[i][0][0]);
+            
+                List<Interval> list = sv1.getIntervals();
+
+                //list.forEach(i -> System.out.print(String.format("[%d, %d]", i.start, i.end)));
+                Assert.assertEquals(String.format("addNum(%d) ", testcase[i][0][0]), Misc.array2String(testcase[i + 1], true), Misc.array2String(sv2.getIntervals()).toString());
             }
         }
 
