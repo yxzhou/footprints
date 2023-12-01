@@ -12,6 +12,11 @@ package geometry;
 public class Point {
     int x;
     int y;
+    
+    Point(){
+        x = 0;
+        y = 0;
+    }
 
     Point(int a, int b) {
         x = a;
@@ -34,7 +39,6 @@ public class Point {
         return ret;
     }
     
-    
     public static String toString(Point[] points){
         StringBuilder sb = new StringBuilder();
         
@@ -44,4 +48,21 @@ public class Point {
         
         return sb.toString();
     }
+    
+    @Override
+    public int hashCode(){
+        return x ^ y;
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Point){
+            Point other = (Point) obj;
+            
+            return this.x == other.x && this.y == other.y;
+        }
+        
+        return false;
+    }
+    
 }

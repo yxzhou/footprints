@@ -31,97 +31,96 @@ import java.util.Set;
 
 public class ConnectedComponentsUDG {
  
+    /**
+     * @param nodes a array of Undirected graph node
+     * @return a connected set of a Undirected graph
+     */
+    public List<List<Integer>> connectedSet_bfs(ArrayList<UndirectedGraphNode> nodes) {
+        List<List<Integer>> result = new ArrayList<>();
+        //check
+        if (null == nodes || nodes.isEmpty()) {
+            return result;
+        }
 
-	/**
-	 * @param nodes
-	 *            a array of Undirected graph node
-	 * @return a connected set of a Undirected graph
-	 */
-	public List<List<Integer>> connectedSet_bfs(ArrayList<UndirectedGraphNode> nodes) {
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
-		//check
-		if( null == nodes || 0 == nodes.size()){
-			return result;
-		}
-		
-		Set<Integer> visited = new HashSet<Integer>();
-		for(UndirectedGraphNode node : nodes){
-			if(!visited.contains(node.label)){
-				result.add(bfs(node, visited));
-			}
-		}
-		
-		return result;
-	}
+        Set<Integer> visited = new HashSet<>();
+        for (UndirectedGraphNode node : nodes) {
+            if (!visited.contains(node.label)) {
+                result.add(bfs(node, visited));
+            }
+        }
 
-	private List<Integer> bfs(UndirectedGraphNode node, Set<Integer> visited){
-		List<Integer> result = new ArrayList<Integer>();
-		
-		Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
-		queue.add(node);
-		visited.add(node.label);
-		
-		UndirectedGraphNode top;
-		while(!queue.isEmpty()){
-			top = queue.poll();
-			result.add(top.label);
-			
-			for(UndirectedGraphNode neighbor : top.neighbors){
-				if(!visited.contains(neighbor.label)){
-					queue.add(neighbor);
-					visited.add(neighbor.label);
-				}
-			}
-		}
-		
-		Collections.sort(result);
-		
-		return result;
-	}
-	
-	public List<List<Integer>> connectedSet_dfs(ArrayList<UndirectedGraphNode> nodes) {
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
-		//check
-		if( null == nodes || 0 == nodes.size()){
-			return result;
-		}
-		
-		Set<Integer> visited = new HashSet<Integer>();
-		List<Integer> connectedComponent;
-		for(UndirectedGraphNode node : nodes){
-			if(!visited.contains(node.label)){
-				connectedComponent = new ArrayList<>();
-				dfs(node, visited, new ArrayList<>());
-				Collections.sort(connectedComponent);
-				
-				result.add(connectedComponent);
-			}
-		}
-		
-		return result;
-	}
-	
-	private void dfs(UndirectedGraphNode node, Set<Integer> visited, List<Integer> result){
-		result.add(node.label);
-		visited.add(node.label);
-		
-		for(UndirectedGraphNode neighbor : node.neighbors){
-			if(!visited.contains(neighbor.label)){
-				dfs(neighbor, visited, result);
-			}
-		}
-	}
-	
-	/**
-	 * Definition for Undirected graph.
-	 */
-	class UndirectedGraphNode {
-		int label;
-		ArrayList<UndirectedGraphNode> neighbors;
+        return result;
+    }
 
-		UndirectedGraphNode(int x) {
-			label = x;
-			neighbors = new ArrayList<UndirectedGraphNode>();
-		}
-	};
+    private List<Integer> bfs(UndirectedGraphNode node, Set<Integer> visited) {
+        List<Integer> result = new ArrayList<>();
+
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        queue.add(node);
+        visited.add(node.label);
+
+        UndirectedGraphNode top;
+        while (!queue.isEmpty()) {
+            top = queue.poll();
+            result.add(top.label);
+
+            for (UndirectedGraphNode neighbor : top.neighbors) {
+                if (!visited.contains(neighbor.label)) {
+                    queue.add(neighbor);
+                    visited.add(neighbor.label);
+                }
+            }
+        }
+
+        Collections.sort(result);
+
+        return result;
+    }
+
+    public List<List<Integer>> connectedSet_dfs(ArrayList<UndirectedGraphNode> nodes) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        if (null == nodes || nodes.isEmpty()) {
+            return result;
+        }
+
+        Set<Integer> visited = new HashSet<>();
+        List<Integer> connectedComponent;
+        for (UndirectedGraphNode node : nodes) {
+            if (!visited.contains(node.label)) {
+                connectedComponent = new ArrayList<>();
+                dfs(node, visited, new ArrayList<>());
+                Collections.sort(connectedComponent);
+
+                result.add(connectedComponent);
+            }
+        }
+
+        return result;
+    }
+
+    private void dfs(UndirectedGraphNode node, Set<Integer> visited, List<Integer> result) {
+        result.add(node.label);
+        visited.add(node.label);
+
+        for (UndirectedGraphNode neighbor : node.neighbors) {
+            if (!visited.contains(neighbor.label)) {
+                dfs(neighbor, visited, result);
+            }
+        }
+    }
+
+    /**
+     * Definition for Undirected graph.
+     */
+    public class UndirectedGraphNode {
+
+        int label;
+        ArrayList<UndirectedGraphNode> neighbors;
+
+        UndirectedGraphNode(int x) {
+            label = x;
+            neighbors = new ArrayList<>();
+        }
+    };
 }

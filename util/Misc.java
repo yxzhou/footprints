@@ -603,6 +603,32 @@ public class Misc
         return result;
     }
     
+    public static List<List<Double>> convert(double[][] nums) {
+
+        List<List<Double>> result = new LinkedList<>();
+
+        for (double[] ss : nums) {
+            result.add(Arrays.stream(ss)
+                                .boxed()
+                                .collect(Collectors.toCollection(ArrayList::new)));
+        }
+
+        return result;
+    }
+    
+    
+    public static int[][] convertInteger(List<List<Integer>> nums) {
+        return nums.stream().map(l -> l.stream().mapToInt(Integer::intValue).toArray()).toArray(int[][]::new);
+    }
+    
+    public static double[][] convertDouble(List<List<Double>> nums) {
+        return nums.stream().map(l -> l.stream().mapToDouble(Double::doubleValue).toArray()).toArray(double[][]::new);
+    }
+    
+    public static String[][] convertString(List<List<Double>> nums) {
+        return nums.stream().map(l -> l.stream().toArray(String[]:: new)).toArray(String[][]::new);
+    }
+    
     public static char[][] convert(String[] matrix){
         char[][] r = new char[matrix.length][];
         

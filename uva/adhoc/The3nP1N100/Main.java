@@ -5,12 +5,12 @@ import java.io.BufferedInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-class Main
-{
+class Main{
   
-  private static HashMap<Integer, Integer> cycleLength = new HashMap<Integer, Integer>();  // store the num and the related cycle length
+  private static Map<Integer, Integer> cycleLength = new HashMap<>();  // store the num and the related cycle length
 
   /*
    * recursive with cache
@@ -63,7 +63,7 @@ class Main
   }
   
   
-  private static HashMap<String, Integer> maxInPeriod = new HashMap<String, Integer>();  // store the period and the related max cycle length
+  private static Map<String, Integer> maxInPeriod = new HashMap<>();  // store the period and the related max cycle length
   
   /*
    * Time O(end - start),  Space O(1)

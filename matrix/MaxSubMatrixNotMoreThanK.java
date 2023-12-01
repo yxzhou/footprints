@@ -1,81 +1,79 @@
 package matrix;
 
 import java.util.TreeSet;
+import junit.framework.Assert;
 
 import util.Misc;
 
 /**
+ * _https://www.lintcode.com/problem/1278
  * 
- * Given a non-empty 2D matrix matrix and an integer k, find the max sum of a rectangle in the matrix such that its sum is no larger than k.
+ * Given a non-empty 2D matrix matrix and an integer k, find the max sum of a rectangle in the matrix such that its sum
+ * is no larger than k.
 
-    Example:
-    Given matrix = [
+ * Example 1:
+   Input: matrix = [
       [1,  0, 1],
       [0, -2, 3]
-    ]
-    k = 2
-    The answer is 2. Because the sum of rectangle [[0, 1], [-2, 3]] is 2 and 2 is the max number no larger than k (k = 2).
+    ], k = 2
+    Output: 2
+* Explanation: Because the sum of rectangle [[0, 1], [-2, 3]] is 2 and 2 is the max number no larger than k (k = 2).
+* 
+* Example 2: 
+* Input: [[2,2,-1]], 3
+* Output: 3
+* Explanation: sum of rectangle [[2,2,-1]] is 3 and 3 is the max number no larger than k
+* 
     
-    Note:
+* Note:
     The rectangle inside the matrix must have an area > 0.
     What if the number of rows is much larger than the number of columns?
  *
+ * Thoughts:
+ *   Define n and m as the matrix row number and column number
+ * 
+ *   m1) brute force with prefix sum. 
+ *      Total it's n*m * n*m / 4 rectangle, 
+ *      Define prefixSum[i][j] as the sum of rectangle (0, 0) to (i, j)  
+ *      The sum of rectangle (upLeft, upRight) to (bottomLeft, bottomRight),
+ *        sum(ul, ur, bl, br) = prefixSum[bl][br] - prefixSum[bl][ur] - prefixSum[ul][br] + prefixSum[ul][ur]
+ *      
+ *      Time complexity O(n*n*m*m) Space O(n*m)
+ * 
+ *   m2) 2D -> 1D
+ *       To row 0 {a1, a2, ..., }, it's 1D
+ *       To row 1 {b1, b2, ..., }, it's 1D
+ *       To row 0 and row 1, 
+ *         {
+ *            {a1, a2, ..., }
+ *            {b1, b2, ..., }
+ *         }
+ *       Think (a1, b1), (a2, b2) as one , it's 1D
+ * 
+ *       To row i, 
+ *         from row i to row i, it's 1D
+ *         from row i-1 to row i, it's 1D
+ *         ...
+ *         from row 0 to row i, it's 1D
+ *  
+ *    m21) to 1D，{s1, s2, ...}  
+ *       prefixSum = 0;
+ *       for each s in 1D
+ *          prefixSum += s;
+ * 
+ *       prefixSum[i] - prefixSum[x] <= k,  how to find the max prefixSum[x]?
+ *       store previous prefixSum in a TreeSet, get the max( prefixSum[i] - TreeSet.ceiling(prefixSum[i] - k) )
+ *
+ *    without TreeSet, Time O(n*n*m*m), Space O(n*m)
+ *    with TreeSet, Time O( n * n * m * log(m) ), Space O(m), ( n <= m )
+ * 
  */
 
 public class MaxSubMatrixNotMoreThanK {
-    public int maxSumSubmatrix(int[][] matrix, int k) {
-        if(null == matrix || 0 == matrix.length || 0 == matrix[0].length){
-            throw new IllegalArgumentException();
-        }
-        
-        int rows = matrix.length;
-        int columns = matrix[0].length;
-        int minDiff = Integer.MAX_VALUE;
-        int diff;
-        int[][] subSumMatrix = new int[rows][columns]; //default all are 0
-
-        for(int row = 0; row < rows; row++){
-            for(int i = 0; i <= row; i++){
-                for(int col = 0; col < columns; col++){
-                    subSumMatrix[i][col] += matrix[row][col];
-                }
-                
-                diff = maxSumSubArray(subSumMatrix[i], k);
-                
-                if(0 == diff){
-                    return k;
-                }else if(diff < minDiff){
-                    minDiff = diff;
-                }
-            }
-        }
-        
-        return k - minDiff;
-    }
     
-    private int maxSumSubArray(int[] arr, int k){
-        int m = arr.length;
-        int minDiff = Integer.MAX_VALUE;
-        int[] subSums = new int[m]; //default all are 0
-        
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j <= i; j++){
-                subSums[j] += arr[i];
-                
-                //no larger than k
-                if( subSums[j] == k){
-                    return 0;
-                }else if( subSums[j] < k){
-                    minDiff = Math.min(minDiff, k - subSums[j]);
-                }
-            }
-        }
-        
-        return minDiff;
-    }
-
+    
     /*Time O(n*n*m*m), Space O(n*m)*/
-    public int maxSumSubmatrix_n(int[][] matrix, int k) {
+    public int maxSumSubmatrix_m21(int[][] matrix, int k) {
         if(null == matrix || 0 == matrix.length || 0 == matrix[0].length){
             throw new IllegalArgumentException();
         }
@@ -116,64 +114,78 @@ public class MaxSubMatrixNotMoreThanK {
      *2D subarray sum solution
      *
      * Time O( rows * rows * ( cols * log(cols)) ), Space O(cols)*/
-    public int maxSumSubmatrix_n2(int[][] matrix, int k) {
-        if(null == matrix || 0 == matrix.length || 0 == matrix[0].length){
-            throw new IllegalArgumentException();
+    
+    public int maxSumSubmatrix_m22(int[][] matrix, int k) {
+        if(matrix == null || matrix.length == 0 ){
+            return k;
         }
-        
-        int rows = matrix.length;
-        int columns = matrix[0].length;
-        int result = Integer.MIN_VALUE;
 
-        //outer loop should use smaller axis
-        //now we assume we have more cols than rows, therefore outer loop will be based on rows 
-        for(int row = 0; row < rows; row++){
-            int[] sums = new int[columns]; 
-            for(int i = row; i < rows; i++){
-                for(int col = columns - 1; col >= 0; col--){
-                    sums[col] += matrix[i][col];
-                }
-                
-                //use TreeSet to help us find the rectangle with maxSum <= k with O(logN) time
-                TreeSet<Integer> set = new TreeSet<Integer>();
-                //add 0 to cover the single row case
-                set.add(0);
-                int currSum = 0;
-                
-                for(int sum : sums){
-                    currSum += sum;
-                    //we use sum subtraction (curSum - sum) to get the subarray with sum <= k
-                    //therefore we need to look for the smallest sum >= currSum - k
-                    Integer num = set.ceiling(currSum - k);
-                    if(num != null){
-                        result = Math.max( result, currSum - num );
+        int max = Integer.MIN_VALUE;
+
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        //int[] sumsOnColumn = new int[m];
+        int sum;
+        //TreeSet<Integer> treeSet;
+
+        Integer ceiling;
+        for(int r = 0; r < n; r++){
+            //Arrays.fill(sumsOnColumn, 0);
+            int[] sumsOnColumn = new int[m];
+
+            //use TreeSet to help us find the rectangle with maxSum <= k with O(logN) time
+            for(int i = r; i >= 0; i--){
+
+                TreeSet<Integer> treeSet = new TreeSet<>();
+                treeSet.add(0);
+
+                sum = 0;
+                for(int c = 0; c < m; c++){
+                    sumsOnColumn[c] += matrix[i][c];
+
+                    sum += sumsOnColumn[c];
+
+                    ceiling = treeSet.ceiling(sum - k);
+                    if(ceiling != null){
+                        max = Math.max(max, sum -  ceiling);
                     }
-                    set.add(currSum);
-                }
 
+                    treeSet.add(sum);
+                }
             }
         }
-        
-        return result;
+
+        return max;
     }
     
     public static void main(String[] args){
         int[][][] input = {
-                    {
-                        {2,2,-1}
-                    }, 
-                    {
-                        {1,  0, 1},
-                        {0, -2, 3}
-                    }
+            {
+                {2, 2, -1},
+            },
+            {
+                {1, 0, 1},
+                {0, -2, 3}
+            },
+            {
+                {5, -4, -3, 4},
+                {-3, -4, 4, 5},
+                {5, 1, 5, -4}
+            }
         };
         
-        int[] kk = {0, 2};
+        int[] kk = {0, 2, 8};
+        int[] results = {-1, 2, 8};
         
         MaxSubMatrixNotMoreThanK sv = new MaxSubMatrixNotMoreThanK();
         for(int i = 0; i < input.length; i++){
             System.out.println(String.format("\nInput: %s, k=%d", Misc.array2String(input[i]), kk[i]));
-            System.out.println(String.format("Output: %d, %d, %d", sv.maxSumSubmatrix(input[i], kk[i]), sv.maxSumSubmatrix_n(input[i], kk[i]), sv.maxSumSubmatrix_n2(input[i], kk[i])));
+            
+            //System.out.println(String.format("Output: %d, %d, %d", sv.maxSumSubmatrix(input[i], kk[i]), sv.maxSumSubmatrix_n(input[i], kk[i]), sv.maxSumSubmatrix_n2(input[i], kk[i])));
+            
+            Assert.assertEquals(results[i], sv.maxSumSubmatrix_m21(input[i], kk[i]));
+            Assert.assertEquals(results[i], sv.maxSumSubmatrix_m22(input[i], kk[i]));
         }
     }
 }

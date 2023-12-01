@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import util.Misc;
 
 /**
@@ -52,117 +52,137 @@ import util.Misc;
  * Note that there could be allowed triples (A, B, C) and (A, B, D) with C != D.
  *
  * Thoughts:
- *   Letters in all strings will be chosen from the set {'A', 'B', 'C', 'D', 'E', 'F', 'G'}, and bottom will be a string
- * with length in range [2, 8]. So 3 bits can represent a letter, and a int (32 bits) can represent a bottom string.
+ *  S1: simulator, DFS
+ *  ("BCG", 0) -> ("DCG", 1) -> ("DE", 0) -> ("A", 0)
  * 
- *   for the above example. 
- *   check BC, if it's not valid, return false.  or continue;
- *   check BCG, from bottom to up, 
- *     check CG, if it's not valid, return false.  or continue;
- *     check DE, if it's not valid, return false.  or continue;
- *   
+ *  S2: BFS
+ * 
+                            A
+                           / \
+              D           D   E
+             / \         / \ / \
+    B       B   C       B   C   G
+ * 
+ *   3 bits can represent a letter, and a int (32 bits) can represent a bottom string.
+ *   f("B") = "B" 
+ *   f("BC") = "DC"
+ *   f("BCG") = f("BC", "G") = "AEG"
+ *  
  * 
  */
 public class PyramidTransitionMatrix {
-
+    
     /**
-     *
      * @param bottom: a string
      * @param allowed: a list of strings
-     * @return true if we can build the pyramid all the way to the top, otherwise false
+     * @return a boolean
      */
     public boolean pyramidTransition(String bottom, List<String> allowed) {
+        //Letters in all strings will be chosen from the set {'A', 'B', 'C', 'D', 'E', 'F', 'G'}.
+        Map<Integer, List<Integer>> map = new HashMap<>();// Example, "ABC", key is 0 * 8 + 1 for 'AB', value is 'C' is 2
 
-        Map<Integer, List<Integer>> cache = new HashMap<>();
-        int xy;
-        for (String triple : allowed) {
-            xy = (code(triple.charAt(0)) << 3) | code(triple.charAt(1));
-            cache.computeIfAbsent(xy, a -> new ArrayList<>()).add(code(triple.charAt(2)));
+        int key;
+        for(String triple : allowed){
+            key = getKey(getId(triple.charAt(0)), getId(triple.charAt(1)));
+            map.computeIfAbsent(key, a -> new ArrayList<>()).add(getId(triple.charAt(2)));
         }
 
-        int state = code(bottom.charAt(0));
-        for (int i = 1; i < bottom.length(); i++) {
-            if (!helper(cache, state, code(bottom.charAt(i)))) {
-                return false;
+        int n = bottom.length();
+        int[] start = new int[n];
+        for(int i = 0; i < n; i++ ){
+            start[i] = getId(bottom.charAt(i));
+        }
+
+        return transition(start, 0, start.length - 1, map);
+    }
+
+    private boolean transition(int[] line, int i, int last, Map<Integer, List<Integer>> map){
+        if(i == last){            
+            i = 0;
+            last--;
+
+            if(last == 0){
+                return true;
             }
-
-            state = (state << 3) | code(bottom.charAt(i));
         }
 
-        return true;
-    }
-
-    private int code(char c) {
-        return c - 'A' + 1;
-    }
-
-    private boolean helper(Map<Integer, List<Integer>> cache, int state, int color) {
-        int result = (state << 3) | color;
-
-        if (cache.containsKey(result)) {
-            return cache.get(result) != null;
-        }
-
-        List<Integer> rights = cache.get(((state & 0b111) << 3) | color);
-        if (rights == null) {
-            cache.put(result, null);
+        int key = getKey(line[i], line[i + 1]);
+        if( !map.containsKey(key) ){
             return false;
         }
         
-        if(state < 10){
-            return true;
-        }
-        List<Integer> lefts = cache.get(state);
-        if(lefts == null){
-            return false;
-        }
+        int tmp;
+        for(int next : map.get(key)){
+            tmp = line[i];
+            line[i] = next;
 
-        List<Integer> merges = new ArrayList<>(lefts.size() * rights.size());
-        for (int left : lefts) {
-            for (int right : rights) {
-                if (!helper(cache, left, right)) {
-                    continue;
-                }
-
-                merges.add((left << 3) | right);
+            if(transition(line, i + 1, last, map)){
+                return true;
             }
+
+            line[i] = tmp;
         }
 
-        cache.put(result, merges.isEmpty() ? null : merges);
-        return !merges.isEmpty();
-
+        return false;
     }
 
+    private int getId(char c){
+        return c - 'A';
+    }
+
+    private int getKey(int i, int j){
+        return (i << 3) + j;
+    }
 
     public static void main(String[] args) {
+        final String TRUE = "true";
+        final String FALSE = "false";
 
         String[][][] inputs = {
-//            {
-//                {"XYZ"},
-//                {"XYD", "YZE", "DEA", "FFF"},
-//                {"true"}
-//            },
-//            {
-//                {"XXYX"},
-//                {"XXX", "XXY", "XYX", "XYY", "YXZ"},
-//                {"false"}
-//            },
-            
-            
             {
                 {"BCG"},
                 {"BCD", "CGE", "DEA", "FFF"},
-                {"true"}
+                {TRUE}
             },
             {
                 {"AABA"},
                 {"AAA", "AAB", "ABA", "ABB", "BAC"},
-                {"false"}
+                {FALSE}
             },
             {
                 {"ABC"},
                 {"ABD", "BCE", "DEF", "FFF"},
-                {"true"}
+                {TRUE}
+            },
+            {
+                {"ABCD"},
+                {"AAA", "AAC", "ABC", "ABD", "ACD", "ADB", "BAB", "BBC", "BCA", "BDC", "BDD", 
+                    "CAA", "CBC", "CCD", "CDB", "DAB", "DAC", "DBD", "DCA", "DDC"},
+                {TRUE}
+            },
+            {
+                {"AACC"},
+                {"AAA", "AAC", "ABC", "ABD", "ACD", "ADB", "BAB", "BBC", "BCA", "BDC", "BDD", 
+                    "CAA", "CBC", "CCD", "CDB", "DAB", "DAC", "DBD", "DCA", "DDC"},
+                {TRUE}
+            },
+            {
+                {"AAAA"},
+                {"AAA", "AAC", "ABC", "ABD", "ACD", "ADB", "BAB", "BBC", "BCA", "BDC", "BDD", 
+                    "CAA", "CBC", "CCD", "CDB", "DAB", "DAC", "DBD", "DCA", "DDC"},
+                {TRUE}
+            },
+            {
+                {"CCCC"},
+                {"AAA", "AAC", "ABC", "ABD", "ACD", "ADB", "BAB", "BBC", "BCA", "BDC", "BDD", 
+                    "CAA", "CBC", "CCD", "CDB", "DAB", "DAC", "DBD", "DCA", "DDC"},
+                {TRUE}
+            },
+            {
+                {"DDDD"},
+                {"AAA", "AAC", "ABC", "ABD", "ACD", "ADB", "BAB", "BBC", "BCA", "BDC", "BDD", 
+                    "CAA", "CBC", "CCD", "CDB", "DAB", "DAC", "DBD", "DCA", "DDC"},
+                {TRUE}
             }
 
         };
@@ -171,14 +191,9 @@ public class PyramidTransitionMatrix {
 
         for (String[][] input : inputs) {
             System.out.println(String.format("\nbottom: %s, allowed: %s", input[0][0], Misc.array2String(input[1])));
+            //System.out.println(String.format("\n %s - %b", input[2][0], sv.pyramidTransition(input[0][0], Arrays.asList(input[1])) ));
             
-            System.out.println(String.format("\n %s - %b", input[2][0], sv.pyramidTransition(input[0][0], Arrays.asList(input[1])) ));
-
-            if (input[2][0].equals("true")) {
-                Assert.assertTrue(sv.pyramidTransition(input[0][0], Arrays.asList(input[1])));
-            } else {
-                Assert.assertFalse(sv.pyramidTransition(input[0][0], Arrays.asList(input[1])));
-            }
+            Assert.assertEquals("", input[2][0], sv.pyramidTransition(input[0][0], Arrays.asList(input[1])) ? TRUE : FALSE);
 
         }
 

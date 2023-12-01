@@ -2,14 +2,16 @@ package datastructure.segmentTree.hotel;
 
 /**
  *
- * Give a int roomNumber,  implement the following 2 functions
- *    queryAndCheckin(int roomNumberNeed) //when a user want to book some rooms, check room by index from 0 to roomNumber - 1,
- *    find the contigurous and empty rooms, if find, assigned to the user and return the leftmost room index.
+ * Give a int roomNumber, implement the following 2 functions 
+ * queryAndCheckin(int roomNumberNeed)
+ * //when a user want to book some rooms, check room by index from 0 to roomNumber - 1, find the contiguous and empty rooms, 
+ * //if find, assigned to the user and return the leftmost room index.
  *
- *    checkout(int roomIndexStart, int roomIndexEnd) //when a user checkout, reset the room from roomIndexStart to roomIndexEnd as empty
+ * checkout(int roomIndexStart, int roomIndexEnd) 
+ * //when a user checkout, reset the room from roomIndexStart to roomIndexEnd as empty
  *
- * Solution
- *     Define a segment tree, segment node { start, end, max contigurous rooms number, the contigurous rooms number from the start, the contigurous rooms number width at the end  }
+ * Solution Define a segment tree, segment node { start, end, max contiguous rooms number, the contiguous rooms number
+ * from the start, the contiguous rooms number width at the end }
  *
  */
 

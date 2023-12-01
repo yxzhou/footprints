@@ -61,7 +61,7 @@ public class QueenII
     }
     
     
-    ArrayList<ArrayList<String>> result = sv.solveNQueens_n2(4);
+    List<List<String>> result = sv.solveNQueens_n2(4);
     Misc.printListList(result);
   }
 
@@ -191,8 +191,8 @@ public class QueenII
    * @return: All distinct solutions
    * For example, A string '...Q' shows a queen on forth position
    */
-  public ArrayList<ArrayList<String>> solveNQueens_n2(int n) {
-      ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+  public List<List<String>> solveNQueens_n2(int n) {
+      List<List<String>> result = new ArrayList<>();
       
       // check
       if(n < 1){
@@ -206,7 +206,7 @@ public class QueenII
   }
   
   //dfs
-  private void solveNQueens(int[] board, int rowIndex, ArrayList<ArrayList<String>> result){
+  private void solveNQueens(int[] board, int rowIndex, List<List<String>> result){
       if(rowIndex == board.length){
           result.add(buildResult(board));
           return;

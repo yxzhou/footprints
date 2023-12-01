@@ -24,8 +24,7 @@ import java.util.Set;
     You can assume that no duplicate edges will appear in edges. 
     Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
  *
- */
-/*
+ *
  * Solutions:
  *   1 DFS
  *   2 BFS
@@ -43,11 +42,11 @@ public class ConnectedComponentsUDGII {
         for (int i = 0; i < n; i++) {
             father[i] = i;
         }
-        for (int i = 0; i < edges.length; i++) {
-             union(edges[i][0], edges[i][1]);
+        for (int[] edge : edges) {
+            union(edge[0], edge[1]);
         }
      
-        Set<Integer> set = new HashSet<Integer>();
+        Set<Integer> set = new HashSet<>();
         for (int i = 0; i < n; i++){ 
             set.add(find(i));
         }

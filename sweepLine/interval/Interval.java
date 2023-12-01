@@ -4,6 +4,8 @@
  */
 package sweepLine.interval;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,6 +60,20 @@ public class Interval {
             ret[i] = build(intervals[i]);
         }
         return ret;
+    }
+    
+    public static List<List<Interval>> build(int[][][] intervals) {
+        if (null == intervals || 0 == intervals.length) {
+            return null;
+        }
+        
+        List<List<Interval>> result = new ArrayList<>();
+
+        for (int[][] it : intervals) {
+            result.add(Arrays.asList(build(it)));
+        }
+        
+        return result;
     }
     
     public static String toString(Interval interval){

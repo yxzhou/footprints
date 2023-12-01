@@ -241,7 +241,14 @@ public class Bit {
             System.out.println( (Math.log10(i) / Math.log10(3)) % 1 < 0.00001 );
             System.out.println( );
         }
-
+        
+        
+        System.out.println("---- x & (-x) ---");
+        
+        int x = 0x1011;
+        System.out.println(Integer.toBinaryString(x));
+        System.out.println(Integer.toBinaryString(-x)); 
+        System.out.println(Integer.toBinaryString( x & (-x) )); 
     }
 
 }

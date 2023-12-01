@@ -4,17 +4,12 @@
  */
 package dfsbfs.wordSearch;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import org.junit.Assert;
 import util.Misc;
 
 /**
+ * 
  * _https://www.lintcode.com/problem/635
  * 
  * Given a board which is a 2D matrix includes a-z and dictionary dict, find the largest collection of words on the
@@ -33,126 +28,111 @@ import util.Misc;
  * Explanation: we can get the largest collection`["a", "a","a","a","a","a","a","a","a","a","a","a","a","a","a","a"]`
  * 
  * Thoughts:
- *   compare to WordSearchIII, here it can reuse the words.
- * 
+ * 1 compare to WordSearchIII, here it can reuse the words.
+ *   
+ * 2 trie + dfs. 
+ *   2.1 To every cell in the 2D matrix, there are 2 options. one is to find a word start with this cell. the other is not.
+ *   2.2 To every cell, there are 4 directory options to dfs. 
+ *   2.3 When found a word, it need "find" from the cell next to the start, instead of the end. 
+ *   2.4 When found a word, it needn't continue to find the longer word. It would be better to leave more space for more words.
+ *   
+ * 3 
+ *    
  * 
  */
 public class BoggleGame {
-    /*
-     * @param board: a list of lists of character
-     * @param words: a list of string
-     * @return: an integer
-     *
-     * m1, DFS
-     */
-
+    
+    final int[][] diffs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+    TrieNode root;
+    int max = 0;
+    
     public int boggleGame(char[][] board, String[] words) {
         if(board == null || board.length == 0 || words == null){
             return 0;
         }
         
-        TrieNode root = new TrieNode();
-        for(String word : words){
-            add(root, word);
-        }
-
-        Map<String, List<BitSet> > wordPositions = new HashMap<>();
-        BitSet state = new BitSet();
-        
-        int n = board.length;
-        int m = board[0].length;
-        for(int r = 0; r < n; r++ ){
-            for(int c = 0; c < m; c++){
-                dfs(board, r, c, root, state, wordPositions);
-            }
+        max = 0; //make BoggleGame as stateless
+        root = new TrieNode();
+        for(String w : words){
+            add(root, w);
         }
         
-        int max = 0;
-            
-        Map<BitSet, Integer> dp = new HashMap<>();
-        List<BitSet> list = new ArrayList<>();
-        list.add(new BitSet());
-        BitSet curr;
-        BitSet next;
-        int x;
-        
-        for(String word : wordPositions.keySet()){
-            for(BitSet toAdd : wordPositions.get(word)){
-                        
-                for(int i = list.size() - 1; i >= 0; i-- ){
-                    curr = list.get(i);
-                    if(!curr.intersects(toAdd) ){
-                        next = (BitSet)curr.clone();
-                        next.or(toAdd);
-                        
-                        if(( x = dp.getOrDefault(curr, 0) + 1) > dp.getOrDefault(next, 0) ){
-                            dp.put(next, x);
-                            list.add(next);
-                            
-                            max = Math.max(max, x);
-                        }
-                    }
-                }
-            }
-            
-        }
+        boolean[][] visited = new boolean[board.length][board[0].length]; //default all are false
+        find(board, 0, 0, root, visited, 0, 0, 0);
         
         return max;
     }
     
-    class TrieNode{
-        TrieNode[] children = new TrieNode[26];
-
-        String word = null;
-    }
-    
-    private void add(TrieNode root, String word){
-        TrieNode curr = root;
-        
-        int p;
-        for(int i = 0, len = word.length(); i < len; i++){
-            p = word.charAt(i) - 'a';
-            
-            if(curr.children[p] == null){
-                curr.children[p] = new TrieNode();
-            }
-            
-            curr = curr.children[p];
-        }
-        
-        curr.word = word;
-    }
-
-    final int[][] diffs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private void dfs(char[][] board, int r, int c, TrieNode node, BitSet position, Map<String, List<BitSet>> wordPositions){
+    /**
+     * dfs
+     *
+     */
+    private void find(char[][] board, int r, int c, TrieNode node, boolean[][] visited, int count, int startR, int startC){
         if(r < 0 || r >= board.length || c < 0 || c >= board[0].length){
             return;
         }
         
-        int index = r * board[0].length + c;
-                
-        if(position.get(index)){
-            return;
-        }
-
-        node = node.children[board[r][c] - 'a'];
-        if( node == null ){
-            return;
+        //if this is not start to find a word yet, it can pass this cell, 
+        //if it alreday found a word, restart to find from the cell next to the start
+        if(node == root){
+            boolean needNewRow = (startC == board[0].length - 1);
+            int newStartR = startR + (needNewRow ? 1 : 0);
+            int newStartC = needNewRow ? 0 : startC + 1;
+            find(board, newStartR, newStartC, root, visited, count, newStartR, newStartC);
         }
         
-        position.set(index);
+        node = node.sons[board[r][c] - 'a'];
+        if(node == null || visited[r][c]){
+            return; //it will restart the finding from the cell next to the start
+        }
         
-        if(node.word != null){
-            wordPositions.computeIfAbsent(node.word, k -> new ArrayList<>()).add((BitSet)position.clone());
+        visited[r][c] = true;
+        
+        if(node.isWord){
+            //When found a word, it need "find" from the cell next to the start, instead of the end. 
+            //And it needn't continue to find the longer word. 
+            count++;
+            max = Math.max(max, count);
+            //System.out.println(String.format(" -- word = %s, count = %d, max = %d, r = %d, c = %d, startR = %d, startC = %d", node.word, count, max, r, c, startR, startC ));            
+            
+            boolean needNewRow = (startC == board[0].length - 1);
+            int newStartR = startR + (needNewRow ? 1 : 0);
+            int newStartC = needNewRow ? 0 : startC + 1;
+            find(board, newStartR, newStartC, root, visited, count, newStartR, newStartC);
+        }else{
+            //continue try 4 directions
+            for(int[] diff : diffs){
+                find(board, r + diff[0], c + diff[1], node, visited, count, startR, startC);
+            }
         }
-
-        for(int[] diff : diffs){            
-            dfs(board, r + diff[0], c + diff[1], node, position, wordPositions);
-        }
-
-        position.set(index, false);
+        
+        visited[r][c] = false;
+        
     }
     
+    private void add(TrieNode root, String word){
+        TrieNode node = root;
+        
+        int c;
+        for(int i = 0; i < word.length(); i++){
+            c = word.charAt(i) - 'a';
+            
+            if(node.sons[c] == null){
+                node.sons[c] = new TrieNode();
+            }
+            
+            node = node.sons[c];
+        }
+        
+        node.isWord = true;
+        //node.word = word;
+    }
+    
+    class TrieNode{
+        TrieNode[] sons = new TrieNode[26];
+        boolean isWord = false;
+        //String word = null;
+    }
     
     public static void main(String[] args){
 
@@ -172,14 +152,19 @@ public class BoggleGame {
                 {"2"}
             },
             {
-                {"abce",
-                 "sfes",
-                 "adee"},
+                {
+                    "abce",
+                    "sfes",
+                    "adee"
+                },
                 {"abceseeefs","abceseedasfe"},
                 {"1"}
             },
             {
-                {"ab", "cd"}, 
+                {
+                    "ab",
+                    "cd"
+                },
                 {"a", "b", "cd", "ab", "ac", "abd"},
                 {"3"}
             },
@@ -189,27 +174,51 @@ public class BoggleGame {
                 {"5"}
             },
             {
-                {"abc","def","ghi"}, 
+                {
+                    "abc",
+                    "def",
+                    "ghi"
+                }, 
                 {"abc","defi","gh"},
                 {"3"}
             },
             {
-                {"aaaa","aaaa","aaaa","aaaa"}, 
-                {"a"},
+                {
+                    "aaaa",
+                    "aaaa",
+                    "aaaa",
+                    "aaaa"
+                }, 
+                {"a", "aa"},
                 {"16"}
+            },
+            {
+                {
+                    "aaaa",
+                    "aaaa",
+                    "aaaa",
+                    "aaaa"
+                }, 
+                {"aa", "aaa"},
+                {"8"}
             }
+                
         };
         
-        BoggleGame sv = new BoggleGame();
+        BoggleGame sv = new BoggleGame(); //
+        BoggleGame3 sv3 = new BoggleGame3(); // BoggleGame3 is stateless
         
         char[][] matrix;
         for(String[][] input : inputs){
             matrix= Misc.convert(input[0]);
                     
-            Misc.printMetrix(matrix);
+            Misc.printMetrix(matrix); 
             System.out.println("words: " + Arrays.toString(input[1]));
             
-            Assert.assertEquals(Integer.parseInt(input[2][0]), sv.boggleGame(matrix, input[1]) );
+            //BoggleGame sv = new BoggleGame();
+            Assert.assertEquals("sv ", Integer.parseInt(input[2][0]), sv.boggleGame(matrix, input[1]) );
+            
+            Assert.assertEquals("sv3 ", Integer.parseInt(input[2][0]), sv3.boggleGame(matrix, input[1]) );
         }
         
     }

@@ -28,6 +28,8 @@ package datastructure.queue;
  * dequeue() 
  * Output: ["false","true","1"]
  *
+ *  similar with QueueWithFixedSizeOfArrays
+ *   
  */
 public class CircularQueue {
     

@@ -1,6 +1,5 @@
 package dfsbfs.wordSearch;
 
-import static algs4.basic.ThreeSum.count;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
