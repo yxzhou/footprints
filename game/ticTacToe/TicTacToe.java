@@ -1,4 +1,4 @@
-package game.ticTacToe;
+package game.TicTacToe;
 
 /**
  * 
