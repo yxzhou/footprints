@@ -21,31 +21,63 @@ import java.util.List;
 
 public class FizzBuzz {
 
-    String fizz = "fizz";
-    String buzz = "buzz";
-    String fb = "fizz buzz";
+    final static String fizz = "fizz";
+    final static String buzz = "buzz";
+    final static String fb = "fizz buzz";
 
     /**
-     * param n: As description.
-     * return: A list of strings.
+     * @param n: As description.
+     * @return A list of strings.
+     * 
      */
     public List<String> fizzBuzz(int n) {
-        List<String> results = new ArrayList<String>();
+        if(n < 1){
+            return Collections.EMPTY_LIST;
+        }
+                
+        List<String> result = new ArrayList<>();
         for (int i = 1; i <= n; i++) {
             if (i % 15 == 0) {
-                results.add(fb);
+                result.add(fb);
             } else if (i % 5 == 0) {
-                results.add(buzz);
+                result.add(buzz);
             } else if (i % 3 == 0) {
-                results.add(fizz);
+                result.add(fizz);
             } else {
-                results.add(String.valueOf(i));
+                result.add(String.valueOf(i));
             }
         }
-        return results;
+        return result;
     }
 
+    public List<String> fizzBuzz_1(int n) {
+        if(n < 1){
+            return Collections.EMPTY_LIST;
+        }
+                
+        List<String> result = new ArrayList<>();
+        
+        boolean isDivided3;
+        boolean isDivided5;
+        for (int i = 1; i <= n; i++) {
+            isDivided3 = ( 0 == i % 3 );
+            isDivided5 = ( 0 == i % 5 );
+            
+            if(isDivided3){
+                if(isDivided5){
+                    result.add(fb);
+                }else{
+                    result.add(fizz);
+                }
 
+            }else if(isDivided5){
+                result.add(buzz);
+            }else{
+                result.add(String.valueOf(i));
+            }
+        }
+        return result;
+    }
 
     public List<String> fizzBuzz_2(int n) {
         if(n < 1){
@@ -63,7 +95,7 @@ public class FizzBuzz {
             result.set(i - 1, buzz);
         }
         for(int i = 15; i <= n; i += 15){
-            result.set(i -1, fb);
+            result.set(i - 1, fb);
         }
 
         return result;

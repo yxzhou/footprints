@@ -27,25 +27,27 @@ import util.Misc;
 public class ProductOf {
 
     /**
+     * Time, O(n);  Space O(1)
+     * 
      * @param nums: Given an integers array A
-     * @return: A Long array B and B[i]= A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1]
+     * @return A Long array B and B[i]= A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1]
      */
-    //Time, O(n);  Space O(1)
     public List<Long> productExcludeItself(int[] nums) {                
         if(null == nums){
             return Collections.EMPTY_LIST;
         }
         
-        List<Long> result = new ArrayList<>();
+        int n = nums.length;
+        List<Long> result = new ArrayList<>(n);
                 
         long p = 1; //product
-        for(int i = 0; i < nums.length; i++){
+        for(int i = 0; i < n; i++){
             result.add(p);
             p *= nums[i];
         }
         
         p = 1;
-        for(int i = nums.length - 1; i >= 0; i--){
+        for(int i = n - 1; i >= 0; i--){
             result.set(i, result.get(i) * p );
             p *= nums[i];
         }
