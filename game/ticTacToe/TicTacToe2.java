@@ -1,4 +1,4 @@
-package game.TicTacToe;
+package game.ticTacToe;
 
 /**
  * Requirement please see TicTacToe.java
