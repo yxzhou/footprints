@@ -127,13 +127,17 @@ public class Misc
     }
 
     public static void printArrayList(List<String> list) {
+        printArrayList(list, true, "");
+    }
+    
+    public static void printArrayList(List<String> list, boolean printId, String delimiter) {
         if (list == null || list.size() == 0) {
             System.out.println("Null");
             return;
         }
 
         for (int i = 0; i < list.size(); i++) {
-            System.out.print("\t-" + i + "-\t\"" + list.get(i) + "\"");
+            System.out.print(String.format("%s %s %s", printId? "\t-" + i + "-\t" : "", list.get(i), delimiter));
         }
 
         System.out.println();

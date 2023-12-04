@@ -9,11 +9,6 @@ package math;
  *
  * The first ten numbers in Fibonacci sequence is: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34 ...
  *
- * Example 
- *   Given 0, return 0 
- *   Given 1, return 1 
- *   Given 2, return 1 
- *   Given 10, return 55
  *
  *
  *
@@ -71,15 +66,25 @@ public class Fibonacci {
      * e.g. A^13 = A * (A^12) = A * (A^6 * A^6) = A * ((A^3 * A^3)*(A^3 * A^3))
      * 
      * Time O(log n)
+     * 
+     * @param n
+     * @return 
      */
-    public long fib_matrix(int n) {
+    public long fibonacci_matrix(int n) {
+        if (n < 0) {
+            return -1; // ERROR CODE
+        }
+        if (n < 2) {
+            return n; // 0, 1, 1, 2, 3, ...
+        }
+        
         UInt r1 = new UInt(0);
         UInt r2 = new UInt(1);
 
         UInt a1 = new UInt(1);
         UInt a2 = new UInt(0);
 
-        for (; n > 0; n >>= 1) {
+        for ( ; n > 0; n >>= 1) {
 
             if (1 == (n & 1)) {
                 matrix_multiply(r1, r2, a1, a2);
@@ -94,18 +99,17 @@ public class Fibonacci {
 
 
     /*
-	 * F(2k) = F(k)*F(k+1) + F(k-1)*(k) = F(k)*F(k) + 2*F(k)*F(k-1)
-	 * F(2k-1) = F(k)*F(k) + F(k-1)*F(k-1)
-	 * 
-	 * Time O(log flag) ( close to logn )
+    * F(2k) = F(k)*F(k+1) + F(k-1)*(k) = F(k)*F(k) + 2*F(k)*F(k-1)
+    * F(2k-1) = F(k)*F(k) + F(k-1)*F(k-1)
+    * 
+    * Time O(log flag) ( close to logn )
      */
-    private long fib_matrix_n(int n) {
-        // check
+    private long fibonacci_matrix_n(int n) {
         if (n < 0) {
             return -1; // ERROR CODE
         }
         if (n < 2) {
-            return n;
+            return n; // 0, 1, 1, 2, 3, ...
         }
 
         int flag = n; //flag = 2^k,(flag < n, and k is the max, example, when n = 17, flag = 16)
@@ -135,26 +139,32 @@ public class Fibonacci {
     }
 
     /*
-	 * Time O(n)
+     * Example 
+     *   Given 0, return 0 
+     *   Given 1, return 1 
+     *   Given 2, return 1 
+     *   Given 9, return 34
+     *
+     * Time O(n)
      */
-    public long fib_itera(int n) {
-
+    public long fibonacci_itera(int n) {
         if (n < 0) {
             return -1; // ERROR CODE
         }
         if (n < 2) {
-            return n; // f0=0, f1=1
+            return n; // 0, 1, 1, 2, 3, ...
         }
-        /* f(n) = f(n-1) + f(n-2), n>=2 */
-        long f0 = 0;
-        long f1 = 1;
-        long result = 0;
+        
+        /* f(n) = f(n-1) + f(n-2) */
+        long a = 0;
+        long b = 1;
+        long sum;
         for (long i = 2; i <= n; i++) {
-            result = f0 + f1;
-            f0 = f1;
-            f1 = result;
+            sum = a + b;
+            a = b;
+            b = sum;
         }
-        return result;
+        return b;
     }
 
     /**
@@ -164,82 +174,117 @@ public class Fibonacci {
      * Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
      *
      *
-     * Example Given an example n=3 , 1+1+1=2+1=1+2=3
-     *
+     * Example:
+     * Given an example n=3 , 1+1+1=2+1=1+2=3
      * return 3
+     * 
+     * Thoughts: 
+     *  n = 1, return 1;
+     *  n = 2, return 2;
+     *  n = 3, return 1 + 2 = 3;
+     *  n = 4, return 2 + 3 = 5;
+     * 
+     * @param n
+     * @return 
      */
     public int climbStairs(int n) {
-        //check
-        if (n < 0) {
-            return 0;
-        } else if (n < 2) {
-            return n;
+        if (n < 3) {
+            return n; // 1, 2, 3, 5, ...
+        } 
+
+        int a = 1;
+        int b = 2;
+        int sum;
+        for (int i = 3; i <= n; i++) {
+            sum = a + b;
+            a = b;
+            b = sum;
         }
 
-        int f0 = 1;
-        int f1 = 1;
-        int fx;
-        for (; n > 1; n--) {
-            fx = f0 + f1;
-
-            f0 = f1;
-            f1 = fx;
-        }
-
-        return f1;
+        return b;
 
     }
 	
     /**
+     *   Given 0, return 0 
+     *   Given 1, return 1 
+     *   Given 2, return 1 
+     *   Given 9, return 34
+     * 
      * Time O(2^n)
+     * 
+     * @param n
+     * @return 
      */
-    public long fib_recursive(int n) {
+    public long fibonacci_recursive(int n) {
         if (n < 0) {
             return -1; // ERROR CODE
         }
         if (n < 2) {
-            return n; // f0=0, f1=1
+            return n; // 0, 1, 1, 2, 3, ...
         }
-        return fib_recursive(n - 1) + fib_recursive(n - 2);
+        
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2);
 
     }
 
     /**
-     * double s = sqrt(5); f(n) = floor((pow((1+s)/2,n)-pow((1-s)/2,n))/s+0.5);
+     * double s = sqrt(5); 
+     * f(n) = floor((pow((1+s)/2,n)-pow((1-s)/2,n))/s+0.5);
      *
      * Time O(1)
+     * 
+     * @param n
+     * @return 
      */
-    public long fib_math(int n) {
-        if (n < 0) {
+    public long fibonacci_math(int n) {
+        if (n < 1) {
             return -1; // ERROR CODE
         }
-        if (n < 2) {
-            return n; // f0=0, f1=1
+        if (n < 3) {
+            return n - 1; // 0, 1, 1, 2, 3, ...
         }
+        
         double sqrOf5 = Math.sqrt(5);
 
         return (long) Math.floor((Math.pow((1 + sqrOf5) / 2, n) - Math.pow((1 - sqrOf5) / 2, n)) / sqrOf5 + 0.5);
     }
 
 
-    public long fib_negative(int n) {
+    /**
+     *  fibonacci define:
+     *   f(i) = f(i - 1) + f(i - 2) 
+     *          n:            0  1  2  3  4 
+     *  fibonacci:            0, 1, 1, 2, 3, ...
+     *          n: -3, -2, -1,
+     *  fibonacci:  2, -1,  1,
+     * 
+     * Example:
+     *   Given -1, return  1
+     *   Given -2, return -1 
+     *   Given -3, return  2 
+     * 
+     * @param n
+     * @return 
+     */
+    public long fibonacci_negative(int n) {
         if (n >= 0) {
-            return fib_matrix(n);
+            return fibonacci_matrix(n);
         }
 
         /* f(n) = f(n+2) - f(n+1), n<0 */
-        long f1 = 1;
-        long f0 = 0;
+        long b = 1;
+        long a = 0;
 
-        long fx;
+        long c;
         for (int i = -1; i >= n; i--) {
-            fx = f1 - f0;
+            c = b - a;
 
-            f1 = f0;
-            f0 = fx;
+            b = a;
+            a = c;
         }
 
-        return f0;
+        return a;
     }
 
     /**
@@ -248,30 +293,54 @@ public class Fibonacci {
     public static void main(String[] args) {
 
         Fibonacci sv = new Fibonacci();
-
-        for (int input = 8; input <= 20; input++) {
-            System.out.println("\n The fib_recursive(" + input + ") is:" + sv.fib_recursive(input));
-
-            System.out.println(" The fib_itera(" + input + ") is:" + sv.fib_itera(input));
-
-            System.out.println(" The fib_matrix(" + input + ") is:" + sv.fib_matrix(input));
-
-            System.out.println(" The fib_matrix_n(" + input + ") is:" + sv.fib_matrix_n(input));
+        
+        System.out.println("\n call fibonacci_recursive ");
+        for (int i = -1; i < 20; i++) {
+            System.out.print(sv.fibonacci_recursive(i) + ", ");
         }
+        
+        System.out.println("\n call fibonacci_itera ");
+        for (int i = -1; i < 20; i++) {
+            System.out.print(sv.fibonacci_itera(i) + ", ");
+        }
+        
+        System.out.println("\n call fibonacci_matrix ");
+        for (int i = -1; i < 20; i++) {
+            System.out.print(sv.fibonacci_matrix(i) + ", ");
+        }
+        
+        System.out.println("\n call fibonacci_matrix_n ");
+        for (int i = -1; i < 20; i++) {
+            System.out.print(sv.fibonacci_matrix_n(i) + ", ");
+        }
+        
+        System.out.println("\n\n--performance test--");
 
         int[] inputs = {10000, 100000, 1000000};
-
+        long startTime;
+        
         for (int input : inputs) {
-
-            System.out.println("\n The fib_matrix(" + input + ") is:" + sv.fib_matrix(input));
-
-            System.out.println(" The fib_matrix_n(" + input + ") is:" + sv.fib_matrix_n(input));
+            
+            startTime = System.nanoTime();
+            System.out.println(String.format("when n = %d, \tcall fib_matrix, \tget %d, \tcost_time: %d", input, sv.fibonacci_matrix(input), System.nanoTime() - startTime ) );
+            
+            startTime = System.nanoTime();
+            System.out.println(String.format("when n = %d, \tcall fib_matrix_n, \tget %d, \tcost_time: %d", input, sv.fibonacci_matrix_n(input), System.nanoTime() - startTime ) );
+            
         }
 
-        for (int input = -1; input >= -10; input--) {
-            System.out.println("\n The fib_negative(" + input + ") is:" + sv.fib_negative(input));
+        System.out.println("\n\n--fibonacci_negative test--");
+        System.out.print("Input n:");
+        for (int input = -10; input < 6; input++) {
+            System.out.print("\t" + input + ",");
+        }
+        
+        System.out.print("\nfibonacci:");
+        for (int input = -10; input < 6; input++) {
+            System.out.print("\t" + + sv.fibonacci_negative(input) + "," );
         }
 
+        System.out.println("\n\n---test end--\n"); 
     }
 
 }
