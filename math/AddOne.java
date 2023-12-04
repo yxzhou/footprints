@@ -5,6 +5,9 @@
  */
 package math;
 
+import java.util.Arrays;
+import org.junit.Assert;
+
 /**
  *
  * Given a non-negative number represented as an array of digits, plus one to the number.Returns a new array.
@@ -24,36 +27,52 @@ package math;
 public class AddOne {
     /**
      * @param digits: a number represented as an array of digits
-     * @return: the result
+     * @return the result d
      */
     public int[] plusOne(int[] digits) {
-        if(digits == null){
-            return new int[0];
+        if(digits == null ){
+            return new int[]{1};
         }
 
         int n = digits.length;
-        int[] r = new int[n];
+        int[] result = new int[n];
         
         int sum = 1;
         for(int i = n - 1; i >= 0; i--){
             sum += digits[i];
-            r[i] = sum % 10;
+            result[i] = sum % 10;
             sum /= 10;
         }
 
         if(sum == 0){
-            return r;
-        }else{
-            int[] r2 = new int[n + 1];
-            r2[0] = sum;
-            System.arraycopy(r, 0, r2, 1, n);
-            return r2;
+            return result;
         }
+        
+        int[] result2 = new int[n + 1];
+        result2[0] = sum;
+        System.arraycopy(result, 0, result2, 1, n);
+        return result2;
     }
     
     
-    
-
-
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        AddOne sv = new AddOne();
+        
+        int[][][] inputs = {
+            {{1,2,3}, {1,2,4}},
+            {{9,9,9}, {1,0,0,0}},
+            {null, {1}},
+            {{}, {1}},    
+        };
+        
+        for(int[][] input : inputs){
+            System.out.println(String.format("Input: digits=%s", Arrays.toString(input[0]) ));
+            
+            Assert.assertArrayEquals(input[1], sv.plusOne(input[0]));
+        }
+    }
     
 }

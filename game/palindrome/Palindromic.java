@@ -58,35 +58,6 @@ import org.junit.Test;
  */
 
 public class Palindromic {
-    public static void main(String[] args) {
-        //int input = Integer.parseInt(args[0]);
-
-        Palindromic sv = new Palindromic();
-
-        System.out.println();
-
-        String[] s1 = {"abcbd", "aba", "aa", "abeba"};
-        for (int i = 0; i < s1.length; i++) {
-            System.out.println(s1[i] + " is a palindromic string: " + isPalindrome(s1[i]));
-        }
-
-        System.out.println();
-
-        String[] s2 = {"A man, a plan, a canal: Panama", "race a ca"};
-        for (int i = 0; i < s2.length; i++) {
-            System.out.println(s2[i] + " is a palindromic string: " + sv.isPalindrome_II(s2[i]));
-        }
-
-        System.out.println();
-
-        int[] n = {-1, 10, -10, 1, 2, 3, 4, 5, 11, 12};
-        for (int i = 0; i < n.length; i++) {
-            //System.out.println((new StringBuilder().append(x[i])).reverse().toString());
-            System.out.println(n[i] + " is a palindromic number: " + isPalindrome_p2(n[i]));
-        }
-
-    }
-
 
     /**
      * Problem #1, determine whether a string is a palindrome.
@@ -165,12 +136,25 @@ public class Palindromic {
      * Problem #2, determine whether an integer is a palindrome. Do this without extra space.
      *
      */
-    public static boolean isPalindrome_p2(int x) {
+    public boolean isPalindrome_p2(int x) {
         return String.valueOf(x).equals((new StringBuilder().append(x)).reverse().toString());
 
         /* the following is not good because overflow (when x is Integer.MAX_VALUE, Integer.MIN_VALUE) */
         //return x == Integer.valueOf((new StringBuilder().append(x)).reverse().toString());
     }
+    
+    public boolean isPalindrome_p2_2(int num){
+        long m = 0l; //the number after reverse, it's long 
+
+        int n = num;
+        while(n > 0){
+            m = m * 10 + n % 10;
+            n /= 10;
+        }
+
+        return m - num == 0;
+    }
+            
     
     public boolean isPalindrome_p2_n(int num) {
         String s = String.valueOf(num);
@@ -227,4 +211,33 @@ public class Palindromic {
     }
 
 
+    public static void main(String[] args) {
+        //int input = Integer.parseInt(args[0]);
+
+        Palindromic sv = new Palindromic();
+
+        System.out.println();
+
+        String[] s1 = {"abcbd", "aba", "aa", "abeba"};
+        for (int i = 0; i < s1.length; i++) {
+            System.out.println(s1[i] + " is a palindromic string: " + isPalindrome(s1[i]));
+        }
+
+        System.out.println();
+
+        String[] s2 = {"A man, a plan, a canal: Panama", "race a ca"};
+        for (int i = 0; i < s2.length; i++) {
+            System.out.println(s2[i] + " is a palindromic string: " + sv.isPalindrome_II(s2[i]));
+        }
+
+        System.out.println();
+
+        int[] n = {-1, 10, -10, 1, 2, 3, 4, 5, 11, 12};
+        for (int i = 0; i < n.length; i++) {
+            //System.out.println((new StringBuilder().append(x[i])).reverse().toString());
+            System.out.println(n[i] + " is a palindromic number: " + sv.isPalindrome_p2(n[i]));
+        }
+
+    }
+    
 }

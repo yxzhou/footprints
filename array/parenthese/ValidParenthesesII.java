@@ -3,102 +3,77 @@ package array.parenthese;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import org.junit.Assert;
 
+/*
+ * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+ *
+ * The brackets must close in the correct order,
+ *    "()" and "()[]{}" are all valid
+ *    "(]" and "([)]" are not.
+ *
+ */
 
 public class ValidParenthesesII {
-    /*
-     * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-     *
-     * The brackets must close in the correct order,
-     *    "()" and "()[]{}" are all valid
-     *    "(]" and "([)]" are not.
-     *
-     */
+
     /*
      * Time O(n)  Space O(n)
      */
     Map<Character, Character> open2close = new HashMap<>(3);
-    Map<Character, Character> close2open = new HashMap<>(3);
     char[][] validCharacters= {{'(',')'}, {'[',']'}, {'{','}'}};
     {
-        //open2close.put('(',')');
         for(char[] pair : validCharacters){
             open2close.put(pair[0], pair[1]);
-            close2open.put(pair[1], pair[0]);
         }
     }
 
+    /**
+     * 
+     * 
+     * @param s
+     * @return 
+     */
     public boolean isValid_n(String s) {
-        if(null == s || s.length() == 0 ){
+        if(null == s ){
             return true;
         }
 
-        if((s.length() % 2) != 0){
+        if( 1 == (s.length() & 1) ){
             return false;
         }
 
         Stack<Character> stack = new Stack<>();
-        for (char c : s.toCharArray()) {
+        
+        char c;
+        for(int i = 0, n = s.length(); i < n; i++){
+            c = s.charAt(i);
+            
             if (open2close.containsKey(c)) {
                 stack.push(c);
             } else if ( stack.isEmpty() || open2close.get(stack.pop()) != c) {
                 return false;
-            }
-        }
-
-        return stack.isEmpty();
-    }
-
-    public boolean isValid_1(String s) {
-        if(null == s || s.length() == 0 ){
-            return true;
-        }
-
-        if((s.length() % 2) != 0){
-            return false;
-        }
-
-        Stack<Character> stack = new Stack<>();
-        for(char c : s.toCharArray()){
-            switch(c){
-                case '(':
-                case '{':
-                case '[':
-                    stack.add(c);
-                    break;
-                case ')':
-                    if(stack.isEmpty() || '(' != stack.pop()){
-                        return false;
-                    }
-                    break;
-                case '}':
-                    if(stack.isEmpty() || '{' != stack.pop()){
-                        return false;
-                    }
-                    break;
-                case ']':
-                    if(stack.isEmpty() || '[' != stack.pop()){
-                        return false;
-                    }
-                    break;
-            }
+            }// works when s only contains '(', ')', '{', '}', '[' and ']', no other characters.
         }
 
         return stack.isEmpty();
     }
 
 
-    public boolean isValid_11(String s) {
-        if(null == s || s.length() == 0 ){
+    public boolean isValid(String s) {
+        if(null == s ){
             return true;
         }
 
-        if((s.length() % 2) != 0){
+        if( 1 == (s.length() & 1) ){
             return false;
         }
 
         Stack<Character> stack = new Stack<>();
-        for(char c : s.toCharArray()){
+        
+        char c;
+        for(int i = 0, n = s.length(); i < n; i++){
+            c = s.charAt(i);
+            
             switch(c){
                 case '(':
                     stack.add(')');
@@ -127,11 +102,11 @@ public class ValidParenthesesII {
      * Time O(n*n)  Space O(1)
      */
     public boolean isValid_withoutStack(String s) {
-        if(null == s || s.length() == 0 ){
+        if(null == s ){
             return true;
         }
 
-        if((s.length() % 2) != 0){
+        if( 1 == (s.length() & 1) ){
             return false;
         }
 
@@ -140,6 +115,7 @@ public class ValidParenthesesII {
 
     private boolean isValid_withoutStack(String s, int start, int end) {
         int count = 0;
+        
         for(int l = start, r = start; r <= end; r++){
             if(open2close.containsKey(s.charAt(r))){
                 count++;
@@ -163,7 +139,7 @@ public class ValidParenthesesII {
             }
         }
 
-        return count == 0;
+        return 0 == count;
     }
 
     /*
@@ -195,24 +171,29 @@ public class ValidParenthesesII {
   public static void main(String[] args) {
     ValidParenthesesII sv = new ValidParenthesesII();
 
-    String[] input = {
-    		null,
-    		"[]",
-            "[",
-            "[[",
-    		"]",
-    		"[()",
-    		"()]",
-    		"[()]",
-    		"[()]]",
-            "[](){}",
-            "{([])}",
-            "[(){}[]({})]"
+    String[][] inputs = {
+        //{s, expect}
+        {null, "true"},
+        {"[]", "true"},
+        {"[", "false"},
+        {"[[", "false"},
+        {"]", "false"},
+        {"[()", "false"},
+        {"()]", "false"},
+        {"[()]", "true"},
+        {"[()]]", "false"},
+        {"[](){}", "true"},
+        {"{([])}", "true"},
+        {"[(){}[]({})]", "true"},
 
     };
     
-    for(int i =0; i< input.length; i++){
-    	System.out.println("\n Input: " + input[i] + "\t"+ sv.isValid_n(input[i]) + "\t" + sv.isValid_11(input[i]) + "\t" + sv.isValid_withoutStack(input[i]) );
+    for(String[] input : inputs){
+    	System.out.println( String.format("\n Input: s = %s", input[0]) );
+        
+        Assert.assertEquals( Boolean.parseBoolean(input[1]), sv.isValid(input[0]));
+        Assert.assertEquals( Boolean.parseBoolean(input[1]), sv.isValid_n(input[0]));
+        Assert.assertEquals( Boolean.parseBoolean(input[1]), sv.isValid_withoutStack(input[0]));
     }
   }
 

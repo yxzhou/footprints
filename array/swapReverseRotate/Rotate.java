@@ -21,14 +21,16 @@ import org.junit.Test;
  * -> [5, 6, 7, 1, 2, 3, 4]   swap [7, 6, 5] and [64, 3, 2, 1]
  *
  */
-public class Rotate
-{
+public class Rotate {
 
     /**
-     *   Solution #1
+     *
+     * @param nums
+     * @param k
+     * @return
      */
     public int[] rotate_copyarray(int[] nums, int k) {
-        if (null == nums || k < 1) {
+        if (null == nums || nums.length < 2 || k < 1) {
             return nums;
         }
 
@@ -43,58 +45,62 @@ public class Rotate
         return result;
     }
 
-
-
-	/**
-	 *  Solution #4, do it in-place with O(1) extra space
+    /**
+     * do it in-place with O(1) extra space
      *
-	 */
-	public void rotate_swap(int[] nums, int k) {
-		if (null == nums || k < 1) {
+     * @param nums
+     * @param k
+     */
+    public void rotate_swap(int[] nums, int k) {
+        if (null == nums || nums.length < 2 || k < 1) {
             return;
         }
 
-		int n = nums.length;
-		k %= n;
+        int n = nums.length;
+        k %= n;
 
-		reverse(nums, 0, n - 1);
-		reverse(nums, 0, k - 1);
-		reverse(nums, k, n - 1);
-	}
+        reverse(nums, 0, n - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, n - 1);
+    }
 
-	private void reverse(int[] nums, int l, int r) {
-		for (; l < r; l++, r--) {
-			int tmp = nums[l];
-			nums[l] = nums[r];
-			nums[r] = tmp;
-		}
-	}
+    private void reverse(int[] nums, int l, int r) {
+        int tmp;
+        for (; l < r; l++, r--) {
+            tmp = nums[l];
+            nums[l] = nums[r];
+            nums[r] = tmp;
+        }
+    }
 
-    @Test
-    public void test(){
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        
+        Rotate sv = new Rotate();
 
-        for(int k = 0; k < 3; k++){
+        for (int k = 0; k < 3; k++) {
             int[] array1 = new int[]{1, 2};
-            rotate_swap(array1, k);
+            sv.rotate_swap(array1, k);
             Misc.printArray_Int(array1);
         }
 
-        for(int k = 0; k < 4; k++){
+        for (int k = 0; k < 4; k++) {
             int[] array1 = new int[]{1, 2, 3};
-            rotate_swap(array1, k);
+            sv.rotate_swap(array1, k);
             Misc.printArray_Int(array1);
         }
 
-
-        for(int k = 0; k < 7; k++){
+        for (int k = 0; k < 7; k++) {
             int[] array1 = new int[]{1, 2, 3, 4, 5, 6};
-            rotate_swap(array1, k);
+            sv.rotate_swap(array1, k);
             Misc.printArray_Int(array1);
         }
 
-        for(int k = 0; k < 8; k++){
+        for (int k = 0; k < 8; k++) {
             int[] array1 = new int[]{1, 2, 3, 4, 5, 6, 7};
-            rotate_swap(array1, k);
+            sv.rotate_swap(array1, k);
             Misc.printArray_Int(array1);
         }
     }

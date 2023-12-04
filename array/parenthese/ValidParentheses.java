@@ -1,17 +1,23 @@
 package array.parenthese;
 
+import junit.framework.Assert;
+
+/**
+ * 
+ * Given a string containing just the characters '(', ')', determine if the input string is valid.
+ * 
+ * The brackets must close in the correct order, 
+ *  "(())" and "()()" are all valid 
+ *  "(（）" and "（））" are not.
+ * 
+ * @author yuanxi
+ */
 
 public class ValidParentheses
 {   
     
     /*
-     * Given a string containing just the characters '(', ')', determine if the input string is valid.
-     * 
-     * The brackets must close in the correct order, 
-     *  "(())" and "()()" are all valid 
-     *  "(（）" and "（））" are not.
-     */
-    /*
+     *
      * Time O(n)  Space O(1)
      */
     public boolean isValidParentheses(String s) {
@@ -19,20 +25,24 @@ public class ValidParentheses
             return true;
         }
     
-        int sum = 0;
-        for(char c : s.toCharArray()){
+        int openCount = 0;
+        char c;
+        for(int i = 0, n = s.length(); i < n; i++){
+            c = s.charAt(i);
+            
             if(c == '('){
-                sum++;
-            } else if(c == ')'){
-                sum--;
-                
-                if(sum < 0){
+                openCount++;
+            } else if(c == ')'){                
+                if(openCount < 1){
                     return false;
                 }
+                
+                openCount--;
             }
+            
         }
         
-        return sum == 0;
+        return 0 == openCount;
     }
     
 
@@ -40,18 +50,23 @@ public class ValidParentheses
   public static void main(String[] args) {
     ValidParentheses sv = new ValidParentheses();
 
-    String[] input = {
-    		null,
-    		"()",
-    		")",
-    		"(()",
-    		"())",
-    		"(())",
-    		"(()))",
-    		"(()())"};
+    String[][] inputs = {
+        //{s, expect}
+        {null, "true"},
+        {"()", "true"},
+        {")", "false"},
+        {"(()", "false"},
+        {"())", "false"},
+        {"(())", "true"},
+        {"(()))", "false"},
+        {"(()())", "true"},
+                        
+    };
     
-    for(int i =0; i< input.length; i++){
-    	System.out.println("\n Input: " + input[i] + "\t"+ sv.isValidParentheses(input[i])  );
+    for(String[] input : inputs){
+    	System.out.println( String.format("\n call isValidParentheses: s = %s ", input[0]) );
+        
+        Assert.assertEquals( Boolean.parseBoolean(input[1]), sv.isValidParentheses(input[0]));
     }
   }
 
