@@ -87,7 +87,7 @@ public class IterativeTraversal2 {
     /**
      * inorder with stack and a Node
      */
-    public static void  inorder_iterative_n(TreeNode root){
+    public void inorder_iterative_n(TreeNode root){
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
 
@@ -103,7 +103,7 @@ public class IterativeTraversal2 {
         }
     }
 
-    public static void  preorder_iterative_n(TreeNode root){
+    public void  preorder_iterative_n(TreeNode root){
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
 
@@ -116,6 +116,25 @@ public class IterativeTraversal2 {
                 stack.add(curr.right);
                 curr = curr.left;
             }
+        }
+    }
+    
+    public void  preorder_iterative_n2(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+
+        while(curr != null || !stack.isEmpty()){
+            if(null == curr){
+                curr = stack.pop();
+            }
+            
+            print(curr);
+
+            if(curr.right != null){
+                stack.add(curr.right);
+            }
+            
+            curr = curr.left;
         }
     }
     
@@ -144,23 +163,25 @@ public class IterativeTraversal2 {
 
     /**
      * postorder with one Stack and 2 node
+     * 
      */
-    public static void postorder_iterative(TreeNode p) {
+    public void postorder_iterative(TreeNode p) {
         Stack<TreeNode> stack = new Stack<>();
-        TreeNode node = p, prev = p;
-        while (node != null || !stack.isEmpty()) {
-            while (node != null) {
-                stack.push(node);
-                node = node.left;
+        TreeNode curr = p;
+        TreeNode pre = p;
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
             }
 
             if (!stack.isEmpty()) {
-                node = stack.peek().right;
-                if (node == null || node == prev) {
-                    node = stack.pop();
-                    print(node);
-                    prev = node;
-                    node = null;
+                curr = stack.peek().right;
+                if (curr == null || curr == pre) {
+                    curr = stack.pop();
+                    print(curr);
+                    pre = curr;
+                    curr = null;
                 }
             }
 

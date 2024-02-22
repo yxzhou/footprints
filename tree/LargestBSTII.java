@@ -1,5 +1,7 @@
 package tree;
 
+import java.lang.annotation.Native;
+
 
 /**
  * 
@@ -29,7 +31,6 @@ package tree;
 public class LargestBSTII {
 
     public int largestBSTSubtree(TreeNode root) {
-       //check
         if(null == root){
             return 0;
         }
@@ -40,16 +41,15 @@ public class LargestBSTII {
     }
     
     private Node largestBSTSub_n_help(TreeNode node){
-
         
-        Node left = null;
+        Node left;
         if(null == node.left){
             left = Node.Node_NULL;
         }else{
             left = largestBSTSub_n_help(node.left);
         }
         
-        Node right = null;
+        Node right;
         if(null == node.right){
             right = Node.Node_NULL;
         }else{
@@ -90,7 +90,7 @@ public class LargestBSTII {
             this.rightLimit = rightLimit;
         }
         
-        final static Node Node_NULL = new Node(0, true, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        static final Node Node_NULL = new Node(0, true, Integer.MAX_VALUE, Integer.MIN_VALUE);
     }
     
 }

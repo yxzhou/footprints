@@ -100,7 +100,7 @@ import util.Misc;
 public class BoundaryOfBT {
     /**
      * @param root: a TreeNode
-     * @return: a list of integer
+     * @return a list of integer
      */
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
         if(root == null){
@@ -135,6 +135,7 @@ public class BoundaryOfBT {
         }
         
     }
+    
     private void dfsRightMost(TreeNode node, List<Integer> result){
         if(node == null || (node.left == null && node.right == null)){
             return;
@@ -148,6 +149,7 @@ public class BoundaryOfBT {
         
         result.add(node.val);
     }
+    
     private void dfsLeaf(TreeNode node, List<Integer> result){
         if(node == null){
             return;
@@ -164,7 +166,7 @@ public class BoundaryOfBT {
     
     /**
      * @param root: a TreeNode
-     * @return: a list of integer
+     * @return a list of integer
      */
     public List<Integer> boundaryOfBinaryTree_n(TreeNode root) {
         if(root == null){

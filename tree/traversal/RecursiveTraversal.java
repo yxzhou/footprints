@@ -4,7 +4,7 @@ import tree.TreeNode;
 
 public class RecursiveTraversal {
 
-    public static void inorder_R(TreeNode p) {
+    public void inorder_R(TreeNode p) {
         if (p != null) {
             inorder_R(p.left);
             print(p);
@@ -12,7 +12,7 @@ public class RecursiveTraversal {
         }
     }
 
-    public static void preorder_R(TreeNode p) {
+    public void preorder_R(TreeNode p) {
         if (p != null) {
             print(p);
             preorder_R(p.left);
@@ -20,7 +20,7 @@ public class RecursiveTraversal {
         }
     }
 
-    public static void postorder_R(TreeNode p) {
+    public void postorder_R(TreeNode p) {
         if (p != null) {
             postorder_R(p.left);
             postorder_R(p.right);
@@ -28,7 +28,7 @@ public class RecursiveTraversal {
         }
     }
 
-    static void print(TreeNode p) {
+    void print(TreeNode p) {
         System.out.print(p.val + " ");
     }
 }

@@ -1,16 +1,17 @@
 package tree;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import basic.serialize.BinaryTreeSerialize;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class BinaryTree {
 
   protected TreeNode root;
-
 
 
   public BinaryTree(TreeNode root) {
@@ -81,15 +82,14 @@ public class BinaryTree {
         int index = getIndex(inorder, s2, e2, preorder[s1]);
 
         if (-1 == index) {
-            throw new IllegalArgumentException(
-                    "the input is not right, inorder-" + inorder);
+            throw new IllegalArgumentException("the input is not right, inorder-" + Arrays.toString(inorder));
         }
 
-        TreeNode root = new TreeNode(preorder[s1]);
-        root.left = buildTree_preorderInorder(preorder, s1 + 1, s1 + index - s2, inorder, s2, index - 1);
-        root.right = buildTree_preorderInorder(preorder, e1 + index + 1 - e2, e1, inorder, index + 1, e2);
+        TreeNode node = new TreeNode(preorder[s1]);
+        node.left = buildTree_preorderInorder(preorder, s1 + 1, s1 + index - s2, inorder, s2, index - 1);
+        node.right = buildTree_preorderInorder(preorder, e1 + index + 1 - e2, e1, inorder, index + 1, e2);
 
-        return root;
+        return node;
     }
 
     private int getIndex(int[] arr, int start, int end, int target) {
@@ -121,11 +121,11 @@ public class BinaryTree {
             throw new IllegalArgumentException("");
         }
 
-        TreeNode root = new TreeNode(postorder[e2]);
-        root.left = buildTree_inorderPostorder(inorder, s1, index - 1, postorder, s2, index - 1 - s1 + s2);
-        root.right = buildTree_inorderPostorder(inorder, index + 1, e1, postorder, e2 - e1 + index, e2 - 1);
+        TreeNode node = new TreeNode(postorder[e2]);
+        node.left = buildTree_inorderPostorder(inorder, s1, index - 1, postorder, s2, index - 1 - s1 + s2);
+        node.right = buildTree_inorderPostorder(inorder, index + 1, e1, postorder, e2 - e1 + index, e2 - 1);
 
-        return root;
+        return node;
     }
     
     /**
@@ -153,8 +153,7 @@ public class BinaryTree {
     }
     
     public static List<TreeNode> initBTs(){
-        //init
-        ArrayList<TreeNode> list = new ArrayList<TreeNode>();
+        List<TreeNode> list = new ArrayList<>();
         BinaryTree tree = new BinaryTree();
         BinaryTreeSerialize seri = new BinaryTreeSerialize();
         

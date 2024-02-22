@@ -1,10 +1,9 @@
 package tree;
 
 
-public class PopulatingNextRight
-{
+public class PopulatingNextRight{
 
-  /*
+  /**
    * 
    * Given a binary tree
    * 
@@ -18,9 +17,9 @@ public class PopulatingNextRight
    * Initially, all next pointers are set to NULL.
    * 
    * Note:
-   * 
    * You may only use constant extra space.
    * You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+   * 
    * For example,
    * Given the following perfect binary tree,
    *          1
@@ -37,52 +36,56 @@ public class PopulatingNextRight
    *    
    * 
    */
-  public void connect(TreeLinkNode root) {
-    if(root == null)
-      return;
     
-    root.next = null;    
-        
-    connect(root.left, root.right);
-    connect(root.right, null);
-  }
+    public void connect(TreeLinkNode root) {
+        if (root == null) {
+            return;
+        }
+
+        root.next = null;
+
+        connect(root.left, root.right);
+        connect(root.right, null);
+    }
+
+    private void connect(TreeLinkNode node, TreeLinkNode next) {
+        if (node == null) {
+            return;
+        }
+
+        node.next = next;
+        connect(node.left, node.right);
+
+        if (next == null) {
+            connect(node.right, null);
+        } else {
+            connect(node.right, next.left);
+        }
+    }
+
+    public void connect_n(TreeLinkNode root) {
+        if (null == root) {
+            return;
+        }
+
+        TreeLinkNode currLevelHead = root;
+        TreeLinkNode currNode;
+        while (null != currLevelHead.left) {
+            currNode = currLevelHead;
+
+            while (null != currNode.next) {
+                currNode.left.next = currNode.right;
+                currNode.right.next = currNode.next.left;
+
+                currNode = currNode.next;
+            }
+            currNode.left.next = currNode.right;
+
+            currLevelHead = currLevelHead.left;
+        }
+    }
   
-  private void connect(TreeLinkNode node, TreeLinkNode next){
-    if(node == null)
-      return;
-    
-    node.next = next;
-    connect(node.left, node.right);
-    
-    if(next == null)
-      connect(node.right, null);
-    else
-      connect(node.right, next.left);
-  }
-  
-	public void connect_n(TreeLinkNode root) {
-		if (null == root) {
-			return;
-		}
-
-		TreeLinkNode currLevelHead = root;
-		TreeLinkNode currNode;
-		while (null != currLevelHead.left) {
-			currNode = currLevelHead;
-
-			while (null != currNode.next) {
-				currNode.left.next = currNode.right;
-				currNode.right.next = currNode.next.left;
-
-				currNode = currNode.next;
-			}
-			currNode.left.next = currNode.right;
-
-			currLevelHead = currLevelHead.left;
-		}
-	}
-  
-  /*
+  /**
    * 
    * Follow up for problem "Populating Next Right Pointers in Each Node".
    * 
@@ -107,47 +110,51 @@ public class PopulatingNextRight
    * 
    */
   
-  public void connectII(TreeLinkNode node) {
-    if(node == null)
-      return;
-    
-    TreeLinkNode thisRowHead = node;
-    
-    while(thisRowHead != null){
-
-      TreeLinkNode nextRowHead = null;
-      TreeLinkNode thisRowCurr = thisRowHead;
-      TreeLinkNode nextRowCurr = null;
-      
-      for( ; thisRowCurr != null; thisRowCurr = thisRowCurr.next){
-        if(thisRowCurr.left != null){
-          
-          if(nextRowHead == null)
-            nextRowHead = thisRowCurr.left;
-          
-          if(nextRowCurr != null)
-            nextRowCurr.next = thisRowCurr.left;
-          
-          nextRowCurr = thisRowCurr.left;
+    public void connectII(TreeLinkNode node) {
+        if (node == null) {
+            return;
         }
-        
-        if(thisRowCurr.right != null){
-          
-          if(nextRowHead == null)
-            nextRowHead = thisRowCurr.right;
-          
-          if(nextRowCurr != null)
-            nextRowCurr.next = thisRowCurr.right;
-          
-          nextRowCurr = thisRowCurr.right;
-        }
-        
-        
-      }
 
-      thisRowHead = nextRowHead;
+        TreeLinkNode thisRowHead = node;
+
+        while (thisRowHead != null) {
+
+            TreeLinkNode nextRowHead = null;
+            TreeLinkNode thisRowCurr = thisRowHead;
+            TreeLinkNode nextRowCurr = null;
+
+            for (; thisRowCurr != null; thisRowCurr = thisRowCurr.next) {
+                if (thisRowCurr.left != null) {
+
+                    if (nextRowHead == null) {
+                        nextRowHead = thisRowCurr.left;
+                    }
+
+                    if (nextRowCurr != null) {
+                        nextRowCurr.next = thisRowCurr.left;
+                    }
+
+                    nextRowCurr = thisRowCurr.left;
+                }
+
+                if (thisRowCurr.right != null) {
+
+                    if (nextRowHead == null) {
+                        nextRowHead = thisRowCurr.right;
+                    }
+
+                    if (nextRowCurr != null) {
+                        nextRowCurr.next = thisRowCurr.right;
+                    }
+
+                    nextRowCurr = thisRowCurr.right;
+                }
+
+            }
+
+            thisRowHead = nextRowHead;
+        }
     }
-  }
     
     //constant space
     public void connectII_x(TreeLinkNode root){
@@ -196,51 +203,55 @@ public class PopulatingNextRight
   
   
   
-  public void connectII_n(TreeLinkNode root) {
-      if(null == root){
-    	  return;
-      }
-      
-      TreeLinkNode currLevelNode = null;
-      TreeLinkNode nextLevelHead = new TreeLinkNode(-1);
-      nextLevelHead.next = root;
-      TreeLinkNode nextLevelNode = null;
-      
-      while(null != currLevelNode || null != nextLevelHead.next){
-    	  if(null == currLevelNode){ //move to the next level
-    		  currLevelNode = nextLevelHead.next;
-    		  nextLevelHead.next = null;
-        	  nextLevelNode = nextLevelHead;
-    	  }
-    	  
-    	  if(null != currLevelNode.left){
-    		  nextLevelNode.next = currLevelNode.left;
-    		  nextLevelNode = nextLevelNode.next;
-    	  }
-    	  
-    	  if(null != currLevelNode.right){
-    		  nextLevelNode.next = currLevelNode.right;
-    		  nextLevelNode = nextLevelNode.next;
-    	  }
-    	  
-    	  currLevelNode = currLevelNode.next;
-      }
-      
-  }
-  
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    // TODO Auto-generated method stub
+    public void connectII_n(TreeLinkNode root) {
+        if (null == root) {
+            return;
+        }
 
-  }
+        TreeLinkNode currLevelNode = null;
+        TreeLinkNode nextLevelHead = new TreeLinkNode(-1);
+        nextLevelHead.next = root;
+        TreeLinkNode nextLevelNode = null;
 
-  /* Definition for binary tree with next pointer. */
-  public class TreeLinkNode {
-      int val;
-      TreeLinkNode left, right, next;
-      TreeLinkNode(int x) { val = x; }
-  }
+        while (null != currLevelNode || null != nextLevelHead.next) {
+            if (null == currLevelNode) { //move to the next level
+                currLevelNode = nextLevelHead.next;
+                nextLevelHead.next = null;
+                nextLevelNode = nextLevelHead;
+            }
+
+            if (null != currLevelNode.left) {
+                nextLevelNode.next = currLevelNode.left;
+                nextLevelNode = nextLevelNode.next;
+            }
+
+            if (null != currLevelNode.right) {
+                nextLevelNode.next = currLevelNode.right;
+                nextLevelNode = nextLevelNode.next;
+            }
+
+            currLevelNode = currLevelNode.next;
+        }
+
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /* Definition for binary tree with next pointer. */
+    public class TreeLinkNode {
+
+        int val;
+        TreeLinkNode left, right, next;
+
+        TreeLinkNode(int x) {
+            val = x;
+        }
+    }
   
 }

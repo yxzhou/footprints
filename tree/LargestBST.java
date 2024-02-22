@@ -42,6 +42,10 @@ import tree.traversal.RecursiveTraversal;
 
 public class LargestBST {
 
+    public HashMap<TreeNode, Integer> htC;  // record(Node, BST sub tree node amount )
+    public HashMap<TreeNode, Integer> htMax; // record(Node, the max of this sub tree)
+    public HashMap<TreeNode, Integer> htMin; // record(Node, the min of this sub tree)
+
     /**
      * Given a binary tree, find the largest subtree which is a Binary Search Tree (BST), where largest means subtree
      * with largest number of nodes in it.
@@ -51,10 +55,6 @@ public class LargestBST {
      * @param root
      * @return the root of the largest BST subtree in a binary tree
      */
-    public HashMap<TreeNode, Integer> htC;  // record(Node, BST sub tree node amount )
-    public HashMap<TreeNode, Integer> htMax; // record(Node, the max of this sub tree)
-    public HashMap<TreeNode, Integer> htMin; // record(Node, the min of this sub tree)
-
     public TreeNode largestBSTSubTree(TreeNode root) {
         //check
         if (root == null) {
@@ -127,7 +127,7 @@ public class LargestBST {
             return false;
         }
 
-        int max = Integer.valueOf(p.val);
+        int max = p.val;
         int min = max;
 
         if (left != null) {
@@ -227,10 +227,7 @@ public class LargestBST {
         //traverse the hashtable,  return one largest BST subtree.
         int maxHeight = 0;
         //Node subRoot = null;
-        Iterator iterator = htC.keySet().iterator();
-
-        while (iterator.hasNext()) {
-            TreeNode key = (TreeNode) iterator.next();
+        for (TreeNode key : htC.keySet()) {
             int height = htC.get(key);
 
             if (height > maxHeight) {
@@ -248,7 +245,7 @@ public class LargestBST {
         }
         if (root.left == null && root.right == null) {
             saveCount(root, 1);
-            saveMaxMin(root, Integer.valueOf(root.val), Integer.valueOf(root.val));
+            saveMaxMin(root, root.val, root.val);
             return root;
         }
 
@@ -301,6 +298,8 @@ public class LargestBST {
      */
     public static void main(String[] args) {
         LargestBST s = new LargestBST();
+        RecursiveTraversal recursiveTraversal = new RecursiveTraversal();
+                
 
         //init a binary tree
         BinaryTree tree = new BinaryTree();
@@ -313,7 +312,7 @@ public class LargestBST {
 
         //print the tree in-order
         System.out.println("\nThe binary tree is (in-order): ");
-        RecursiveTraversal.inorder_R(tree.root);
+        recursiveTraversal.inorder_R(tree.root);
 
         //get largest BST subtree 
         TreeNode subRoot = s.largestBSTSubTree(tree.root);
@@ -323,7 +322,7 @@ public class LargestBST {
         System.out.println("htMin: " + s.htMin.toString());
 
         System.out.println("\nThe Largest BST subtree is (in-order): ");
-        RecursiveTraversal.inorder_R(subRoot);
+        recursiveTraversal.inorder_R(subRoot);
 
         //get largest BST 
         subRoot = s.largestBST(tree.root);

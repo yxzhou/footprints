@@ -39,7 +39,7 @@ import java.util.*;
       [7]
     ]
 
-    Given binary tree [3,9,20,4,5,2,7],
+    Given binary tree [3,9,8,4,0,1,7,#,#,#,5,2,#,#,#],
         _3_
       /      \
      9         8

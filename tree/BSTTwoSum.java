@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package tree;
-
-
-import tree.TreeNode;
         
 /**
  *
@@ -15,7 +12,7 @@ import tree.TreeNode;
  * Use O(1) extra space.
  * 
  * Example
- * Input： {4,2,5,1,3}, 3
+ * Input： {4,2,5,1,3,#,#}, 3
  * Output： [1,2] (or [2,1])
  * Explanation：
  *   the BST is
@@ -35,10 +32,10 @@ public class BSTTwoSum {
      * @param : the target sum
      * @return: two numbers from tree which sum is n
      */
-   public int[] twoSum(TreeNode root, int n) {
+    public int[] twoSum(TreeNode root, int n) {
 
         int[] result = new int[2];
-        if(helper(root, n, result)){
+        if (helper(root, n, result)) {
             return result;
         }
 

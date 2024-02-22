@@ -18,77 +18,84 @@ import java.util.*;
  * 	   2     1         2                 3
  */
 
-public class BSTUnique
-{
+public class BSTUnique{
 
-  /*
-   * DP
-   *  define f(n),  how many structurally unique BST
-   * 
-   * f(n) = 1   when n = 0 or 1
-   *      = sum of f(i) * f(n-1-i),  i is from 0 to n-1, n >1 
-   *        
-   *  Catalan number ,  similar to UniquePaths.java
-   */
-  public int numTrees(int n) {
-      if(n < 3){
-          return n;
-      }
+    /**
+     * DP define f(n), how many structurally unique BST
+     *
+     * f(n) = 1 when n = 0 or 1 
+     *      = sum of f(i) * f(n-1-i), i is from 0 to n-1, n>1
+     *
+     * Catalan number , similar to UniquePaths.java
+     * 
+     * 
+     * @param n
+     * @return 
+     */
+    public int numTrees(int n) {
+        if (n < 3) {
+            return n;
+        }
 
-      int[] f = new int[n + 1];
-      f[0] = 1;
-      f[1] = 1;
+        int[] f = new int[n + 1];
+        f[0] = 1;
+        f[1] = 1;
 
-      int mid;
-      for(int i = 2; i <= n; i++){
-          mid = i / 2;
-          f[i] = ( (i & 1) == 1 ? f[mid] * f[mid] : 0 );
-          for(int k = 0; k < mid; k++){
-              f[i] += f[k]*f[i - k - 1]*2;
-          }
-      }
+        int mid;
+        for (int i = 2; i <= n; i++) {
+            mid = i / 2;
+            f[i] = ((i & 1) == 1 ? f[mid] * f[mid] : 0);
+            for (int k = 0; k < mid; k++) {
+                f[i] += f[k] * f[i - k - 1] * 2;
+            }
+        }
 
-      return f[n];
-  }
+        return f[n];
+    }
   
-  /**
-   * Given n, generate all structurally unique BST's (binary search trees) that store values 1...n.
-   * 
-   */
-  public List<TreeNode> generateTrees_n(int n) {
-      return generate(1, n);
-  }
-  private ArrayList<TreeNode> generate(int start, int end) {
-      ArrayList<TreeNode> result = new ArrayList<TreeNode>();
-      if (start > end) {
-          result.add(null);
-          return result;
-      }
-      
-      ArrayList<TreeNode> left;
-      ArrayList<TreeNode> right;
-      TreeNode node;
-      for (int i = start; i <= end; i++){
-          left = generate(start, i - 1);
-          right = generate(i +  1, end);
-          
-          for (TreeNode l : left) {
-              for (TreeNode r : right) {
-                  node = new TreeNode(i);
-                  node.left = l;
-                  node.right = r;
-                  result.add(node);
-              }
-          }
-      }
-      return result;
-  }
+    /**
+     * Given n, generate all structurally unique BST's (binary search trees) that store values 1...n.
+     *
+     * @param n
+     * @return
+     */
+    public List<TreeNode> generateTrees_n(int n) {
+        return generate(1, n);
+    }
+
+    private ArrayList<TreeNode> generate(int start, int end) {
+        ArrayList<TreeNode> result = new ArrayList<TreeNode>();
+        if (start > end) {
+            result.add(null);
+            return result;
+        }
+
+        ArrayList<TreeNode> left;
+        ArrayList<TreeNode> right;
+        TreeNode node;
+        for (int i = start; i <= end; i++) {
+            left = generate(start, i - 1);
+            right = generate(i + 1, end);
+
+            for (TreeNode l : left) {
+                for (TreeNode r : right) {
+                    node = new TreeNode(i);
+                    node.left = l;
+                    node.right = r;
+                    result.add(node);
+                }
+            }
+        }
+        return result;
+    }
 
     /**
      *  recursive + memorize
      *
+     * 
+     * @param n
+     * @return 
      */
-
     public List<TreeNode> generateTrees_x(int n) {
         if(n < 1){
             return Collections.EMPTY_LIST;
@@ -160,42 +167,31 @@ public class BSTUnique
         return result;
     }
   
-//  
-//  private int[] buildMapping(int start, int end){
-//    int[] vals = new int[end - start + 1];
-//    vals[0] = 0;
-//    
-//    for(int i=1, val = start; val <= end; val ++, i++ )
-//      vals[i] = val;
-//    
-//    return vals;
-//  }
-  
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    /* fundmental test  
-    
-    ArrayList<TreeNode> ret = new ArrayList<TreeNode>();
-    System.out.println(ret.size());
-    
-    //ret.get(0);
-    ret.add(null);
-*/
-    
-		/* generateTrees test */
-		BSTUnique sv = new BSTUnique();
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        /**
+         * fundmental test *
+         * ArrayList<TreeNode> ret = new ArrayList<TreeNode>(); 
+         * System.out.println(ret.size());
+         *
+         * //ret.get(0); 
+         * ret.add(null);
+         */
 
-		for (int i = -1; i < 10; i++) {
-			System.out.println("\n n = " + i + "\t numTree = " + sv.numTrees(i));
-		}
+        /** generateTrees test */
+        BSTUnique sv = new BSTUnique();
 
-		for (int i = 0; i < 6; i++) {
-			System.out.println(sv.generateTrees_x(i).size());
-		}
-    
-  }
+        for (int i = -1; i < 10; i++) {
+            System.out.println("\n n = " + i + "\t numTree = " + sv.numTrees(i));
+        }
+
+        for (int i = 0; i < 6; i++) {
+            System.out.println(sv.generateTrees_x(i).size());
+        }
+
+    }
 
   
 }

@@ -33,7 +33,7 @@ public class TreeUtils {
     private void readBinaryTreeHelper(TreeNode root, boolean isLeft, Scanner in) {
         String token = in.next();
         if ("#".equals(token)) {
-            return;
+            //return;
         } else {
             TreeNode newNode = new TreeNode(Integer.parseInt(token));
             if (isLeft) {
