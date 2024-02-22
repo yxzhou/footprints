@@ -41,7 +41,6 @@ public class ValidParenthesesIII {
             
             switch(c){
                 case '(':
-                    
                     for(int count : curr){
                         next.add(count + 1);
                     }
